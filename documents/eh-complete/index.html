@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>eh-complete - Emacs-helper</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Feng Shu" />
+    <link rel="stylesheet" href="http://tumashu.github.com/emacs-helper/media/css/main.css" type="text/css">
+  </head>
+<body class="container">
+    <div>
+      <header class="masthead">
+        <h1 class="masthead-title"><a href="http://tumashu.github.com/emacs-helper/">Emacs-helper</a> <span class="subtitle">(Tumashu 的 emacs 配置)</span></h1>
+        <ul>
+          <li><a href="http://tumashu.github.com/emacs-helper/documents/">Documents</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/elpa/">Elpa</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/tags/">Tags</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/about/">About</a></li>
+          <li><a href="https://github.com/tumashu/emacs-helper">GitHub</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/rss.xml">RSS</a></li>
+        </ul>
+        <form method="get" id="searchform" action="http://www.google.com/search">
+          <input type="text" class="field" name="q" id="s" placeholder="Search">
+          <input type="hidden" name="as_sitesearch" value="tumashu.github.com/emacs-helper">
+        </form>
+      </header>
+    </div>
+
+<div class="content-and-footer">
+<div>
+<div class="post">
+<h1 class="post-title">eh-complete</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 简介</a></li>
+<li><a href="#orgheadline2">2. 代码</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span>简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span>代码</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ido</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">tramp</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">setq</span> tramp-default-method nil))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">setq</span> org-completion-use-ido t))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ido-ubiquitous</span>
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">setq</span> ido-everywhere t)
+    (ido-ubiquitous-mode 1))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">flx-ido</span>
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">setq</span> flx-ido-use-faces t)
+    (flx-ido-mode 1))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ido-vertical-mode</span>
+    <span style="color: #4c83ff;">:config</span>
+    (ido-vertical-mode 1))
+
+  (<span style="color: #4c83ff;">setq</span> ido-enable-flex-matching t
+        ido-enable-regexp t
+        ido-enable-prefix nil
+        ido-create-new-buffer 'always
+        ido-file-extensions-order '(<span style="color: #61CE3C;">".org"</span> <span style="color: #61CE3C;">".R"</span> <span style="color: #61CE3C;">".el"</span> <span style="color: #61CE3C;">".java"</span> <span style="color: #61CE3C;">".js"</span> <span style="color: #61CE3C;">".el"</span> <span style="color: #61CE3C;">".xml"</span>)
+        ido-use-filename-at-point 'guess
+        ido-auto-merge-work-directories-length -1
+        ido-auto-merge-delay-time 2
+        ido-use-url-at-point t
+        ido-use-faces nil
+        gc-cons-threshold 20000000)
+
+  (ido-mode -1)
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">ido sort</span>
+  (add-hook 'ido-make-file-list-hook
+            'eh-ido-sort-mtime) <span style="color: #8B8989; font-style: italic;">; </span><span style="color: #8B8989; font-style: italic;">&#25991;&#20214;&#30340;&#25490;&#24207;&#26041;&#27861;</span>
+  (add-hook 'ido-make-dir-list-hook
+            'eh-ido-sort-mtime)  <span style="color: #8B8989; font-style: italic;">; </span><span style="color: #8B8989; font-style: italic;">&#30446;&#24405;&#30340;&#25490;&#24207;&#26041;&#27861;</span>
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-ido-sort-mtime</span> ()
+    (<span style="color: #4c83ff;">setq</span> ido-temp-list
+          (sort ido-temp-list
+                (<span style="color: #4c83ff;">lambda</span> (a b)
+                  (time-less-p
+                   (sixth (file-attributes (concat ido-current-directory b)))
+                   (sixth (file-attributes (concat ido-current-directory a)))))))
+    (ido-to-end  <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">move . files to end (again)</span>
+     (delq nil (mapcar
+                (<span style="color: #4c83ff;">lambda</span> (x) (<span style="color: #4c83ff;">and</span> (char-equal (string-to-char x) ?.) x))
+                ido-temp-list))))
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">ido keybindings</span>
+  (add-hook 'ido-setup-hook 'eh-ido-keybinding)
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-ido-keybinding</span> ()
+    (define-key ido-completion-map (kbd <span style="color: #61CE3C;">"C-SPC"</span>) nil)
+    (define-key ido-completion-map (kbd <span style="color: #61CE3C;">"C-@"</span>) nil)
+    (define-key ido-completion-map (kbd <span style="color: #61CE3C;">"C-i"</span>) 'ido-edit-input)
+    (define-key ido-completion-map (kbd <span style="color: #61CE3C;">"C-l"</span>) 'ido-delete-backward-updir))
+  (global-set-key (kbd <span style="color: #61CE3C;">"C-x C-b"</span>) 'ido-display-buffer))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">smex swiper and ivy-mode</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">smex</span>
+  <span style="color: #4c83ff;">:config</span> (smex-initialize))
+
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">swiper</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">counsel</span>
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">setq</span> counsel-yank-pop-separator
+          (concat <span style="color: #61CE3C;">"\n\n"</span> (make-string 70 ?-) <span style="color: #61CE3C;">"\n"</span>))
+    (define-key counsel-find-file-map (kbd <span style="color: #61CE3C;">"C-f"</span>) 'eh-ivy-open-typed-path)
+    <span style="color: #4c83ff;">:bind</span>
+    ((<span style="color: #61CE3C;">"C-c C-r"</span> . ivy-resume)
+     (<span style="color: #61CE3C;">"M-x"</span> . counsel-M-x)
+     (<span style="color: #61CE3C;">"C-x C-f"</span> . counsel-find-file)
+     (<span style="color: #61CE3C;">"C-h f"</span> . counsel-describe-function)
+     (<span style="color: #61CE3C;">"C-h v"</span> . counsel-describe-variable)
+     (<span style="color: #61CE3C;">"C-c y"</span> . counsel-yank-pop)))
+
+  (ivy-mode 1)
+  (<span style="color: #4c83ff;">setq</span> ivy-count-format <span style="color: #61CE3C;">""</span>
+        <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">ivy-count-format "%-2d "</span>
+        ivy-extra-directories nil
+        ivy-format-function 'ivy-format-function-arrow
+        ivy-display-style 'fancy)
+  (<span style="color: #4c83ff;">push</span> '(counsel-M-x . <span style="color: #61CE3C;">""</span>) ivy-initial-inputs-alist)
+  (<span style="color: #4c83ff;">push</span> '(counsel-describe-function . <span style="color: #61CE3C;">""</span>) ivy-initial-inputs-alist)
+  (<span style="color: #4c83ff;">push</span> '(counsel-describe-variable . <span style="color: #61CE3C;">""</span>) ivy-initial-inputs-alist)
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-open-typed-path</span> (path)
+    (<span style="color: #4c83ff;">let</span> ((parent-directory
+           (<span style="color: #4c83ff;">if</span> (file-directory-p path)
+               (file-name-directory (directory-file-name path))
+             (file-name-directory path))))
+      (find-file (concat parent-directory ivy-text))))
+
+  (ivy-set-actions
+   'counsel-find-file
+   '((<span style="color: #61CE3C;">"f"</span> eh-open-typed-path  <span style="color: #61CE3C;">"Open typed path"</span>)))
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-ivy-open-typed-path</span> ()
+    (<span style="color: #4c83ff;">interactive</span>)
+    (<span style="color: #4c83ff;">when</span> ivy--directory
+      (ivy-set-action 'eh-open-typed-path)
+      (ivy-done)))
+
+  (define-key ivy-minibuffer-map (kbd <span style="color: #61CE3C;">"&lt;return&gt;"</span>) 'ivy-alt-done))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">company-mode</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">company</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> company-idle-delay 0.2)
+  (<span style="color: #4c83ff;">setq</span> company-minimum-prefix-length 2)
+  (<span style="color: #4c83ff;">setq</span> company-selection-wrap-around t)
+  (<span style="color: #4c83ff;">setq</span> company-show-numbers t)
+  (<span style="color: #4c83ff;">setq</span> company-tooltip-limit 10)
+  (<span style="color: #4c83ff;">setq</span> company-echo-delay 0)
+  (<span style="color: #4c83ff;">setq</span> company-global-modes
+        '(not message-mode git-commit-mode eshell-mode
+              sfh/sawfish-console-mode))
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">company-dabbrev</span>
+  (<span style="color: #4c83ff;">setq</span> company-dabbrev-char-regexp <span style="color: #61CE3C;">"[[:word:]_:@.-]+"</span>)
+  (<span style="color: #4c83ff;">setq</span> company-dabbrev-downcase nil)
+  (<span style="color: #4c83ff;">setq</span> company-dabbrev-ignore-case nil)
+  (<span style="color: #4c83ff;">setq</span> company-require-match nil)
+  (<span style="color: #4c83ff;">setq</span> company-dabbrev-minimum-length 2)
+
+  (<span style="color: #4c83ff;">setq</span> company-backends
+        '((company-capf company-dabbrev company-files)
+          (company-dabbrev-code company-gtags company-etags
+                                company-keywords)))
+  (<span style="color: #4c83ff;">setq</span> company-transformers
+        '(company-sort-by-occurrence))
+
+  (<span style="color: #4c83ff;">setq</span> company-frontends
+        '(company-pseudo-tooltip-frontend
+          company-echo-metadata-frontend))
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#31105;&#29992; dabberv &#20013;&#25991;&#34917;&#20840;</span>
+  (<span style="color: #4c83ff;">setq</span> pyim-company-complete-chinese-enable nil)
+
+  (global-set-key (kbd <span style="color: #61CE3C;">"M-/"</span>) 'company-complete)
+  (define-key company-active-map (kbd <span style="color: #61CE3C;">"M-i"</span>) 'company-complete-selection)
+  (define-key company-active-map (kbd <span style="color: #61CE3C;">"C-n"</span>) 'company-select-next)
+  (define-key company-active-map (kbd <span style="color: #61CE3C;">"C-p"</span>)'company-select-previous)
+  (define-key company-active-map (kbd <span style="color: #61CE3C;">"M-n"</span>) 'company-select-next)
+  (define-key company-active-map (kbd <span style="color: #61CE3C;">"M-p"</span>)'company-select-previous)
+
+  (<span style="color: #4c83ff;">if</span> (<span style="color: #4c83ff;">and</span> (fboundp 'daemonp) (daemonp))
+      (add-hook 'after-make-frame-functions
+                (<span style="color: #4c83ff;">lambda</span> (x)
+                  (global-company-mode)))
+    (global-company-mode)))
+</pre>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+    <div>
+      <div class="post-meta">
+        <span title="post date" class="post-info">2016-09-24</span>
+        <span title="last modification date" class="post-info">2016-09-24</span>
+        <span title="tags" class="post-info">N/A</span>
+        <span title="author" class="post-info">Feng Shu</span>
+      </div>
+      <div class="footer">
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 8.x)</p>
+        <p>
+          Copyright &copy; <span id="footerYear"></span> <a href="mailto:tumashu &lt;at&gt; 163 &lt;dot&gt; com">Feng Shu</a>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          Powered by <a href="https://github.com/tumashu/org-webpage" target="_blank">org-webpage</a>
+          <script type="text/javascript">document.getElementById("footerYear").innerHTML = (new Date()).getFullYear();</script>
+        </p>
+      </div>
+    </div>
+
+</div>
+</body>
+</html>

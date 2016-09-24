@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>eh-org - Emacs-helper</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Feng Shu" />
+    <link rel="stylesheet" href="http://tumashu.github.com/emacs-helper/media/css/main.css" type="text/css">
+  </head>
+<body class="container">
+    <div>
+      <header class="masthead">
+        <h1 class="masthead-title"><a href="http://tumashu.github.com/emacs-helper/">Emacs-helper</a> <span class="subtitle">(Tumashu 的 emacs 配置)</span></h1>
+        <ul>
+          <li><a href="http://tumashu.github.com/emacs-helper/documents/">Documents</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/elpa/">Elpa</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/tags/">Tags</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/about/">About</a></li>
+          <li><a href="https://github.com/tumashu/emacs-helper">GitHub</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/rss.xml">RSS</a></li>
+        </ul>
+        <form method="get" id="searchform" action="http://www.google.com/search">
+          <input type="text" class="field" name="q" id="s" placeholder="Search">
+          <input type="hidden" name="as_sitesearch" value="tumashu.github.com/emacs-helper">
+        </form>
+      </header>
+    </div>
+
+<div class="content-and-footer">
+<div>
+<div class="post">
+<h1 class="post-title">eh-org</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 简介</a></li>
+<li><a href="#orgheadline2">2. 代码</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span>简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span>代码</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Export language</span>
+    (<span style="color: #4c83ff;">setq</span> org-export-default-language <span style="color: #61CE3C;">"zh-CN"</span>))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-chinese-utils</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span> (org-chinese-utils-enable))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-odt</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-html</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">html</span>
+    (<span style="color: #4c83ff;">setq</span> org-html-coding-system 'utf-8)
+    (<span style="color: #4c83ff;">setq</span> org-html-head-include-default-style t)
+    (<span style="color: #4c83ff;">setq</span> org-html-head-include-scripts t))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-latex</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#19981;&#35201;&#22312;latex&#36755;&#20986;&#25991;&#20214;&#20013;&#25554;&#20837;\maketitle</span>
+    (<span style="color: #4c83ff;">setq</span> org-latex-title-command <span style="color: #61CE3C;">""</span>)
+    (<span style="color: #4c83ff;">setq</span> org-latex-date-format <span style="color: #61CE3C;">"%Y-%m-%d"</span>)
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(setq org-latex-create-formula-image-program 'imagemagick)  ;&#40664;&#35748;&#25903;&#25345;&#20013;&#25991;</span>
+    (<span style="color: #4c83ff;">setq</span> org-latex-create-formula-image-program 'dvipng)          <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">&#36895;&#24230;&#36739;&#24555;&#65292;&#20294;&#40664;&#35748;&#19981;&#25903;&#25345;&#20013;&#25991;</span>
+    (<span style="color: #4c83ff;">setq</span> org-format-latex-options
+          (plist-put org-format-latex-options <span style="color: #4c83ff;">:scale</span> 2.5))
+    (<span style="color: #4c83ff;">setq</span> org-format-latex-options
+          (plist-put org-format-latex-options <span style="color: #4c83ff;">:html-scale</span> 2.5)))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-latex-chinese</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span> (oxlc/toggle-ox-latex-chinese t))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-ascii</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-beamer</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-md</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-deck</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-rss</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-s5</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">org-plus-contrib</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-extra</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#22914;&#26524;&#19968;&#20010;&#26631;&#39064;&#21253;&#21547;TAG: &#8220;ignore&#8221; ,&#23548;&#20986;latex&#26102;&#30452;&#25509;&#24573;&#30053;&#36825;&#20010;&#26631;&#39064;&#65292;</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20294;&#23545;&#23427;&#30340;&#20869;&#23481;&#27809;&#26377;&#24433;&#21709;&#12290;</span>
+    (ox-extras-activate '(latex-header-blocks ignore-headlines)))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-mime</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-bookmark</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-protocol</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-screenshot</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-bibtex</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ox-bibtex-chinese</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span> (ox-bibtex-chinese-enable))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ebib-handy</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(use-package ob-R</span>
+  <span style="color: #8B8989; font-style: italic;">;;   </span><span style="color: #8B8989; font-style: italic;">:ensure nil)</span>
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ob-plantuml</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">setq</span> org-plantuml-jar-path <span style="color: #61CE3C;">"~/bin/plantuml.jar"</span>))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-agenda</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">setq</span> org-agenda-files
+          (append (file-expand-wildcards <span style="color: #61CE3C;">"~/org/*.org"</span>)))
+
+    (<span style="color: #4c83ff;">setq</span> org-agenda-custom-commands
+          '((<span style="color: #61CE3C;">"l"</span> <span style="color: #61CE3C;">"agenda:"</span>
+             ((agenda  <span style="color: #61CE3C;">""</span> ((org-agenda-overriding-header <span style="color: #61CE3C;">"Two-Days"</span>)
+                           (org-agenda-span 2)))
+              (tags-todo <span style="color: #61CE3C;">"&#29983;&#27963;|IT|&#36141;&#29289;"</span>)))))
+
+    (<span style="color: #4c83ff;">setq</span> org-agenda-remove-tags t))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ob-core</span>
+    <span style="color: #4c83ff;">:ensure</span>  nil
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">setq</span> org-confirm-babel-evaluate nil))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-capture</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-org-capture</span>
+      <span style="color: #4c83ff;">:ensure</span> nil))
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#33258;&#23450;&#20041;&#21464;&#37327;</span>
+  (<span style="color: #4c83ff;">setq</span> eh-org-mathtoweb-file <span style="color: #61CE3C;">"~/bin/mathtoweb.jar"</span>)
+
+  (<span style="color: #4c83ff;">setq</span> org-latex-to-mathml-convert-command
+        <span style="color: #61CE3C;">"java -jar %j -unicode -force -df %o %I"</span>
+        org-latex-to-mathml-jar-file
+        eh-org-mathtoweb-file)
+
+  (<span style="color: #4c83ff;">setq</span> org-todo-keywords
+        '((sequence <span style="color: #61CE3C;">"TODO(t)"</span> <span style="color: #61CE3C;">"WAIT(w@/!)"</span> <span style="color: #61CE3C;">"|"</span> <span style="color: #61CE3C;">"DONE(d!)"</span> <span style="color: #61CE3C;">"CANCELED(c@)"</span>)))
+
+  (add-to-list 'auto-mode-alist '(<span style="color: #61CE3C;">"\.\(org\|org_archive\)$"</span> . org-mode))
+  (<span style="color: #4c83ff;">setq</span> org-insert-heading-respect-content nil)
+  (<span style="color: #4c83ff;">setq</span> org-log-done t)
+  (<span style="color: #4c83ff;">setq</span> org-startup-indented nil)
+  (<span style="color: #4c83ff;">setq</span> org-edit-src-content-indentation 0)
+  (<span style="color: #4c83ff;">setq</span> org-export-backends
+        '(ascii beamer html latex md deck rss s5 odt))
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">org&#40664;&#35748;&#20351;&#29992;"_&#19979;&#26631;"&#26469;&#23450;&#20041;&#19968;&#20010;&#19979;&#26631;&#65292;&#20351;&#29992;"^&#19978;&#26631;"&#23450;&#20041;&#19968;&#20010;&#19978;&#26631;&#65292;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20294;&#36825;&#31181;&#26041;&#24335;&#22312;&#20013;&#25991;&#29615;&#22659;&#20013;&#19982;&#19979;&#21010;&#32447;&#20914;&#31361;&#12290;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#36825;&#37324;&#24378;&#21046;&#20351;&#29992;"_{&#19979;&#26631;}"&#26469;&#23450;&#20041;&#19968;&#20010;&#19979;&#26631;&#12290;"^{&#19978;&#26631;}"&#26469;&#23450;&#20041;&#19968;&#20010;&#19978;&#26631;&#12290;</span>
+  (<span style="color: #4c83ff;">setq</span> org-export-with-sub-superscripts '{})
+  (<span style="color: #4c83ff;">setq</span> org-use-sub-superscripts '{})
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">org-bable&#35774;&#32622;</span>
+  (<span style="color: #4c83ff;">setq</span> org-src-fontify-natively t)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(R . t)</span>
+     (org . t)
+     (ditaa . nil)
+     (dot . nil)
+     (emacs-lisp . t)
+     (gnuplot . t)
+     (haskell . nil)
+     (mscgen . t)
+     (latex . t)
+     (ocaml . nil)
+     (perl . t)
+     (python . nil)
+     (ruby . nil)
+     (screen . nil)
+     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(shell . nil)</span>
+     (sql . nil)
+     (sqlite . nil)))
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">export filter</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(defun eh-convert-punctuation (text backend info)</span>
+  <span style="color: #8B8989; font-style: italic;">;;   </span><span style="color: #8B8989; font-style: italic;">"&#23558;&#21322;&#35282;&#26631;&#28857;&#31526;&#21495;&#20840;&#37096;&#26367;&#25442;&#20026;&#20840;&#35282;&#26631;&#28857;&#31526;&#21495;"</span>
+  <span style="color: #8B8989; font-style: italic;">;;   </span><span style="color: #8B8989; font-style: italic;">(when (memq backend '(odt html))</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">(replace-regexp-in-string</span>
+  <span style="color: #8B8989; font-style: italic;">;;      </span><span style="color: #8B8989; font-style: italic;">";" "&#65307;"</span>
+  <span style="color: #8B8989; font-style: italic;">;;      </span><span style="color: #8B8989; font-style: italic;">(replace-regexp-in-string</span>
+  <span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">":" "&#65306;"</span>
+  <span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">(replace-regexp-in-string</span>
+  <span style="color: #8B8989; font-style: italic;">;;        </span><span style="color: #8B8989; font-style: italic;">"&#183;" "&#12290;"</span>
+  <span style="color: #8B8989; font-style: italic;">;;        </span><span style="color: #8B8989; font-style: italic;">(replace-regexp-in-string</span>
+  <span style="color: #8B8989; font-style: italic;">;;    </span><span style="color: #8B8989; font-style: italic;">","  "&#65292;"</span>
+  <span style="color: #8B8989; font-style: italic;">;;    </span><span style="color: #8B8989; font-style: italic;">(replace-regexp-in-string</span>
+  <span style="color: #8B8989; font-style: italic;">;;   </span><span style="color: #8B8989; font-style: italic;">"\\."  "&#12290;"</span>
+  <span style="color: #8B8989; font-style: italic;">;;   </span><span style="color: #8B8989; font-style: italic;">(replace-regexp-in-string "\n" "" text))))))))</span>
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(add-to-list 'org-export-filter-plain-text-functions</span>
+  <span style="color: #8B8989; font-style: italic;">;;              </span><span style="color: #8B8989; font-style: italic;">'eh-convert-punctuation)</span>
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Use Cairo graphics device by default,which can get better graphics quality.</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">you shoule add below lines to you ~/.Rprofile</span>
+  <span style="color: #8B8989; font-style: italic;">;;    </span><span style="color: #8B8989; font-style: italic;">require("Cairo")</span>
+  <span style="color: #8B8989; font-style: italic;">;;    </span><span style="color: #8B8989; font-style: italic;">CairoFonts(regular="SimSun:style=Regular",</span>
+  <span style="color: #8B8989; font-style: italic;">;;             </span><span style="color: #8B8989; font-style: italic;">bold="SimHei:style=Regular",</span>
+  <span style="color: #8B8989; font-style: italic;">;;             </span><span style="color: #8B8989; font-style: italic;">italic="KaiTi_GB2312:style=Regular",</span>
+  <span style="color: #8B8989; font-style: italic;">;;             </span><span style="color: #8B8989; font-style: italic;">symbol="Symbol")</span>
+  <span style="color: #8B8989; font-style: italic;">;;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(setq org-babel-R-graphics-devices</span>
+  <span style="color: #8B8989; font-style: italic;">;;   </span><span style="color: #8B8989; font-style: italic;">'((:bmp "bmp" "filename")</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">(:jpg "jpeg" "filename")</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">(:jpeg "jpeg" "filename")</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">(:tikz "tikz" "file")</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">(:tiff "tiff" "filename")</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">(:png "CairoPNG" "filename")</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">(:svg "CairoSVG" "file")</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">(:pdf "CairoPDF" "file")</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">(:ps "CairoPS" "file")</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">(:postscript "postscript" "file")))</span>
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Add new easy templates</span>
+  (<span style="color: #4c83ff;">setq</span> org-structure-template-alist
+        (append '((<span style="color: #61CE3C;">"r"</span> <span style="color: #61CE3C;">"#+BEGIN_SRC R\n?\n#+END_SRC"</span>)
+                  (<span style="color: #61CE3C;">"e"</span> <span style="color: #61CE3C;">"#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"</span>)
+                  (<span style="color: #61CE3C;">"ex"</span> <span style="color: #61CE3C;">"#+BEGIN_EXAMPLE\n?\n#+END_EXAMPLE"</span>)
+                  (<span style="color: #61CE3C;">"rh"</span> <span style="color: #61CE3C;">"#+PROPERTY: header-args:R  :session *R* :tangle yes :colnames yes :rownames no :width 700 :height 500 :exports both"</span>)
+                  (<span style="color: #61CE3C;">"rv"</span> <span style="color: #61CE3C;">"#+BEGIN_SRC R :results value\n?\n#+END_SRC"</span>)
+                  (<span style="color: #61CE3C;">"ro"</span> <span style="color: #61CE3C;">"#+BEGIN_SRC R :results output verbatim\n?\n#+END_SRC"</span>)
+                  (<span style="color: #61CE3C;">"rg"</span> <span style="color: #61CE3C;">"#+BEGIN_SRC R :results graphics :file ?\n\n#+END_SRC"</span>)
+                  (<span style="color: #61CE3C;">"rs"</span> <span style="color: #61CE3C;">"#+BEGIN_SRC R :results output silent\n?\n#+END_SRC"</span>)
+                  (<span style="color: #61CE3C;">"rd"</span> <span style="color: #61CE3C;">"#+BEGIN_SRC R :colnames no :results value drawer\n`%c%` &lt;- function(a,b){c(a,b)}\n?\n#+END_SRC"</span>))
+                org-structure-template-alist))
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-org-fill-paragraph</span> ()
+    <span style="color: #FBDE2D;">"Fill org paragraph"</span>
+    (<span style="color: #4c83ff;">interactive</span>)
+    (<span style="color: #4c83ff;">let</span> ((fill-column 10000000))
+      (org-fill-paragraph))))
+</pre>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+    <div>
+      <div class="post-meta">
+        <span title="post date" class="post-info">2016-09-24</span>
+        <span title="last modification date" class="post-info">2016-09-24</span>
+        <span title="tags" class="post-info">N/A</span>
+        <span title="author" class="post-info">Feng Shu</span>
+      </div>
+      <div class="footer">
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 8.x)</p>
+        <p>
+          Copyright &copy; <span id="footerYear"></span> <a href="mailto:tumashu &lt;at&gt; 163 &lt;dot&gt; com">Feng Shu</a>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          Powered by <a href="https://github.com/tumashu/org-webpage" target="_blank">org-webpage</a>
+          <script type="text/javascript">document.getElementById("footerYear").innerHTML = (new Date()).getFullYear();</script>
+        </p>
+      </div>
+    </div>
+
+</div>
+</body>
+</html>

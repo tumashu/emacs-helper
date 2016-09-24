@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>eh-basic - Emacs-helper</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Feng Shu" />
+    <link rel="stylesheet" href="http://tumashu.github.com/emacs-helper/media/css/main.css" type="text/css">
+  </head>
+<body class="container">
+    <div>
+      <header class="masthead">
+        <h1 class="masthead-title"><a href="http://tumashu.github.com/emacs-helper/">Emacs-helper</a> <span class="subtitle">(Tumashu 的 emacs 配置)</span></h1>
+        <ul>
+          <li><a href="http://tumashu.github.com/emacs-helper/documents/">Documents</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/elpa/">Elpa</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/tags/">Tags</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/about/">About</a></li>
+          <li><a href="https://github.com/tumashu/emacs-helper">GitHub</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/rss.xml">RSS</a></li>
+        </ul>
+        <form method="get" id="searchform" action="http://www.google.com/search">
+          <input type="text" class="field" name="q" id="s" placeholder="Search">
+          <input type="hidden" name="as_sitesearch" value="tumashu.github.com/emacs-helper">
+        </form>
+      </header>
+    </div>
+
+<div class="content-and-footer">
+<div>
+<div class="post">
+<h1 class="post-title">eh-basic</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 简介</a></li>
+<li><a href="#orgheadline2">2. 代码</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span>简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span>代码</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defvar</span> <span style="color: #ff69b4;">eh-directory</span>
+  (file-name-directory
+   (locate-library <span style="color: #61CE3C;">"eh-basic.el"</span>))
+  <span style="color: #FBDE2D;">"eh-basic.el &#25991;&#20214;&#25152;&#22312;&#30340;&#30446;&#24405;&#12290;"</span>)
+
+(<span style="color: #4c83ff;">defvar</span> <span style="color: #ff69b4;">eh-elpa-directory</span>
+  (file-name-as-directory
+   (concat eh-directory <span style="color: #61CE3C;">"elpa/"</span>))
+  <span style="color: #FBDE2D;">"emacs-helper &#20869;&#32622; elpa &#38236;&#20687;&#30340;&#30446;&#24405;&#12290;"</span>)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Full name and email</span>
+(<span style="color: #4c83ff;">setq</span> user-full-name <span style="color: #61CE3C;">"Feng Shu"</span>)
+(<span style="color: #4c83ff;">setq</span> user-mail-address <span style="color: #61CE3C;">"tumashu@163.com"</span>)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Startup screen</span>
+(<span style="color: #4c83ff;">setq</span> inhibit-startup-screen t)
+(<span style="color: #4c83ff;">setq</span> initial-buffer-choice nil)
+(<span style="color: #4c83ff;">setq</span> initial-scratch-message <span style="color: #61CE3C;">";; This is *scratch* buffer.\n\n"</span>)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20351;&#29992;&#31354;&#26684;&#32553;&#36827;</span>
+(<span style="color: #4c83ff;">setq-default</span> indent-tabs-mode nil)
+(<span style="color: #4c83ff;">setq-default</span> tab-width 4)
+(<span style="color: #4c83ff;">setq</span> tab-width 4)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20851;&#38381; beep</span>
+(<span style="color: #4c83ff;">setq</span> visible-bell t)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Don't delete *scratch* buffer</span>
+(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-unkillable-scratch-buffer</span> ()
+  (<span style="color: #4c83ff;">if</span> (string= (buffer-name (current-buffer)) <span style="color: #61CE3C;">"*scratch*"</span>)
+      (<span style="color: #4c83ff;">progn</span>
+        (delete-region (point-min) (point-max))
+        (insert initial-scratch-message)
+        nil)
+    t))
+
+(add-hook 'kill-buffer-query-functions 'eh-unkillable-scratch-buffer)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">load-path</span>
+(<span style="color: #4c83ff;">defvar</span> <span style="color: #ff69b4;">eh-enable-load-path-hack</span> t)
+
+(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-hack-load-path</span> ()
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Delete buildin org's PATH</span>
+  (<span style="color: #4c83ff;">setq</span> load-path
+        (delq nil (mapcar
+                   #'(lambda (p)
+                       (<span style="color: #4c83ff;">unless</span> (<span style="color: #4c83ff;">or</span> (string-match <span style="color: #61CE3C;">"lisp/org$"</span> p))
+                         p))
+                   load-path)))
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Demove property lists to defeat cus-load and remove autoloads</span>
+  (mapatoms #'(lambda (s)
+                (<span style="color: #4c83ff;">let</span> ((sn (symbol-name s)))
+                  (<span style="color: #4c83ff;">when</span> (string-match <span style="color: #61CE3C;">"^</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">(</span><span style="color: #61CE3C;">org</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">|</span><span style="color: #61CE3C;">ob</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">|</span><span style="color: #61CE3C;">ox</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">)</span><span style="color: #61CE3C;">-?"</span> sn)
+                    (setplist s nil)
+                    (<span style="color: #4c83ff;">when</span> (autoloadp s)
+                      (unintern s)))))))
+(eh-hack-load-path)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">package</span>
+(<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">package</span>)
+(<span style="color: #4c83ff;">setq</span> package-archives `((<span style="color: #61CE3C;">"eh-elpa"</span> . ,eh-elpa-directory)))
+(package-initialize)
+
+(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-packages-install</span> (packages)
+  (<span style="color: #4c83ff;">let</span> ((refreshed nil))
+    (<span style="color: #4c83ff;">when</span> (not package-archive-contents)
+      (package-refresh-contents)
+      (<span style="color: #4c83ff;">setq</span> refreshed t))
+    (<span style="color: #4c83ff;">dolist</span> (pkg packages)
+      (<span style="color: #4c83ff;">when</span> (<span style="color: #4c83ff;">and</span> (not (package-installed-p pkg))
+                 (assoc pkg package-archive-contents))
+        (<span style="color: #4c83ff;">unless</span> refreshed
+          (package-refresh-contents)
+          (<span style="color: #4c83ff;">setq</span> refreshed t))
+        (package-install pkg)))))
+
+(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-update-package-archives</span> ()
+  (<span style="color: #4c83ff;">interactive</span>)
+  (<span style="color: #4c83ff;">setq</span> package-archives
+        `((<span style="color: #61CE3C;">"eh-elpa"</span> . ,eh-elpa-directory)
+          (<span style="color: #61CE3C;">"gnu-cn"</span>   . <span style="color: #61CE3C;">"http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"</span>)
+          (<span style="color: #61CE3C;">"melpa-cn"</span> . <span style="color: #61CE3C;">"http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"</span>)
+          (<span style="color: #61CE3C;">"org-cn"</span>   . <span style="color: #61CE3C;">"http://mirrors.tuna.tsinghua.edu.cn/elpa/org/"</span>))))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#23433;&#35013; emacs-helper/elpa &#30446;&#24405;&#19979;&#30340;&#25152;&#26377;&#30340;&#21253;</span>
+(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-get-elpa-mirror-packages</span> ()
+  (<span style="color: #4c83ff;">let</span> ((file (concat (file-name-directory eh-elpa-directory)
+                      <span style="color: #61CE3C;">"archive-contents"</span>)))
+    (<span style="color: #4c83ff;">when</span> (file-exists-p file)
+      (mapcar #'car (cdr (read
+                          (<span style="color: #4c83ff;">with-temp-buffer</span>
+                            (insert-file-contents file)
+                            (buffer-string))))))))
+
+(eh-packages-install (eh-get-elpa-mirror-packages))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">use-package</span>
+(<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">use-package</span>)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#40664;&#35748;&#19981;&#26174;&#31034; *Async Shell Command* buffer</span>
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(add-to-list 'display-buffer-alist</span>
+<span style="color: #8B8989; font-style: italic;">;;              </span><span style="color: #8B8989; font-style: italic;">'("\\*Async Shell Command\\*.*"  display-buffer-no-window nil))</span>
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Theme &#35774;&#32622;</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">cyberpunk-theme</span>
+  <span style="color: #4c83ff;">:config</span>
+  (add-hook 'after-init-hook
+            #'(lambda ()
+                (load-theme 'cyberpunk t))))
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">async</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">async</span>)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">elpa-mirror &#35774;&#32622;</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">elpa-mirror</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-update-elpa</span> ()
+    (<span style="color: #4c83ff;">interactive</span>)
+    (<span style="color: #4c83ff;">let*</span> ((dir (file-name-as-directory eh-elpa-directory))
+           (elpamr-default-output-directory dir))
+      (<span style="color: #4c83ff;">when</span> (y-or-n-p (format <span style="color: #61CE3C;">"&#26356;&#26032; emacs/elpa &#30446;&#24405;&#65306;%S ? "</span> dir))
+        (<span style="color: #4c83ff;">when</span> (file-directory-p dir)
+          (delete-directory dir t))
+        (make-directory dir t))
+      (elpamr-create-mirror-for-installed))))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Charset &#35774;&#32622;</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">mule</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+
+  (set-language-environment <span style="color: #61CE3C;">"UTF-8"</span>)
+  (set-buffer-file-coding-system 'utf-8-unix)
+  (set-clipboard-coding-system 'utf-8-unix)
+  (set-file-name-coding-system 'utf-8-unix)
+  (set-keyboard-coding-system 'utf-8-unix)
+  (set-next-selection-coding-system 'utf-8-unix)
+  (set-selection-coding-system 'utf-8-unix)
+  (set-terminal-coding-system 'utf-8-unix)
+
+  (<span style="color: #4c83ff;">when</span> (eq system-type 'windows-nt)
+    (set-selection-coding-system 'gbk-dos)
+    (set-next-selection-coding-system 'gbk-dos)
+    (set-clipboard-coding-system 'gbk-dos)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20445;&#23384;&#25991;&#20214;&#20043;&#21069;&#65292;&#21024;&#38500;&#26080;&#29992;&#30340;&#31354;&#26684;</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">files</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">whitespace</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#24320;&#21551;&#36825;&#20010; hook &#21518;&#65292;org-mode &#30340;&#28304;&#20195;&#30721;&#24635;&#26159;&#33707;&#21517;&#20854;&#22937;&#30340;</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#34987;&#26356;&#25913;&#65292;&#23548;&#33268; diff &#30456;&#24403;&#20081;&#65292;&#26242;&#26102;&#31105;&#29992;&#21543;&#12290;</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(add-hook 'before-save-hook 'whitespace-cleanup)</span>
+    )
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">simple</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    (add-hook 'before-save-hook (<span style="color: #4c83ff;">lambda</span> () (delete-trailing-whitespace)))))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">eshell</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eshell</span>
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x c"</span> . eshell))
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">em-term</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">em-unix</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">setq</span> eshell-visual-commands
+        (append '(<span style="color: #61CE3C;">"aptitude"</span> <span style="color: #61CE3C;">"mutt"</span> <span style="color: #61CE3C;">"nano"</span> <span style="color: #61CE3C;">"crontab"</span> <span style="color: #61CE3C;">"vim"</span> <span style="color: #61CE3C;">"less"</span>)
+                eshell-visual-commands))
+  (<span style="color: #4c83ff;">setq</span> eshell-visual-subcommands
+        (list (append '(<span style="color: #61CE3C;">"sudo"</span>) eshell-visual-commands)
+              '(<span style="color: #61CE3C;">"git"</span> <span style="color: #61CE3C;">"log"</span> <span style="color: #61CE3C;">"diff"</span> <span style="color: #61CE3C;">"show"</span>)))
+  (<span style="color: #4c83ff;">setq</span> eshell-visual-options
+        '((<span style="color: #61CE3C;">"git"</span> <span style="color: #61CE3C;">"--help"</span>)))
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-eshell</span> (<span style="color: #afd8af;">&amp;optional</span> arg)
+    (<span style="color: #4c83ff;">interactive</span>)
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20351;&#29992;eshell-exec-visual&#31532;&#19968;&#27425;&#25171;&#24320;term&#26102;&#65292;</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#19981;&#33021;&#20351;&#29992;multi-term&#30340;&#38190;&#30424;&#32465;&#23450;&#65292;&#21407;&#22240;&#19981;&#30693;&#65292;</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#39318;&#20808;&#36816;&#34892;&#19968;&#19979;less, &#20174;&#32780;&#35753;multi-term&#30340;&#38190;&#30424;&#32465;&#23450;&#29983;&#25928;&#12290;</span>
+    (eshell-command <span style="color: #61CE3C;">"less"</span>)
+    (eshell arg)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(setenv "PATH"</span>
+<span style="color: #8B8989; font-style: italic;">;;         </span><span style="color: #8B8989; font-style: italic;">(concat "/usr/local/texlive/2014/bin/i386-linux:"</span>
+<span style="color: #8B8989; font-style: italic;">;;                 </span><span style="color: #8B8989; font-style: italic;">(getenv "PATH")))</span>
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(setenv "PYTHONPATH"</span>
+<span style="color: #8B8989; font-style: italic;">;;         </span><span style="color: #8B8989; font-style: italic;">(concat "~/project/emacs-packages/emacs-helper/doc/configs:"</span>
+<span style="color: #8B8989; font-style: italic;">;;                 </span><span style="color: #8B8989; font-style: italic;">(getenv "PYTHONPATH")))</span>
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(setq exec-path</span>
+<span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">(append '("/usr/local/texlive/2014/bin/i386-linux")</span>
+<span style="color: #8B8989; font-style: italic;">;;               </span><span style="color: #8B8989; font-style: italic;">exec-path))</span>
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">eww</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eww</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> shr-width 90)
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#25628;&#29399;:  http://www.sogou.com/sogou?query=</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#30334;&#24230;:  http://m.baidu.com/ssid=0/s?word=</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#24517;&#24212;:  http://cn.bing.com/search?q=</span>
+  (<span style="color: #4c83ff;">setq</span> eww-search-prefix <span style="color: #61CE3C;">"http://www.sogou.com/sogou?query="</span>))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Pinyin Input Method</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#28608;&#27963; basedict &#35789;&#24211;</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim-basedict</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span> (chinese-pyim-basedict-enable))
+  (<span style="color: #4c83ff;">setq</span> default-input-method <span style="color: #61CE3C;">"chinese-pyim"</span>)
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20351;&#29992;&#21452;&#25340;</span>
+  (<span style="color: #4c83ff;">setq</span> pyim-default-pinyin-scheme 'default)
+  (<span style="color: #4c83ff;">setq-default</span> pyim-english-input-switch-functions
+                '(pyim-probe-dynamic-english
+                  pyim-probe-isearch-mode
+                  pyim-probe-program-mode
+                  pyim-probe-org-structure-template))
+
+  (<span style="color: #4c83ff;">setq-default</span> pyim-punctuation-half-width-functions
+                '(pyim-probe-punctuation-line-beginning
+                  pyim-probe-punctuation-after-punctuation))
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#24320;&#21551;&#25340;&#38899;&#25628;&#32034;&#21151;&#33021;</span>
+  (<span style="color: #4c83ff;">setq</span> pyim-isearch-enable-pinyin-search t)
+  (<span style="color: #4c83ff;">setq</span> pyim-use-tooltip 'popup
+        pyim-page-length 5)
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">emacs &#21551;&#21160;&#26102;&#21152;&#36733; pyim &#35789;&#24211;</span>
+  (add-hook 'emacs-startup-hook
+            #'(lambda () (pyim-restart-1 t)))
+  <span style="color: #4c83ff;">:bind</span>
+  ((<span style="color: #61CE3C;">"M-j"</span> . pyim-convert-pinyin-at-point)
+   (<span style="color: #61CE3C;">"C-;"</span> . pyim-delete-word-from-personal-buffer)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Chinese fonts setup</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-fonts-setup</span>
+  <span style="color: #4c83ff;">:demand</span> t
+  <span style="color: #4c83ff;">:init</span> (<span style="color: #4c83ff;">setq</span> cfs-verbose nil)
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> cfs-use-face-font-rescale (eq system-type 'gnu/linux))
+  (chinese-fonts-setup-enable)
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C--"</span> . cfs-decrease-fontsize)
+         (<span style="color: #61CE3C;">"C-="</span> . cfs-increase-fontsize)
+         (<span style="color: #61CE3C;">"C-+"</span> . cfs-next-profile)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">recentf</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">recentf</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x f"</span> . recentf-open-files))
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> recentf-auto-cleanup 'never)
+  (recentf-mode 1)
+  (<span style="color: #4c83ff;">setq</span> recentf-max-saved-items 99)
+  (<span style="color: #4c83ff;">setq</span> recentf-max-menu-items 99)
+  (<span style="color: #4c83ff;">setq</span> recentf-exclude
+        '(<span style="color: #61CE3C;">"COMMIT"</span> <span style="color: #61CE3C;">"autoloads"</span> <span style="color: #61CE3C;">"archive-contents"</span> <span style="color: #61CE3C;">"eld"</span> <span style="color: #61CE3C;">"newsrc"</span>
+          <span style="color: #61CE3C;">".recentf"</span> <span style="color: #61CE3C;">"emacs-font-size.conf"</span>))
+  (<span style="color: #4c83ff;">setq</span> recentf-menu-filter 'eh-recentf-buffer-filter)
+  (<span style="color: #4c83ff;">setq</span> recentf-show-file-shortcuts-flag nil)
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-recentf-buffer-filter</span> (l)
+    (<span style="color: #4c83ff;">let</span> ((index 0)
+          filtered-list element list name recentf-string)
+      (<span style="color: #4c83ff;">dolist</span> (elt l (nreverse filtered-list))
+        (<span style="color: #4c83ff;">setq</span> index (1+ index)
+              element (recentf-menu-element-value elt)
+              list (reverse (split-string element <span style="color: #61CE3C;">"/"</span>))
+              name (<span style="color: #4c83ff;">if</span> (&gt; (length (nth 0 list)) 0)
+                       (format <span style="color: #61CE3C;">"%s"</span> (nth 0 list))
+                     (format <span style="color: #61CE3C;">"%s/"</span> (nth 1 list)))
+              recentf-string (format <span style="color: #61CE3C;">"[%2s]:  %-30s (%s)"</span> index name element))
+        (<span style="color: #4c83ff;">push</span> (recentf-make-menu-element recentf-string element) filtered-list))))
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#33258;&#21160;&#20445;&#23384;recentf&#25991;&#20214;&#12290;</span>
+  (add-hook 'find-file-hook 'recentf-save-list))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">ibuffer</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ibuffer</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x b"</span> . ibuffer)))
+
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">simple</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:init</span> (global-unset-key (kbd <span style="color: #61CE3C;">"C-x C-x"</span>))
+  <span style="color: #4c83ff;">:bind</span>
+  ((<span style="color: #61CE3C;">"C-x &lt;SPC&gt;"</span> . set-mark-command)
+   (<span style="color: #61CE3C;">"C-x C-x C-x"</span> . exchange-point-and-mark)))
+
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">rect</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x C-x &lt;SPC&gt;"</span> . rectangle-mark-mode)))
+
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">tool-bar</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (tool-bar-mode -1)
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x k"</span> . kill-this-buffer)))
+
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">menu-bar</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (menu-bar-mode 1)
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x k"</span> . kill-this-buffer)))
+
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">scroll-bar</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (scroll-bar-mode -1))
+
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">paren</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#39640;&#20142;&#37197;&#23545;&#30340;&#25324;&#21495;</span>
+  (show-paren-mode 1))
+</pre>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+    <div>
+      <div class="post-meta">
+        <span title="post date" class="post-info">2016-09-24</span>
+        <span title="last modification date" class="post-info">2016-09-24</span>
+        <span title="tags" class="post-info">N/A</span>
+        <span title="author" class="post-info">Feng Shu</span>
+      </div>
+      <div class="footer">
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 8.x)</p>
+        <p>
+          Copyright &copy; <span id="footerYear"></span> <a href="mailto:tumashu &lt;at&gt; 163 &lt;dot&gt; com">Feng Shu</a>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          Powered by <a href="https://github.com/tumashu/org-webpage" target="_blank">org-webpage</a>
+          <script type="text/javascript">document.getElementById("footerYear").innerHTML = (new Date()).getFullYear();</script>
+        </p>
+      </div>
+    </div>
+
+</div>
+</body>
+</html>

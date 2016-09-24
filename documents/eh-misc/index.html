@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>eh-misc - Emacs-helper</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Feng Shu" />
+    <link rel="stylesheet" href="http://tumashu.github.com/emacs-helper/media/css/main.css" type="text/css">
+  </head>
+<body class="container">
+    <div>
+      <header class="masthead">
+        <h1 class="masthead-title"><a href="http://tumashu.github.com/emacs-helper/">Emacs-helper</a> <span class="subtitle">(Tumashu 的 emacs 配置)</span></h1>
+        <ul>
+          <li><a href="http://tumashu.github.com/emacs-helper/documents/">Documents</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/elpa/">Elpa</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/tags/">Tags</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/about/">About</a></li>
+          <li><a href="https://github.com/tumashu/emacs-helper">GitHub</a></li>
+          <li><a href="http://tumashu.github.com/emacs-helper/rss.xml">RSS</a></li>
+        </ul>
+        <form method="get" id="searchform" action="http://www.google.com/search">
+          <input type="text" class="field" name="q" id="s" placeholder="Search">
+          <input type="hidden" name="as_sitesearch" value="tumashu.github.com/emacs-helper">
+        </form>
+      </header>
+    </div>
+
+<div class="content-and-footer">
+<div>
+<div class="post">
+<h1 class="post-title">eh-misc</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. 简介</a></li>
+<li><a href="#orgheadline2">2. 代码</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span>简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
+</p>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span>代码</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp"><span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">eh-website</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-webpage</span>
+  <span style="color: #4c83ff;">:config</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">my website's owp config</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-website</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">org-webpage's owp config</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">owp-devtools</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">chinese-pyim owp config</span>
+    (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim-devtools</span>
+      <span style="color: #4c83ff;">:ensure</span> nil)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">easy-lentic</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">easy-lentic</span>
+  <span style="color: #4c83ff;">:config</span>
+  (easy-lentic-mode-setup))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">bbdb</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-ebib</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:if</span> (not (eq system-type 'windows-nt))
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c b"</span> . eh-ebib)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">sdcv</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-yasdcv</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:if</span> (not (eq system-type 'windows-nt))
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c d"</span> . yasdcv-translate-at-point)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">emms</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-emms</span>
+  <span style="color: #4c83ff;">:ensure</span> nil)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">sql</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">sql-mssql</span>
+  <span style="color: #4c83ff;">:ensure</span> nil)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">xah-fly-keys</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">xah-fly-keys</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:disabled</span> t)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">elisp setting</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">lisp-mode</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">aggressive-indent</span>
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-elisp-setup</span> ()
+      <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#36319;&#36394;&#34892;&#23614;&#31354;&#26684;</span>
+      (<span style="color: #4c83ff;">setq</span> show-trailing-whitespace t)
+      <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#39640;&#20142;TAB</span>
+      (<span style="color: #4c83ff;">setq</span> highlight-tabs t)
+      <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#33258;&#21160;&#32553;&#36827;</span>
+      (aggressive-indent-mode))
+    (add-hook 'emacs-lisp-mode-hook
+              #'eh-elisp-setup)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">org-journal</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-journal</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-agenda</span>
+    <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">setq</span> org-journal-dir <span style="color: #61CE3C;">"E:/doc/journal/"</span>)
+  (<span style="color: #4c83ff;">setq</span> org-journal-file-format <span style="color: #61CE3C;">"%Y%m%d.org"</span>)
+  (<span style="color: #4c83ff;">setq</span> org-agenda-files
+        (<span style="color: #4c83ff;">if</span> (file-directory-p org-journal-dir)
+            (append (directory-files org-journal-dir t <span style="color: #61CE3C;">".org$"</span>)
+                    org-agenda-files)
+          org-agenda-files))
+  <span style="color: #4c83ff;">:bind</span>
+  ((<span style="color: #61CE3C;">"C-c C-j"</span> . org-journal-new-entry)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">ESS</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ess</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> ess-eval-visibly-p nil)
+  (<span style="color: #4c83ff;">setq</span> ess-ask-for-ess-directory nil))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">aggressive-indent</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">aggressive-indent</span>)
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">autopair</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">autopair</span>
+  <span style="color: #4c83ff;">:config</span>
+  (autopair-global-mode 1))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">visual-regexp</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">visual-regexp</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">visual-regexp-steroids</span>)
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c r"</span> . vr/replace)
+         (<span style="color: #61CE3C;">"C-c q"</span> . vr/query-replace)
+         (<span style="color: #61CE3C;">"C-c m"</span> . vr/mc-mark)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">multi-term</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">multi-term</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> multi-term-program <span style="color: #61CE3C;">"/bin/bash"</span>)
+  (<span style="color: #4c83ff;">setq</span> multi-term-buffer-name <span style="color: #61CE3C;">"term"</span>)
+  (<span style="color: #4c83ff;">setq</span> term-scroll-show-maximum-output nil)
+  (<span style="color: #4c83ff;">setq</span> term-scroll-to-bottom-on-output nil)
+  (<span style="color: #4c83ff;">setq</span> multi-term-dedicated-select-after-open-p t)
+  (<span style="color: #4c83ff;">setq</span> term-bind-key-alist
+        (append '((<span style="color: #61CE3C;">"C-c C-x"</span> . eh-term-send-ctrl-x)
+                  (<span style="color: #61CE3C;">"C-c C-h"</span> . eh-term-send-ctrl-h))
+                term-bind-key-alist))
+
+  (remove-hook 'term-mode-hook 'eh-term-setup)
+  (remove-hook 'term-mode-hook 'multi-term-keystroke-setup)
+  (remove-hook 'kill-buffer-hook 'multi-term-kill-buffer-hook)
+
+  (add-hook 'term-mode-hook 'eh-term-setup)
+  (add-hook 'term-mode-hook 'multi-term-keystroke-setup)
+  (add-hook 'kill-buffer-hook 'multi-term-kill-buffer-hook)
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-term-setup</span> ()
+    (<span style="color: #4c83ff;">setq</span> truncate-lines t)
+    (<span style="color: #4c83ff;">setq</span> term-buffer-maximum-size 0)
+    (<span style="color: #4c83ff;">setq</span> show-trailing-whitespace nil)
+    (multi-term-handle-close))
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-term-send-ctrl-x</span> ()
+    <span style="color: #FBDE2D;">"Send C-x in term mode."</span>
+    (<span style="color: #4c83ff;">interactive</span>)
+    (term-send-raw-string <span style="color: #61CE3C;">"\C-x"</span>))
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-term-send-ctrl-z</span> ()
+    <span style="color: #FBDE2D;">"Send C-z in term mode."</span>
+    (<span style="color: #4c83ff;">interactive</span>)
+    (term-send-raw-string <span style="color: #61CE3C;">"\C-z"</span>))
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-term-send-ctrl-h</span> ()
+    <span style="color: #FBDE2D;">"Send C-h in term mode."</span>
+    (<span style="color: #4c83ff;">interactive</span>)
+    (term-send-raw-string <span style="color: #61CE3C;">"\C-h"</span>)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">magit</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">magit</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> magit-completing-read-function 'magit-ido-completing-read)
+  (<span style="color: #4c83ff;">setq</span> magit-completing-read-function 'ivy-completing-read)
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c g"</span> . magit-status)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">wdired and dired-ranger</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">wdired</span>)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired-ranger</span>))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">multiple-cursors</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">multiple-cursors</span>
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x C-x m"</span> . mc/edit-lines)
+         (<span style="color: #61CE3C;">"C-c &gt;"</span> . mc/mark-next-like-this)
+         (<span style="color: #61CE3C;">"C-c &lt;"</span> . mc/mark-previous-like-this)
+         (<span style="color: #61CE3C;">"C-c C-&lt;"</span> . mc/mark-all-like-this)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">ace-jump</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ace-jump-mode</span>
+  <span style="color: #4c83ff;">:init</span>
+  (autoload 'ace-jump-mode <span style="color: #61CE3C;">"ace-jump-mode"</span> nil t)
+  (<span style="color: #4c83ff;">bind-key</span> <span style="color: #61CE3C;">"C-j"</span> 'ace-jump-mode))
+
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ace-window</span>
+  <span style="color: #4c83ff;">:disabled</span> t
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x o"</span> . ace-window))
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> aw-keys '(?a ?b ?c ?d ?e ?f ?g ?h ?i))
+  (ace-window-display-mode))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">switch window</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">switch-window</span>
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x o"</span> . switch-window)
+         (<span style="color: #61CE3C;">"C-x 1"</span> . switch-window-then-maximize)
+         (<span style="color: #61CE3C;">"C-x 2"</span> . switch-window-then-split-below)
+         (<span style="color: #61CE3C;">"C-x 3"</span> . switch-window-then-split-right)
+         (<span style="color: #61CE3C;">"C-x 0"</span> . switch-window-then-delete))
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> switch-window-increase 8)
+  (<span style="color: #4c83ff;">setq</span> switch-window-shortcut-style 'qwerty))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">expand-region</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">expand-region</span>
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c ="</span> . er/expand-region)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">wrap-region</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">wrap-region</span>
+  <span style="color: #4c83ff;">:ensure</span> t
+  <span style="color: #4c83ff;">:config</span>
+  (wrap-region-add-wrappers
+   '((<span style="color: #61CE3C;">"*"</span> <span style="color: #61CE3C;">"*"</span> nil org-mode)
+     (<span style="color: #61CE3C;">"~"</span> <span style="color: #61CE3C;">"~"</span> nil org-mode)
+     (<span style="color: #61CE3C;">"/"</span> <span style="color: #61CE3C;">"/"</span> nil org-mode)
+     (<span style="color: #61CE3C;">"="</span> <span style="color: #61CE3C;">"="</span> <span style="color: #61CE3C;">"+"</span> org-mode)
+     (<span style="color: #61CE3C;">"_"</span> <span style="color: #61CE3C;">"_"</span> nil org-mode)
+     (<span style="color: #61CE3C;">"$"</span> <span style="color: #61CE3C;">"$"</span> nil (org-mode latex-mode))
+     (<span style="color: #61CE3C;">"\n#+BEGIN_SRC emacs-lisp\n"</span> <span style="color: #61CE3C;">"\n#+END_SRC\n"</span> <span style="color: #61CE3C;">"#"</span> org-mode)
+     (<span style="color: #61CE3C;">"\n;; #+BEGIN_SRC emacs-lisp\n"</span> <span style="color: #61CE3C;">"\n;; #+END_SRC\n"</span> <span style="color: #61CE3C;">"#"</span> emacs-lisp-mode)))
+  (add-hook 'org-mode-hook 'wrap-region-mode)
+  (add-hook 'emacs-lisp-mode-hook 'wrap-region-mode)
+  (add-hook 'latex-mode-hook 'wrap-region-mode))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">General project support</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">projectile</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> projectile-completion-system 'ivy)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">wgrep</span>
+    <span style="color: #4c83ff;">:config</span>
+    (projectile-global-mode 1)
+    (<span style="color: #4c83ff;">setq</span> projectile-enable-caching nil)
+    <span style="color: #4c83ff;">:bind</span>
+    ((<span style="color: #61CE3C;">"C-x F"</span> . projectile-find-file)
+     (<span style="color: #61CE3C;">"C-S-s"</span> . projectile-grep))))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">ebib-handy</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ebib-handy</span>
+    <span style="color: #4c83ff;">:config</span>
+    (ebib-handy-enable)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">undo tree</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">undo-tree</span>
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c /"</span> . undo-tree-visualize))
+  <span style="color: #4c83ff;">:config</span>
+  (global-undo-tree-mode)
+  (add-hook 'undo-tree-visualizer-mode-hook
+            'eh-undo-tree-visualizer-settings)
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-undo-tree-visualizer-settings</span> ()
+    (<span style="color: #4c83ff;">interactive</span>)
+    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"C-c C-k"</span>) 'undo-tree-visualizer-quit)
+    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"C-k"</span>) 'undo-tree-visualizer-quit)
+    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"k"</span>) 'undo-tree-visualizer-quit)
+    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"C-g"</span>) 'undo-tree-visualizer-abort)))
+
+<span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">calfw</span>
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">holidays</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">defvar</span> <span style="color: #ff69b4;">eh-calendar-holidays</span> nil)
+  (<span style="color: #4c83ff;">setq</span> eh-calendar-holidays
+        '(<span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">&#20844;&#21382;&#33410;&#26085;</span>
+          (holiday-fixed 1 1 <span style="color: #61CE3C;">"&#20803;&#26086;"</span>)
+          (holiday-fixed 2 14 <span style="color: #61CE3C;">"&#24773;&#20154;&#33410;"</span>)
+          (holiday-fixed 3 8 <span style="color: #61CE3C;">"&#22919;&#22899;&#33410;"</span>)
+          (holiday-fixed 3 14 <span style="color: #61CE3C;">"&#30333;&#33394;&#24773;&#20154;&#33410;"</span>)
+          (holiday-fixed 4 1 <span style="color: #61CE3C;">"&#24858;&#20154;&#33410;"</span>)
+          (holiday-fixed 5 1 <span style="color: #61CE3C;">"&#21171;&#21160;&#33410;"</span>)
+          (holiday-fixed 5 4 <span style="color: #61CE3C;">"&#38738;&#24180;&#33410;"</span>)
+          (holiday-float 5 0 2 <span style="color: #61CE3C;">"&#27597;&#20146;&#33410;"</span>)
+          (holiday-fixed 6 1 <span style="color: #61CE3C;">"&#20799;&#31461;&#33410;"</span>)
+          (holiday-float 6 0 3 <span style="color: #61CE3C;">"&#29238;&#20146;&#33410;"</span>)
+          (holiday-fixed 9 10 <span style="color: #61CE3C;">"&#25945;&#24072;&#33410;"</span>)
+          (holiday-fixed 10 1 <span style="color: #61CE3C;">"&#22269;&#24198;&#33410;"</span>)
+          (holiday-fixed 12 25 <span style="color: #61CE3C;">"&#22307;&#35806;&#33410;"</span>)
+          <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20892;&#21382;&#33410;&#26085;</span>
+          (holiday-lunar 1 1 <span style="color: #61CE3C;">"&#26149;&#33410;"</span> 0)
+          (holiday-lunar 1 2 <span style="color: #61CE3C;">"&#26149;&#33410;"</span> 0)
+          (holiday-lunar 1 3 <span style="color: #61CE3C;">"&#26149;&#33410;"</span> 0)
+          (holiday-lunar 1 15 <span style="color: #61CE3C;">"&#20803;&#23477;&#33410;"</span> 0)
+          (holiday-solar-term <span style="color: #61CE3C;">"&#28165;&#26126;"</span> <span style="color: #61CE3C;">"&#28165;&#26126;&#33410;"</span>)
+          (holiday-solar-term <span style="color: #61CE3C;">"&#23567;&#23506;"</span> <span style="color: #61CE3C;">"&#23567;&#23506;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#22823;&#23506;"</span> <span style="color: #61CE3C;">"&#22823;&#23506;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#31435;&#26149;"</span> <span style="color: #61CE3C;">"&#31435;&#26149;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#38632;&#27700;"</span> <span style="color: #61CE3C;">"&#38632;&#27700;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#24778;&#34544;"</span> <span style="color: #61CE3C;">"&#24778;&#34544;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#26149;&#20998;"</span> <span style="color: #61CE3C;">"&#26149;&#20998;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#35895;&#38632;"</span> <span style="color: #61CE3C;">"&#35895;&#38632;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#31435;&#22799;"</span> <span style="color: #61CE3C;">"&#31435;&#22799;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#23567;&#28385;"</span> <span style="color: #61CE3C;">"&#23567;&#28385;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#33426;&#31181;"</span> <span style="color: #61CE3C;">"&#33426;&#31181;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#22799;&#33267;"</span> <span style="color: #61CE3C;">"&#22799;&#33267;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#23567;&#26257;"</span> <span style="color: #61CE3C;">"&#23567;&#26257;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#22823;&#26257;"</span> <span style="color: #61CE3C;">"&#22823;&#26257;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#31435;&#31179;"</span> <span style="color: #61CE3C;">"&#31435;&#31179;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#22788;&#26257;"</span> <span style="color: #61CE3C;">"&#22788;&#26257;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#30333;&#38706;"</span> <span style="color: #61CE3C;">"&#30333;&#38706;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#31179;&#20998;"</span> <span style="color: #61CE3C;">"&#31179;&#20998;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#23506;&#38706;"</span> <span style="color: #61CE3C;">"&#23506;&#38706;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#38684;&#38477;"</span> <span style="color: #61CE3C;">"&#38684;&#38477;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#31435;&#20908;"</span> <span style="color: #61CE3C;">"&#31435;&#20908;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#23567;&#38634;"</span> <span style="color: #61CE3C;">"&#23567;&#38634;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#22823;&#38634;"</span> <span style="color: #61CE3C;">"&#22823;&#38634;"</span> )
+          (holiday-solar-term <span style="color: #61CE3C;">"&#20908;&#33267;"</span> <span style="color: #61CE3C;">"&#20908;&#33267;"</span> )
+          (holiday-lunar 5 5 <span style="color: #61CE3C;">"&#31471;&#21320;&#33410;"</span> 0)
+          (holiday-lunar 8 15 <span style="color: #61CE3C;">"&#20013;&#31179;&#33410;"</span> 0)
+          (holiday-lunar 7 7 <span style="color: #61CE3C;">"&#19971;&#22805;&#24773;&#20154;&#33410;"</span> 0)
+          (holiday-lunar 12 8 <span style="color: #61CE3C;">"&#33098;&#20843;&#33410;"</span> 0)
+          (holiday-lunar 9 9 <span style="color: #61CE3C;">"&#37325;&#38451;&#33410;"</span> 0)
+          (holiday-lunar 12 22 <span style="color: #61CE3C;">"&#20908;&#33267;"</span> 0)))
+
+  (<span style="color: #4c83ff;">setq</span> calendar-holidays eh-calendar-holidays))
+
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calendar</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> calendar-month-name-array
+        [<span style="color: #61CE3C;">"&#19968;&#26376;"</span> <span style="color: #61CE3C;">"&#20108;&#26376;"</span> <span style="color: #61CE3C;">"&#19977;&#26376;"</span> <span style="color: #61CE3C;">"&#22235;&#26376;"</span> <span style="color: #61CE3C;">"&#20116;&#26376;"</span> <span style="color: #61CE3C;">"&#20845;&#26376;"</span>
+         <span style="color: #61CE3C;">"&#19971;&#26376;"</span> <span style="color: #61CE3C;">"&#20843;&#26376;"</span> <span style="color: #61CE3C;">"&#20061;&#26376;"</span> <span style="color: #61CE3C;">"&#21313;&#26376;"</span> <span style="color: #61CE3C;">"&#21313;&#19968;&#26376;"</span> <span style="color: #61CE3C;">"&#21313;&#20108;&#26376;"</span>])
+  (<span style="color: #4c83ff;">setq</span> calendar-day-name-array
+        [<span style="color: #61CE3C;">"&#26143;&#26399;&#26085;"</span> <span style="color: #61CE3C;">"&#26143;&#26399;&#19968;"</span> <span style="color: #61CE3C;">"&#26143;&#26399;&#20108;"</span> <span style="color: #61CE3C;">"&#26143;&#26399;&#19977;"</span> <span style="color: #61CE3C;">"&#26143;&#26399;&#22235;"</span> <span style="color: #61CE3C;">"&#26143;&#26399;&#20116;"</span> <span style="color: #61CE3C;">"&#26143;&#26399;&#20845;"</span>])
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#19968;&#21608;&#31532;&#19968;&#22825;&#65292;0&#34920;&#31034;&#26143;&#26399;&#22825;, 1&#34920;&#31034;&#26143;&#26399;&#19968;</span>
+  (<span style="color: #4c83ff;">setq</span> calendar-week-start-day 0))
+
+(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw</span>
+  <span style="color: #4c83ff;">:config</span>
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw-cal</span> <span style="color: #4c83ff;">:ensure</span> calfw)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw-ical</span> <span style="color: #4c83ff;">:ensure</span> calfw)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw-org</span> <span style="color: #4c83ff;">:ensure</span> calfw)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">cal-china-x</span>)
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-capture</span>
+    <span style="color: #4c83ff;">:ensure</span> org
+    <span style="color: #4c83ff;">:config</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20026;calfw&#35774;&#32622;&#19968;&#20010;capture&#27169;&#26495;&#24182;&#28155;&#21152;&#21040;org-capture-templates</span>
+    (<span style="color: #4c83ff;">setq</span> cfw:org-capture-template
+          '(<span style="color: #61CE3C;">"calfw2org"</span> <span style="color: #61CE3C;">"calfw2org"</span> entry (file+headline eh-org-schedule-file <span style="color: #61CE3C;">"Schedule"</span>)
+            <span style="color: #61CE3C;">"* %?\n %(cfw:org-capture-day)\n %a"</span>))
+    (<span style="color: #4c83ff;">setq</span> org-capture-templates
+          (append org-capture-templates (list cfw:org-capture-template))))
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26085;&#21382;&#34920;&#26684;&#36793;&#26694;&#35774;&#32622;</span>
+  (<span style="color: #4c83ff;">setq</span> cfw:fchar-junction ?+
+        cfw:fchar-vertical-line ?|
+        cfw:fchar-horizontal-line ?-
+        cfw:fchar-left-junction ?+
+        cfw:fchar-right-junction ?+
+        cfw:fchar-top-junction ?+
+        cfw:fchar-top-left-corner ?+
+        cfw:fchar-top-right-corner ?+ )
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-cfw-render-toolbar</span> (width current-view prev-cmd next-cmd)
+    <span style="color: #FBDE2D;">"Translate words: 'Month', 'Week', 'Day' and 'Two day' to Chinese"</span>
+    (<span style="color: #4c83ff;">let*</span> ((prev (cfw:render-button <span style="color: #61CE3C;">" &lt; "</span> prev-cmd))
+           (today (cfw:render-button <span style="color: #61CE3C;">"&#20170;&#22825;"</span> 'cfw:navi-goto-today-command))
+           (next (cfw:render-button <span style="color: #61CE3C;">" &gt; "</span> next-cmd))
+           (month (cfw:render-button
+                   <span style="color: #61CE3C;">"&#26174;&#31034;&#19968;&#26376;"</span> 'cfw:change-view-month
+                   (eq current-view 'month)))
+           (tweek (cfw:render-button
+                   <span style="color: #61CE3C;">"&#26174;&#31034;&#20004;&#21608;"</span> 'cfw:change-view-two-weeks
+                   (eq current-view 'two-weeks)))
+           (week (cfw:render-button
+                  <span style="color: #61CE3C;">"&#26174;&#31034;&#19968;&#21608;"</span> 'cfw:change-view-week
+                  (eq current-view 'week)))
+           (day (cfw:render-button
+                 <span style="color: #61CE3C;">"&#26174;&#31034;&#19968;&#22825;"</span> 'cfw:change-view-day
+                 (eq current-view 'day)))
+           (sp  <span style="color: #61CE3C;">" "</span>)
+           (toolbar-text
+            (cfw:render-add-right
+             width (concat sp prev sp next sp today sp)
+             (concat day sp week sp tweek sp month sp))))
+      (cfw:render-default-content-face toolbar-text 'cfw:face-toolbar)))
+
+  (advice-add 'cfw:render-toolbar <span style="color: #4c83ff;">:override</span> #'eh-cfw-render-toolbar)
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-calendar</span> ()
+    (<span style="color: #4c83ff;">interactive</span>)
+    (cfw:open-calendar-buffer
+     <span style="color: #4c83ff;">:view</span> 'month
+     <span style="color: #4c83ff;">:contents-sources</span>
+     (list
+      <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">orgmode source</span>
+      (cfw:org-create-source <span style="color: #61CE3C;">"Green"</span>)))))
+</pre>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+    <div>
+      <div class="post-meta">
+        <span title="post date" class="post-info">2016-09-24</span>
+        <span title="last modification date" class="post-info">2016-09-24</span>
+        <span title="tags" class="post-info">N/A</span>
+        <span title="author" class="post-info">Feng Shu</span>
+      </div>
+      <div class="footer">
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 8.x)</p>
+        <p>
+          Copyright &copy; <span id="footerYear"></span> <a href="mailto:tumashu &lt;at&gt; 163 &lt;dot&gt; com">Feng Shu</a>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          Powered by <a href="https://github.com/tumashu/org-webpage" target="_blank">org-webpage</a>
+          <script type="text/javascript">document.getElementById("footerYear").innerHTML = (new Date()).getFullYear();</script>
+        </p>
+      </div>
+    </div>
+
+</div>
+</body>
+</html>
