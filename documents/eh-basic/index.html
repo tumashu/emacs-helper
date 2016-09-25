@@ -93,6 +93,7 @@
 
 <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">load-path</span>
 (<span style="color: #4c83ff;">defvar</span> <span style="color: #ff69b4;">eh-enable-load-path-hack</span> t)
+(<span style="color: #4c83ff;">defvar</span> <span style="color: #ff69b4;">eh-enable-load-path-update</span> nil)
 
 (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-hack-load-path</span> ()
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Delete buildin org's PATH</span>
@@ -109,7 +110,27 @@
                     (setplist s nil)
                     (<span style="color: #4c83ff;">when</span> (autoloadp s)
                       (unintern s)))))))
-(eh-hack-load-path)
+
+(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-update-load-path</span> ()
+  (<span style="color: #4c83ff;">interactive</span>)
+  (<span style="color: #4c83ff;">let</span> (dirs)
+    (<span style="color: #4c83ff;">dolist</span> (x '(<span style="color: #61CE3C;">"~"</span> <span style="color: #61CE3C;">"c:"</span> <span style="color: #61CE3C;">"d:"</span> <span style="color: #61CE3C;">"e:"</span> <span style="color: #61CE3C;">"f:"</span> <span style="color: #61CE3C;">"g:"</span>))
+      (<span style="color: #4c83ff;">push</span> (file-name-as-directory
+             (concat x <span style="color: #61CE3C;">"/projects/emacs-packages"</span>)) <span style="color: #ff69b4;">dirs)</span>
+      (<span style="color: #4c83ff;">push</span> (file-name-as-directory
+             (concat x <span style="color: #61CE3C;">"/project/emacs-packages"</span>)) <span style="color: #ff69b4;">dirs))</span>
+    (<span style="color: #4c83ff;">dolist</span> (dir dirs)
+      (<span style="color: #4c83ff;">dolist</span> (x (directory-files <span style="color: #61CE3C;">"~/project/emacs-packages"</span> t))
+        (<span style="color: #4c83ff;">when</span> (<span style="color: #4c83ff;">and</span> (file-directory-p x)
+                   (not (string-match-p <span style="color: #61CE3C;">"/\\.$"</span> x))
+                   (not (string-match-p <span style="color: #61CE3C;">"/\\.\\.$"</span> x)))
+          (add-to-list 'load-path x)))))
+  (<span style="color: #4c83ff;">when</span> eh-enable-load-path-hack
+    (eh-hack-load-path)))
+
+(<span style="color: #4c83ff;">when</span> eh-enable-load-path-update
+  (eh-update-load-path)
+  (message <span style="color: #61CE3C;">"emacs-helper update load-path success!"</span>))
 
 <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">package</span>
 (<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">package</span>)
@@ -383,8 +404,8 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2016-09-24</span>
-        <span title="last modification date" class="post-info">2016-09-24</span>
+        <span title="post date" class="post-info">2016-09-25</span>
+        <span title="last modification date" class="post-info">2016-09-25</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>

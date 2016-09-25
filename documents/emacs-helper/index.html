@@ -32,10 +32,10 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline3">1. emacs-helper 使用说明</a>
+<li><a href="#orgheadline3">1. Emacs-helper 使用说明</a>
 <ul>
 <li><a href="#orgheadline1">1.1. 简介</a></li>
-<li><a href="#orgheadline2">1.2. 使用</a></li>
+<li><a href="#orgheadline2">1.2. 使用方法</a></li>
 </ul>
 </li>
 <li><a href="#orgheadline4">2. 代码</a></li>
@@ -43,29 +43,34 @@
 </div>
 </div>
 <div id="outline-container-orgheadline3" class="outline-2">
-<h2 id="orgheadline3"><span class="section-number-2">1</span> emacs-helper 使用说明</h2>
+<h2 id="orgheadline3"><span class="section-number-2">1</span> Emacs-helper 使用说明</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-orgheadline1" class="outline-3">
 <h3 id="orgheadline1"><span class="section-number-3">1.1</span>简介</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-emacs-helper 是<a href="https://github.com/tumashu">Tumashu</a>同学的个人配置，可以做为 emacs 中文用户的一个参考。
+Emacs-helper 是<a href="https://github.com/tumashu">Tumashu</a>同学的个人配置，可以做为 Emacs 中文用户的一个参考。
 </p>
 </div>
 </div>
 
 <div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2"><span class="section-number-3">1.2</span>使用</h3>
+<h3 id="orgheadline2"><span class="section-number-3">1.2</span>使用方法</h3>
 <div class="outline-text-3" id="text-1-2">
-<p>
-将下面的代码粘贴到 "~/.emacs" , 然后 `eval-buffer', emacs-helper 加载时，其依赖的包会通过 use-package 自动安装。
+<ol class="org-ol">
+<li>下载: <a href="https://github.com/tumashu/emacs-helper/archive/master.zip">emacs-helper</a></li>
+<li>解压缩到目录："d:/projects/emacs-packages/emacs-helper"</li>
+<li><p>
+将下面的代码粘贴到 "~/.emacs"
 </p>
-
 <pre class="example">
 (add-to-list 'load-path "d:/projects/emacs-packages/emacs-helper")
 (setq use-package-always-ensure t)
+(setq eh-enable-load-path-update nil)
 (require 'emacs-helper)
-</pre>
+</pre></li>
+<li>重启 Emacs, 第一次加载 Emacs-helper 的时候，它依赖的包会自动安装。</li>
+</ol>
 </div>
 </div>
 </div>
@@ -91,8 +96,8 @@ emacs-helper 是<a href="https://github.com/tumashu">Tumashu</a>同学的个人�
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2016-09-24</span>
-        <span title="last modification date" class="post-info">2016-09-24</span>
+        <span title="post date" class="post-info">2016-09-25</span>
+        <span title="last modification date" class="post-info">2016-09-25</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>

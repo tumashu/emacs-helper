@@ -4,10 +4,24 @@
     <title>Emacs-helper</title>
     <link>https://tumashu.github.io/emacs-helper</link>
     <description>(Tumashu 的 emacs 配置)</description>
-    <pubDate>六, 24 9月 2016 14:18:02 CST</pubDate>
-    <lastBuildDate>六, 24 9月 2016 14:18:02 CST</lastBuildDate>
+    <pubDate>日, 25 9月 2016 11:20:18 CST</pubDate>
+    <lastBuildDate>日, 25 9月 2016 11:20:18 CST</lastBuildDate>
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>org-webpage static site generator (https://github.com/tumashu/org-webpage)</generator>
+<item>
+<title>eh-basic</title>
+<link>https://tumashu.github.io/emacs-helper/documents/eh-basic/</link>
+<description>No Description</description>
+<pubDate>2016-09-25</pubDate>
+<guid>https://tumashu.github.io/emacs-helper/documents/eh-basic/</guid>
+</item>
+<item>
+<title>emacs-helper</title>
+<link>https://tumashu.github.io/emacs-helper/documents/emacs-helper/</link>
+<description>No Description</description>
+<pubDate>2016-09-25</pubDate>
+<guid>https://tumashu.github.io/emacs-helper/documents/emacs-helper/</guid>
+</item>
 <item>
 <title>eh-devtools</title>
 <link>https://tumashu.github.io/emacs-helper/documents/eh-devtools/</link>
@@ -16,25 +30,11 @@
 <guid>https://tumashu.github.io/emacs-helper/documents/eh-devtools/</guid>
 </item>
 <item>
-<title>emacs-helper</title>
-<link>https://tumashu.github.io/emacs-helper/documents/emacs-helper/</link>
-<description>No Description</description>
-<pubDate>2016-09-24</pubDate>
-<guid>https://tumashu.github.io/emacs-helper/documents/emacs-helper/</guid>
-</item>
-<item>
 <title>eh-gnus</title>
 <link>https://tumashu.github.io/emacs-helper/documents/eh-gnus/</link>
 <description>No Description</description>
 <pubDate>2016-09-24</pubDate>
 <guid>https://tumashu.github.io/emacs-helper/documents/eh-gnus/</guid>
-</item>
-<item>
-<title>eh-basic</title>
-<link>https://tumashu.github.io/emacs-helper/documents/eh-basic/</link>
-<description>No Description</description>
-<pubDate>2016-09-24</pubDate>
-<guid>https://tumashu.github.io/emacs-helper/documents/eh-basic/</guid>
 </item>
 <item>
 <title>eh-complete</title>
