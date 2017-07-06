@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <title>eh-gnus - Emacs-helper</title>
+    <title>eh-gnus.el --- Tumashu&#39;s gnus configuation file - Emacs-helper</title>
     <meta charset="utf-8" />
     <meta name="author" content="Feng Shu" />
     <link rel="stylesheet" href="https://tumashu.github.io/emacs-helper/media/css/main.css" type="text/css">
@@ -27,18 +27,18 @@
 <div class="content-and-footer">
 <div>
 <div class="post">
-<h1 class="post-title">eh-gnus</h1>
+<h1 class="post-title">eh-gnus.el --- Tumashu&#39;s gnus configuation file</h1>
 <div id="table-of-contents">
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">1. 简介</a></li>
-<li><a href="#orgheadline2">2. 代码</a></li>
+<li><a href="#orgec0e55d">1. 简介</a></li>
+<li><a href="#org966934e">2. 代码</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span>简介</h2>
+<div id="outline-container-orgec0e55d" class="outline-2">
+<h2 id="orgec0e55d"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -55,36 +55,34 @@
 </div>
 </div>
 
-
-
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="orgheadline2"><span class="section-number-2">2</span>代码</h2>
+<div id="outline-container-org966934e" class="outline-2">
+<h2 id="org966934e"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
-
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defcustom</span> <span style="color: #ff69b4;">eh-gnus-personal-file</span> <span style="color: #61CE3C;">"~/Gnus/eh-gnus-personal.el"</span>
   <span style="color: #FBDE2D;">"eh-gnus&#29992;&#20110;&#23384;&#20648;&#20010;&#20154;&#24080;&#21495;&#20449;&#24687;&#30340;&#25991;&#20214;"</span>)
+</pre>
+</div>
 
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-gnus-load</span> ()
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-gnus-load</span> ()
   (<span style="color: #4c83ff;">interactive</span>)
   (<span style="color: #4c83ff;">if</span> (file-exists-p (expand-file-name eh-gnus-personal-file))
       (<span style="color: #4c83ff;">progn</span>
         <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#21152;&#36733;&#20010;&#20154;&#24080;&#21495;&#20449;&#24687;&#12290;</span>
         (load eh-gnus-personal-file)
-        <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">bbdb</span>
-        (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-bbdb3</span>
-          <span style="color: #4c83ff;">:ensure</span> nil)
         <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#21152;&#36733; gnus &#21487;&#20849;&#20139;&#30340;&#37197;&#32622;</span>
-        (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-gnus-common</span>
-          <span style="color: #4c83ff;">:ensure</span> nil))
+        (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-gnus-common</span> <span style="color: #4c83ff;">:ensure</span> nil))
     (message <span style="color: #61CE3C;">"eh-gnus&#20010;&#20154;&#24080;&#21495;&#25991;&#20214;&#19981;&#23384;&#22312;&#65292;eh-gnus&#21551;&#21160;&#22833;&#36133;!!!"</span>)))
+</pre>
+</div>
 
-(global-set-key (kbd <span style="color: #61CE3C;">"C-x m"</span>)
-                '(lambda ()
-                   (<span style="color: #4c83ff;">interactive</span>)
-                   (<span style="color: #4c83ff;">unless</span> (gnus-alive-p)
-                     (gnus))
-                   (gnus-msg-mail)))
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(global-set-key (kbd <span style="color: #61CE3C;">"C-x m"</span>) #'(lambda ()
+                                  (<span style="color: #4c83ff;">interactive</span>)
+                                  (<span style="color: #4c83ff;">unless</span> (gnus-alive-p)
+                                    (gnus))
+                                  (gnus-msg-mail)))
 </pre>
 </div>
 </div>
@@ -94,13 +92,13 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2016-09-25</span>
-        <span title="last modification date" class="post-info">2016-09-24</span>
+        <span title="post date" class="post-info">2017-07-06</span>
+        <span title="last modification date" class="post-info">2017-07-06</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>
       <div class="footer">
-        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 8.x)</p>
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 9.x)</p>
         <p>
           Copyright &copy; <span id="footerYear"></span> <a href="mailto:tumashu &lt;at&gt; 163 &lt;dot&gt; com">Feng Shu</a>
           &nbsp;&nbsp;-&nbsp;&nbsp;

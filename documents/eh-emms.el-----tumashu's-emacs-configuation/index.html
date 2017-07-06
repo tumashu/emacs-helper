@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <title>eh-emms - Emacs-helper</title>
+    <title>eh-emms.el --- Tumashu&#39;s emacs configuation - Emacs-helper</title>
     <meta charset="utf-8" />
     <meta name="author" content="Feng Shu" />
     <link rel="stylesheet" href="https://tumashu.github.io/emacs-helper/media/css/main.css" type="text/css">
@@ -27,18 +27,18 @@
 <div class="content-and-footer">
 <div>
 <div class="post">
-<h1 class="post-title">eh-emms</h1>
+<h1 class="post-title">eh-emms.el --- Tumashu&#39;s emacs configuation</h1>
 <div id="table-of-contents">
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">1. 简介</a></li>
-<li><a href="#orgheadline2">2. 代码</a></li>
+<li><a href="#org67b5cb8">1. 简介</a></li>
+<li><a href="#orgf1bb34c">2. 代码</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span>简介</h2>
+<div id="outline-container-org67b5cb8" class="outline-2">
+<h2 id="org67b5cb8"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -46,27 +46,21 @@
 </div>
 </div>
 
-
-
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="orgheadline2"><span class="section-number-2">2</span>代码</h2>
+<div id="outline-container-orgf1bb34c" class="outline-2">
+<h2 id="orgf1bb34c"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
-
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">emms</span>
   <span style="color: #4c83ff;">:config</span>
-
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">emms-setup</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">emms-info-libtag</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">emms-setup</span> <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">emms-info-libtag</span> <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired</span> <span style="color: #4c83ff;">:ensure</span> nil)
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim</span>)
 
   (emms-devel)
   (emms-default-players)
-  (<span style="color: #4c83ff;">when</span> (fboundp 'emms-cache) (emms-cache 1))
+  (<span style="color: #4c83ff;">when</span> (fboundp 'emms-cache)
+    (emms-cache 1))
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">EMMS &#30446;&#24405;</span>
   (<span style="color: #4c83ff;">setq</span> emms-source-file-default-directory <span style="color: #61CE3C;">"~/Music"</span>)
@@ -103,11 +97,11 @@
   (<span style="color: #4c83ff;">setq</span> emms-source-file-directory-tree-function
         'emms-source-file-directory-tree-find)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#22312;minibuffer&#20013;&#26174;&#31034;&#25773;&#25918;&#20449;&#24687;(emms-show)</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#22312; minibuffer &#20013;&#26174;&#31034;&#25773;&#25918;&#20449;&#24687; (emms-show)</span>
   (add-hook 'emms-player-started-hook 'emms-show)
   (<span style="color: #4c83ff;">setq</span> emms-show-format <span style="color: #61CE3C;">"&#27491;&#22312;&#25773;&#25918;: [%s]"</span>)
 
-  <span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622;Mode-line&#30340;&#26174;&#31034;&#26041;&#24335;</span>
+  <span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622; Mode-line &#30340;&#26174;&#31034;&#26041;&#24335;</span>
   (<span style="color: #4c83ff;">setq</span> emms-mode-line-format <span style="color: #61CE3C;">"%s"</span>)
   (<span style="color: #4c83ff;">setq</span> emms-playing-time-display-format <span style="color: #61CE3C;">"%s ]"</span>)
   (<span style="color: #4c83ff;">setq</span> global-mode-string
@@ -391,13 +385,13 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2016-09-25</span>
-        <span title="last modification date" class="post-info">2016-09-24</span>
+        <span title="post date" class="post-info">2017-07-06</span>
+        <span title="last modification date" class="post-info">2017-07-06</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>
       <div class="footer">
-        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 8.x)</p>
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 9.x)</p>
         <p>
           Copyright &copy; <span id="footerYear"></span> <a href="mailto:tumashu &lt;at&gt; 163 &lt;dot&gt; com">Feng Shu</a>
           &nbsp;&nbsp;-&nbsp;&nbsp;

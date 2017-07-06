@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <title>eh-functions - Emacs-helper</title>
+    <title>eh-functions.el --- Tumashu&#39;s  emacs functions - Emacs-helper</title>
     <meta charset="utf-8" />
     <meta name="author" content="Feng Shu" />
     <link rel="stylesheet" href="https://tumashu.github.io/emacs-helper/media/css/main.css" type="text/css">
@@ -27,18 +27,18 @@
 <div class="content-and-footer">
 <div>
 <div class="post">
-<h1 class="post-title">eh-functions</h1>
+<h1 class="post-title">eh-functions.el --- Tumashu&#39;s  emacs functions</h1>
 <div id="table-of-contents">
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">1. 简介</a></li>
-<li><a href="#orgheadline2">2. 代码</a></li>
+<li><a href="#org11f0700">1. 简介</a></li>
+<li><a href="#org253ee4a">2. 代码</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span>简介</h2>
+<div id="outline-container-org11f0700" class="outline-2">
+<h2 id="org11f0700"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -46,39 +46,11 @@
 </div>
 </div>
 
-
-
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="orgheadline2"><span class="section-number-2">2</span>代码</h2>
+<div id="outline-container-org253ee4a" class="outline-2">
+<h2 id="org253ee4a"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
-
-<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-shutdown-emacs-server</span> ()
-  (<span style="color: #4c83ff;">interactive</span>)
-  (<span style="color: #4c83ff;">when</span> (not (eq window-system 'x))
-    (message <span style="color: #61CE3C;">"Initializing x windows system."</span>)
-    (x-initialize-window-system)
-    (<span style="color: #4c83ff;">when</span> (not x-display-name) (<span style="color: #4c83ff;">setq</span> x-display-name (getenv <span style="color: #61CE3C;">"DISPLAY"</span>)))
-    (select-frame (make-frame-on-display x-display-name '((window-system . x)))))
-  (<span style="color: #4c83ff;">let</span> ((last-nonmenu-event nil)(window-system <span style="color: #61CE3C;">"x"</span>))(save-buffers-kill-emacs)))
-
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-isearch-string</span> (string)
-  <span style="color: #FBDE2D;">"search a string with isearch"</span>
-  (isearch-mode t nil nil nil)
-  (isearch-yank-string string)
-  (isearch-exit))
-
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-mark-word</span> ()
-  <span style="color: #FBDE2D;">"Mark the entire word around or in front of point."</span>
-  (<span style="color: #4c83ff;">interactive</span>)
-  (<span style="color: #4c83ff;">let</span> ((word-regexp <span style="color: #61CE3C;">"\\sw"</span>))
-    (<span style="color: #4c83ff;">when</span> (<span style="color: #4c83ff;">or</span> (looking-at word-regexp)
-              (looking-back word-regexp (line-beginning-position)))
-      (skip-syntax-forward <span style="color: #61CE3C;">"w"</span>)
-      (set-mark (point))
-      (skip-syntax-backward <span style="color: #61CE3C;">"w"</span>))))
-
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-directory-files-recursively</span> (directory <span style="color: #afd8af;">&amp;optional</span> type regexp)
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-directory-files-recursively</span> (directory <span style="color: #afd8af;">&amp;optional</span> type regexp)
   <span style="color: #FBDE2D;">"recursively list all the files in a directory"</span>
   (<span style="color: #4c83ff;">let*</span> ((directory (<span style="color: #4c83ff;">or</span> directory default-directory))
          (regexp  (<span style="color: #4c83ff;">if</span> regexp regexp <span style="color: #61CE3C;">".*"</span>))
@@ -98,8 +70,11 @@
           when (file-directory-p file)
           nconc (eh-directory-files-recursively file type regexp) into ret
           finally return ret)))
+</pre>
+</div>
 
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-wash-text</span> (text <span style="color: #afd8af;">&amp;optional</span> fill-width indent)
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-wash-text</span> (text <span style="color: #afd8af;">&amp;optional</span> fill-width indent)
   <span style="color: #FBDE2D;">"Insert text into a temp buffer and wash it,</span>
 <span style="color: #FBDE2D;">if `</span><span style="color: #96CBFE;">fill-width</span><span style="color: #FBDE2D;">' is a number, the temp buffer will be filled to the number,</span>
 <span style="color: #FBDE2D;">if `</span><span style="color: #96CBFE;">indent</span><span style="color: #FBDE2D;">' is a number ,the temp buffer will be indent the number,</span>
@@ -155,50 +130,59 @@
     (<span style="color: #4c83ff;">when</span> indent
       (indent-region (point-min) (point-max) indent))
     (buffer-string)))
+</pre>
+</div>
 
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-dos2unix</span> ()
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-dos2unix</span> ()
   <span style="color: #FBDE2D;">"&#23558;dos&#25442;&#34892;&#26041;&#24335;&#36716;&#25442;&#20026;unix&#30340;&#25442;&#34892;&#26041;&#24335;,&#29992;&#20110;&#21435;&#38500;^M"</span>
   (<span style="color: #4c83ff;">interactive</span>)
   (goto-char (point-min))
   (<span style="color: #4c83ff;">while</span> (search-forward <span style="color: #61CE3C;">"\r"</span> nil t) (replace-match <span style="color: #61CE3C;">""</span>)))
+</pre>
+</div>
 
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-unix2dos</span> ()
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-unix2dos</span> ()
   <span style="color: #FBDE2D;">"&#23558;unix&#25442;&#34892;&#26041;&#24335;&#36716;&#25442;&#20026;dos&#30340;&#25442;&#34892;&#26041;&#24335;"</span>
   (<span style="color: #4c83ff;">interactive</span>)
   (goto-char (point-min))
   (<span style="color: #4c83ff;">while</span> (search-forward <span style="color: #61CE3C;">"\n"</span> nil t) (replace-match <span style="color: #61CE3C;">"\r\n"</span>)))
+</pre>
+</div>
 
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-remove-white-space</span> ()
-  <span style="color: #FBDE2D;">"&#21024;&#38500;&#22810;&#20313;&#31354;&#26684;"</span>
-  (<span style="color: #4c83ff;">interactive</span>)
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#21024;&#38500;&#34892;&#39318;&#31354;&#26684;</span>
-  (goto-char (point-min))
-  (<span style="color: #4c83ff;">while</span> (re-search-forward <span style="color: #61CE3C;">"^ +</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">(</span><span style="color: #61CE3C;">\\cc+</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">)</span><span style="color: #61CE3C;">"</span> nil t)
-    (replace-match <span style="color: #61CE3C;">"\\1"</span>))
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#21024;&#38500;&#27721;&#23383;&#20043;&#38388;&#30340;&#31354;&#26684;</span>
-  (goto-char (point-min))
-  (<span style="color: #4c83ff;">while</span> (re-search-forward <span style="color: #61CE3C;">"</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">(</span><span style="color: #61CE3C;">\\cc+</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">)</span><span style="color: #61CE3C;"> +"</span> nil t)
-    (replace-match <span style="color: #61CE3C;">"\\1"</span>)))
-
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-revert-buffer-with-gbk</span> ()
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-revert-buffer-with-gbk</span> ()
   (<span style="color: #4c83ff;">interactive</span>)
   (revert-buffer-with-coding-system 'gbk-dos))
+</pre>
+</div>
 
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-revert-buffer-with-utf8</span> ()
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-revert-buffer-with-utf8</span> ()
   (<span style="color: #4c83ff;">interactive</span>)
   (revert-buffer-with-coding-system 'utf-8-unix))
+</pre>
+</div>
 
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-save-buffer-with-gbk</span> (<span style="color: #afd8af;">&amp;optional</span> arg)
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-save-buffer-with-gbk</span> (<span style="color: #afd8af;">&amp;optional</span> arg)
   (<span style="color: #4c83ff;">interactive</span>)
   (set-buffer-file-coding-system 'gbk-dos)
   (save-buffer arg))
+</pre>
+</div>
 
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-save-buffer-with-utf8</span> (<span style="color: #afd8af;">&amp;optional</span> arg)
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-save-buffer-with-utf8</span> (<span style="color: #afd8af;">&amp;optional</span> arg)
   (<span style="color: #4c83ff;">interactive</span>)
   (set-buffer-file-coding-system 'utf-8-unix)
   (save-buffer arg))
+</pre>
+</div>
 
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-utf8-language-environment</span> ()
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-utf8-language-environment</span> ()
   <span style="color: #FBDE2D;">"&#35774;&#32622;utf-8&#35821;&#35328;&#29615;&#22659;"</span>
   (<span style="color: #4c83ff;">interactive</span>)
   (set-language-environment <span style="color: #61CE3C;">"UTF-8"</span>)
@@ -209,8 +193,11 @@
   (set-next-selection-coding-system 'utf-8-unix)
   (set-selection-coding-system 'utf-8-unix)
   (set-terminal-coding-system 'utf-8-unix))
+</pre>
+</div>
 
-(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-gbk-language-environment</span> ()
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-gbk-language-environment</span> ()
   <span style="color: #FBDE2D;">"&#35774;&#32622;gbk&#35821;&#35328;&#29615;&#22659;"</span>
   (<span style="color: #4c83ff;">interactive</span>)
   (set-language-environment <span style="color: #61CE3C;">"Chinese-GBK"</span>)
@@ -230,13 +217,13 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2016-09-25</span>
-        <span title="last modification date" class="post-info">2016-09-24</span>
+        <span title="post date" class="post-info">2017-07-06</span>
+        <span title="last modification date" class="post-info">2017-07-06</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>
       <div class="footer">
-        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 8.x)</p>
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 9.x)</p>
         <p>
           Copyright &copy; <span id="footerYear"></span> <a href="mailto:tumashu &lt;at&gt; 163 &lt;dot&gt; com">Feng Shu</a>
           &nbsp;&nbsp;-&nbsp;&nbsp;

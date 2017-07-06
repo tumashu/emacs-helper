@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <title>eh-gnus-common - Emacs-helper</title>
+    <title>eh-gnus-common.el --- Tumashu&#39;s gnus configuation file - Emacs-helper</title>
     <meta charset="utf-8" />
     <meta name="author" content="Feng Shu" />
     <link rel="stylesheet" href="https://tumashu.github.io/emacs-helper/media/css/main.css" type="text/css">
@@ -27,18 +27,18 @@
 <div class="content-and-footer">
 <div>
 <div class="post">
-<h1 class="post-title">eh-gnus-common</h1>
+<h1 class="post-title">eh-gnus-common.el --- Tumashu&#39;s gnus configuation file</h1>
 <div id="table-of-contents">
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">1. 简介</a></li>
-<li><a href="#orgheadline2">2. 代码</a></li>
+<li><a href="#org72271a9">1. 简介</a></li>
+<li><a href="#org0f4d12f">2. 代码</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span>简介</h2>
+<div id="outline-container-org72271a9" class="outline-2">
+<h2 id="org72271a9"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -46,29 +46,19 @@
 </div>
 </div>
 
-
-
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="orgheadline2"><span class="section-number-2">2</span>代码</h2>
+<div id="outline-container-org0f4d12f" class="outline-2">
+<h2 id="org0f4d12f"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
-
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gnus</span>
   <span style="color: #4c83ff;">:ensure</span> nil
   <span style="color: #4c83ff;">:config</span>
-
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">mm-encode</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">mm-decode</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">rfc2047</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">nnir</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gnus-demon</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eww</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">mm-encode</span> <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">mm-decode</span> <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">rfc2047</span> <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">nnir</span> <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gnus-demon</span> <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eww</span> <span style="color: #4c83ff;">:ensure</span> nil)
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#37038;&#20214;&#20998;&#31867;&#35774;&#32622;</span>
   (<span style="color: #4c83ff;">setq</span> nnmail-treat-duplicates 'delete
@@ -560,11 +550,12 @@
             'gnus-group-first-unread-group)
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#27599;&#38548;10&#20998;&#38047;&#21047;&#26032;&#19968;&#19979;</span>
-  (add-hook 'gnus-startup-hook
-            '(lambda ()
-               (<span style="color: #4c83ff;">progn</span> (<span style="color: #4c83ff;">setq</span> gnus-use-demon t)
-                      (gnus-demon-add-handler
-                       'gnus-demon-scan-news 10 nil))))
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(add-hook 'gnus-startup-hook</span>
+  <span style="color: #8B8989; font-style: italic;">;;           </span><span style="color: #8B8989; font-style: italic;">(lambda ()</span>
+  <span style="color: #8B8989; font-style: italic;">;;             </span><span style="color: #8B8989; font-style: italic;">(progn (setq gnus-use-demon t)</span>
+  <span style="color: #8B8989; font-style: italic;">;;                    </span><span style="color: #8B8989; font-style: italic;">(gnus-demon-add-handler</span>
+  <span style="color: #8B8989; font-style: italic;">;;                     </span><span style="color: #8B8989; font-style: italic;">'gnus-demon-scan-news 10 nil))))</span>
+
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org</span>
     <span style="color: #4c83ff;">:ensure</span> nil
     <span style="color: #4c83ff;">:config</span>
@@ -587,13 +578,13 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2016-09-25</span>
-        <span title="last modification date" class="post-info">2016-09-24</span>
+        <span title="post date" class="post-info">2017-07-06</span>
+        <span title="last modification date" class="post-info">2017-07-06</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>
       <div class="footer">
-        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 8.x)</p>
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 9.x)</p>
         <p>
           Copyright &copy; <span id="footerYear"></span> <a href="mailto:tumashu &lt;at&gt; 163 &lt;dot&gt; com">Feng Shu</a>
           &nbsp;&nbsp;-&nbsp;&nbsp;
