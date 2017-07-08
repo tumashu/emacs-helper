@@ -28,9 +28,19 @@
 <div>
 <div class="post">
 <h1 class="post-title">eh-gnus-personal-example</h1>
-<p>
-Gnus邮件设置。
-</p>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgbc8058d">1. Gnus 邮件基本设置。</a></li>
+<li><a href="#org68009c5">2. 设置 gnus-posting-styles</a></li>
+<li><a href="#org3871bbe">3. 其他一些常见的配置例子</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbc8058d" class="outline-2">
+<h2 id="orgbc8058d"><span class="section-number-2">1</span> Gnus 邮件基本设置。</h2>
+<div class="outline-text-2" id="text-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">setq</span> gnus-select-method '(nnml <span style="color: #61CE3C;">""</span>))
 (<span style="color: #4c83ff;">setq</span> mail-sources
@@ -46,10 +56,12 @@ Gnus邮件设置。
               <span style="color: #4c83ff;">:fetchflag</span> <span style="color: #61CE3C;">"\\Seen"</span>)))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-gnus-posting-styles设置
-</p>
+<div id="outline-container-org68009c5" class="outline-2">
+<h2 id="org68009c5"><span class="section-number-2">2</span> 设置 gnus-posting-styles</h2>
+<div class="outline-text-2" id="text-2">
 <ol class="org-ol">
 <li>邮件发送时字符编码设置.</li>
 <li>发送邮件使用的方法.</li>
@@ -76,48 +88,46 @@ gnus-posting-styles设置
                      '(iso-8859-1 gb2312 gbk gb18030 utf-8))))))
 </pre>
 </div>
+</div>
+</div>
 
-
-<p>
+<div id="outline-container-org3871bbe" class="outline-2">
+<h2 id="org3871bbe"><span class="section-number-2">3</span> 其他一些常见的配置例子</h2>
+<div class="outline-text-2" id="text-3">
+<pre class="example">
 (add-to-list 'gnus-secondary-select-methods
              '(nnimap "gmail"
                       (nnimap-address "localhost")
                       (nnimap-stream network)))
+
 (add-to-list 'gnus-secondary-select-methods
              '(nnimap "163mail"
                       (nnimap-address "localhost")
                       (nnimap-stream network)))
+
 (add-to-list 'gnus-secondary-select-methods
              '(nnimap "qqmail"
                       (nnimap-address "localhost")
                       (nnimap-stream network)))
-</p>
 
-<p>
 (add-to-list 'gnus-secondary-select-methods
       '(nnimap "RSS"
            (nnimap-address "localhost")
            (nnimap-stream shell)
-           (nnimap-shell-program "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Maildir/rss:LAYOUT=fs")))
-</p>
+           (nnimap-shell-program
+            "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Maildir/rss:LAYOUT=fs")))
 
-<p>
 (setq gnus-select-method
       '(nnimap "gmail"
         (nnimap-address "imap.gmail.com")
         (nnimap-stream ssl)))
-</p>
 
-<p>
 (add-to-list 'gnus-secondary-select-methods
       '(nntp "news.gmane.org"))
-</p>
 
-<p>
 (add-to-list 'gnus-secondary-select-methods
       '(nntp "news.newsfan.net"))
-</p>
-
+</pre>
 
 <pre class="example">
 Local Variables:
@@ -125,6 +135,8 @@ coding: utf-8-unix
 no-byte-compile: t
 End:
 </pre>
+</div>
+</div>
 
 </div>
 </div>

@@ -32,36 +32,41 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org70bc7e3">1. 简介</a></li>
-<li><a href="#orgff300c9">2. 代码</a>
+<li><a href="#org34d20f8">1. 简介</a></li>
+<li><a href="#org6df189b">2. 代码</a>
 <ul>
-<li><a href="#org08f8d79">2.1. Full name and Email</a></li>
-<li><a href="#org0450d5d">2.2. 启动时默认打开的 buffer.</a></li>
-<li><a href="#orgb13a959">2.3. 使用空格缩进</a></li>
-<li><a href="#org702f5a8">2.4. 关闭 beep</a></li>
-<li><a href="#org1c6dbb4">2.5. 让 <b>scratch</b> buffer 无法删除</a></li>
-<li><a href="#orga0bbcde">2.6. 设置 load-path</a></li>
-<li><a href="#orgc838562">2.7. 设置 emacs 包管理器</a></li>
-<li><a href="#org5053c47">2.8. 安装 emacs-helper/elpa 目录下的所有的包</a></li>
-<li><a href="#org5485b9e">2.9. 使用 use-package</a></li>
-<li><a href="#org2c532f0">2.10. 设置主题</a></li>
-<li><a href="#orgb97d790">2.11. 启用 async</a></li>
-<li><a href="#org3083259">2.12. 设置 elpa-mirror</a></li>
-<li><a href="#org07f34b3">2.13. 设置 Charset</a></li>
-<li><a href="#org2b3d5ca">2.14. 保存文件之前，删除无用的空格</a></li>
-<li><a href="#org4f76d1f">2.15. 设置 Eshell</a></li>
-<li><a href="#org1d3f7fc">2.16. 设置 EWW</a></li>
-<li><a href="#org42c05ea">2.17. 设置拼音输入法</a></li>
-<li><a href="#org75808f4">2.18. 设置中文字体</a></li>
-<li><a href="#orgfebf54d">2.19. 设置 recentf</a></li>
-<li><a href="#org1f5a7ad">2.20. 设置 ibuffer</a></li>
+<li><a href="#orgce5ec95">2.1. Full name and Email</a></li>
+<li><a href="#org02f9a59">2.2. 启动时默认打开的 buffer.</a></li>
+<li><a href="#org036a511">2.3. 使用空格缩进</a></li>
+<li><a href="#org4c4cacb">2.4. 关闭 beep</a></li>
+<li><a href="#orgd6d5cc9">2.5. 让 <b>scratch</b> buffer 无法删除</a></li>
+<li><a href="#orgb431110">2.6. 设置 load-path</a></li>
+<li><a href="#orga2054d2">2.7. 设置 emacs 包管理器</a></li>
+<li><a href="#org2bd0b4e">2.8. 安装 emacs-helper/elpa 目录下的所有的包</a></li>
+<li><a href="#org3513fb7">2.9. 使用 use-package</a></li>
+<li><a href="#org63cd814">2.10. 设置主题</a></li>
+<li><a href="#org05370fd">2.11. 启用 async</a></li>
+<li><a href="#orge9901fe">2.12. 设置 elpa-mirror</a></li>
+<li><a href="#org35c109a">2.13. 设置 Charset</a></li>
+<li><a href="#org616ff6a">2.14. 保存文件之前，删除无用的空格</a></li>
+<li><a href="#org19f9f1c">2.15. 设置 Eshell</a></li>
+<li><a href="#orgd7fc8cf">2.16. 设置 EWW</a></li>
+<li><a href="#org401f3ec">2.17. 设置拼音输入法</a></li>
+<li><a href="#org399ae0b">2.18. 设置中文字体</a></li>
+<li><a href="#orga1bedb9">2.19. 设置 recentf</a></li>
+<li><a href="#org37fc5b6">2.20. 设置 ibuffer</a></li>
+<li><a href="#org92b3afc">2.21. 设置区域选择快捷键</a></li>
+<li><a href="#org8d5a603">2.22. 关闭 tool-bar</a></li>
+<li><a href="#orgb0e4332">2.23. 关闭 menu-bar</a></li>
+<li><a href="#org4ad024b">2.24. 关闭 scroll-bar</a></li>
+<li><a href="#orgaa9d231">2.25. 配对括号高亮显示</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org70bc7e3" class="outline-2">
-<h2 id="org70bc7e3"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org34d20f8" class="outline-2">
+<h2 id="org34d20f8"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -69,8 +74,8 @@
 </div>
 </div>
 
-<div id="outline-container-orgff300c9" class="outline-2">
-<h2 id="orgff300c9"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-org6df189b" class="outline-2">
+<h2 id="org6df189b"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">cl-lib</span>)
@@ -94,8 +99,8 @@
 </div>
 </div>
 
-<div id="outline-container-org08f8d79" class="outline-3">
-<h3 id="org08f8d79"><span class="section-number-3">2.1</span> Full name and Email</h3>
+<div id="outline-container-orgce5ec95" class="outline-3">
+<h3 id="orgce5ec95"><span class="section-number-3">2.1</span> Full name and Email</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">setq</span> user-full-name <span style="color: #61CE3C;">"Feng Shu"</span>)
@@ -105,8 +110,8 @@
 </div>
 </div>
 
-<div id="outline-container-org0450d5d" class="outline-3">
-<h3 id="org0450d5d"><span class="section-number-3">2.2</span> 启动时默认打开的 buffer.</h3>
+<div id="outline-container-org02f9a59" class="outline-3">
+<h3 id="org02f9a59"><span class="section-number-3">2.2</span> 启动时默认打开的 buffer.</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">setq</span> inhibit-startup-screen t)
@@ -118,8 +123,8 @@
 </div>
 </div>
 
-<div id="outline-container-orgb13a959" class="outline-3">
-<h3 id="orgb13a959"><span class="section-number-3">2.3</span> 使用空格缩进</h3>
+<div id="outline-container-org036a511" class="outline-3">
+<h3 id="org036a511"><span class="section-number-3">2.3</span> 使用空格缩进</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">setq-default</span> indent-tabs-mode nil)
@@ -130,8 +135,8 @@
 </div>
 </div>
 
-<div id="outline-container-org702f5a8" class="outline-3">
-<h3 id="org702f5a8"><span class="section-number-3">2.4</span> 关闭 beep</h3>
+<div id="outline-container-org4c4cacb" class="outline-3">
+<h3 id="org4c4cacb"><span class="section-number-3">2.4</span> 关闭 beep</h3>
 <div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">setq</span> visible-bell t)
@@ -140,8 +145,8 @@
 </div>
 </div>
 
-<div id="outline-container-org1c6dbb4" class="outline-3">
-<h3 id="org1c6dbb4"><span class="section-number-3">2.5</span> 让 <b>scratch</b> buffer 无法删除</h3>
+<div id="outline-container-orgd6d5cc9" class="outline-3">
+<h3 id="orgd6d5cc9"><span class="section-number-3">2.5</span> 让 <b>scratch</b> buffer 无法删除</h3>
 <div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-unkillable-scratch-buffer</span> ()
@@ -162,8 +167,8 @@
 </div>
 </div>
 
-<div id="outline-container-orga0bbcde" class="outline-3">
-<h3 id="orga0bbcde"><span class="section-number-3">2.6</span> 设置 load-path</h3>
+<div id="outline-container-orgb431110" class="outline-3">
+<h3 id="orgb431110"><span class="section-number-3">2.6</span> 设置 load-path</h3>
 <div class="outline-text-3" id="text-2-6">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defvar</span> <span style="color: #ff69b4;">eh-enable-load-path-hack</span> t)
@@ -220,8 +225,8 @@
 </div>
 </div>
 
-<div id="outline-container-orgc838562" class="outline-3">
-<h3 id="orgc838562"><span class="section-number-3">2.7</span> 设置 emacs 包管理器</h3>
+<div id="outline-container-orga2054d2" class="outline-3">
+<h3 id="orga2054d2"><span class="section-number-3">2.7</span> 设置 emacs 包管理器</h3>
 <div class="outline-text-3" id="text-2-7">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">package</span>)
@@ -268,8 +273,8 @@
 </div>
 </div>
 
-<div id="outline-container-org5053c47" class="outline-3">
-<h3 id="org5053c47"><span class="section-number-3">2.8</span> 安装 emacs-helper/elpa 目录下的所有的包</h3>
+<div id="outline-container-org2bd0b4e" class="outline-3">
+<h3 id="org2bd0b4e"><span class="section-number-3">2.8</span> 安装 emacs-helper/elpa 目录下的所有的包</h3>
 <div class="outline-text-3" id="text-2-8">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-get-elpa-mirror-packages</span> ()
@@ -299,8 +304,8 @@
 </div>
 </div>
 
-<div id="outline-container-org5485b9e" class="outline-3">
-<h3 id="org5485b9e"><span class="section-number-3">2.9</span> 使用 use-package</h3>
+<div id="outline-container-org3513fb7" class="outline-3">
+<h3 id="org3513fb7"><span class="section-number-3">2.9</span> 使用 use-package</h3>
 <div class="outline-text-3" id="text-2-9">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">use-package</span>)
@@ -309,8 +314,8 @@
 </div>
 </div>
 
-<div id="outline-container-org2c532f0" class="outline-3">
-<h3 id="org2c532f0"><span class="section-number-3">2.10</span> 设置主题</h3>
+<div id="outline-container-org63cd814" class="outline-3">
+<h3 id="org63cd814"><span class="section-number-3">2.10</span> 设置主题</h3>
 <div class="outline-text-3" id="text-2-10">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">cyberpunk-theme</span>
@@ -322,8 +327,8 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgb97d790" class="outline-3">
-<h3 id="orgb97d790"><span class="section-number-3">2.11</span> 启用 async</h3>
+<div id="outline-container-org05370fd" class="outline-3">
+<h3 id="org05370fd"><span class="section-number-3">2.11</span> 启用 async</h3>
 <div class="outline-text-3" id="text-2-11">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">async</span>)
@@ -332,8 +337,8 @@
 </div>
 </div>
 
-<div id="outline-container-org3083259" class="outline-3">
-<h3 id="org3083259"><span class="section-number-3">2.12</span> 设置 elpa-mirror</h3>
+<div id="outline-container-orge9901fe" class="outline-3">
+<h3 id="orge9901fe"><span class="section-number-3">2.12</span> 设置 elpa-mirror</h3>
 <div class="outline-text-3" id="text-2-12">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">elpa-mirror</span>
@@ -352,8 +357,8 @@
 </div>
 </div>
 
-<div id="outline-container-org07f34b3" class="outline-3">
-<h3 id="org07f34b3"><span class="section-number-3">2.13</span> 设置 Charset</h3>
+<div id="outline-container-org35c109a" class="outline-3">
+<h3 id="org35c109a"><span class="section-number-3">2.13</span> 设置 Charset</h3>
 <div class="outline-text-3" id="text-2-13">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">mule</span>
@@ -379,8 +384,8 @@
 </div>
 </div>
 
-<div id="outline-container-org2b3d5ca" class="outline-3">
-<h3 id="org2b3d5ca"><span class="section-number-3">2.14</span> 保存文件之前，删除无用的空格</h3>
+<div id="outline-container-org616ff6a" class="outline-3">
+<h3 id="org616ff6a"><span class="section-number-3">2.14</span> 保存文件之前，删除无用的空格</h3>
 <div class="outline-text-3" id="text-2-14">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">files</span>
@@ -402,8 +407,8 @@
 </div>
 </div>
 
-<div id="outline-container-org4f76d1f" class="outline-3">
-<h3 id="org4f76d1f"><span class="section-number-3">2.15</span> 设置 Eshell</h3>
+<div id="outline-container-org19f9f1c" class="outline-3">
+<h3 id="org19f9f1c"><span class="section-number-3">2.15</span> 设置 Eshell</h3>
 <div class="outline-text-3" id="text-2-15">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eshell</span>
@@ -434,8 +439,8 @@
 </div>
 </div>
 
-<div id="outline-container-org1d3f7fc" class="outline-3">
-<h3 id="org1d3f7fc"><span class="section-number-3">2.16</span> 设置 EWW</h3>
+<div id="outline-container-orgd7fc8cf" class="outline-3">
+<h3 id="orgd7fc8cf"><span class="section-number-3">2.16</span> 设置 EWW</h3>
 <div class="outline-text-3" id="text-2-16">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eww</span>
@@ -451,8 +456,8 @@
 </div>
 </div>
 
-<div id="outline-container-org42c05ea" class="outline-3">
-<h3 id="org42c05ea"><span class="section-number-3">2.17</span> 设置拼音输入法</h3>
+<div id="outline-container-org401f3ec" class="outline-3">
+<h3 id="org401f3ec"><span class="section-number-3">2.17</span> 设置拼音输入法</h3>
 <div class="outline-text-3" id="text-2-17">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim</span>
@@ -500,8 +505,8 @@
 </div>
 </div>
 
-<div id="outline-container-org75808f4" class="outline-3">
-<h3 id="org75808f4"><span class="section-number-3">2.18</span> 设置中文字体</h3>
+<div id="outline-container-org399ae0b" class="outline-3">
+<h3 id="org399ae0b"><span class="section-number-3">2.18</span> 设置中文字体</h3>
 <div class="outline-text-3" id="text-2-18">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-fonts-setup</span>
@@ -519,8 +524,8 @@
 </div>
 </div>
 
-<div id="outline-container-orgfebf54d" class="outline-3">
-<h3 id="orgfebf54d"><span class="section-number-3">2.19</span> 设置 recentf</h3>
+<div id="outline-container-orga1bedb9" class="outline-3">
+<h3 id="orga1bedb9"><span class="section-number-3">2.19</span> 设置 recentf</h3>
 <div class="outline-text-3" id="text-2-19">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">recentf</span>
@@ -543,8 +548,8 @@
 </div>
 </div>
 
-<div id="outline-container-org1f5a7ad" class="outline-3">
-<h3 id="org1f5a7ad"><span class="section-number-3">2.20</span> 设置 ibuffer</h3>
+<div id="outline-container-org37fc5b6" class="outline-3">
+<h3 id="org37fc5b6"><span class="section-number-3">2.20</span> 设置 ibuffer</h3>
 <div class="outline-text-3" id="text-2-20">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ibuffer</span>
@@ -552,7 +557,12 @@
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x b"</span> . ibuffer)))
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-org92b3afc" class="outline-3">
+<h3 id="org92b3afc"><span class="section-number-3">2.21</span> 设置区域选择快捷键</h3>
+<div class="outline-text-3" id="text-2-21">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">simple</span>
   <span style="color: #4c83ff;">:ensure</span> nil
@@ -572,7 +582,12 @@
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x C-x &lt;SPC&gt;"</span> . rectangle-mark-mode)))
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-org8d5a603" class="outline-3">
+<h3 id="org8d5a603"><span class="section-number-3">2.22</span> 关闭 tool-bar</h3>
+<div class="outline-text-3" id="text-2-22">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">tool-bar</span>
   <span style="color: #4c83ff;">:ensure</span> nil
@@ -581,7 +596,12 @@
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x k"</span> . kill-this-buffer)))
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-orgb0e4332" class="outline-3">
+<h3 id="orgb0e4332"><span class="section-number-3">2.23</span> 关闭 menu-bar</h3>
+<div class="outline-text-3" id="text-2-23">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">menu-bar</span>
   <span style="color: #4c83ff;">:ensure</span> nil
@@ -590,7 +610,12 @@
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x k"</span> . kill-this-buffer)))
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-org4ad024b" class="outline-3">
+<h3 id="org4ad024b"><span class="section-number-3">2.24</span> 关闭 scroll-bar</h3>
+<div class="outline-text-3" id="text-2-24">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">scroll-bar</span>
   <span style="color: #4c83ff;">:ensure</span> nil
@@ -598,12 +623,16 @@
   (scroll-bar-mode -1))
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-orgaa9d231" class="outline-3">
+<h3 id="orgaa9d231"><span class="section-number-3">2.25</span> 配对括号高亮显示</h3>
+<div class="outline-text-3" id="text-2-25">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">paren</span>
   <span style="color: #4c83ff;">:ensure</span> nil
   <span style="color: #4c83ff;">:config</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#39640;&#20142;&#37197;&#23545;&#30340;&#25324;&#21495;</span>
   (show-paren-mode 1))
 </pre>
 </div>

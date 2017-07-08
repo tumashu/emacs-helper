@@ -32,13 +32,34 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1013542">1. 简介</a></li>
-<li><a href="#org9dbdc06">2. 代码</a></li>
+<li><a href="#orga24c7c4">1. 简介</a></li>
+<li><a href="#orgb2e4443">2. 代码</a>
+<ul>
+<li><a href="#org27bc65b">2.1. eh-website</a></li>
+<li><a href="#org8683c48">2.2. el2org</a></li>
+<li><a href="#org692594d">2.3. EPG</a></li>
+<li><a href="#org5575d5d">2.4. sdcv</a></li>
+<li><a href="#org28ebbb4">2.5. emms</a></li>
+<li><a href="#org9dd072b">2.6. elisp setting</a></li>
+<li><a href="#org6dfbe6a">2.7. org-journal</a></li>
+<li><a href="#org57e1030">2.8. ESS</a></li>
+<li><a href="#orge14bae1">2.9. aggressive-indent</a></li>
+<li><a href="#org8304b25">2.10. autopair</a></li>
+<li><a href="#orgbcb04d6">2.11. multi-term</a></li>
+<li><a href="#org3ccee48">2.12. magit</a></li>
+<li><a href="#orgcd2759f">2.13. wdired and dired-ranger</a></li>
+<li><a href="#org789ebb9">2.14. ace-jump</a></li>
+<li><a href="#org304afcb">2.15. switch-window</a></li>
+<li><a href="#orgcc1a4b6">2.16. projectile</a></li>
+<li><a href="#orga06161c">2.17. undo-tree</a></li>
+<li><a href="#org80ed017">2.18. emacs-calfw</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1013542" class="outline-2">
-<h2 id="org1013542"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orga24c7c4" class="outline-2">
+<h2 id="orga24c7c4"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -46,12 +67,12 @@
 </div>
 </div>
 
-<div id="outline-container-org9dbdc06" class="outline-2">
-<h2 id="org9dbdc06"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-orgb2e4443" class="outline-2">
+<h2 id="orgb2e4443"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
-<p>
-eh-website
-</p>
+</div><div id="outline-container-org27bc65b" class="outline-3">
+<h3 id="org27bc65b"><span class="section-number-3">2.1</span> eh-website</h3>
+<div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-webpage</span>
   <span style="color: #4c83ff;">:config</span>
@@ -69,19 +90,22 @@ eh-website
       <span style="color: #4c83ff;">:ensure</span> nil)))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-el2org
-</p>
+<div id="outline-container-org8683c48" class="outline-3">
+<h3 id="org8683c48"><span class="section-number-3">2.2</span> el2org</h3>
+<div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">el2org</span>)
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-EPG
-</p>
-
+<div id="outline-container-org692594d" class="outline-3">
+<h3 id="org692594d"><span class="section-number-3">2.3</span> EPG</h3>
+<div class="outline-text-3" id="text-2-3">
 <ol class="org-ol">
 <li>Put the below to your ~/.gnupg/gpg-agent.conf:
 allow-emacs-pinentry
@@ -97,10 +121,12 @@ allow-loopback-pinentry</li>
   (<span style="color: #4c83ff;">setq</span> epa-pinentry-mode 'loopback))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-sdcv
-</p>
+<div id="outline-container-org5575d5d" class="outline-3">
+<h3 id="org5575d5d"><span class="section-number-3">2.4</span> sdcv</h3>
+<div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-yasdcv</span>
   <span style="color: #4c83ff;">:ensure</span> nil
@@ -108,19 +134,23 @@ sdcv
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c d"</span> . yasdcv-translate-at-point)))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-emms
-</p>
+<div id="outline-container-org28ebbb4" class="outline-3">
+<h3 id="org28ebbb4"><span class="section-number-3">2.5</span> emms</h3>
+<div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-emms</span>
   <span style="color: #4c83ff;">:ensure</span> nil)
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-elisp setting
-</p>
+<div id="outline-container-org9dd072b" class="outline-3">
+<h3 id="org9dd072b"><span class="section-number-3">2.6</span> elisp setting</h3>
+<div class="outline-text-3" id="text-2-6">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">lisp-mode</span>
   <span style="color: #4c83ff;">:ensure</span> nil
@@ -138,10 +168,12 @@ elisp setting
               #'eh-elisp-setup)))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-org-journal
-</p>
+<div id="outline-container-org6dfbe6a" class="outline-3">
+<h3 id="org6dfbe6a"><span class="section-number-3">2.7</span> org-journal</h3>
+<div class="outline-text-3" id="text-2-7">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-journal</span>
   <span style="color: #4c83ff;">:config</span>
@@ -160,10 +192,12 @@ org-journal
   ((<span style="color: #61CE3C;">"C-c C-j"</span> . org-journal-new-entry)))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-ESS
-</p>
+<div id="outline-container-org57e1030" class="outline-3">
+<h3 id="org57e1030"><span class="section-number-3">2.8</span> ESS</h3>
+<div class="outline-text-3" id="text-2-8">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ess</span>
   <span style="color: #4c83ff;">:config</span>
@@ -188,28 +222,34 @@ ESS
          (<span style="color: #61CE3C;">"C-c C-c"</span> . eh-ess-eval-paragraph)))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-aggressive-indent
-</p>
+<div id="outline-container-orge14bae1" class="outline-3">
+<h3 id="orge14bae1"><span class="section-number-3">2.9</span> aggressive-indent</h3>
+<div class="outline-text-3" id="text-2-9">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">aggressive-indent</span>)
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-autopair
-</p>
+<div id="outline-container-org8304b25" class="outline-3">
+<h3 id="org8304b25"><span class="section-number-3">2.10</span> autopair</h3>
+<div class="outline-text-3" id="text-2-10">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">autopair</span>
   <span style="color: #4c83ff;">:config</span>
   (autopair-global-mode 1))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-multi-term
-</p>
+<div id="outline-container-orgbcb04d6" class="outline-3">
+<h3 id="orgbcb04d6"><span class="section-number-3">2.11</span> multi-term</h3>
+<div class="outline-text-3" id="text-2-11">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">multi-term</span>
   <span style="color: #4c83ff;">:config</span>
@@ -253,10 +293,12 @@ multi-term
     (term-send-raw-string <span style="color: #61CE3C;">"\C-h"</span>)))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-magit
-</p>
+<div id="outline-container-org3ccee48" class="outline-3">
+<h3 id="org3ccee48"><span class="section-number-3">2.12</span> magit</h3>
+<div class="outline-text-3" id="text-2-12">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">magit</span>
   <span style="color: #4c83ff;">:config</span>
@@ -264,10 +306,12 @@ magit
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c g"</span> . magit-status)))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-wdired and dired-ranger
-</p>
+<div id="outline-container-orgcd2759f" class="outline-3">
+<h3 id="orgcd2759f"><span class="section-number-3">2.13</span> wdired and dired-ranger</h3>
+<div class="outline-text-3" id="text-2-13">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired</span>
   <span style="color: #4c83ff;">:ensure</span> nil
@@ -276,10 +320,12 @@ wdired and dired-ranger
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired-ranger</span>))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-ace-jump
-</p>
+<div id="outline-container-org789ebb9" class="outline-3">
+<h3 id="org789ebb9"><span class="section-number-3">2.14</span> ace-jump</h3>
+<div class="outline-text-3" id="text-2-14">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ace-jump-mode</span>
   <span style="color: #4c83ff;">:init</span>
@@ -287,10 +333,12 @@ ace-jump
   (<span style="color: #4c83ff;">bind-key</span> <span style="color: #61CE3C;">"C-j"</span> 'ace-jump-mode))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-switch window
-</p>
+<div id="outline-container-org304afcb" class="outline-3">
+<h3 id="org304afcb"><span class="section-number-3">2.15</span> switch-window</h3>
+<div class="outline-text-3" id="text-2-15">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">switch-window</span>
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x o"</span> . switch-window)
@@ -304,10 +352,12 @@ switch window
   (<span style="color: #4c83ff;">setq</span> switch-window-input-style 'minibuffer))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-General project support
-</p>
+<div id="outline-container-orgcc1a4b6" class="outline-3">
+<h3 id="orgcc1a4b6"><span class="section-number-3">2.16</span> projectile</h3>
+<div class="outline-text-3" id="text-2-16">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">projectile</span>
   <span style="color: #4c83ff;">:config</span>
@@ -321,10 +371,12 @@ General project support
    (<span style="color: #61CE3C;">"C-S-s"</span> . projectile-grep)))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-undo tree
-</p>
+<div id="outline-container-orga06161c" class="outline-3">
+<h3 id="orga06161c"><span class="section-number-3">2.17</span> undo-tree</h3>
+<div class="outline-text-3" id="text-2-17">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">undo-tree</span>
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c /"</span> . undo-tree-visualize))
@@ -340,10 +392,12 @@ undo tree
     (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"C-g"</span>) 'undo-tree-visualizer-abort)))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-calfw
-</p>
+<div id="outline-container-org80ed017" class="outline-3">
+<h3 id="org80ed017"><span class="section-number-3">2.18</span> emacs-calfw</h3>
+<div class="outline-text-3" id="text-2-18">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">holidays</span>
   <span style="color: #4c83ff;">:ensure</span> nil
@@ -480,6 +534,7 @@ calfw
       <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">orgmode source</span>
       (cfw:org-create-source <span style="color: #61CE3C;">"Green"</span>)))))
 </pre>
+</div>
 </div>
 </div>
 </div>

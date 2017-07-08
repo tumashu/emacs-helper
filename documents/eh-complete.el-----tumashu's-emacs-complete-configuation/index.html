@@ -32,13 +32,19 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org287ca79">1. 简介</a></li>
-<li><a href="#orge9dc09a">2. 代码</a></li>
+<li><a href="#orge1829e0">1. 简介</a></li>
+<li><a href="#org68b3b73">2. 代码</a>
+<ul>
+<li><a href="#orgb0310dc">2.1. 设置 smex</a></li>
+<li><a href="#org5d0d3c7">2.2. 设置 swiper 和 ivy-mode</a></li>
+<li><a href="#orgdd23ff9">2.3. 设置 company-mode</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org287ca79" class="outline-2">
-<h2 id="org287ca79"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orge1829e0" class="outline-2">
+<h2 id="orge1829e0"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -46,19 +52,24 @@
 </div>
 </div>
 
-<div id="outline-container-orge9dc09a" class="outline-2">
-<h2 id="orge9dc09a"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-org68b3b73" class="outline-2">
+<h2 id="org68b3b73"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
-<p>
-smex swiper and ivy-mode
-</p>
+</div><div id="outline-container-orgb0310dc" class="outline-3">
+<h3 id="orgb0310dc"><span class="section-number-3">2.1</span> 设置 smex</h3>
+<div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">smex</span>
   <span style="color: #4c83ff;">:config</span>
   (smex-initialize))
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-org5d0d3c7" class="outline-3">
+<h3 id="org5d0d3c7"><span class="section-number-3">2.2</span> 设置 swiper 和 ivy-mode</h3>
+<div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">swiper</span>
   <span style="color: #4c83ff;">:config</span>
@@ -90,10 +101,12 @@ smex swiper and ivy-mode
   (define-key ivy-minibuffer-map (kbd <span style="color: #61CE3C;">"C-f"</span>) 'ivy-immediate-done))
 </pre>
 </div>
+</div>
+</div>
 
-<p>
-company-mode
-</p>
+<div id="outline-container-orgdd23ff9" class="outline-3">
+<h3 id="orgdd23ff9"><span class="section-number-3">2.3</span> 设置 company-mode</h3>
+<div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">company</span>
   <span style="color: #4c83ff;">:config</span>
@@ -146,6 +159,7 @@ company-mode
 
   (advice-add 'company-dabbrev--prefix <span style="color: #4c83ff;">:around</span> #'eh-company-dabbrev--prefix))
 </pre>
+</div>
 </div>
 </div>
 </div>
