@@ -32,13 +32,13 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5559758">1. 简介</a></li>
-<li><a href="#org70ac01b">2. 代码</a></li>
+<li><a href="#org8706310">1. 简介</a></li>
+<li><a href="#org4ee5cd4">2. 代码</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org5559758" class="outline-2">
-<h2 id="org5559758"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org8706310" class="outline-2">
+<h2 id="org8706310"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -46,8 +46,8 @@
 </div>
 </div>
 
-<div id="outline-container-org70ac01b" class="outline-2">
-<h2 id="org70ac01b"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-org4ee5cd4" class="outline-2">
+<h2 id="org4ee5cd4"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gnus</span>
@@ -59,6 +59,9 @@
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">nnir</span> <span style="color: #4c83ff;">:ensure</span> nil)
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gnus-demon</span> <span style="color: #4c83ff;">:ensure</span> nil)
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eww</span> <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gnus-select-account</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span> (gnus-select-account-enable))
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#37038;&#20214;&#20998;&#31867;&#35774;&#32622;</span>
   (<span style="color: #4c83ff;">setq</span> nnmail-treat-duplicates 'delete
@@ -68,7 +71,7 @@
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#23384;&#20648;&#35774;&#32622;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-startup-file <span style="color: #61CE3C;">"~/Gnus/.newsrc"</span>)                  <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">&#21021;&#22987;&#25991;&#20214;</span>
-  (<span style="color: #4c83ff;">setq</span> gnus-init-file <span style="color: #61CE3C;">"~/Gnus/.gnus"</span>)                       <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">.gnus&#20301;&#32622;</span>
+  (<span style="color: #4c83ff;">setq</span> gnus-init-file <span style="color: #61CE3C;">"~/Gnus/.gnus"</span>)                       <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">.gnus &#20301;&#32622;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-default-directory nil)                          <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">&#40664;&#35748;&#30446;&#24405;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-home-directory <span style="color: #61CE3C;">"~/"</span>)                            <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">&#20027;&#30446;&#24405;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-dribble-directory <span style="color: #61CE3C;">"~/Gnus/"</span>)                    <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">&#24674;&#22797;&#30446;&#24405;</span>
@@ -81,20 +84,15 @@
   (<span style="color: #4c83ff;">setq</span> message-directory <span style="color: #61CE3C;">"~/Gnus/Mail/"</span>)                    <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">&#37038;&#20214;&#30340;&#23384;&#20648;&#30446;&#24405;</span>
   (<span style="color: #4c83ff;">setq</span> message-auto-save-directory <span style="color: #61CE3C;">"~/Gnus/Mail/drafts"</span>)    <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">&#33258;&#21160;&#20445;&#23384;&#30340;&#30446;&#24405;</span>
   (<span style="color: #4c83ff;">setq</span> mail-source-directory <span style="color: #61CE3C;">"~/Gnus/Mail/incoming"</span>)        <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">&#37038;&#20214;&#30340;&#28304;&#30446;&#24405;</span>
-  (<span style="color: #4c83ff;">setq</span> nnmail-message-id-cache-file <span style="color: #61CE3C;">"~/Gnus/.nnmail-cache"</span>) <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">nnmail&#30340;&#28040;&#24687;ID&#32531;&#23384;</span>
+  (<span style="color: #4c83ff;">setq</span> nnmail-message-id-cache-file <span style="color: #61CE3C;">"~/Gnus/.nnmail-cache"</span>) <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">nnmail &#30340;&#28040;&#24687;ID&#32531;&#23384;</span>
   (<span style="color: #4c83ff;">setq</span> nnml-newsgroups-file <span style="color: #61CE3C;">"~/Gnus/Mail/newsgroup"</span>)        <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">&#37038;&#20214;&#26032;&#38395;&#32452;&#35299;&#37322;&#25991;&#20214;</span>
-  (<span style="color: #4c83ff;">setq</span> nntp-marks-directory <span style="color: #61CE3C;">"~/Gnus/News/marks"</span>)            <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">nntp&#32452;&#23384;&#20648;&#30446;&#24405;</span>
+  (<span style="color: #4c83ff;">setq</span> nntp-marks-directory <span style="color: #61CE3C;">"~/Gnus/News/marks"</span>)            <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">nntp &#32452;&#23384;&#20648;&#30446;&#24405;</span>
   (<span style="color: #4c83ff;">setq</span> mml-default-directory <span style="color: #61CE3C;">"~/"</span>)                          <span style="color: #8B8989; font-style: italic;">;</span><span style="color: #8B8989; font-style: italic;">&#38468;&#20214;&#30340;&#23384;&#20648;&#20301;&#32622;</span>
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622;&#26700;&#38754;&#25552;&#37266;&#21151;&#33021;</span>
-  (<span style="color: #4c83ff;">setq</span> gnus-notifications-minimum-level 1)
-  (<span style="color: #4c83ff;">setq</span> gnus-notifications-use-google-contacts nil)
-  (<span style="color: #4c83ff;">setq</span> gnus-notifications-use-gravatar nil)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#40664;&#35748;&#31105;&#29992;nnfolder</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#40664;&#35748;&#31105;&#29992; nnfolder</span>
   (<span style="color: #4c83ff;">setq</span> gnus-message-archive-group nil)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622;message-mode&#21457;&#20449;&#30340;&#26041;&#24335;&#65292;&#36825;&#37324;&#40664;&#35748;&#20351;&#29992;/usr/sbin/sendmail.</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622; message-mode &#21457;&#20449;&#30340;&#26041;&#24335;&#65292;&#36825;&#37324;&#40664;&#35748;&#20351;&#29992;/usr/sbin/sendmail.</span>
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#22312; `</span><span style="color: #96CBFE; font-style: italic;">gnus-posting-styles</span><span style="color: #8B8989; font-style: italic;">' &#20013;&#35774;&#32622; "X-Message-SMTP-Method" &#37038;&#20214;&#22836;&#21487;&#20197;&#23454;&#29616;</span>
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26356;&#20026;&#22797;&#26434;&#30340;&#37038;&#20214;&#21457;&#36865;&#26041;&#24335;&#12290;</span>
   (<span style="color: #4c83ff;">setq</span> message-send-mail-function 'message-smtpmail-send-it)
@@ -157,28 +155,21 @@
   (<span style="color: #4c83ff;">setq</span> nnmail-expiry-wait 7)                         <span style="color: #8B8989; font-style: italic;">; </span><span style="color: #8B8989; font-style: italic;">&#37038;&#20214;&#33258;&#21160;&#21024;&#38500;&#30340;&#26399;&#38480; (&#21333;&#20301;: &#22825;)</span>
   (<span style="color: #4c83ff;">setq</span> nnmairix-allowfast-default t)                 <span style="color: #8B8989; font-style: italic;">; </span><span style="color: #8B8989; font-style: italic;">&#21152;&#24555;&#36827;&#20837;&#25628;&#32034;&#32467;&#26524;&#30340;&#32452;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-use-correct-string-widths t)             <span style="color: #8B8989; font-style: italic;">; </span><span style="color: #8B8989; font-style: italic;">&#20351;&#29992;&#27491;&#30830;&#30340;&#23383;&#31526;&#23485;&#24230;</span>
-  (<span style="color: #4c83ff;">setq</span> gc-cons-threshold 3500000)                    <span style="color: #8B8989; font-style: italic;">; </span><span style="color: #8B8989; font-style: italic;">&#21152;&#24555;gnus&#30340;&#36895;&#24230;</span>
+  (<span style="color: #4c83ff;">setq</span> gc-cons-threshold 3500000)                    <span style="color: #8B8989; font-style: italic;">; </span><span style="color: #8B8989; font-style: italic;">&#21152;&#24555; gnus &#30340;&#36895;&#24230;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-use-cross-reference t)                   <span style="color: #8B8989; font-style: italic;">; </span><span style="color: #8B8989; font-style: italic;">&#24320;&#21551;&#20132;&#21449;&#32034;&#24341;</span>
-  (<span style="color: #4c83ff;">setq</span> gnus-summary-display-while-building 50)       <span style="color: #8B8989; font-style: italic;">; </span><span style="color: #8B8989; font-style: italic;">&#29983;&#25104;summary&#26102;,&#27599;50&#23553;&#26174;&#31034;&#19968;&#19979;</span>
+  (<span style="color: #4c83ff;">setq</span> gnus-summary-display-while-building 50)       <span style="color: #8B8989; font-style: italic;">; </span><span style="color: #8B8989; font-style: italic;">&#29983;&#25104; summary &#26102;,&#27599;50&#23553;&#26174;&#31034;&#19968;&#19979;</span>
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#36827;&#20837;summer&#27169;&#24335;&#26102;&#65292;&#31105;&#27490;&#33258;&#21160;&#36873;&#25321;&#31532;&#19968;&#20010;article,</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#36825;&#26679;&#35774;&#32622;&#20027;&#35201;&#26159;&#22240;&#20026;&#26377;&#20123;article&#19979;&#36733;&#36895;&#24230;&#26497;&#24930;&#65292;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#36827;&#20837; summer &#27169;&#24335;&#26102;&#65292;&#31105;&#27490;&#33258;&#21160;&#36873;&#25321;&#31532;&#19968;&#20010;article,</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#36825;&#26679;&#35774;&#32622;&#20027;&#35201;&#26159;&#22240;&#20026;&#26377;&#20123; article &#19979;&#36733;&#36895;&#24230;&#26497;&#24930;&#65292;</span>
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20250;&#38477;&#20302;&#21709;&#24212;&#36895;&#24230;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-auto-select-first nil)
   (<span style="color: #4c83ff;">setq</span> gnus-auto-select-next nil)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622;gnus&#21551;&#21160;&#26102;,&#32452;&#32423;&#21035;&#22823;&#20110;3&#30340;&#19981;&#33258;&#21160;&#26356;&#26032;&#12290;</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#24403;&#20320;&#28155;&#21152;&#20102;&#35768;&#22810;&#36895;&#24230;&#24930;&#30340;&#32452;&#26102;&#65292;&#27604;&#22914;rss,imap&#31561;&#65292;&#21551;&#21160;&#36895;&#24230;&#20250;&#30456;&#24403;&#24930;&#12290;&#36825;&#26102;&#20320;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622; gnus &#21551;&#21160;&#26102;,&#32452;&#32423;&#21035;&#22823;&#20110;3&#30340;&#19981;&#33258;&#21160;&#26356;&#26032;&#12290;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#24403;&#20320;&#28155;&#21152;&#20102;&#35768;&#22810;&#36895;&#24230;&#24930;&#30340;&#32452;&#26102;&#65292;&#27604;&#22914; rss,imap &#31561;&#65292;&#21551;&#21160;&#36895;&#24230;&#20250;&#30456;&#24403;&#24930;&#12290;&#36825;&#26102;&#20320;</span>
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#21487;&#20197;&#25226;&#23427;&#20204;&#30340;&#32452;&#32423;&#21035;&#35774;&#32622;&#20026;&#22823;&#20110;3&#30340;&#20540;&#65292;&#36825;&#26679;&#21551;&#21160;&#26102;&#23601;&#19981;&#33258;&#21160;&#26356;&#26032;&#20102;&#12290;</span>
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#24403;&#20320;&#38656;&#35201;&#26356;&#26032;&#36825;&#20123;&#32452;&#30340;&#26102;&#20505;&#65292;&#20351;&#29992; "4-g" "5-g" &#31561;&#24555;&#25463;&#38190;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-activate-level 3)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#21452;&#31383;&#21475;&#24067;&#23616;(&#22402;&#30452;)</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(gnus-add-configuration</span>
-  <span style="color: #8B8989; font-style: italic;">;;  </span><span style="color: #8B8989; font-style: italic;">'(article</span>
-  <span style="color: #8B8989; font-style: italic;">;;    </span><span style="color: #8B8989; font-style: italic;">(horizontal 1.0</span>
-  <span style="color: #8B8989; font-style: italic;">;;         </span><span style="color: #8B8989; font-style: italic;">(summary 0.50 point)</span>
-  <span style="color: #8B8989; font-style: italic;">;;         </span><span style="color: #8B8989; font-style: italic;">(article 1.0))))</span>
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#21452;&#31383;&#21475;&#24067;&#23616;(&#27700;&#24179;)</span>
   (gnus-add-configuration
@@ -187,125 +178,29 @@
                (summary 0.25 point)
                (article 1.0))))
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#19977;&#31383;&#21475;&#24067;&#23616;</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(gnus-add-configuration</span>
-  <span style="color: #8B8989; font-style: italic;">;;  </span><span style="color: #8B8989; font-style: italic;">'(article</span>
-  <span style="color: #8B8989; font-style: italic;">;;    </span><span style="color: #8B8989; font-style: italic;">(horizontal 1.0</span>
-  <span style="color: #8B8989; font-style: italic;">;;         </span><span style="color: #8B8989; font-style: italic;">(vertical 25</span>
-  <span style="color: #8B8989; font-style: italic;">;;           </span><span style="color: #8B8989; font-style: italic;">(group 1.0))</span>
-  <span style="color: #8B8989; font-style: italic;">;;         </span><span style="color: #8B8989; font-style: italic;">(vertical 1.0</span>
-  <span style="color: #8B8989; font-style: italic;">;;           </span><span style="color: #8B8989; font-style: italic;">(summary 0.25 point)</span>
-  <span style="color: #8B8989; font-style: italic;">;;           </span><span style="color: #8B8989; font-style: italic;">(article 1.0)))))</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(gnus-add-configuration</span>
-  <span style="color: #8B8989; font-style: italic;">;;  </span><span style="color: #8B8989; font-style: italic;">'(summary</span>
-  <span style="color: #8B8989; font-style: italic;">;;    </span><span style="color: #8B8989; font-style: italic;">(horizontal 1.0</span>
-  <span style="color: #8B8989; font-style: italic;">;;         </span><span style="color: #8B8989; font-style: italic;">(vertical 25</span>
-  <span style="color: #8B8989; font-style: italic;">;;           </span><span style="color: #8B8989; font-style: italic;">(group 1.0))</span>
-  <span style="color: #8B8989; font-style: italic;">;;         </span><span style="color: #8B8989; font-style: italic;">(vertical 1.0</span>
-  <span style="color: #8B8989; font-style: italic;">;;           </span><span style="color: #8B8989; font-style: italic;">(summary 1.0 point)))))</span>
-
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622;&#22270;&#29255;&#26174;&#31034;&#26041;&#24335;</span>
   (<span style="color: #4c83ff;">setq</span> mm-inline-large-images t)
   (add-to-list 'mm-attachment-override-types <span style="color: #61CE3C;">"image/*"</span>)
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622;summary&#32531;&#20914;&#21306;&#30340;&#26174;&#31034;&#26684;&#24335;</span>
-  (<span style="color: #4c83ff;">setq</span> gnus-extra-headers
-        '(To From))
+  (<span style="color: #4c83ff;">setq</span> gnus-extra-headers '(To From))
   (<span style="color: #4c83ff;">setq</span> nnmail-extra-headers gnus-extra-headers)
   (<span style="color: #4c83ff;">setq</span> gnus-summary-gather-subject-limit 'fuzzy)
   (<span style="color: #4c83ff;">setq</span> gnus-summary-make-false-root 'adopt)
-  (<span style="color: #4c83ff;">setq</span> gnus-summary-line-format
-        (concat
-         <span style="color: #61CE3C;">"%U%R |"</span>
-         <span style="color: #61CE3C;">"%ua"</span>
-         <span style="color: #61CE3C;">"%2{%ub%}"</span>
-         <span style="color: #61CE3C;">"%uc"</span>
-         <span style="color: #61CE3C;">"%B"</span>
-         <span style="color: #61CE3C;">"%I"</span>
-         <span style="color: #61CE3C;">"%2{%ud%}"</span>
-         <span style="color: #61CE3C;">"%ue"</span>
-         <span style="color: #61CE3C;">"%3{%uf%}"</span>
-         <span style="color: #61CE3C;">"\n"</span>))
+  (<span style="color: #4c83ff;">setq</span> gnus-summary-line-format <span style="color: #61CE3C;">"%U%R%z %&amp;user-date; |%I%B%s\n"</span>)
 
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-gnus-find-invisible-foreground</span> ()
-    (<span style="color: #4c83ff;">let</span> ((candidates
-           (remove
-            <span style="color: #61CE3C;">"unspecified-bg"</span>
-            (nconc
-             (list (face-background 'default))
-             (mapcar
-              (<span style="color: #4c83ff;">lambda</span> (alist)
-                (<span style="color: #4c83ff;">when</span> (boundp alist)
-                  (cdr (assoc 'background-color (symbol-value alist)))))
-              '(default-frame-alist initial-frame-alist
-                 window-system-default-frame-alist))
-             (list (face-foreground 'eh-gnus-face-3))))))
-      (car (remove nil candidates))))
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622; threads &#30340;&#26679;&#24335;</span>
+  (<span style="color: #4c83ff;">setq</span> gnus-thread-indent-level 0)
+  (<span style="color: #4c83ff;">setq</span> gnus-summary-same-subject <span style="color: #61CE3C;">""</span>)
+  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-indent <span style="color: #61CE3C;">"  "</span>)
+  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-single-indent <span style="color: #61CE3C;">"&gt; "</span>)
+  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-root <span style="color: #61CE3C;">"&gt; "</span>)
+  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-false-root <span style="color: #61CE3C;">"&gt; "</span>)
+  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-vertical <span style="color: #61CE3C;">"   |"</span>)
+  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-leaf-with-other <span style="color: #61CE3C;">"   |-&gt; "</span>)
+  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-single-leaf <span style="color: #61CE3C;">"    `-&gt; "</span>)
 
-  (<span style="color: #4c83ff;">defface</span> <span style="color: #ff69b4;">eh-gnus-face-2</span>
-    '((t <span style="color: #4c83ff;">:inherit</span> default))
-    <span style="color: #FBDE2D;">"Face used by `</span><span style="color: #96CBFE;">gnus-face-2</span><span style="color: #FBDE2D;">'"</span>)
-
-  (<span style="color: #4c83ff;">defface</span> <span style="color: #ff69b4;">eh-gnus-face-3</span>
-    '((t <span style="color: #4c83ff;">:inherit</span> default))
-    <span style="color: #FBDE2D;">"Face used by `</span><span style="color: #96CBFE;">gnus-face-3</span><span style="color: #FBDE2D;">'"</span>)
-
-  (<span style="color: #4c83ff;">setq</span> gnus-face-2 'eh-gnus-face-2)
-  (<span style="color: #4c83ff;">setq</span> gnus-face-3 'eh-gnus-face-3)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26174;&#31034;&#31661;&#22836;&#35774;&#32622;</span>
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">gnus-user-format-function-a</span> (header)
-    (<span style="color: #4c83ff;">let</span> ((date (<span style="color: #4c83ff;">mail-header-date</span> header)))
-      (<span style="color: #4c83ff;">if</span> (zerop gnus-tmp-level)
-          <span style="color: #61CE3C;">"-&gt; "</span> <span style="color: #61CE3C;">""</span>)))
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26174;&#31034;&#26102;&#38388;&#35774;&#32622;</span>
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">gnus-user-format-function-b</span> (header)
-    (<span style="color: #4c83ff;">let</span> ((date (<span style="color: #4c83ff;">mail-header-date</span> header)))
-      (<span style="color: #4c83ff;">if</span> (zerop gnus-tmp-level)
-          <span style="color: #61CE3C;">""</span> (concat <span style="color: #61CE3C;">"     "</span> (concat (gnus-user-date date) <span style="color: #61CE3C;">"  "</span>)))))
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26174;&#31034;&#20027;&#39064;&#35774;&#32622;</span>
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">gnus-user-format-function-c</span> (header)
-    (<span style="color: #4c83ff;">let</span> ((date (<span style="color: #4c83ff;">mail-header-date</span> header))
-          (subject (<span style="color: #4c83ff;">mail-header-subject</span> header)))
-      (<span style="color: #4c83ff;">if</span> (zerop gnus-tmp-level)
-          (concat subject
-                  <span style="color: #61CE3C;">" ("</span>
-                  (gnus-user-date date)<span style="color: #61CE3C;">")"</span>) <span style="color: #61CE3C;">""</span>)))
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#25552;&#21462;From&#21517;&#23383;</span>
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-mail-header-from-name</span> (from)
-    (<span style="color: #4c83ff;">cond</span>
-     ((string-match <span style="color: #61CE3C;">"&lt;[</span><span style="color: #61CE3C;">^</span><span style="color: #61CE3C;">&gt;]+&gt; *$"</span> from)
-      (<span style="color: #4c83ff;">let</span> ((beg (match-beginning 0)))
-        (<span style="color: #4c83ff;">or</span> (<span style="color: #4c83ff;">and</span> (string-match <span style="color: #61CE3C;">"^\".+\""</span> from)
-                 (substring from 1 (1- (match-end 0))))
-            (substring from 0 beg))))
-     ((string-match <span style="color: #61CE3C;">"(.+)"</span> from)
-      (substring from
-                 (1+ (match-beginning 0)) (1- (match-end 0))))
-     (t from)))
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26174;&#31034;&#21457;&#20214;&#20154;&#35774;&#32622;</span>
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">gnus-user-format-function-d</span> (header)
-    (<span style="color: #4c83ff;">let</span> ((from (<span style="color: #4c83ff;">mail-header-from</span> header)))
-      (<span style="color: #4c83ff;">if</span> (zerop gnus-tmp-level)
-          <span style="color: #61CE3C;">""</span> (eh-mail-header-from-name from))))
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26174;&#31034;&#31661;&#22836;&#35774;&#32622;</span>
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">gnus-user-format-function-e</span> (header)
-    (<span style="color: #4c83ff;">if</span> (zerop gnus-tmp-level)
-        <span style="color: #61CE3C;">""</span> <span style="color: #61CE3C;">"----&gt; "</span>))
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26174;&#31034;&#38544;&#34255;Subject, &#29992;&#20110;&#25628;&#32034;</span>
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">gnus-user-format-function-f</span> (header)
-    (<span style="color: #4c83ff;">let</span> ((date (<span style="color: #4c83ff;">mail-header-date</span> header))
-          (subject (<span style="color: #4c83ff;">mail-header-subject</span> header)))
-      (<span style="color: #4c83ff;">if</span> (zerop gnus-tmp-level)
-          <span style="color: #61CE3C;">""</span>
-        subject)))
-
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622; `</span><span style="color: #96CBFE; font-style: italic;">gnus-summary-line-format</span><span style="color: #8B8989; font-style: italic;">' &#20013;&#30340; %&amp;user-date;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-user-date-format-alist
         '(((gnus-seconds-today) . <span style="color: #61CE3C;">"%H:%M"</span>)
           ((+ (* 24 3600)    (gnus-seconds-today)) . <span style="color: #61CE3C;">"YD   "</span>)
@@ -316,53 +211,19 @@
           ((gnus-seconds-year)  . <span style="color: #61CE3C;">"%m-%d"</span>)
           (t . <span style="color: #61CE3C;">"%Y "</span>)))
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622;threads&#30340;&#26679;&#24335;</span>
-  (<span style="color: #4c83ff;">setq</span> gnus-thread-indent-level 0)
-  (<span style="color: #4c83ff;">setq</span> gnus-summary-same-subject <span style="color: #61CE3C;">""</span>)
-  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-indent <span style="color: #61CE3C;">"    "</span>)
-  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-single-indent <span style="color: #61CE3C;">""</span>)
-  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-root <span style="color: #61CE3C;">""</span>)
-  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-false-root <span style="color: #61CE3C;">""</span>)
-  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-vertical <span style="color: #61CE3C;">"|"</span>)
-  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-leaf-with-other <span style="color: #61CE3C;">"|----"</span>)
-  (<span style="color: #4c83ff;">setq</span> gnus-sum-thread-tree-single-leaf <span style="color: #61CE3C;">" `----"</span>)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#39640;&#20142;&#24403;&#21069;&#34892;</span>
-  (<span style="color: #4c83ff;">defface</span> <span style="color: #ff69b4;">eh-gnus-hl-line</span>
-    '((t <span style="color: #4c83ff;">:inherit</span> hl-line))
-    <span style="color: #FBDE2D;">"Face used for highlight gnus line"</span>)
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-gnus-hl-line</span> ()
-    (hl-line-mode 1)
-    (set (make-local-variable 'hl-line-face) 'eh-gnus-hl-line)
-    (<span style="color: #4c83ff;">setq</span> cursor-type nil))
-
-  (add-hook 'gnus-summary-mode-hook 'eh-gnus-hl-line)
-  (add-hook 'gnus-group-mode-hook 'eh-gnus-hl-line)
-
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#23558;&#37038;&#20214;&#30340;&#21457;&#20986;&#26102;&#38388;&#36716;&#25442;&#20026;&#26412;&#22320;&#26102;&#38388;</span>
-  (add-hook 'gnus-article-prepare-hook 'gnus-article-date-local)
+  (add-hook 'gnus-article-prepare-hook #'gnus-article-date-local)
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#36319;&#36394;&#32452;&#30340;&#26102;&#38388;&#36724;</span>
-  (add-hook 'gnus-select-group-hook 'gnus-group-set-timestamp)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#23558;&#26032;&#38395;&#32452;&#20998;&#32452;</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(add-hook 'gnus-group-mode-hook 'gnus-topic-mode)</span>
+  (add-hook 'gnus-select-group-hook #'gnus-group-set-timestamp)
 
   (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-gnus-summary-setup</span> ()
     (<span style="color: #4c83ff;">interactive</span>)
-    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">summary buffer&#34892;&#36317;&#35774;&#32622;</span>
-    (<span style="color: #4c83ff;">setq</span> line-spacing 3)
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">summary buffer &#34892;&#36317;&#35774;&#32622;</span>
+    (<span style="color: #4c83ff;">setq</span> line-spacing 5)
 
-    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">summary&#32447;&#31243;&#20013;&#26085;&#26399;&#21644;&#21457;&#37038;&#20154;&#21517;&#23383;&#20351;&#29992;&#30340;face&#12290;</span>
-    (set-face-foreground 'eh-gnus-face-2 <span style="color: #61CE3C;">"orange"</span>)
-
-    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622;&#19968;&#20010;face,&#29992;&#26469;&#38544;&#34255;&#19981;&#38656;&#35201;&#26174;&#31034;&#30340;&#25991;&#23383;</span>
-    (set-face-foreground 'eh-gnus-face-3
-                         (eh-gnus-find-invisible-foreground))
-
-    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">summary buffer&#19981;&#26174;&#31034;&#21491;fringe</span>
-    (set-fringe-style  '(nil . 0))
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Highlight &#24403;&#21069;&#34892;</span>
+    (hl-line-mode 1)
 
     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#37325;&#26032;&#23450;&#20041;&#38190;&#30424;&#32465;&#23450;</span>
     (local-set-key (kbd <span style="color: #61CE3C;">"SPC"</span>)
@@ -389,80 +250,9 @@
                    (<span style="color: #4c83ff;">lambda</span> ()
                      (<span style="color: #4c83ff;">interactive</span>)
                      (delete-other-windows)
-                     (next-line 1)))
-    (local-set-key (kbd <span style="color: #61CE3C;">"&lt;f1&gt;"</span>) 'gnus-uu-mark-all)
-    (local-set-key (kbd <span style="color: #61CE3C;">"&lt;f2&gt;"</span>) 'gnus-uu-unmark-thread)
-    (local-set-key (kbd <span style="color: #61CE3C;">"&lt;f3&gt;"</span>) 'gnus-uu-mark-thread))
+                     (next-line 1))))
 
-  (add-hook 'gnus-summary-mode-hook 'eh-gnus-summary-setup)
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-gnus-select-mail-account</span> ()
-    (<span style="color: #4c83ff;">interactive</span>)
-    (<span style="color: #4c83ff;">let*</span> ((accounts-info
-            `((<span style="color: #61CE3C;">"# None"</span>)
-              (<span style="color: #61CE3C;">"# Sendmail"</span> <span style="color: #4c83ff;">:type</span> sendmail)
-              ,@(mapcar
-                 #'(lambda (account)
-                     (<span style="color: #4c83ff;">let*</span> ((user (plist-get account <span style="color: #4c83ff;">:user</span>))
-                            (host (plist-get account <span style="color: #4c83ff;">:host</span>))
-                            (port (plist-get account <span style="color: #4c83ff;">:port</span>))
-                            (user-full-name (plist-get account <span style="color: #4c83ff;">:user-full-name</span>))
-                            (user-mail-address (plist-get account <span style="color: #4c83ff;">:user-mail-address</span>))
-                            (name (<span style="color: #4c83ff;">or</span> user-mail-address
-                                      (<span style="color: #4c83ff;">if</span> (string-match-p <span style="color: #61CE3C;">"@"</span> user)
-                                          user
-                                        (concat user <span style="color: #61CE3C;">"@"</span> host)))))
-                       `(,name <span style="color: #4c83ff;">:type</span> imap <span style="color: #4c83ff;">:user</span> ,user <span style="color: #4c83ff;">:port</span> ,port <span style="color: #4c83ff;">:host</span> ,host
-                               <span style="color: #4c83ff;">:user-full-name</span> ,user-full-name
-                               <span style="color: #4c83ff;">:user-mail-address</span> ,(<span style="color: #4c83ff;">or</span> user-mail-address name))))
-                 (auth-source-search <span style="color: #4c83ff;">:max</span> 1000 <span style="color: #4c83ff;">:port</span> '(<span style="color: #61CE3C;">"smtp"</span> <span style="color: #61CE3C;">"25"</span> <span style="color: #61CE3C;">"465"</span> <span style="color: #61CE3C;">"587"</span>)))))
-           (account-used
-            (cdr (assoc (completing-read
-                         <span style="color: #61CE3C;">"Which account will be used? "</span>
-                         (mapcar #'car accounts-info))
-                        accounts-info)))
-           (type (plist-get account-used <span style="color: #4c83ff;">:type</span>))
-           (user (plist-get account-used <span style="color: #4c83ff;">:user</span>))
-           (port (plist-get account-used <span style="color: #4c83ff;">:port</span>))
-           (host (plist-get account-used <span style="color: #4c83ff;">:host</span>))
-           (user-full-name (plist-get account-used <span style="color: #4c83ff;">:user-full-name</span>))
-           (user-mail-address (plist-get account-used <span style="color: #4c83ff;">:user-mail-address</span>)))
-      (<span style="color: #4c83ff;">when</span> type
-        (<span style="color: #4c83ff;">if</span> (eq type 'sendmail)
-            (<span style="color: #4c83ff;">progn</span> (message-replace-header
-                    <span style="color: #61CE3C;">"X-Message-SMTP-Method"</span> <span style="color: #61CE3C;">"sendmail"</span> nil t)
-                   (message-replace-header <span style="color: #61CE3C;">"From"</span> <span style="color: #61CE3C;">"localhost"</span> nil t))
-          (message-replace-header
-           <span style="color: #61CE3C;">"X-Message-SMTP-Method"</span>
-           (format <span style="color: #61CE3C;">"smtp %s %s %s"</span> host port user) nil t)
-          (<span style="color: #4c83ff;">if</span> user-full-name
-              (message-replace-header
-               <span style="color: #61CE3C;">"From"</span> (format <span style="color: #61CE3C;">"\"%s\" &lt;%s&gt;"</span> user-full-name user-mail-address) nil t)
-            (message-replace-header
-             <span style="color: #61CE3C;">"From"</span> user-mail-address nil t)))
-        <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Sort headers</span>
-        (<span style="color: #4c83ff;">let</span> ((message-header-format-alist
-               `((To)
-                 (Subject)
-                 (Cc)
-                 (From)
-                 (Newsgroups)
-                 (In-Reply-To)
-                 (Fcc)
-                 (Bcc)
-                 (Date)
-                 (Organization)
-                 (Distribution)
-                 (Lines)
-                 (Expires)
-                 (Message-ID)
-                 (References . message-shorten-references)
-                 (User-Agent))))
-          (message-sort-headers)
-          <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Move cursor to "To: " header</span>
-          (message-goto-to)))))
-
-  (add-hook 'message-setup-hook 'eh-gnus-select-mail-account)
+  (add-hook 'gnus-summary-mode-hook #'eh-gnus-summary-setup)
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">visual</span>
   (<span style="color: #4c83ff;">setq</span> gnus-treat-emphasize t
@@ -515,60 +305,38 @@
         sc-preferred-header-style 4
         sc-use-only-preference-p nil)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20351;&#29992;threads&#26174;&#31034;&#25991;&#31456;&#26631;&#39064;&#12290;</span>
-  (<span style="color: #4c83ff;">setq</span> gnus-use-trees t)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#29992;&#26368;&#23567;&#31383;&#21475;&#26174;&#31034;</span>
-  (<span style="color: #4c83ff;">setq</span> gnus-tree-minimize-window nil)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26500;&#24314;threads&#26102;&#25235;&#21462;&#26087;&#25991;&#31456;&#26631;&#39064;,</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26500;&#24314; threads &#26102;&#25235;&#21462;&#26087;&#25991;&#31456;&#26631;&#39064;,</span>
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#27880;&#24847;&#65306; &#32593;&#36895;&#19981;&#24555;&#26102;&#19981;&#35201;&#20351;&#29992;&#36825;&#20010;&#36873;&#39033;&#12290;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-fetch-old-headers nil)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#29983;&#25104;&#27700;&#24179;&#26641;</span>
-  (<span style="color: #4c83ff;">setq</span> gnus-generate-tree-function
-        'gnus-generate-horizontal-tree)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#32858;&#38598;threads&#30340;&#26041;&#24335;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#32858;&#38598; threads &#30340;&#26041;&#24335;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-summary-thread-gathering-function
         'gnus-gather-threads-by-subject)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Thread root&#25490;&#24207;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Thread root &#25490;&#24207;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-thread-sort-functions
         '(gnus-thread-sort-by-most-recent-number
           gnus-thread-sort-by-most-recent-date))
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Subthread&#25490;&#24207;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Subthread &#25490;&#24207;</span>
   (<span style="color: #4c83ff;">setq</span> gnus-subthread-sort-functions
         '(gnus-thread-sort-by-number
           gnus-thread-sort-by-date))
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#33258;&#21160;&#36339;&#21040;&#31532;&#19968;&#20010;&#27809;&#26377;&#38405;&#35835;&#30340;&#32452;</span>
   (add-hook 'gnus-switch-on-after-hook
-            'gnus-group-first-unread-group)
+            #'gnus-group-first-unread-group)
+
   (add-hook 'gnus-summary-exit-hook
-            'gnus-group-first-unread-group)
+            #'gnus-group-first-unread-group)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#27599;&#38548;10&#20998;&#38047;&#21047;&#26032;&#19968;&#19979;</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(add-hook 'gnus-startup-hook</span>
-  <span style="color: #8B8989; font-style: italic;">;;           </span><span style="color: #8B8989; font-style: italic;">(lambda ()</span>
-  <span style="color: #8B8989; font-style: italic;">;;             </span><span style="color: #8B8989; font-style: italic;">(progn (setq gnus-use-demon t)</span>
-  <span style="color: #8B8989; font-style: italic;">;;                    </span><span style="color: #8B8989; font-style: italic;">(gnus-demon-add-handler</span>
-  <span style="color: #8B8989; font-style: italic;">;;                     </span><span style="color: #8B8989; font-style: italic;">'gnus-demon-scan-news 10 nil))))</span>
-
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">org struct &#25903;&#25345;</span>
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org</span>
     <span style="color: #4c83ff;">:ensure</span> nil
     <span style="color: #4c83ff;">:config</span>
     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#22312;message-mode&#20013;&#20351;&#29992;org-mode</span>
-    (add-hook 'message-mode-hook 'turn-on-orgstruct)
-    (add-hook 'message-mode-hook 'turn-on-orgstruct++))
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#21551;&#29992;&#26700;&#38754;&#25552;&#37266;&#21151;&#33021;</span>
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gnus-notifications</span>
-    <span style="color: #4c83ff;">:ensure</span> nil
-    <span style="color: #4c83ff;">:config</span>
-    (add-hook 'gnus-after-getting-new-news-hook
-              'gnus-notifications)))
+    (add-hook 'message-mode-hook #'turn-on-orgstruct)
+    (add-hook 'message-mode-hook #'turn-on-orgstruct++)))
 </pre>
 </div>
 </div>
@@ -578,8 +346,8 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2017-07-08</span>
-        <span title="last modification date" class="post-info">2017-07-08</span>
+        <span title="post date" class="post-info">2017-07-21</span>
+        <span title="last modification date" class="post-info">2017-07-21</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>

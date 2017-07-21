@@ -32,34 +32,37 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga24c7c4">1. 简介</a></li>
-<li><a href="#orgb2e4443">2. 代码</a>
+<li><a href="#org511e4cb">1. 简介</a></li>
+<li><a href="#org1da51a2">2. 代码</a>
 <ul>
-<li><a href="#org27bc65b">2.1. eh-website</a></li>
-<li><a href="#org8683c48">2.2. el2org</a></li>
-<li><a href="#org692594d">2.3. EPG</a></li>
-<li><a href="#org5575d5d">2.4. sdcv</a></li>
-<li><a href="#org28ebbb4">2.5. emms</a></li>
-<li><a href="#org9dd072b">2.6. elisp setting</a></li>
-<li><a href="#org6dfbe6a">2.7. org-journal</a></li>
-<li><a href="#org57e1030">2.8. ESS</a></li>
-<li><a href="#orge14bae1">2.9. aggressive-indent</a></li>
-<li><a href="#org8304b25">2.10. autopair</a></li>
-<li><a href="#orgbcb04d6">2.11. multi-term</a></li>
-<li><a href="#org3ccee48">2.12. magit</a></li>
-<li><a href="#orgcd2759f">2.13. wdired and dired-ranger</a></li>
-<li><a href="#org789ebb9">2.14. ace-jump</a></li>
-<li><a href="#org304afcb">2.15. switch-window</a></li>
-<li><a href="#orgcc1a4b6">2.16. projectile</a></li>
-<li><a href="#orga06161c">2.17. undo-tree</a></li>
-<li><a href="#org80ed017">2.18. emacs-calfw</a></li>
+<li><a href="#orgc1f1c6d">2.1. eh-website</a></li>
+<li><a href="#org12aede6">2.2. el2org</a></li>
+<li><a href="#org797b8c5">2.3. EPG</a></li>
+<li><a href="#orgc26e4ea">2.4. sdcv</a></li>
+<li><a href="#org388f4a4">2.5. emms</a></li>
+<li><a href="#orgf01d1c2">2.6. elisp setting</a></li>
+<li><a href="#org9f25e3e">2.7. org-journal</a></li>
+<li><a href="#orgac470ca">2.8. ESS</a></li>
+<li><a href="#orga46a027">2.9. aggressive-indent</a></li>
+<li><a href="#org5320fec">2.10. autopair</a></li>
+<li><a href="#org3eb2970">2.11. multi-term</a></li>
+<li><a href="#org03ec25b">2.12. wdired and dired-ranger</a></li>
+<li><a href="#org2ec451c">2.13. ace-jump</a></li>
+<li><a href="#orgeabd7f5">2.14. switch-window</a></li>
+<li><a href="#orgbbe30dc">2.15. gitpatch</a></li>
+<li><a href="#orgc66609e">2.16. ebdb</a></li>
+<li><a href="#orgd58ff99">2.17. magit</a></li>
+<li><a href="#org22d6ec1">2.18. projectile</a></li>
+<li><a href="#org826d63e">2.19. guix</a></li>
+<li><a href="#orgd71d5b1">2.20. undo-tree</a></li>
+<li><a href="#org7713c66">2.21. emacs-calfw</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orga24c7c4" class="outline-2">
-<h2 id="orga24c7c4"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org511e4cb" class="outline-2">
+<h2 id="org511e4cb"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -67,11 +70,11 @@
 </div>
 </div>
 
-<div id="outline-container-orgb2e4443" class="outline-2">
-<h2 id="orgb2e4443"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-org1da51a2" class="outline-2">
+<h2 id="org1da51a2"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-org27bc65b" class="outline-3">
-<h3 id="org27bc65b"><span class="section-number-3">2.1</span> eh-website</h3>
+</div><div id="outline-container-orgc1f1c6d" class="outline-3">
+<h3 id="orgc1f1c6d"><span class="section-number-3">2.1</span> eh-website</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-webpage</span>
@@ -93,8 +96,8 @@
 </div>
 </div>
 
-<div id="outline-container-org8683c48" class="outline-3">
-<h3 id="org8683c48"><span class="section-number-3">2.2</span> el2org</h3>
+<div id="outline-container-org12aede6" class="outline-3">
+<h3 id="org12aede6"><span class="section-number-3">2.2</span> el2org</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">el2org</span>)
@@ -103,8 +106,8 @@
 </div>
 </div>
 
-<div id="outline-container-org692594d" class="outline-3">
-<h3 id="org692594d"><span class="section-number-3">2.3</span> EPG</h3>
+<div id="outline-container-org797b8c5" class="outline-3">
+<h3 id="org797b8c5"><span class="section-number-3">2.3</span> EPG</h3>
 <div class="outline-text-3" id="text-2-3">
 <ol class="org-ol">
 <li>Put the below to your ~/.gnupg/gpg-agent.conf:
@@ -124,8 +127,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org5575d5d" class="outline-3">
-<h3 id="org5575d5d"><span class="section-number-3">2.4</span> sdcv</h3>
+<div id="outline-container-orgc26e4ea" class="outline-3">
+<h3 id="orgc26e4ea"><span class="section-number-3">2.4</span> sdcv</h3>
 <div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-yasdcv</span>
@@ -137,8 +140,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org28ebbb4" class="outline-3">
-<h3 id="org28ebbb4"><span class="section-number-3">2.5</span> emms</h3>
+<div id="outline-container-org388f4a4" class="outline-3">
+<h3 id="org388f4a4"><span class="section-number-3">2.5</span> emms</h3>
 <div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-emms</span>
@@ -148,8 +151,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org9dd072b" class="outline-3">
-<h3 id="org9dd072b"><span class="section-number-3">2.6</span> elisp setting</h3>
+<div id="outline-container-orgf01d1c2" class="outline-3">
+<h3 id="orgf01d1c2"><span class="section-number-3">2.6</span> elisp setting</h3>
 <div class="outline-text-3" id="text-2-6">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">lisp-mode</span>
@@ -171,8 +174,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org6dfbe6a" class="outline-3">
-<h3 id="org6dfbe6a"><span class="section-number-3">2.7</span> org-journal</h3>
+<div id="outline-container-org9f25e3e" class="outline-3">
+<h3 id="org9f25e3e"><span class="section-number-3">2.7</span> org-journal</h3>
 <div class="outline-text-3" id="text-2-7">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-journal</span>
@@ -195,8 +198,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org57e1030" class="outline-3">
-<h3 id="org57e1030"><span class="section-number-3">2.8</span> ESS</h3>
+<div id="outline-container-orgac470ca" class="outline-3">
+<h3 id="orgac470ca"><span class="section-number-3">2.8</span> ESS</h3>
 <div class="outline-text-3" id="text-2-8">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ess</span>
@@ -225,8 +228,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-orge14bae1" class="outline-3">
-<h3 id="orge14bae1"><span class="section-number-3">2.9</span> aggressive-indent</h3>
+<div id="outline-container-orga46a027" class="outline-3">
+<h3 id="orga46a027"><span class="section-number-3">2.9</span> aggressive-indent</h3>
 <div class="outline-text-3" id="text-2-9">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">aggressive-indent</span>)
@@ -235,8 +238,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org8304b25" class="outline-3">
-<h3 id="org8304b25"><span class="section-number-3">2.10</span> autopair</h3>
+<div id="outline-container-org5320fec" class="outline-3">
+<h3 id="org5320fec"><span class="section-number-3">2.10</span> autopair</h3>
 <div class="outline-text-3" id="text-2-10">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">autopair</span>
@@ -247,8 +250,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-orgbcb04d6" class="outline-3">
-<h3 id="orgbcb04d6"><span class="section-number-3">2.11</span> multi-term</h3>
+<div id="outline-container-org3eb2970" class="outline-3">
+<h3 id="org3eb2970"><span class="section-number-3">2.11</span> multi-term</h3>
 <div class="outline-text-3" id="text-2-11">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">multi-term</span>
@@ -267,9 +270,9 @@ allow-loopback-pinentry</li>
   (remove-hook 'term-mode-hook 'multi-term-keystroke-setup)
   (remove-hook 'kill-buffer-hook 'multi-term-kill-buffer-hook)
 
-  (add-hook 'term-mode-hook 'eh-term-setup)
-  (add-hook 'term-mode-hook 'multi-term-keystroke-setup)
-  (add-hook 'kill-buffer-hook 'multi-term-kill-buffer-hook)
+  (add-hook 'term-mode-hook #'eh-term-setup)
+  (add-hook 'term-mode-hook #'multi-term-keystroke-setup)
+  (add-hook 'kill-buffer-hook #'multi-term-kill-buffer-hook)
 
   (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-term-setup</span> ()
     (<span style="color: #4c83ff;">setq</span> truncate-lines t)
@@ -296,22 +299,9 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org3ccee48" class="outline-3">
-<h3 id="org3ccee48"><span class="section-number-3">2.12</span> magit</h3>
+<div id="outline-container-org03ec25b" class="outline-3">
+<h3 id="org03ec25b"><span class="section-number-3">2.12</span> wdired and dired-ranger</h3>
 <div class="outline-text-3" id="text-2-12">
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">magit</span>
-  <span style="color: #4c83ff;">:config</span>
-  (<span style="color: #4c83ff;">setq</span> magit-completing-read-function 'ivy-completing-read)
-  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c g"</span> . magit-status)))
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgcd2759f" class="outline-3">
-<h3 id="orgcd2759f"><span class="section-number-3">2.13</span> wdired and dired-ranger</h3>
-<div class="outline-text-3" id="text-2-13">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired</span>
   <span style="color: #4c83ff;">:ensure</span> nil
@@ -323,9 +313,9 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org789ebb9" class="outline-3">
-<h3 id="org789ebb9"><span class="section-number-3">2.14</span> ace-jump</h3>
-<div class="outline-text-3" id="text-2-14">
+<div id="outline-container-org2ec451c" class="outline-3">
+<h3 id="org2ec451c"><span class="section-number-3">2.13</span> ace-jump</h3>
+<div class="outline-text-3" id="text-2-13">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ace-jump-mode</span>
   <span style="color: #4c83ff;">:init</span>
@@ -336,9 +326,9 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org304afcb" class="outline-3">
-<h3 id="org304afcb"><span class="section-number-3">2.15</span> switch-window</h3>
-<div class="outline-text-3" id="text-2-15">
+<div id="outline-container-orgeabd7f5" class="outline-3">
+<h3 id="orgeabd7f5"><span class="section-number-3">2.14</span> switch-window</h3>
+<div class="outline-text-3" id="text-2-14">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">switch-window</span>
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x o"</span> . switch-window)
@@ -355,9 +345,84 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-orgcc1a4b6" class="outline-3">
-<h3 id="orgcc1a4b6"><span class="section-number-3">2.16</span> projectile</h3>
+<div id="outline-container-orgbbe30dc" class="outline-3">
+<h3 id="orgbbe30dc"><span class="section-number-3">2.15</span> gitpatch</h3>
+<div class="outline-text-3" id="text-2-15">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gitpatch</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> gitpatch-mail-function 'gnus-msg-mail)
+  (<span style="color: #4c83ff;">setq</span> gitpatch-mail-database
+        '(<span style="color: #61CE3C;">"guix-patches@gnu.org"</span>
+          <span style="color: #61CE3C;">"guix-devel@gnu.org"</span>
+          <span style="color: #61CE3C;">"emms-help@gnu.org"</span>
+          <span style="color: #61CE3C;">"emacs-orgmode@gnu.org"</span>
+          <span style="color: #61CE3C;">"emacs-devel@gnu.org"</span>)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc66609e" class="outline-3">
+<h3 id="orgc66609e"><span class="section-number-3">2.16</span> ebdb</h3>
 <div class="outline-text-3" id="text-2-16">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ebdb</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">ebdb-mua</span>)
+  (<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">ebdb-com</span>)
+  (<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">ebdb-chn</span>)
+  (<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">ebdb-vcard</span>)
+  (<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">ebdb-complete</span>)
+  (ebdb-complete-enable)
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(defun eh-ebdb-search-chinese (string)</span>
+  <span style="color: #8B8989; font-style: italic;">;;   </span><span style="color: #8B8989; font-style: italic;">(if (functionp 'pyim-isearch-build-search-regexp)</span>
+  <span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">(pyim-isearch-build-search-regexp string)</span>
+  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">string))</span>
+
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(setq ebdb-search-transform-functions</span>
+  <span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">'(eh-ebdb-search-chinese))</span>
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim</span>
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">cl-defmethod</span> <span style="color: #ff1493;">ebdb-field-search</span>
+        <span style="color: #4c83ff;">:around</span> (field criterion)
+        (<span style="color: #4c83ff;">or</span> (cl-call-next-method)
+            (<span style="color: #4c83ff;">when</span> (stringp criterion)
+              (<span style="color: #4c83ff;">let</span> ((str (ebdb-string field)))
+                (cl-some
+                 (<span style="color: #4c83ff;">lambda</span> (pinyin)
+                   (string-match-p criterion pinyin))
+                 (append (pyim-hanzi2pinyin str nil <span style="color: #61CE3C;">""</span> t)
+                         (pyim-hanzi2pinyin str t <span style="color: #61CE3C;">""</span> t)))))))))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd58ff99" class="outline-3">
+<h3 id="orgd58ff99"><span class="section-number-3">2.17</span> magit</h3>
+<div class="outline-text-3" id="text-2-17">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">magit</span>
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c g"</span> . magit-status))
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">setq</span> magit-completing-read-function 'ivy-completing-read)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gitpatch</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    (define-key magit-status-mode-map (kbd <span style="color: #61CE3C;">"C-c m"</span>) 'gitpatch-mail)))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org22d6ec1" class="outline-3">
+<h3 id="org22d6ec1"><span class="section-number-3">2.18</span> projectile</h3>
+<div class="outline-text-3" id="text-2-18">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">projectile</span>
   <span style="color: #4c83ff;">:config</span>
@@ -374,9 +439,30 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-orga06161c" class="outline-3">
-<h3 id="orga06161c"><span class="section-number-3">2.17</span> undo-tree</h3>
-<div class="outline-text-3" id="text-2-17">
+<div id="outline-container-org826d63e" class="outline-3">
+<h3 id="org826d63e"><span class="section-number-3">2.19</span> guix</h3>
+<div class="outline-text-3" id="text-2-19">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">guix</span>
+  <span style="color: #4c83ff;">:config</span>
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">geiser</span>
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">setq</span> geiser-debug-jump-to-debug-p nil)
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">NOTE: "~/.config/guix/latest/" is invaild,</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">use "~/.config/guix/latest" instead.</span>
+    (<span style="color: #4c83ff;">with-eval-after-load</span> 'geiser-guile
+      (add-to-list 'geiser-guile-load-path <span style="color: #61CE3C;">"~/.config/guix/latest"</span>)))
+  (<span style="color: #4c83ff;">setq</span> guix-directory <span style="color: #61CE3C;">"~/project/guix"</span>)
+  (add-hook 'scheme-mode-hook 'guix-devel-mode)
+  (add-hook 'after-init-hook 'global-guix-prettify-mode))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd71d5b1" class="outline-3">
+<h3 id="orgd71d5b1"><span class="section-number-3">2.20</span> undo-tree</h3>
+<div class="outline-text-3" id="text-2-20">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">undo-tree</span>
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c /"</span> . undo-tree-visualize))
@@ -386,18 +472,18 @@ allow-loopback-pinentry</li>
             #'eh-undo-tree-visualizer-settings)
   (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-undo-tree-visualizer-settings</span> ()
     (<span style="color: #4c83ff;">interactive</span>)
-    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"C-c C-k"</span>) 'undo-tree-visualizer-quit)
-    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"C-k"</span>) 'undo-tree-visualizer-quit)
-    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"k"</span>) 'undo-tree-visualizer-quit)
-    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"C-g"</span>) 'undo-tree-visualizer-abort)))
+    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"C-c C-k"</span>) #'undo-tree-visualizer-quit)
+    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"C-k"</span>) #'undo-tree-visualizer-quit)
+    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"k"</span>) #'undo-tree-visualizer-quit)
+    (define-key undo-tree-visualizer-mode-map (kbd <span style="color: #61CE3C;">"C-g"</span>) #'undo-tree-visualizer-abort)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org80ed017" class="outline-3">
-<h3 id="org80ed017"><span class="section-number-3">2.18</span> emacs-calfw</h3>
-<div class="outline-text-3" id="text-2-18">
+<div id="outline-container-org7713c66" class="outline-3">
+<h3 id="org7713c66"><span class="section-number-3">2.21</span> emacs-calfw</h3>
+<div class="outline-text-3" id="text-2-21">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">holidays</span>
   <span style="color: #4c83ff;">:ensure</span> nil
@@ -475,16 +561,14 @@ allow-loopback-pinentry</li>
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw</span>
   <span style="color: #4c83ff;">:config</span>
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw-cal</span> <span style="color: #4c83ff;">:ensure</span> calfw)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw-ical</span> <span style="color: #4c83ff;">:ensure</span> calfw)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw-org</span> <span style="color: #4c83ff;">:ensure</span> calfw)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw-org</span>)
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">cal-china-x</span>)
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-capture</span>
     <span style="color: #4c83ff;">:ensure</span> org
     <span style="color: #4c83ff;">:config</span>
     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20026;calfw&#35774;&#32622;&#19968;&#20010;capture&#27169;&#26495;&#24182;&#28155;&#21152;&#21040;org-capture-templates</span>
     (<span style="color: #4c83ff;">setq</span> cfw:org-capture-template
-          '(<span style="color: #61CE3C;">"calfw2org"</span> <span style="color: #61CE3C;">"calfw2org"</span> entry (file+headline eh-org-schedule-file <span style="color: #61CE3C;">"Schedule"</span>)
+          '(<span style="color: #61CE3C;">"calfw2org"</span> <span style="color: #61CE3C;">"calfw2org"</span> entry (file+headline <span style="color: #61CE3C;">"~/org/calfw.org"</span> <span style="color: #61CE3C;">"Schedule"</span>)
             <span style="color: #61CE3C;">"* %?\n %(cfw:org-capture-day)\n %a"</span>))
     (<span style="color: #4c83ff;">setq</span> org-capture-templates
           (append org-capture-templates (list cfw:org-capture-template))))
@@ -499,36 +583,17 @@ allow-loopback-pinentry</li>
         cfw:fchar-top-left-corner ?+
         cfw:fchar-top-right-corner ?+)
 
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-cfw-render-toolbar</span> (width current-view prev-cmd next-cmd)
-    <span style="color: #FBDE2D;">"Translate words: 'Month', 'Week', 'Day' and 'Two day' to Chinese"</span>
-    (<span style="color: #4c83ff;">let*</span> ((prev (cfw:render-button <span style="color: #61CE3C;">" &lt; "</span> prev-cmd))
-           (today (cfw:render-button <span style="color: #61CE3C;">"&#20170;&#22825;"</span> 'cfw:navi-goto-today-command))
-           (next (cfw:render-button <span style="color: #61CE3C;">" &gt; "</span> next-cmd))
-           (month (cfw:render-button
-                   <span style="color: #61CE3C;">"&#26174;&#31034;&#19968;&#26376;"</span> 'cfw:change-view-month
-                   (eq current-view 'month)))
-           (tweek (cfw:render-button
-                   <span style="color: #61CE3C;">"&#26174;&#31034;&#20004;&#21608;"</span> 'cfw:change-view-two-weeks
-                   (eq current-view 'two-weeks)))
-           (week (cfw:render-button
-                  <span style="color: #61CE3C;">"&#26174;&#31034;&#19968;&#21608;"</span> 'cfw:change-view-week
-                  (eq current-view 'week)))
-           (day (cfw:render-button
-                 <span style="color: #61CE3C;">"&#26174;&#31034;&#19968;&#22825;"</span> 'cfw:change-view-day
-                 (eq current-view 'day)))
-           (sp  <span style="color: #61CE3C;">" "</span>)
-           (toolbar-text
-            (cfw:render-add-right
-             width (concat sp prev sp next sp today sp)
-             (concat day sp week sp tweek sp month sp))))
-      (cfw:render-default-content-face toolbar-text 'cfw:face-toolbar)))
-
-  (advice-add 'cfw:render-toolbar <span style="color: #4c83ff;">:override</span> #'eh-cfw-render-toolbar)
+  (<span style="color: #4c83ff;">setq</span> cfw:gettext-alist
+        '((<span style="color: #61CE3C;">"Today"</span> . <span style="color: #61CE3C;">"t:&#20170;&#22825;"</span>)
+          (<span style="color: #61CE3C;">"Month"</span> . <span style="color: #61CE3C;">"M:&#19968;&#26376;"</span>)
+          (<span style="color: #61CE3C;">"Week"</span> . <span style="color: #61CE3C;">"W:&#19968;&#21608;"</span>)
+          (<span style="color: #61CE3C;">"Two Weeks"</span> . <span style="color: #61CE3C;">"T:&#20004;&#21608;"</span>)
+          (<span style="color: #61CE3C;">"Day"</span> . <span style="color: #61CE3C;">"D:&#19968;&#22825;"</span>)))
 
   (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-calendar</span> ()
     (<span style="color: #4c83ff;">interactive</span>)
     (cfw:open-calendar-buffer
-     <span style="color: #4c83ff;">:view</span> 'month
+     <span style="color: #4c83ff;">:view</span> 'two-weeks
      <span style="color: #4c83ff;">:contents-sources</span>
      (list
       <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">orgmode source</span>
@@ -543,8 +608,8 @@ allow-loopback-pinentry</li>
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2017-07-08</span>
-        <span title="last modification date" class="post-info">2017-07-08</span>
+        <span title="post date" class="post-info">2017-07-21</span>
+        <span title="last modification date" class="post-info">2017-07-21</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>

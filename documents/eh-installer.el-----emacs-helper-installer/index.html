@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <title>eh-installer.el --- Emacs-helper installer - Emacs-helper</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Feng Shu" />
+    <link rel="stylesheet" href="https://tumashu.github.io/emacs-helper/media/css/main.css" type="text/css">
+  </head>
+<body class="container">
+    <div>
+      <header class="masthead">
+        <h1 class="masthead-title"><a href="https://tumashu.github.io/emacs-helper/">Emacs-helper</a> <span class="subtitle">(Tumashu 的 emacs 配置)</span></h1>
+        <ul>
+          <li><a href="https://tumashu.github.io/emacs-helper/documents/">Documents</a></li>
+          <li><a href="https://tumashu.github.io/emacs-helper/tags/">Tags</a></li>
+          <li><a href="https://tumashu.github.io/emacs-helper/about/">About</a></li>
+          <li><a href="https://github.com/tumashu/emacs-helper">GitHub</a></li>
+          <li><a href="https://tumashu.github.io/emacs-helper/rss.xml">RSS</a></li>
+        </ul>
+        <form method="get" id="searchform" action="http://www.google.com/search">
+          <input type="text" class="field" name="q" id="s" placeholder="Search">
+          <input type="hidden" name="as_sitesearch" value="tumashu.github.io/emacs-helper">
+        </form>
+      </header>
+    </div>
+
+<div class="content-and-footer">
+<div>
+<div class="post">
+<h1 class="post-title">eh-installer.el --- Emacs-helper installer</h1>
+<div id="table-of-contents">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgefacc32">1. 简介</a></li>
+<li><a href="#org3fdd79f">2. 代码</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgefacc32" class="outline-2">
+<h2 id="orgefacc32"><span class="section-number-2">1</span> 简介</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3fdd79f" class="outline-2">
+<h2 id="org3fdd79f"><span class="section-number-2">2</span> 代码</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">package</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-current-directory</span> ()
+  (file-name-directory
+   (buffer-file-name)))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">setq</span> package-archives
+      `((<span style="color: #61CE3C;">"eh-elpa"</span> . ,(concat (eh-current-directory) <span style="color: #61CE3C;">"elpa/"</span>))))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(package-initialize)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-packages-install</span> (packages)
+  (<span style="color: #4c83ff;">let</span> ((refreshed nil))
+    (<span style="color: #4c83ff;">when</span> (not package-archive-contents)
+      (package-refresh-contents)
+      (<span style="color: #4c83ff;">setq</span> refreshed t))
+    (<span style="color: #4c83ff;">dolist</span> (pkg packages)
+      (<span style="color: #4c83ff;">when</span> (<span style="color: #4c83ff;">and</span> (not (package-installed-p pkg))
+                 (assoc pkg package-archive-contents))
+        (<span style="color: #4c83ff;">unless</span> refreshed
+          (package-refresh-contents)
+          (<span style="color: #4c83ff;">setq</span> refreshed t))
+        (package-install pkg)))))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-get-mirror-packages</span> (mirror-directory)
+  <span style="color: #FBDE2D;">"Return all package's name in a mirror directory: MIRROR-DIRECTROY."</span>
+  (<span style="color: #4c83ff;">when</span> (<span style="color: #4c83ff;">and</span> mirror-directory (stringp mirror-directory))
+    (<span style="color: #4c83ff;">let</span> ((file (concat (file-name-as-directory mirror-directory)
+                        <span style="color: #61CE3C;">"archive-contents"</span>)))
+      (<span style="color: #4c83ff;">when</span> (file-exists-p file)
+        (mapcar #'car (cdr (read (<span style="color: #4c83ff;">with-temp-buffer</span>
+                                   (insert-file-contents file)
+                                   (buffer-string)))))))))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defvar</span> <span style="color: #ff69b4;">eh-config-template</span>
+  <span style="color: #61CE3C;">"</span>
+<span style="color: #61CE3C;">------------------------------------</span>
+<span style="color: #61CE3C;">Add by emacs-helper installer</span>
+
+<span style="color: #61CE3C;">(add-to-list 'load-path %S)</span>
+<span style="color: #61CE3C;">(require 'emacs-helper)</span>
+
+<span style="color: #61CE3C;">------------------------------------</span>
+<span style="color: #61CE3C;">"</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-installer</span> ()
+  (<span style="color: #4c83ff;">interactive</span>)
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#23433;&#35013; elpa &#30446;&#24405;&#19979;&#30340;&#25152;&#26377;&#21253;</span>
+  (eh-packages-install
+   (eh-get-mirror-packages
+    (concat (eh-current-directory) <span style="color: #61CE3C;">"elpa/"</span>)))
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#22312; "~/.emacs" &#25991;&#20214;&#20013;&#25554;&#20837;&#37197;&#32622;&#29255;&#26029;</span>
+  (append-to-file
+   (format eh-config-template
+           (eh-current-directory)) nil <span style="color: #61CE3C;">"~/.emacs"</span>)
+  (message <span style="color: #61CE3C;">"Emacs-helper &#23433;&#35013;&#23436;&#25104;&#65292;&#35831;&#37325;&#26032;&#21551;&#21160; Emacs"</span>))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(eh-installer)
+</pre>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+    <div>
+      <div class="post-meta">
+        <span title="post date" class="post-info">2017-07-21</span>
+        <span title="last modification date" class="post-info">2017-07-21</span>
+        <span title="tags" class="post-info">N/A</span>
+        <span title="author" class="post-info">Feng Shu</span>
+      </div>
+      <div class="footer">
+        <p>Generated by <a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.x(<a href="http://orgmode.org">Org mode</a> 9.x)</p>
+        <p>
+          Copyright &copy; <span id="footerYear"></span> <a href="mailto:tumashu &lt;at&gt; 163 &lt;dot&gt; com">Feng Shu</a>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          Powered by <a href="https://github.com/tumashu/org-webpage" target="_blank">org-webpage</a>
+          <script type="text/javascript">document.getElementById("footerYear").innerHTML = (new Date()).getFullYear();</script>
+        </p>
+      </div>
+    </div>
+
+</div>
+</body>
+</html>

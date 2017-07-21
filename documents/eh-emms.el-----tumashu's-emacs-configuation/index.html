@@ -32,13 +32,13 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org34c8fd2">1. 简介</a></li>
-<li><a href="#org15caf98">2. 代码</a></li>
+<li><a href="#org260ad6d">1. 简介</a></li>
+<li><a href="#orga4001dd">2. 代码</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org34c8fd2" class="outline-2">
-<h2 id="org34c8fd2"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org260ad6d" class="outline-2">
+<h2 id="org260ad6d"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -46,8 +46,8 @@
 </div>
 </div>
 
-<div id="outline-container-org15caf98" class="outline-2">
-<h2 id="org15caf98"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-orga4001dd" class="outline-2">
+<h2 id="orga4001dd"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">emms</span>
@@ -55,84 +55,76 @@
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">emms-setup</span> <span style="color: #4c83ff;">:ensure</span> nil)
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">emms-info-libtag</span> <span style="color: #4c83ff;">:ensure</span> nil)
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired</span> <span style="color: #4c83ff;">:ensure</span> nil)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim</span>)
 
-  (emms-devel)
+  (emms-all)
   (emms-default-players)
   (<span style="color: #4c83ff;">when</span> (fboundp 'emms-cache)
     (emms-cache 1))
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">EMMS &#30446;&#24405;</span>
   (<span style="color: #4c83ff;">setq</span> emms-source-file-default-directory <span style="color: #61CE3C;">"~/Music"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-directory <span style="color: #61CE3C;">"~/emacs.d/emms/"</span>)
 
   (<span style="color: #4c83ff;">unless</span> (file-directory-p emms-source-file-default-directory)
-    (make-directory (file-name-as-directory emms-source-file-default-directory)))
+    (make-directory
+     (file-name-as-directory
+      emms-source-file-default-directory) <span style="color: #ff69b4;">t))</span>
 
-  (<span style="color: #4c83ff;">setq</span> emms-directory <span style="color: #61CE3C;">"~/Music/.emms/"</span>)
-  (<span style="color: #4c83ff;">setq</span> emms-history-file <span style="color: #61CE3C;">"~/Music/.emms/history"</span>)
-  (<span style="color: #4c83ff;">setq</span> emms-cache-file <span style="color: #61CE3C;">"~/Music/.emms/cache"</span>)
-  (<span style="color: #4c83ff;">setq</span> emms-stream-bookmarks-file <span style="color: #61CE3C;">"~/Music/.emms/streams"</span>)
-  (<span style="color: #4c83ff;">setq</span> emms-score-file <span style="color: #61CE3C;">"~/Music/.emms/scores"</span>)
+  (<span style="color: #4c83ff;">unless</span> (file-directory-p emms-directory)
+    (make-directory
+     (file-name-as-directory emms-directory) t))
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#23450;EMMS&#20027;&#27169;&#24335;&#20026;Playlist&#27169;&#24335;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#23450;EMMS&#20027;&#27169;&#24335;&#20026; Playlist &#27169;&#24335;</span>
   (<span style="color: #4c83ff;">setq</span> emms-playlist-default-major-mode 'emms-playlist-mode)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20462;&#22797;&#25773;&#25918;&#23436;&#21518;&#30340;BUG</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20462;&#22797;&#25773;&#25918;&#23436;&#21518;&#30340; BUG</span>
   (<span style="color: #4c83ff;">setq</span> emms-player-next-function 'emms-next)
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#23450;&#38899;&#36712;&#21021;&#22987;&#21270;&#20449;&#24687;</span>
-  (add-to-list 'emms-track-initialize-functions 'emms-info-initialize-track)
+  (add-to-list 'emms-track-initialize-functions
+               'emms-info-initialize-track)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20851;&#38381;EMMS&#20449;&#24687;&#24322;&#27493;&#27169;&#24335;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20851;&#38381; EMMS &#20449;&#24687;&#24322;&#27493;&#27169;&#24335;</span>
   (<span style="color: #4c83ff;">setq</span> emms-info-asynchronously nil)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#23450;EMMS&#21551;&#21160;&#21015;&#34920;&#24490;&#29615;&#25773;&#25918;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#23450; EMMS &#21551;&#21160;&#21015;&#34920;&#24490;&#29615;&#25773;&#25918;</span>
   (<span style="color: #4c83ff;">setq</span> emms-repeat-playlist t)
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#25490;&#24207;&#26041;&#27861;: &#33402;&#26415;&#23478; -&gt; &#19987;&#36753; -&gt; &#24207;&#21495;</span>
   (<span style="color: #4c83ff;">setq</span> emms-playlist-sort-function
         'emms-playlist-sort-by-natural-order)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20351;&#29992;Gnu find&#26597;&#25214;&#25991;&#20214;</span>
-  (<span style="color: #4c83ff;">setq</span> emms-source-file-directory-tree-function
-        'emms-source-file-directory-tree-find)
-
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#22312; minibuffer &#20013;&#26174;&#31034;&#25773;&#25918;&#20449;&#24687; (emms-show)</span>
-  (add-hook 'emms-player-started-hook 'emms-show)
-  (<span style="color: #4c83ff;">setq</span> emms-show-format <span style="color: #61CE3C;">"&#27491;&#22312;&#25773;&#25918;: [%s]"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-show-format <span style="color: #61CE3C;">"&#27491;&#22312;&#25773;&#25918;: %s"</span>)
+  (add-hook 'emms-player-started-hook #'emms-show)
 
-  <span style="color: #8B8989; font-style: italic;">;;</span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622; Mode-line &#30340;&#26174;&#31034;&#26041;&#24335;</span>
-  (<span style="color: #4c83ff;">setq</span> emms-mode-line-format <span style="color: #61CE3C;">"%s"</span>)
-  (<span style="color: #4c83ff;">setq</span> emms-playing-time-display-format <span style="color: #61CE3C;">"%s ]"</span>)
-  (<span style="color: #4c83ff;">setq</span> global-mode-string
-        '(<span style="color: #61CE3C;">" "</span> emms-mode-line-string <span style="color: #61CE3C;">" "</span> emms-playing-time-string <span style="color: #61CE3C;">" "</span>))
-  (<span style="color: #4c83ff;">setq</span> emms-mode-line-mode-line-function
-        'eh-emms-mode-line-playlist-current)
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#19981;&#22312; mode-line &#20013;&#26174;&#31034;&#25773;&#25918;&#20449;&#24687;</span>
+  (emms-mode-line -1)
 
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-mode-line-playlist-current</span> ()
-    <span style="color: #FBDE2D;">"Format the currently playing."</span>
-    (<span style="color: #4c83ff;">let</span> ((track (emms-playlist-current-selected-track)))
-      (<span style="color: #4c83ff;">if</span> (eq 'file (emms-track-type track))
-          (<span style="color: #4c83ff;">if</span> (<span style="color: #4c83ff;">and</span> (emms-track-get track 'info-artist)
-                   (emms-track-get track 'info-title))
-              (<span style="color: #4c83ff;">let</span> ((art  (emms-track-get track 'info-artist))
-                    (tit  (emms-track-get track 'info-title)))
-                (format <span style="color: #61CE3C;">"[ %s -- %s"</span> art tit))
-            (format <span style="color: #61CE3C;">"[ %s"</span>
-                    (file-relative-name (emms-track-name track)
-                                        emms-source-file-default-directory))))))
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#22914;&#20309;&#26174;&#31034; track</span>
+  (<span style="color: #4c83ff;">setq</span> emms-track-description-function
+        #'eh-emms-track-simple-description)
+
+  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-track-simple-description</span> (track)
+    (<span style="color: #4c83ff;">let</span> ((type (emms-track-type track)))
+      (concat <span style="color: #61CE3C;">"&#9834; "</span>
+              (<span style="color: #4c83ff;">cond</span> ((eq 'file type)
+                     (file-relative-name
+                      (emms-track-name track)
+                      emms-source-file-default-directory))
+                    ((eq 'url type)
+                     (emms-format-url-track-name (emms-track-name track)))
+                    (t (concat (symbol-name type)
+                               <span style="color: #61CE3C;">": "</span> (emms-track-name track)))))))
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26174;&#31034;&#27468;&#35789;</span>
   (emms-lyrics 1)
-  (<span style="color: #4c83ff;">setq</span> emms-lyrics-display-on-modeline t)
 
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Track information, function `</span><span style="color: #96CBFE; font-style: italic;">emms-info-libtag</span><span style="color: #8B8989; font-style: italic;">' need emms-print-metadata</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">command in emms, which build with: make emms-print-metadata</span>
+  (<span style="color: #4c83ff;">setq</span> emms-info-functions '(emms-info-libtag))
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Function used to format track</span>
-  (<span style="color: #4c83ff;">setq</span> emms-track-description-function
-        #'(lambda (track)
-            (concat <span style="color: #61CE3C;">" "</span> (eh-emms-make-track-description track))))
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622;Playlist&#30340;&#26174;&#31034;&#26041;&#24335;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622; Playlist &#30340;&#26174;&#31034;&#26041;&#24335;</span>
   (<span style="color: #4c83ff;">setq</span> emms-last-played-format-alist
         '(((emms-last-played-seconds-today) . <span style="color: #61CE3C;">"%H:%M"</span>)
           (604800                           . <span style="color: #61CE3C;">"%H:%M"</span>)
@@ -140,242 +132,43 @@
           ((emms-last-played-seconds-year)  . <span style="color: #61CE3C;">"%m-%d"</span>)
           (t                                . <span style="color: #61CE3C;">"%Y"</span>)))
 
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-make-track-description</span> (track)
-    <span style="color: #FBDE2D;">"Return a description of the current track."</span>
-    (<span style="color: #4c83ff;">let</span> ((track-type (emms-track-type track))
-          (play-count (<span style="color: #4c83ff;">or</span> (emms-track-get track 'play-count) 0))
-          (last-played (<span style="color: #4c83ff;">or</span> (emms-track-get track 'last-played) '(0 0 0)))
-          (name (emms-track-name track))
-          (pmin (emms-track-get track 'info-playing-time-min))
-          (psec (emms-track-get track 'info-playing-time-sec))
-          (ptot (emms-track-get track 'info-playing-time))
-          (title (emms-track-get track 'info-title))
-          (artist (emms-track-get track 'info-artist))
-          (album (emms-track-get track 'info-album)))
-      (<span style="color: #4c83ff;">if</span> (eq 'file track-type)
-          (format <span style="color: #61CE3C;">"%5s %3s |-&gt; %-s"</span>
-                  (emms-last-played-format-date last-played)
-                  play-count
-                  (<span style="color: #4c83ff;">cond</span> ((<span style="color: #4c83ff;">and</span> pmin psec) (format <span style="color: #61CE3C;">"%s %s -- %s [%02d:%02d]"</span> artist album title pmin psec))
-                        (ptot (format  <span style="color: #61CE3C;">"%s %s -- %s [%02d:%02d]"</span> artist album title (/ ptot 60) (% ptot 60)))
-                        (t (format <span style="color: #61CE3C;">"%s %s -- %s"</span> artist album  title)))))))
-
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Function used to get music tags, for example IDv2.3!</span>
-  (<span style="color: #4c83ff;">setq</span> emms-info-functions '(eh-emms-info-libtag eh-emms-info-add-pinyin-alias))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-info-libtag</span> (track)
-    (<span style="color: #4c83ff;">when</span> (<span style="color: #4c83ff;">and</span> (eq 'file (emms-track-type track))
-               (string-match
-                <span style="color: #61CE3C;">"\\.</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">(</span><span style="color: #61CE3C;">[Mm][Pp]3</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">|</span><span style="color: #61CE3C;">[oO][gG][gG]</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">|</span><span style="color: #61CE3C;">[fF][lL][aA][cC]</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">|</span><span style="color: #61CE3C;">[sS][pP][xX]</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">)</span><span style="color: #61CE3C;">\\'"</span>
-                (emms-track-name track)))
-      (<span style="color: #4c83ff;">let</span> ((info-list
-             (split-string (file-relative-name
-                            (emms-track-name track)
-                            emms-source-file-default-directory) <span style="color: #61CE3C;">"/"</span> t)))
-        (emms-track-set track 'info-artist (<span style="color: #4c83ff;">if</span> (&gt; (length info-list) 1) (nth 0 info-list) <span style="color: #61CE3C;">"&#26410;&#30693;&#33402;&#26415;&#23478;"</span>))
-        (emms-track-set track 'info-album  (<span style="color: #4c83ff;">if</span> (&gt; (length info-list) 2) (nth 1 info-list) <span style="color: #61CE3C;">"&#26434;&#39033;"</span>))
-        (emms-track-set track 'info-title (car (reverse info-list))))
-      (<span style="color: #4c83ff;">with-temp-buffer</span>
-        (<span style="color: #4c83ff;">when</span> (string= <span style="color: #61CE3C;">"0"</span>
-                       (format <span style="color: #61CE3C;">"%s"</span> (<span style="color: #4c83ff;">let</span> ((coding-system-for-read 'utf-8))
-                                      (call-process emms-info-libtag-program-name
-                                                    nil '(t nil) nil
-                                                    (emms-track-name track)))))
-          (goto-char (point-min))
-          <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Crush the trailing whitespace</span>
-          (<span style="color: #4c83ff;">while</span> (re-search-forward <span style="color: #61CE3C;">"[[:space:]]+$"</span> nil t)
-            (replace-match <span style="color: #61CE3C;">""</span> nil nil))
-          (goto-char (point-min))
-          (<span style="color: #4c83ff;">while</span> (looking-at <span style="color: #61CE3C;">"^</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">(</span><span style="color: #61CE3C;">[</span><span style="color: #61CE3C;">^</span><span style="color: #61CE3C;">=\n]+</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">)</span><span style="color: #61CE3C;">=</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">(</span><span style="color: #61CE3C;">.*</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">)</span><span style="color: #61CE3C;">$"</span>)
-            (<span style="color: #4c83ff;">let</span> ((name (intern-soft (match-string 1)))
-                  (value (match-string 2)))
-              (<span style="color: #4c83ff;">when</span> (&gt; (length value)
-                       0)
-                (emms-track-set track
-                                name
-                                (<span style="color: #4c83ff;">if</span> (eq name 'info-playing-time)
-                                    (string-to-number value)
-                                  value))))
-            (forward-line 1))))))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-info-add-pinyin-alias</span> (track)
-    <span style="color: #FBDE2D;">"Add pinyin alias to the track"</span>
-    (<span style="color: #4c83ff;">when</span> (<span style="color: #4c83ff;">and</span> (<span style="color: #4c83ff;">featurep</span> '<span style="color: #96CBFE;">chinese-pyim</span>)
-               (eq 'file (emms-track-type track)))
-      (emms-track-set track 'info-artist-alias (pyim-hanzi2pinyin (emms-track-get track 'info-artist) t))
-      (emms-track-set track 'info-album-alias (pyim-hanzi2pinyin (emms-track-get track 'info-album) t))
-      (emms-track-set track 'info-title-alias (pyim-hanzi2pinyin (emms-track-get track 'info-title) t))))
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622;EMMS &#27983;&#35272;&#22120;, &#40664;&#35748;&#26174;&#31034;&#26041;&#24335;&#20026;: &#26174;&#31034;&#25152;&#26377;</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622; EMMS &#27983;&#35272;&#22120;, &#40664;&#35748;&#26174;&#31034;&#26041;&#24335;&#20026;: &#26174;&#31034;&#25152;&#26377;</span>
   (emms-browser-set-filter (assoc <span style="color: #61CE3C;">"EVERYTHING"</span> emms-browser-filters))
+
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">filter: &#26174;&#31034;&#25152;&#26377;</span>
   (<span style="color: #4c83ff;">emms-browser-make-filter</span> <span style="color: #61CE3C;">"EVERYTHING"</span> 'ignore)
+
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">filter: &#21482;&#26174;&#31034;&#25991;&#20214;</span>
-  (<span style="color: #4c83ff;">emms-browser-make-filter</span> <span style="color: #61CE3C;">"ALL-FILES"</span> (emms-browser-filter-only-type 'file))
+  (<span style="color: #4c83ff;">emms-browser-make-filter</span>
+   <span style="color: #61CE3C;">"ALL-FILES"</span>
+   (emms-browser-filter-only-type 'file))
+
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">filter: &#26368;&#36817;&#19968;&#20010;&#26143;&#26399;&#25773;&#25918;&#30340;</span>
-  (<span style="color: #4c83ff;">emms-browser-make-filter</span> <span style="color: #61CE3C;">"LAST-WEEK"</span> (emms-browser-filter-only-recent 7))
+  (<span style="color: #4c83ff;">emms-browser-make-filter</span>
+   <span style="color: #61CE3C;">"LAST-WEEK"</span>
+   (emms-browser-filter-only-recent 7))
+
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">filter: &#26368;&#36817;&#19968;&#20010;&#26376;&#37117;&#27809;&#26377;&#25773;&#25918;&#30340;</span>
-  (<span style="color: #4c83ff;">emms-browser-make-filter</span> <span style="color: #61CE3C;">"LAST-MONTH-NOT-PLAYED"</span> (<span style="color: #4c83ff;">lambda</span> (track) (not (funcall (emms-browser-filter-only-recent 30) track))))
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">EMMS &#27983;&#35272;&#22120;, &#21024;&#38500;&#25991;&#20214;&#19981;&#25552;&#37266;</span>
-  (put 'emms-browser-delete-files 'disabled nil)
+  (<span style="color: #4c83ff;">emms-browser-make-filter</span>
+   <span style="color: #61CE3C;">"LAST-MONTH-NOT-PLAYED"</span>
+   (<span style="color: #4c83ff;">lambda</span> (track)
+     (not (funcall (emms-browser-filter-only-recent 30) track))))
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622; emms buffer &#26174;&#31034;&#26684;&#24335;</span>
-  (<span style="color: #4c83ff;">setq</span> emms-browser-info-artist-format <span style="color: #61CE3C;">"* %n"</span>)
-  (<span style="color: #4c83ff;">setq</span> emms-browser-info-album-format  <span style="color: #61CE3C;">"  - %n"</span>)
-  (<span style="color: #4c83ff;">setq</span> emms-browser-info-title-format  <span style="color: #61CE3C;">"    &#9834;. %n"</span>)
-  (<span style="color: #4c83ff;">setq</span> emms-browser-playlist-info-title-format <span style="color: #61CE3C;">"%n"</span>)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#33258;&#23450;&#20041;emms-browser-add-tracks, &#31105;&#27490;&#22312;playlist&#25991;&#20214;&#20013;&#28155;&#21152;</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">artist&#34892; &#21644; album&#34892;&#65292;&#21516;&#26102;&#20351;emacs-browser-playlist-*-*-format</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20013; "%i"&#20301;&#32622;&#31526;&#22833;&#25928;</span>
-  <span style="color: #8B8989; font-style: italic;">;;</span>
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#27880;: emms-browser-playlist-info-artist-format</span>
-  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">emms-browser-playlist-info-album-format</span>
-  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">&#20004;&#20010;&#21464;&#37327;&#35774;&#32622;&#22312;&#36825;&#37324;&#19981;&#36215;&#20316;&#29992;</span>
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-browser-add-tracks</span> ()
-    <span style="color: #FBDE2D;">"Add all tracks at point.</span>
-<span style="color: #FBDE2D;">Return the previous point-max before adding."</span>
-    (<span style="color: #4c83ff;">interactive</span>)
-    (<span style="color: #4c83ff;">let</span> ((first-new-track (<span style="color: #4c83ff;">with-current-emms-playlist</span> (point-max)))
-          (bdata (emms-browser-bdata-at-point)))
-      (eh-emms-browser-playlist-insert-bdata bdata)
-      (run-hook-with-args 'emms-browser-tracks-added-hook
-                          first-new-track)
-      first-new-track))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-browser-playlist-insert-bdata</span> (bdata)
-    <span style="color: #FBDE2D;">"Add all tracks in BDATA to the playlist."</span>
-    (<span style="color: #4c83ff;">let</span> ((type (emms-browser-bdata-type bdata)))
-      <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">recurse or add tracks</span>
-      (<span style="color: #4c83ff;">dolist</span> (item (emms-browser-bdata-data bdata))
-        (<span style="color: #4c83ff;">if</span> (not (eq type 'info-title))
-            (eh-emms-browser-playlist-insert-bdata item)
-          (emms-browser-playlist-insert-track bdata)))))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-browser-make-name</span> (entry type)
-    <span style="color: #FBDE2D;">"Override `</span><span style="color: #96CBFE;">emms-browser-make-name</span><span style="color: #FBDE2D;">'. Return a name for ENTRY, used for making a bdata object."</span>
-    (<span style="color: #4c83ff;">let</span> ((key (car entry))
-          (track (cadr entry))
-          artist title) <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">only the first track</span>
-      (<span style="color: #4c83ff;">cond</span>
-       ((eq type 'info-title)
-        (eh-emms-make-track-description track))
-       (t key))))
-
-  (advice-add 'emms-browser-make-name <span style="color: #4c83ff;">:override</span> #'eh-emms-browser-make-name)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#24555;&#25463;&#20989;&#25968;</span>
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-toggle-playing</span> ()
-    (<span style="color: #4c83ff;">interactive</span>)
-    (<span style="color: #4c83ff;">if</span> emms-player-playing-p
-        (emms-pause)
-      (emms-start)))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-search</span> ()
-    (<span style="color: #4c83ff;">interactive</span>)
-    (goto-char (point-min))
-    (call-interactively 'isearch-forward))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms</span> ()
-    (<span style="color: #4c83ff;">interactive</span>)
-    (<span style="color: #4c83ff;">if</span> (<span style="color: #4c83ff;">or</span> (null emms-playlist-buffer)
-            (not (buffer-live-p emms-playlist-buffer)))
-        (<span style="color: #4c83ff;">let</span> ((playlist (concat
-                         (file-name-as-directory emms-source-file-default-directory)
-                         <span style="color: #61CE3C;">"default.playlist"</span>)))
-          (<span style="color: #4c83ff;">if</span> (not (file-readable-p playlist))
-              (eh-emms-add-directory-tree)
-            (emms-add-playlist playlist))))
-    (emms-playlist-mode-go))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-add-directory-tree</span> ()
-    (<span style="color: #4c83ff;">interactive</span>)
-    (emms-add-directory-tree
-     (ido-read-directory-name
-      <span style="color: #61CE3C;">"Add directory tree:"</span>
-      emms-source-file-default-directory)))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-add-file</span> ()
-    (<span style="color: #4c83ff;">interactive</span>)
-    (<span style="color: #4c83ff;">let</span> ((file (ido-read-file-name
-                 <span style="color: #61CE3C;">"Add directory tree:"</span>
-                 emms-source-file-default-directory)))
-      (<span style="color: #4c83ff;">cond</span>
-       ((string-match <span style="color: #61CE3C;">"\\.</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">(</span><span style="color: #61CE3C;">m3u</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">|</span><span style="color: #61CE3C;">pls</span><span style="color: #E9C062;">\\</span><span style="color: #ff0000;">)</span><span style="color: #61CE3C;">\\'"</span> file)
-        (emms-add-playlist file))
-       (t (emms-add-file file)))))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-browser-search-by-names</span> ()
-    (<span style="color: #4c83ff;">interactive</span>)
-    (emms-browser-search '(info-artist info-artist-alias info-title info-title-alias info-album info-album-alias)))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-browser-search-by-artist</span> ()
-    (<span style="color: #4c83ff;">interactive</span>)
-    (emms-browser-search '(info-artist info-artist-alias)))
-
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-emms-browser-search-by-title</span> ()
-    (<span style="color: #4c83ff;">interactive</span>)
-    (emms-browser-search '(info-title info-title-alias)))
-
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">Global keybinding for emms</span>
-  (global-unset-key (kbd <span style="color: #61CE3C;">"C-c e"</span>))
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e e"</span>) 'eh-emms)
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e d"</span>) 'eh-emms-add-directory-tree)
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e f"</span>) 'eh-emms-add-file)
-
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e SPC"</span>) 'eh-emms-toggle-playing)
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e q"</span>) 'emms-stop)
-
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e n"</span>) 'emms-next)
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e p"</span>) 'emms-previous)
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e o"</span>) 'emms-show)
-
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e h"</span>) 'emms-shuffle)
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e H"</span>) 'emms-sort)
-
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e r"</span>)   'emms-toggle-repeat-track)
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e R"</span>)   'emms-toggle-repeat-playlist)
-
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e s u"</span>) 'emms-score-up-playing)
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e s d"</span>) 'emms-score-down-playing)
-  (global-set-key (kbd <span style="color: #61CE3C;">"C-c e s o"</span>) 'emms-score-show-playing)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">browser mode map</span>
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"SPC"</span>) 'emms-browser-next-non-track)
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"&lt;return&gt;"</span>) (<span style="color: #4c83ff;">lambda</span> ()
-                                                       (<span style="color: #4c83ff;">interactive</span>)
-                                                       (eh-emms-browser-add-tracks)
-                                                       (message <span style="color: #61CE3C;">"Add current track to playlist"</span>)))
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"C-SPC"</span>) 'emms-browser-next-non-track)
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"&lt;tab&gt;"</span>) 'emms-browser-toggle-subitems)
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"o"</span>) 'emms-playlist-mode-go)
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"w"</span>) 'emms-browser-show-LAST-WEEK)
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"a"</span>) 'emms-browser-show-EVERYTHING)
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"m"</span>) 'emms-browser-show-LAST-MONTH-NOT-PLAYED)
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"s s"</span>) 'eh-emms-browser-search-by-names)
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"s a"</span>) 'eh-emms-browser-search-by-artist)
-  (define-key emms-browser-mode-map (kbd <span style="color: #61CE3C;">"s t"</span>) 'eh-emms-browser-search-by-title)
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">playlist-mode-map</span>
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"o"</span>) 'emms-browser-show-LAST-WEEK)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"SPC"</span>) 'emms-pause)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"/"</span>) 'eh-emms-search)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"+"</span>) 'emms-volume-raise)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"-"</span>) 'emms-volume-lower)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"C-&lt;right&gt;"</span>) (<span style="color: #4c83ff;">lambda</span> () (<span style="color: #4c83ff;">interactive</span>) (emms-seek +10)))
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"C-&lt;left&gt;"</span>) (<span style="color: #4c83ff;">lambda</span> () (<span style="color: #4c83ff;">interactive</span>) (emms-seek -10)))
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"C-&lt;right&gt;"</span>) (<span style="color: #4c83ff;">lambda</span> () (<span style="color: #4c83ff;">interactive</span>) (emms-seek +60)))
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"C-&lt;left&gt;"</span>) (<span style="color: #4c83ff;">lambda</span> () (<span style="color: #4c83ff;">interactive</span>) (emms-seek -60)))
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"S u"</span>) 'emms-score-up-file-on-line)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"S d"</span>) 'emms-score-down-file-on-line)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"S o"</span>) 'emms-score-show-file-on-line)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"S l"</span>) 'emms-score-less-tolerant)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"S m"</span>) 'emms-score-more-tolerant)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"S t"</span>) 'emms-score-set-tolerance)
-  (define-key emms-playlist-mode-map (kbd <span style="color: #61CE3C;">"S s"</span>) 'emms-score-show-playing))
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#35774;&#32622; emms browser &#21644; browser-list &#20013;&#38899;&#20048;&#30340;&#26174;&#31034;&#26684;&#24335;</span>
+  (<span style="color: #4c83ff;">setq</span> emms-browser-info-year-format      <span style="color: #61CE3C;">"%i+ %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-info-genre-format     <span style="color: #61CE3C;">"%i+ %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-info-performer-format <span style="color: #61CE3C;">"%i+ %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-info-composer-format  <span style="color: #61CE3C;">"%i+ %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-info-artist-format    <span style="color: #61CE3C;">"%i* %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-info-album-format     <span style="color: #61CE3C;">"%i- %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-info-title-format     <span style="color: #61CE3C;">"%i&#9834; %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-playlist-info-year-format      <span style="color: #61CE3C;">"%i+ %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-playlist-info-genre-format     <span style="color: #61CE3C;">"%i+ %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-playlist-info-performer-format <span style="color: #61CE3C;">"%i+ %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-playlist-info-composer-format  <span style="color: #61CE3C;">"%i+ %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-playlist-info-artist-format    <span style="color: #61CE3C;">"%i* %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-playlist-info-album-format     <span style="color: #61CE3C;">"%i- %n"</span>)
+  (<span style="color: #4c83ff;">setq</span> emms-browser-playlist-info-title-format     <span style="color: #61CE3C;">"%i&#9834; %n"</span>))
 </pre>
 </div>
 </div>
@@ -385,8 +178,8 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2017-07-08</span>
-        <span title="last modification date" class="post-info">2017-07-08</span>
+        <span title="post date" class="post-info">2017-07-21</span>
+        <span title="last modification date" class="post-info">2017-07-21</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>

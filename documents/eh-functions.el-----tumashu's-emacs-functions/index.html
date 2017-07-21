@@ -32,13 +32,13 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org26f3b14">1. 简介</a></li>
-<li><a href="#orgafe6180">2. 代码</a></li>
+<li><a href="#orgeb0b4ea">1. 简介</a></li>
+<li><a href="#org832e232">2. 代码</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org26f3b14" class="outline-2">
-<h2 id="org26f3b14"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgeb0b4ea" class="outline-2">
+<h2 id="orgeb0b4ea"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -46,33 +46,9 @@
 </div>
 </div>
 
-<div id="outline-container-orgafe6180" class="outline-2">
-<h2 id="orgafe6180"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-org832e232" class="outline-2">
+<h2 id="org832e232"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
-<div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-directory-files-recursively</span> (directory <span style="color: #afd8af;">&amp;optional</span> type regexp)
-  <span style="color: #FBDE2D;">"recursively list all the files in a directory"</span>
-  (<span style="color: #4c83ff;">let*</span> ((directory (<span style="color: #4c83ff;">or</span> directory default-directory))
-         (regexp  (<span style="color: #4c83ff;">if</span> regexp regexp <span style="color: #61CE3C;">".*"</span>))
-         (predfunc (<span style="color: #4c83ff;">case</span> type
-                     (dir 'file-directory-p)
-                     (file 'file-regular-p)
-                     (otherwise 'identity)))
-         (files (delete-if
-                 (<span style="color: #4c83ff;">lambda</span> (s)
-                   (string-match (<span style="color: #4c83ff;">rx</span> bol (repeat 1 2 <span style="color: #61CE3C;">"."</span>) eol)
-                                 (file-name-nondirectory s)))
-                 (directory-files directory t nil t))))
-    (<span style="color: #4c83ff;">loop</span> for file in files
-          when (<span style="color: #4c83ff;">and</span> (funcall predfunc file)
-                    (string-match regexp (file-name-nondirectory file)))
-          collect file into ret
-          when (file-directory-p file)
-          nconc (eh-directory-files-recursively file type regexp) into ret
-          finally return ret)))
-</pre>
-</div>
-
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-wash-text</span> (text <span style="color: #afd8af;">&amp;optional</span> fill-width indent)
   <span style="color: #FBDE2D;">"Insert text into a temp buffer and wash it,</span>
@@ -217,8 +193,8 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2017-07-08</span>
-        <span title="last modification date" class="post-info">2017-07-08</span>
+        <span title="post date" class="post-info">2017-07-21</span>
+        <span title="last modification date" class="post-info">2017-07-21</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>

@@ -32,20 +32,20 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge0491d8">1. Emacs-helper 使用说明</a>
+<li><a href="#orge2712bc">1. Emacs-helper 使用说明</a>
 <ul>
-<li><a href="#orgb60f74b">1.1. 简介</a></li>
-<li><a href="#orgbcb62e5">1.2. 使用方法</a></li>
+<li><a href="#org7223ffe">1.1. 简介</a></li>
+<li><a href="#orgfe0b1e9">1.2. 使用方法</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orge0491d8" class="outline-2">
-<h2 id="orge0491d8"><span class="section-number-2">1</span> Emacs-helper 使用说明</h2>
+<div id="outline-container-orge2712bc" class="outline-2">
+<h2 id="orge2712bc"><span class="section-number-2">1</span> Emacs-helper 使用说明</h2>
 <div class="outline-text-2" id="text-1">
-</div><div id="outline-container-orgb60f74b" class="outline-3">
-<h3 id="orgb60f74b"><span class="section-number-3">1.1</span> 简介</h3>
+</div><div id="outline-container-org7223ffe" class="outline-3">
+<h3 id="org7223ffe"><span class="section-number-3">1.1</span> 简介</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Emacs-helper 是 <a href="https://github.com/tumashu">Tumashu</a> 同学的个人配置，可以做为 Emacs 中文用户的一个参考。
@@ -53,23 +53,20 @@ Emacs-helper 是 <a href="https://github.com/tumashu">Tumashu</a> 同学的个�
 </div>
 </div>
 
-<div id="outline-container-orgbcb62e5" class="outline-3">
-<h3 id="orgbcb62e5"><span class="section-number-3">1.2</span> 使用方法</h3>
+<div id="outline-container-orgfe0b1e9" class="outline-3">
+<h3 id="orgfe0b1e9"><span class="section-number-3">1.2</span> 使用方法</h3>
 <div class="outline-text-3" id="text-1-2">
 <ol class="org-ol">
-<li>下载: <a href="https://github.com/tumashu/emacs-helper/archive/master.zip">emacs-helper</a></li>
-<li>解压缩到目录："d:/projects/emacs-packages/emacs-helper"</li>
+<li>下载 emacs-helper 压缩包: <a href="https://github.com/tumashu/emacs-helper/archive/master.zip">emacs-helper</a></li>
+<li>将压缩包解压缩到任意一个目录，比如："d:/emacs-helper"</li>
+<li>用 emacs 打开 installer 文件： "d:/emacs-helper/eh-installer.el"</li>
 <li><p>
-将下面的代码粘贴到 "~/.emacs"
+运行下面的命令来安装 "d:/emacs-helper/elpa" 目录下所有的包，并在 "~/.emacs" 文件中插入相应的配置片断。
 </p>
 <pre class="example">
-(add-to-list 'load-path "d:/projects/emacs-packages/emacs-helper")
-(setq use-package-always-ensure t)
-(setq eh-enable-load-path-update nil)
-(setq eh-enable-full-install t)
-(require 'emacs-helper)
+M-x eval-buffer
 </pre></li>
-<li>重启 Emacs, 第一次加载 Emacs-helper 的时候，它依赖的包会自动安装。</li>
+<li>重启 Emacs</li>
 </ol>
 </div>
 </div>

@@ -32,19 +32,19 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge1829e0">1. 简介</a></li>
-<li><a href="#org68b3b73">2. 代码</a>
+<li><a href="#orgda90144">1. 简介</a></li>
+<li><a href="#org0ea8d49">2. 代码</a>
 <ul>
-<li><a href="#orgb0310dc">2.1. 设置 smex</a></li>
-<li><a href="#org5d0d3c7">2.2. 设置 swiper 和 ivy-mode</a></li>
-<li><a href="#orgdd23ff9">2.3. 设置 company-mode</a></li>
+<li><a href="#org08fcbc3">2.1. 设置 smex</a></li>
+<li><a href="#org0aabf4e">2.2. 设置 swiper 和 ivy-mode</a></li>
+<li><a href="#org4a8d1b8">2.3. 设置 company-mode</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orge1829e0" class="outline-2">
-<h2 id="orge1829e0"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgda90144" class="outline-2">
+<h2 id="orgda90144"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -52,11 +52,11 @@
 </div>
 </div>
 
-<div id="outline-container-org68b3b73" class="outline-2">
-<h2 id="org68b3b73"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-org0ea8d49" class="outline-2">
+<h2 id="org0ea8d49"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-orgb0310dc" class="outline-3">
-<h3 id="orgb0310dc"><span class="section-number-3">2.1</span> 设置 smex</h3>
+</div><div id="outline-container-org08fcbc3" class="outline-3">
+<h3 id="org08fcbc3"><span class="section-number-3">2.1</span> 设置 smex</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">smex</span>
@@ -67,8 +67,8 @@
 </div>
 </div>
 
-<div id="outline-container-org5d0d3c7" class="outline-3">
-<h3 id="org5d0d3c7"><span class="section-number-3">2.2</span> 设置 swiper 和 ivy-mode</h3>
+<div id="outline-container-org0aabf4e" class="outline-3">
+<h3 id="org0aabf4e"><span class="section-number-3">2.2</span> 设置 swiper 和 ivy-mode</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">swiper</span>
@@ -98,14 +98,14 @@
   (<span style="color: #4c83ff;">push</span> '(counsel-describe-variable . <span style="color: #61CE3C;">""</span>) ivy-initial-inputs-alist)
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">I use "C-x C-f" to open file, so bind "C-f" to</span>
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">`</span><span style="color: #96CBFE; font-style: italic;">ivy-immediate-done</span><span style="color: #8B8989; font-style: italic;">' is very useful.</span>
-  (define-key ivy-minibuffer-map (kbd <span style="color: #61CE3C;">"C-f"</span>) 'ivy-immediate-done))
+  (define-key ivy-minibuffer-map (kbd <span style="color: #61CE3C;">"C-f"</span>) #'ivy-immediate-done))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdd23ff9" class="outline-3">
-<h3 id="orgdd23ff9"><span class="section-number-3">2.3</span> 设置 company-mode</h3>
+<div id="outline-container-org4a8d1b8" class="outline-3">
+<h3 id="org4a8d1b8"><span class="section-number-3">2.3</span> 设置 company-mode</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">company</span>
@@ -137,12 +137,12 @@
         '(company-pseudo-tooltip-frontend
           company-echo-metadata-frontend))
 
-  (global-set-key (kbd <span style="color: #61CE3C;">"M-/"</span>) 'company-complete)
-  (define-key company-active-map (kbd <span style="color: #61CE3C;">"M-i"</span>) 'company-complete-selection)
-  (define-key company-active-map (kbd <span style="color: #61CE3C;">"C-n"</span>) 'company-select-next)
-  (define-key company-active-map (kbd <span style="color: #61CE3C;">"C-p"</span>)'company-select-previous)
-  (define-key company-active-map (kbd <span style="color: #61CE3C;">"M-n"</span>) 'company-select-next)
-  (define-key company-active-map (kbd <span style="color: #61CE3C;">"M-p"</span>)'company-select-previous)
+  (global-set-key (kbd <span style="color: #61CE3C;">"M-/"</span>) #'company-complete)
+  (define-key company-active-map (kbd <span style="color: #61CE3C;">"M-i"</span>) #'company-complete-selection)
+  (define-key company-active-map (kbd <span style="color: #61CE3C;">"C-n"</span>) #'company-select-next)
+  (define-key company-active-map (kbd <span style="color: #61CE3C;">"C-p"</span>) #'company-select-previous)
+  (define-key company-active-map (kbd <span style="color: #61CE3C;">"M-n"</span>) #'company-select-next)
+  (define-key company-active-map (kbd <span style="color: #61CE3C;">"M-p"</span>) #'company-select-previous)
 
   (<span style="color: #4c83ff;">if</span> (<span style="color: #4c83ff;">and</span> (fboundp 'daemonp) (daemonp))
       (add-hook 'after-make-frame-functions
@@ -168,8 +168,8 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2017-07-08</span>
-        <span title="last modification date" class="post-info">2017-07-08</span>
+        <span title="post date" class="post-info">2017-07-21</span>
+        <span title="last modification date" class="post-info">2017-07-21</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>
