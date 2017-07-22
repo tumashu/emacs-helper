@@ -32,37 +32,37 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org5eb5e88">1. 简介</a></li>
-<li><a href="#orgd71ddcb">2. 代码</a>
+<li><a href="#org17683e6">1. 简介</a></li>
+<li><a href="#org37b170f">2. 代码</a>
 <ul>
-<li><a href="#org848bcbc">2.1. eh-website</a></li>
-<li><a href="#orgdf54d83">2.2. el2org</a></li>
-<li><a href="#orgb44b68a">2.3. EPG</a></li>
-<li><a href="#orgf7529e7">2.4. sdcv</a></li>
-<li><a href="#org797fb26">2.5. emms</a></li>
-<li><a href="#org78eb7ee">2.6. elisp setting</a></li>
-<li><a href="#org9b21384">2.7. org-journal</a></li>
-<li><a href="#org751635e">2.8. ESS</a></li>
-<li><a href="#orgc47b5dd">2.9. aggressive-indent</a></li>
-<li><a href="#org39a2b54">2.10. autopair</a></li>
-<li><a href="#orgbe3eb90">2.11. multi-term</a></li>
-<li><a href="#org5d13d13">2.12. wdired and dired-ranger</a></li>
-<li><a href="#orgc6435bc">2.13. ace-jump</a></li>
-<li><a href="#orgec4fc2d">2.14. switch-window</a></li>
-<li><a href="#org25adbc2">2.15. gitpatch</a></li>
-<li><a href="#org0742f98">2.16. ebdb</a></li>
-<li><a href="#orgc120ff7">2.17. magit</a></li>
-<li><a href="#org09d3160">2.18. projectile</a></li>
-<li><a href="#org4103084">2.19. guix</a></li>
-<li><a href="#org4951634">2.20. undo-tree</a></li>
-<li><a href="#orgf97a16d">2.21. emacs-calfw</a></li>
+<li><a href="#orgbd0b5b0">2.1. eh-website</a></li>
+<li><a href="#org653b89f">2.2. el2org</a></li>
+<li><a href="#org69a3353">2.3. EPG</a></li>
+<li><a href="#org6174e31">2.4. sdcv</a></li>
+<li><a href="#org88a90f1">2.5. emms</a></li>
+<li><a href="#org957c8eb">2.6. elisp setting</a></li>
+<li><a href="#org070e06e">2.7. org-journal</a></li>
+<li><a href="#org3e9ac65">2.8. ESS</a></li>
+<li><a href="#orgf24a09a">2.9. aggressive-indent</a></li>
+<li><a href="#org334e5e5">2.10. autopair</a></li>
+<li><a href="#org607f951">2.11. multi-term</a></li>
+<li><a href="#orgc5d4189">2.12. wdired and dired-ranger</a></li>
+<li><a href="#org82d8420">2.13. ace-jump</a></li>
+<li><a href="#orgde07aff">2.14. switch-window</a></li>
+<li><a href="#org84029d2">2.15. gitpatch</a></li>
+<li><a href="#org918e91c">2.16. ebdb</a></li>
+<li><a href="#orgb5e1099">2.17. magit</a></li>
+<li><a href="#org52b7fe2">2.18. projectile</a></li>
+<li><a href="#orgd61fb3f">2.19. guix</a></li>
+<li><a href="#org374cd15">2.20. undo-tree</a></li>
+<li><a href="#org6349979">2.21. emacs-calfw</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org5eb5e88" class="outline-2">
-<h2 id="org5eb5e88"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org17683e6" class="outline-2">
+<h2 id="org17683e6"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -70,34 +70,31 @@
 </div>
 </div>
 
-<div id="outline-container-orgd71ddcb" class="outline-2">
-<h2 id="orgd71ddcb"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-org37b170f" class="outline-2">
+<h2 id="org37b170f"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-org848bcbc" class="outline-3">
-<h3 id="org848bcbc"><span class="section-number-3">2.1</span> eh-website</h3>
+</div><div id="outline-container-orgbd0b5b0" class="outline-3">
+<h3 id="orgbd0b5b0"><span class="section-number-3">2.1</span> eh-website</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-webpage</span>
   <span style="color: #4c83ff;">:config</span>
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">my website's owp config</span>
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-website</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-website</span> <span style="color: #4c83ff;">:ensure</span> nil)
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">org-webpage's owp config</span>
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">owp-devtools</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">owp-devtools</span> <span style="color: #4c83ff;">:ensure</span> nil)
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim</span>
     <span style="color: #4c83ff;">:ensure</span> nil
     <span style="color: #4c83ff;">:config</span>
     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">chinese-pyim owp config</span>
-    (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim-devtools</span>
-      <span style="color: #4c83ff;">:ensure</span> nil)))
+    (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim-devtools</span> <span style="color: #4c83ff;">:ensure</span> nil)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdf54d83" class="outline-3">
-<h3 id="orgdf54d83"><span class="section-number-3">2.2</span> el2org</h3>
+<div id="outline-container-org653b89f" class="outline-3">
+<h3 id="org653b89f"><span class="section-number-3">2.2</span> el2org</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">el2org</span>)
@@ -106,29 +103,26 @@
 </div>
 </div>
 
-<div id="outline-container-orgb44b68a" class="outline-3">
-<h3 id="orgb44b68a"><span class="section-number-3">2.3</span> EPG</h3>
+<div id="outline-container-org69a3353" class="outline-3">
+<h3 id="org69a3353"><span class="section-number-3">2.3</span> EPG</h3>
 <div class="outline-text-3" id="text-2-3">
-<ol class="org-ol">
-<li>Put the below to your ~/.gnupg/gpg-agent.conf:
-allow-emacs-pinentry
-allow-loopback-pinentry</li>
-<li>gpgconf &#x2013;reload gpg-agent</li>
-<li>(setq epa-pinentry-mode 'loopback)</li>
-<li>(pinentry-start)</li>
-</ol>
-
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">epg</span>
   <span style="color: #4c83ff;">:config</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">1. Put the below to your ~/.gnupg/gpg-agent.conf:</span>
+  <span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">allow-emacs-pinentry</span>
+  <span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">allow-loopback-pinentry</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">2. gpgconf --reload gpg-agent</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">3. (setq epa-pinentry-mode 'loopback)</span>
+  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">4. (pinentry-start)</span>
   (<span style="color: #4c83ff;">setq</span> epa-pinentry-mode 'loopback))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf7529e7" class="outline-3">
-<h3 id="orgf7529e7"><span class="section-number-3">2.4</span> sdcv</h3>
+<div id="outline-container-org6174e31" class="outline-3">
+<h3 id="org6174e31"><span class="section-number-3">2.4</span> sdcv</h3>
 <div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-yasdcv</span>
@@ -140,19 +134,18 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org797fb26" class="outline-3">
-<h3 id="org797fb26"><span class="section-number-3">2.5</span> emms</h3>
+<div id="outline-container-org88a90f1" class="outline-3">
+<h3 id="org88a90f1"><span class="section-number-3">2.5</span> emms</h3>
 <div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-emms</span>
-  <span style="color: #4c83ff;">:ensure</span> nil)
+<pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">eh-emms</span> <span style="color: #4c83ff;">:ensure</span> nil)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org78eb7ee" class="outline-3">
-<h3 id="org78eb7ee"><span class="section-number-3">2.6</span> elisp setting</h3>
+<div id="outline-container-org957c8eb" class="outline-3">
+<h3 id="org957c8eb"><span class="section-number-3">2.6</span> elisp setting</h3>
 <div class="outline-text-3" id="text-2-6">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">lisp-mode</span>
@@ -174,35 +167,38 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org9b21384" class="outline-3">
-<h3 id="org9b21384"><span class="section-number-3">2.7</span> org-journal</h3>
+<div id="outline-container-org070e06e" class="outline-3">
+<h3 id="org070e06e"><span class="section-number-3">2.7</span> org-journal</h3>
 <div class="outline-text-3" id="text-2-7">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-journal</span>
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c C-j"</span> . org-journal-new-entry))
+  <span style="color: #4c83ff;">:ensure</span> nil
   <span style="color: #4c83ff;">:config</span>
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-agenda</span>
-    <span style="color: #4c83ff;">:ensure</span> nil)
   (<span style="color: #4c83ff;">setq</span> org-journal-dir <span style="color: #61CE3C;">"E:/doc/journal/"</span>)
   (<span style="color: #4c83ff;">setq</span> org-journal-file-format <span style="color: #61CE3C;">"%Y%m%d.org"</span>)
-  (<span style="color: #4c83ff;">setq</span> org-agenda-files
-        (<span style="color: #4c83ff;">if</span> (file-directory-p org-journal-dir)
-            (append (directory-files org-journal-dir t <span style="color: #61CE3C;">".org$"</span>)
-                    org-agenda-files)
-          org-agenda-files))
-  <span style="color: #4c83ff;">:bind</span>
-  ((<span style="color: #61CE3C;">"C-c C-j"</span> . org-journal-new-entry)))
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-agenda</span>
+      <span style="color: #4c83ff;">:ensure</span> nil
+      <span style="color: #4c83ff;">:config</span>
+      (<span style="color: #4c83ff;">setq</span> org-agenda-files
+            (<span style="color: #4c83ff;">if</span> (file-directory-p org-journal-dir)
+                (append (directory-files org-journal-dir t <span style="color: #61CE3C;">".org$"</span>)
+                        org-agenda-files)
+              org-agenda-files)))))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org751635e" class="outline-3">
-<h3 id="org751635e"><span class="section-number-3">2.8</span> ESS</h3>
+<div id="outline-container-org3e9ac65" class="outline-3">
+<h3 id="org3e9ac65"><span class="section-number-3">2.8</span> ESS</h3>
 <div class="outline-text-3" id="text-2-8">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ess</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
   <span style="color: #4c83ff;">:config</span>
   (<span style="color: #4c83ff;">setq</span> ess-eval-visibly-p nil)
   (<span style="color: #4c83ff;">setq</span> ess-ask-for-ess-directory nil)
@@ -228,8 +224,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-orgc47b5dd" class="outline-3">
-<h3 id="orgc47b5dd"><span class="section-number-3">2.9</span> aggressive-indent</h3>
+<div id="outline-container-orgf24a09a" class="outline-3">
+<h3 id="orgf24a09a"><span class="section-number-3">2.9</span> aggressive-indent</h3>
 <div class="outline-text-3" id="text-2-9">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">aggressive-indent</span>)
@@ -238,8 +234,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org39a2b54" class="outline-3">
-<h3 id="org39a2b54"><span class="section-number-3">2.10</span> autopair</h3>
+<div id="outline-container-org334e5e5" class="outline-3">
+<h3 id="org334e5e5"><span class="section-number-3">2.10</span> autopair</h3>
 <div class="outline-text-3" id="text-2-10">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">autopair</span>
@@ -250,11 +246,12 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-orgbe3eb90" class="outline-3">
-<h3 id="orgbe3eb90"><span class="section-number-3">2.11</span> multi-term</h3>
+<div id="outline-container-org607f951" class="outline-3">
+<h3 id="org607f951"><span class="section-number-3">2.11</span> multi-term</h3>
 <div class="outline-text-3" id="text-2-11">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">multi-term</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
   <span style="color: #4c83ff;">:config</span>
   (<span style="color: #4c83ff;">setq</span> multi-term-program <span style="color: #61CE3C;">"/bin/bash"</span>)
   (<span style="color: #4c83ff;">setq</span> multi-term-buffer-name <span style="color: #61CE3C;">"term"</span>)
@@ -299,35 +296,34 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org5d13d13" class="outline-3">
-<h3 id="org5d13d13"><span class="section-number-3">2.12</span> wdired and dired-ranger</h3>
+<div id="outline-container-orgc5d4189" class="outline-3">
+<h3 id="orgc5d4189"><span class="section-number-3">2.12</span> wdired and dired-ranger</h3>
 <div class="outline-text-3" id="text-2-12">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired</span>
   <span style="color: #4c83ff;">:ensure</span> nil
   <span style="color: #4c83ff;">:config</span>
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">wdired</span>)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired-ranger</span>))
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">wdired</span> <span style="color: #4c83ff;">:ensure</span> nil)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">dired-ranger</span> <span style="color: #4c83ff;">:ensure</span> nil))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc6435bc" class="outline-3">
-<h3 id="orgc6435bc"><span class="section-number-3">2.13</span> ace-jump</h3>
+<div id="outline-container-org82d8420" class="outline-3">
+<h3 id="org82d8420"><span class="section-number-3">2.13</span> ace-jump</h3>
 <div class="outline-text-3" id="text-2-13">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ace-jump-mode</span>
-  <span style="color: #4c83ff;">:init</span>
-  (autoload 'ace-jump-mode <span style="color: #61CE3C;">"ace-jump-mode"</span> nil t)
-  (<span style="color: #4c83ff;">bind-key</span> <span style="color: #61CE3C;">"C-j"</span> 'ace-jump-mode))
+  <span style="color: #4c83ff;">:ensure</span> nil
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-j"</span> . ace-jump-mode)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgec4fc2d" class="outline-3">
-<h3 id="orgec4fc2d"><span class="section-number-3">2.14</span> switch-window</h3>
+<div id="outline-container-orgde07aff" class="outline-3">
+<h3 id="orgde07aff"><span class="section-number-3">2.14</span> switch-window</h3>
 <div class="outline-text-3" id="text-2-14">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">switch-window</span>
@@ -345,17 +341,17 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org25adbc2" class="outline-3">
-<h3 id="org25adbc2"><span class="section-number-3">2.15</span> gitpatch</h3>
+<div id="outline-container-org84029d2" class="outline-3">
+<h3 id="org84029d2"><span class="section-number-3">2.15</span> gitpatch</h3>
 <div class="outline-text-3" id="text-2-15">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gitpatch</span>
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c m"</span> . gitpatch-mail))
   <span style="color: #4c83ff;">:ensure</span> nil
   <span style="color: #4c83ff;">:config</span>
   (<span style="color: #4c83ff;">setq</span> gitpatch-mail-function 'gnus-msg-mail)
   (<span style="color: #4c83ff;">setq</span> gitpatch-mail-database
         '(<span style="color: #61CE3C;">"guix-patches@gnu.org"</span>
-          <span style="color: #61CE3C;">"guix-devel@gnu.org"</span>
           <span style="color: #61CE3C;">"emms-help@gnu.org"</span>
           <span style="color: #61CE3C;">"emacs-orgmode@gnu.org"</span>
           <span style="color: #61CE3C;">"emacs-devel@gnu.org"</span>)))
@@ -364,8 +360,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-org0742f98" class="outline-3">
-<h3 id="org0742f98"><span class="section-number-3">2.16</span> ebdb</h3>
+<div id="outline-container-org918e91c" class="outline-3">
+<h3 id="org918e91c"><span class="section-number-3">2.16</span> ebdb</h3>
 <div class="outline-text-3" id="text-2-16">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">ebdb</span>
@@ -378,16 +374,15 @@ allow-loopback-pinentry</li>
   (<span style="color: #4c83ff;">require</span> '<span style="color: #96CBFE;">ebdb-complete</span>)
   (ebdb-complete-enable)
 
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(defun eh-ebdb-search-chinese (string)</span>
-  <span style="color: #8B8989; font-style: italic;">;;   </span><span style="color: #8B8989; font-style: italic;">(if (functionp 'pyim-isearch-build-search-regexp)</span>
-  <span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">(pyim-isearch-build-search-regexp string)</span>
-  <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">string))</span>
-
-  <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(setq ebdb-search-transform-functions</span>
-  <span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">'(eh-ebdb-search-chinese))</span>
-
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">chinese-pyim</span>
     <span style="color: #4c83ff;">:config</span>
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(defun eh-ebdb-search-chinese (string)</span>
+    <span style="color: #8B8989; font-style: italic;">;;   </span><span style="color: #8B8989; font-style: italic;">(if (functionp 'pyim-isearch-build-search-regexp)</span>
+    <span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">(pyim-isearch-build-search-regexp string)</span>
+    <span style="color: #8B8989; font-style: italic;">;;     </span><span style="color: #8B8989; font-style: italic;">string))</span>
+
+    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">(setq ebdb-search-transform-functions</span>
+    <span style="color: #8B8989; font-style: italic;">;;       </span><span style="color: #8B8989; font-style: italic;">'(eh-ebdb-search-chinese))</span>
     (<span style="color: #4c83ff;">cl-defmethod</span> <span style="color: #ff1493;">ebdb-field-search</span>
         <span style="color: #4c83ff;">:around</span> (field criterion)
         (<span style="color: #4c83ff;">or</span> (cl-call-next-method)
@@ -403,65 +398,66 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-orgc120ff7" class="outline-3">
-<h3 id="orgc120ff7"><span class="section-number-3">2.17</span> magit</h3>
+<div id="outline-container-orgb5e1099" class="outline-3">
+<h3 id="orgb5e1099"><span class="section-number-3">2.17</span> magit</h3>
 <div class="outline-text-3" id="text-2-17">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">magit</span>
   <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c g"</span> . magit-status))
   <span style="color: #4c83ff;">:config</span>
-  (<span style="color: #4c83ff;">setq</span> magit-completing-read-function 'ivy-completing-read)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">gitpatch</span>
-    <span style="color: #4c83ff;">:ensure</span> nil
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">swiper</span>
     <span style="color: #4c83ff;">:config</span>
-    (define-key magit-status-mode-map (kbd <span style="color: #61CE3C;">"C-c m"</span>) 'gitpatch-mail)))
+    (<span style="color: #4c83ff;">setq</span> magit-completing-read-function 'ivy-completing-read)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org09d3160" class="outline-3">
-<h3 id="org09d3160"><span class="section-number-3">2.18</span> projectile</h3>
+<div id="outline-container-org52b7fe2" class="outline-3">
+<h3 id="org52b7fe2"><span class="section-number-3">2.18</span> projectile</h3>
 <div class="outline-text-3" id="text-2-18">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">projectile</span>
+  <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-x F"</span> . projectile-find-file)
+         (<span style="color: #61CE3C;">"C-S-s"</span> . projectile-grep))
   <span style="color: #4c83ff;">:config</span>
-  (<span style="color: #4c83ff;">setq</span> projectile-completion-system 'ivy)
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">swiper</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span> (<span style="color: #4c83ff;">setq</span> projectile-completion-system 'ivy))
   (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">wgrep</span>
     <span style="color: #4c83ff;">:config</span>
     (projectile-global-mode 1)
-    (<span style="color: #4c83ff;">setq</span> projectile-enable-caching nil))
-  <span style="color: #4c83ff;">:bind</span>
-  ((<span style="color: #61CE3C;">"C-x F"</span> . projectile-find-file)
-   (<span style="color: #61CE3C;">"C-S-s"</span> . projectile-grep)))
+    (<span style="color: #4c83ff;">setq</span> projectile-enable-caching nil)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4103084" class="outline-3">
-<h3 id="org4103084"><span class="section-number-3">2.19</span> guix</h3>
+<div id="outline-container-orgd61fb3f" class="outline-3">
+<h3 id="orgd61fb3f"><span class="section-number-3">2.19</span> guix</h3>
 <div class="outline-text-3" id="text-2-19">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">guix</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
   <span style="color: #4c83ff;">:config</span>
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">geiser</span>
-    <span style="color: #4c83ff;">:config</span>
-    (<span style="color: #4c83ff;">setq</span> geiser-debug-jump-to-debug-p nil)
+  (<span style="color: #4c83ff;">setq</span> guix-directory <span style="color: #61CE3C;">"~/project/guix"</span>)
+  (<span style="color: #4c83ff;">setq</span> geiser-debug-jump-to-debug-p nil)
+  (add-hook 'after-init-hook 'global-guix-prettify-mode)
+  (add-hook 'scheme-mode-hook 'guix-devel-mode)
+  (<span style="color: #4c83ff;">with-eval-after-load</span> 'geiser-guile
     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">NOTE: "~/.config/guix/latest/" is invaild,</span>
     <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">use "~/.config/guix/latest" instead.</span>
-    (<span style="color: #4c83ff;">with-eval-after-load</span> 'geiser-guile
-      (add-to-list 'geiser-guile-load-path <span style="color: #61CE3C;">"~/.config/guix/latest"</span>)))
-  (<span style="color: #4c83ff;">setq</span> guix-directory <span style="color: #61CE3C;">"~/project/guix"</span>)
-  (add-hook 'scheme-mode-hook 'guix-devel-mode)
-  (add-hook 'after-init-hook 'global-guix-prettify-mode))
+    (add-to-list 'geiser-guile-load-path
+                 (concat (file-name-directory (locate-library <span style="color: #61CE3C;">"geiser.el"</span>))
+                         <span style="color: #61CE3C;">"scheme/guile"</span>))
+    (add-to-list 'geiser-guile-load-path <span style="color: #61CE3C;">"~/.config/guix/latest"</span>)))
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org4951634" class="outline-3">
-<h3 id="org4951634"><span class="section-number-3">2.20</span> undo-tree</h3>
+<div id="outline-container-org374cd15" class="outline-3">
+<h3 id="org374cd15"><span class="section-number-3">2.20</span> undo-tree</h3>
 <div class="outline-text-3" id="text-2-20">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">undo-tree</span>
@@ -481,8 +477,8 @@ allow-loopback-pinentry</li>
 </div>
 </div>
 
-<div id="outline-container-orgf97a16d" class="outline-3">
-<h3 id="orgf97a16d"><span class="section-number-3">2.21</span> emacs-calfw</h3>
+<div id="outline-container-org6349979" class="outline-3">
+<h3 id="org6349979"><span class="section-number-3">2.21</span> emacs-calfw</h3>
 <div class="outline-text-3" id="text-2-21">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">holidays</span>
@@ -560,18 +556,12 @@ allow-loopback-pinentry</li>
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw</span>
+  <span style="color: #4c83ff;">:ensure</span> nil
   <span style="color: #4c83ff;">:config</span>
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw-org</span>)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">cal-china-x</span>)
-  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-capture</span>
-    <span style="color: #4c83ff;">:ensure</span> org
-    <span style="color: #4c83ff;">:config</span>
-    <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20026;calfw&#35774;&#32622;&#19968;&#20010;capture&#27169;&#26495;&#24182;&#28155;&#21152;&#21040;org-capture-templates</span>
-    (<span style="color: #4c83ff;">setq</span> cfw:org-capture-template
-          '(<span style="color: #61CE3C;">"calfw2org"</span> <span style="color: #61CE3C;">"calfw2org"</span> entry (file+headline <span style="color: #61CE3C;">"~/org/calfw.org"</span> <span style="color: #61CE3C;">"Schedule"</span>)
-            <span style="color: #61CE3C;">"* %?\n %(cfw:org-capture-day)\n %a"</span>))
-    (<span style="color: #4c83ff;">setq</span> org-capture-templates
-          (append org-capture-templates (list cfw:org-capture-template))))
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">cal-china-x</span> <span style="color: #4c83ff;">:ensure</span> nil)
+
+  (<span style="color: #4c83ff;">defvar</span> <span style="color: #ff69b4;">eh-calfw-org-file</span> nil)
+  (<span style="color: #4c83ff;">setq</span> eh-calfw-org-file <span style="color: #61CE3C;">"~/org/calfw.org"</span>)
 
   <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#26085;&#21382;&#34920;&#26684;&#36793;&#26694;&#35774;&#32622;</span>
   (<span style="color: #4c83ff;">setq</span> cfw:fchar-junction ?+
@@ -590,14 +580,32 @@ allow-loopback-pinentry</li>
           (<span style="color: #61CE3C;">"Two Weeks"</span> . <span style="color: #61CE3C;">"T:&#20004;&#21608;"</span>)
           (<span style="color: #61CE3C;">"Day"</span> . <span style="color: #61CE3C;">"D:&#19968;&#22825;"</span>)))
 
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-calendar</span> ()
-    (<span style="color: #4c83ff;">interactive</span>)
-    (cfw:open-calendar-buffer
-     <span style="color: #4c83ff;">:view</span> 'two-weeks
-     <span style="color: #4c83ff;">:contents-sources</span>
-     (list
-      <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">orgmode source</span>
-      (cfw:org-create-source <span style="color: #61CE3C;">"Green"</span>)))))
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">calfw-org</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-calendar</span> ()
+      (<span style="color: #4c83ff;">interactive</span>)
+      (cfw:open-calendar-buffer
+       <span style="color: #4c83ff;">:view</span> 'two-weeks
+       <span style="color: #4c83ff;">:contents-sources</span>
+       (list
+        <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">orgmode source</span>
+        (cfw:org-create-source <span style="color: #61CE3C;">"Green"</span>)))))
+
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-agenda</span>
+    <span style="color: #4c83ff;">:ensure</span> nil
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">unless</span> (member eh-calfw-org-file org-agenda-files)
+      (<span style="color: #4c83ff;">push</span> eh-calfw-org-file org-agenda-files))
+    (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">org-capture</span>
+      <span style="color: #4c83ff;">:ensure</span> nil
+      <span style="color: #4c83ff;">:config</span>
+      <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">&#20026;calfw&#35774;&#32622;&#19968;&#20010;capture&#27169;&#26495;&#24182;&#28155;&#21152;&#21040;org-capture-templates</span>
+      (<span style="color: #4c83ff;">setq</span> cfw:org-capture-template
+            '(<span style="color: #61CE3C;">"calfw2org"</span> <span style="color: #61CE3C;">"calfw2org"</span> entry (file+headline eh-calfw-org-file <span style="color: #61CE3C;">"Schedule"</span>)
+              <span style="color: #61CE3C;">"* %?\n %(cfw:org-capture-day)\n %a"</span>))
+      (<span style="color: #4c83ff;">setq</span> org-capture-templates
+            (append org-capture-templates (list cfw:org-capture-template))))))
 </pre>
 </div>
 </div>
@@ -608,8 +616,8 @@ allow-loopback-pinentry</li>
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2017-07-21</span>
-        <span title="last modification date" class="post-info">2017-07-21</span>
+        <span title="post date" class="post-info">2017-07-22</span>
+        <span title="last modification date" class="post-info">2017-07-22</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>
