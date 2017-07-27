@@ -32,19 +32,19 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org15efc07">1. 简介</a></li>
-<li><a href="#org6924e28">2. 代码</a>
+<li><a href="#orgd494eb9">1. 简介</a></li>
+<li><a href="#org2636a56">2. 代码</a>
 <ul>
-<li><a href="#orgfff1e96">2.1. 设置 smex</a></li>
-<li><a href="#org0259973">2.2. 设置 swiper 和 ivy-mode</a></li>
-<li><a href="#org5a4771e">2.3. 设置 company-mode</a></li>
+<li><a href="#org2eb0f1b">2.1. 设置 smex</a></li>
+<li><a href="#orgec0f593">2.2. 设置 swiper 和 ivy-mode</a></li>
+<li><a href="#orgbfa64a7">2.3. 设置 company-mode</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org15efc07" class="outline-2">
-<h2 id="org15efc07"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-orgd494eb9" class="outline-2">
+<h2 id="orgd494eb9"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -52,11 +52,11 @@
 </div>
 </div>
 
-<div id="outline-container-org6924e28" class="outline-2">
-<h2 id="org6924e28"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-org2636a56" class="outline-2">
+<h2 id="org2636a56"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-orgfff1e96" class="outline-3">
-<h3 id="orgfff1e96"><span class="section-number-3">2.1</span> 设置 smex</h3>
+</div><div id="outline-container-org2eb0f1b" class="outline-3">
+<h3 id="org2eb0f1b"><span class="section-number-3">2.1</span> 设置 smex</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">smex</span>
@@ -67,8 +67,8 @@
 </div>
 </div>
 
-<div id="outline-container-org0259973" class="outline-3">
-<h3 id="org0259973"><span class="section-number-3">2.2</span> 设置 swiper 和 ivy-mode</h3>
+<div id="outline-container-orgec0f593" class="outline-3">
+<h3 id="orgec0f593"><span class="section-number-3">2.2</span> 设置 swiper 和 ivy-mode</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">swiper</span>
@@ -77,6 +77,9 @@
     <span style="color: #4c83ff;">:config</span>
     (<span style="color: #4c83ff;">setq</span> counsel-yank-pop-separator
           (concat <span style="color: #61CE3C;">"\n\n"</span> (make-string 70 ?-) <span style="color: #61CE3C;">"\n"</span>))
+    (<span style="color: #4c83ff;">setq</span> counsel-git-log-cmd
+          <span style="color: #61CE3C;">"GIT_PAGER=cat git log --pretty='TUMASHU%%s%%n%%n%%b' --grep '%s'"</span>)
+    (<span style="color: #4c83ff;">setq</span> counsel-git-log-split-string-re <span style="color: #61CE3C;">"TUMASHU"</span>)
     <span style="color: #4c83ff;">:bind</span>
     ((<span style="color: #61CE3C;">"C-c C-r"</span> . ivy-resume)
      (<span style="color: #61CE3C;">"M-x"</span> . counsel-M-x)
@@ -104,8 +107,8 @@
 </div>
 </div>
 
-<div id="outline-container-org5a4771e" class="outline-3">
-<h3 id="org5a4771e"><span class="section-number-3">2.3</span> 设置 company-mode</h3>
+<div id="outline-container-orgbfa64a7" class="outline-3">
+<h3 id="orgbfa64a7"><span class="section-number-3">2.3</span> 设置 company-mode</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">company</span>
@@ -168,8 +171,8 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2017-07-22</span>
-        <span title="last modification date" class="post-info">2017-07-22</span>
+        <span title="post date" class="post-info">2017-07-27</span>
+        <span title="last modification date" class="post-info">2017-07-27</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>

@@ -32,19 +32,20 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf835e2a">1. Gnus 邮件基本设置。</a></li>
-<li><a href="#orgca81269">2. 设置 gnus-posting-styles</a></li>
-<li><a href="#org8271428">3. 其他一些常见的配置例子</a></li>
+<li><a href="#org183a236">1. Gnus 邮件基本设置。</a></li>
+<li><a href="#orgc2ad26f">2. Account file: "~/.authinfo.gpg" template</a></li>
+<li><a href="#orgc4e2b5f">3. 设置 gnus-posting-styles</a></li>
+<li><a href="#org4726972">4. 其他一些常见的配置例子</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf835e2a" class="outline-2">
-<h2 id="orgf835e2a"><span class="section-number-2">1</span> Gnus 邮件基本设置。</h2>
+<div id="outline-container-org183a236" class="outline-2">
+<h2 id="org183a236"><span class="section-number-2">1</span> Gnus 邮件基本设置。</h2>
 <div class="outline-text-2" id="text-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">setq</span> gnus-select-method '(nnml <span style="color: #61CE3C;">""</span>))
 (<span style="color: #4c83ff;">setq</span> mail-sources
-      `((<span style="color: #4c83ff;">pop</span> <span style="color: #4c83ff;">:server</span> <span style="color: #61CE3C;">"pop.163.com"</span>
+      '((<span style="color: #4c83ff;">pop</span> <span style="color: #4c83ff;">:server</span> <span style="color: #61CE3C;">"pop.163.com"</span>
              <span style="color: #4c83ff;">:user</span> <span style="color: #61CE3C;">"myname@163.com"</span>
              <span style="color: #4c83ff;">:port</span> 995
              <span style="color: #4c83ff;">:stream</span> ssl
@@ -59,9 +60,33 @@
 </div>
 </div>
 
-<div id="outline-container-orgca81269" class="outline-2">
-<h2 id="orgca81269"><span class="section-number-2">2</span> 设置 gnus-posting-styles</h2>
+<div id="outline-container-orgc2ad26f" class="outline-2">
+<h2 id="orgc2ad26f"><span class="section-number-2">2</span> Account file: "~/.authinfo.gpg" template</h2>
 <div class="outline-text-2" id="text-2">
+<p>
+#### pop or imap ####
+machine imap.163.com login xxx@163.com port 993 password PASSWORD
+machine pop.163.com  login xxx@163.com port 995 password PASSWORD
+machine imap.qq.com  login xxx@qq.com  port 993 password PASSWORD
+machine pop.qq.com   login xxx@qq.com  port 995 password PASSWORD
+</p>
+
+<p>
+#### smtp ####
+machine smtp.163.com login xxxr@163.com port 465 password PASSWORD user-full-name "XXX" user-mail-address xxx@163.com
+machine smtp.qq.com  login xxx@qq.com   port 465 password PASSWORD user-full-name "XXX" user-mail-address xxx@qq.com
+</p>
+
+<p>
+#### erc ####
+machine irc.freenode.net login xxx port 6667 secret PASSWORD
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc4e2b5f" class="outline-2">
+<h2 id="orgc4e2b5f"><span class="section-number-2">3</span> 设置 gnus-posting-styles</h2>
+<div class="outline-text-2" id="text-3">
 <ol class="org-ol">
 <li>邮件发送时字符编码设置.</li>
 <li>发送邮件使用的方法.</li>
@@ -91,9 +116,9 @@
 </div>
 </div>
 
-<div id="outline-container-org8271428" class="outline-2">
-<h2 id="org8271428"><span class="section-number-2">3</span> 其他一些常见的配置例子</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org4726972" class="outline-2">
+<h2 id="org4726972"><span class="section-number-2">4</span> 其他一些常见的配置例子</h2>
+<div class="outline-text-2" id="text-4">
 <pre class="example">
 (add-to-list 'gnus-secondary-select-methods
              '(nnimap "gmail"
@@ -142,8 +167,8 @@ End:
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2017-07-22</span>
-        <span title="last modification date" class="post-info">2017-07-22</span>
+        <span title="post date" class="post-info">2017-07-27</span>
+        <span title="last modification date" class="post-info">2017-07-27</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>
