@@ -32,19 +32,19 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org94c80f3">1. 简介</a></li>
-<li><a href="#orgda9654c">2. 代码</a>
+<li><a href="#org622e267">1. 简介</a></li>
+<li><a href="#org471dae4">2. 代码</a>
 <ul>
-<li><a href="#orga1d4c4d">2.1. 设置 smex</a></li>
-<li><a href="#org4fc4666">2.2. 设置 swiper 和 ivy-mode</a></li>
-<li><a href="#org2dab939">2.3. 设置 company-mode</a></li>
+<li><a href="#org5a2c8af">2.1. 设置 smex</a></li>
+<li><a href="#org30721f2">2.2. 设置 swiper 和 ivy-mode</a></li>
+<li><a href="#org79be9d1">2.3. 设置 company-mode</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org94c80f3" class="outline-2">
-<h2 id="org94c80f3"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org622e267" class="outline-2">
+<h2 id="org622e267"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -52,11 +52,11 @@
 </div>
 </div>
 
-<div id="outline-container-orgda9654c" class="outline-2">
-<h2 id="orgda9654c"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-org471dae4" class="outline-2">
+<h2 id="org471dae4"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-orga1d4c4d" class="outline-3">
-<h3 id="orga1d4c4d"><span class="section-number-3">2.1</span> 设置 smex</h3>
+</div><div id="outline-container-org5a2c8af" class="outline-3">
+<h3 id="org5a2c8af"><span class="section-number-3">2.1</span> 设置 smex</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">smex</span>
@@ -67,8 +67,8 @@
 </div>
 </div>
 
-<div id="outline-container-org4fc4666" class="outline-3">
-<h3 id="org4fc4666"><span class="section-number-3">2.2</span> 设置 swiper 和 ivy-mode</h3>
+<div id="outline-container-org30721f2" class="outline-3">
+<h3 id="org30721f2"><span class="section-number-3">2.2</span> 设置 swiper 和 ivy-mode</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">swiper</span>
@@ -80,6 +80,10 @@
     (<span style="color: #4c83ff;">setq</span> counsel-git-log-cmd
           <span style="color: #61CE3C;">"GIT_PAGER=cat git log --pretty='TUMASHU%%s%%n%%n%%b' --grep '%s'"</span>)
     (<span style="color: #4c83ff;">setq</span> counsel-git-log-split-string-re <span style="color: #61CE3C;">"TUMASHU"</span>)
+
+    (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">git-commit</span>
+      <span style="color: #4c83ff;">:bind</span> ((<span style="color: #61CE3C;">"C-c i"</span> . counsel-git-log)))
+
     <span style="color: #4c83ff;">:bind</span>
     ((<span style="color: #61CE3C;">"C-c C-r"</span> . ivy-resume)
      (<span style="color: #61CE3C;">"M-x"</span> . counsel-M-x)
@@ -107,8 +111,8 @@
 </div>
 </div>
 
-<div id="outline-container-org2dab939" class="outline-3">
-<h3 id="org2dab939"><span class="section-number-3">2.3</span> 设置 company-mode</h3>
+<div id="outline-container-org79be9d1" class="outline-3">
+<h3 id="org79be9d1"><span class="section-number-3">2.3</span> 设置 company-mode</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">company</span>
@@ -171,8 +175,8 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2017-07-28</span>
-        <span title="last modification date" class="post-info">2017-07-28</span>
+        <span title="post date" class="post-info">2017-07-30</span>
+        <span title="last modification date" class="post-info">2017-07-30</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>
