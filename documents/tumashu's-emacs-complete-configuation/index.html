@@ -32,19 +32,19 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org65e1e25">1. 简介</a></li>
-<li><a href="#org30dadb3">2. 代码</a>
+<li><a href="#org76298f2">1. 简介</a></li>
+<li><a href="#orgdc53c90">2. 代码</a>
 <ul>
-<li><a href="#org064efbd">2.1. 设置 smex</a></li>
-<li><a href="#orgdb6d95d">2.2. 设置 swiper 和 ivy-mode</a></li>
-<li><a href="#org4e42e43">2.3. 设置 company-mode</a></li>
+<li><a href="#orga93affd">2.1. 设置 smex</a></li>
+<li><a href="#org14b6861">2.2. 设置 swiper 和 ivy-mode</a></li>
+<li><a href="#org44ecea3">2.3. 设置 company-mode</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org65e1e25" class="outline-2">
-<h2 id="org65e1e25"><span class="section-number-2">1</span> 简介</h2>
+<div id="outline-container-org76298f2" class="outline-2">
+<h2 id="org76298f2"><span class="section-number-2">1</span> 简介</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 这个文件是tumashu个人专用的emacs配置文件，emacs中文用户可以参考。
@@ -52,11 +52,12 @@
 </div>
 </div>
 
-<div id="outline-container-org30dadb3" class="outline-2">
-<h2 id="org30dadb3"><span class="section-number-2">2</span> 代码</h2>
+<div id="outline-container-orgdc53c90" class="outline-2">
+<h2 id="orgdc53c90"><span class="section-number-2">2</span> 代码</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-org064efbd" class="outline-3">
-<h3 id="org064efbd"><span class="section-number-3">2.1</span> 设置 smex</h3>
+</div>
+<div id="outline-container-orga93affd" class="outline-3">
+<h3 id="orga93affd"><span class="section-number-3">2.1</span> 设置 smex</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">smex</span>
@@ -67,8 +68,8 @@
 </div>
 </div>
 
-<div id="outline-container-orgdb6d95d" class="outline-3">
-<h3 id="orgdb6d95d"><span class="section-number-3">2.2</span> 设置 swiper 和 ivy-mode</h3>
+<div id="outline-container-org14b6861" class="outline-3">
+<h3 id="org14b6861"><span class="section-number-3">2.2</span> 设置 swiper 和 ivy-mode</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">swiper</span>
@@ -111,8 +112,8 @@
 </div>
 </div>
 
-<div id="outline-container-org4e42e43" class="outline-3">
-<h3 id="org4e42e43"><span class="section-number-3">2.3</span> 设置 company-mode</h3>
+<div id="outline-container-org44ecea3" class="outline-3">
+<h3 id="org44ecea3"><span class="section-number-3">2.3</span> 设置 company-mode</h3>
 <div class="outline-text-3" id="text-2-3">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">company</span>
@@ -157,14 +158,17 @@
                   (global-company-mode)))
     (global-company-mode))
 
-  (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-company-dabbrev--prefix</span> (orig-fun)
-    <span style="color: #FBDE2D;">"&#21462;&#28040;&#20013;&#25991;&#34917;&#20840;"</span>
-    (<span style="color: #4c83ff;">let</span> ((string (pyim-char-before-to-string 0)))
-      (<span style="color: #4c83ff;">if</span> (pyim-string-match-p <span style="color: #61CE3C;">"\\cc"</span> string)
-          nil
-        (funcall orig-fun))))
+  (<span style="color: #4c83ff;">use-package</span> <span style="color: #96CBFE;">pyim</span>
+    <span style="color: #4c83ff;">:config</span>
+    (<span style="color: #4c83ff;">defun</span> <span style="color: #ff1493;">eh-company-dabbrev--prefix</span> (orig-fun)
+      <span style="color: #FBDE2D;">"&#21462;&#28040;&#20013;&#25991;&#34917;&#20840;"</span>
+      (<span style="color: #4c83ff;">let</span> ((string (pyim-char-before-to-string 0)))
+        (<span style="color: #4c83ff;">if</span> (pyim-string-match-p <span style="color: #61CE3C;">"\\cc"</span> string)
+            nil
+          (funcall orig-fun))))
 
-  (advice-add 'company-dabbrev--prefix <span style="color: #4c83ff;">:around</span> #'eh-company-dabbrev--prefix))
+    (advice-add 'company-dabbrev--prefix
+                <span style="color: #4c83ff;">:around</span> #'eh-company-dabbrev--prefix)))
 </pre>
 </div>
 </div>
@@ -175,8 +179,8 @@
 </div>
     <div>
       <div class="post-meta">
-        <span title="post date" class="post-info">2017-08-09</span>
-        <span title="last modification date" class="post-info">2017-08-09</span>
+        <span title="post date" class="post-info">2017-10-04</span>
+        <span title="last modification date" class="post-info">2017-10-04</span>
         <span title="tags" class="post-info">N/A</span>
         <span title="author" class="post-info">Feng Shu</span>
       </div>
