@@ -727,7 +727,7 @@
   :init
   (setq org-brain-path eh-org-local-directory)
   :config
-  (defhydra eh-org-brain (:exit t :color pink)
+  (defhydra eh-org-brain (:exit t :color pink :foreign-keys warn)
     "
 org-brain:
 _p_: Goto parent  _P_: Add parent  _C-p_: Remove paren
