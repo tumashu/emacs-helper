@@ -718,7 +718,7 @@
   )
 
 (use-package org-brain
-  :after org
+  :after org-agenda
   :bind (("C-c b" . org-brain-visualize)
          :map org-agenda-mode-map
          ("o" . eh-org-brain/body)
