@@ -719,16 +719,36 @@
 
 (use-package org-brain
   :after org
-  :bind (("C-c b" . org-brain-visualize))
+  :bind (("C-c b" . org-brain-visualize)
+         :map org-agenda-mode-map
+         ("o" . eh-org-brain/body)
+         :map org-mode-map
+         ("C-c o" . eh-org-brain/body))
   :init
   (setq org-brain-path eh-org-local-directory)
   :config
+  (defhydra eh-org-brain (:exit t :color pink)
+    "
+org-brain:
+_p_: Goto parent  _P_: Add parent  _C-p_: Remove paren
+_c_: Goto child   _C_: Add child   _C-c_: Remove child
+_f_: Goto friend  _P_: Add friend  _C-p_: Remove friend"
+    ("p" org-brain-goto-parent nil)
+    ("P" org-brain-add-parent nil)
+    ("C-p" org-brain-remove-parent nil)
+    ("c" org-brain-goto-child nil)
+    ("C" org-brain-add-child nil)
+    ("C-c" org-brain-remove-child nil)
+    ("f" org-brain-goto-friend nil)
+    ("F" org-brain-add-friendship nil)
+    ("C-f" org-brain-remove-friendship nil))
   (setq org-id-track-globally t)
   (setq org-brain-file-entries-use-title nil)
   (setq org-brain-visualize-default-choices 'all)
   (setq org-brain-title-max-length 30)
   (setq org-brain-headline-entries-match "proj|ref")
   (setq org-brain-files-transparent "project")
+  (org-brain-cache t)
   )
 
 ;; * Footer
