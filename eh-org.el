@@ -82,6 +82,11 @@
   ;;         ("DONE" . (:foreground "light sea green"))
   ;;         ("CANCELLED" . (:foreground "forest green")))
 
+  (setq org-fast-tag-selection-single-key t)
+  (setq org-tag-alist
+        '(("proj" . ?p)
+          ("ref"  . ?r)))
+
   (setq org-tags-exclude-from-inheritance
         '("proj"))
 
@@ -133,14 +138,14 @@
         (_ (toggle-truncate-lines -1))))
     (org-ctrl-c-ctrl-c arg))
 
-  (defun eh-org-set-tags-command (orig-fun &optional arg)
-    (interactive "P")
-    (if (functionp 'counsel-org-tag)
-        (funcall-interactively 'counsel-org-tag)
-      (funcall orig-fun arg)))
+  ;; (defun eh-org-set-tags-command (orig-fun &optional arg)
+  ;;   (interactive "P")
+  ;;   (if (functionp 'counsel-org-tag)
+  ;;       (funcall-interactively 'counsel-org-tag)
+  ;;     (funcall orig-fun arg)))
 
-  (advice-add 'org-set-tags-command
-              :around #'eh-org-set-tags-command)
+  ;; (advice-add 'org-set-tags-command
+  ;;             :around #'eh-org-set-tags-command)
 
   (defun eh-org-smart-truncate-lines (&optional arg)
     (interactive)
