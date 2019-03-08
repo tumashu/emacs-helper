@@ -40,7 +40,9 @@
   :bind (("C-c a" . org-agenda)
          ("C-c l" . org-store-link)
          ("C-c c" . org-capture)
-         ("C-c b" . org-switchb))
+         ("C-c b" . org-switchb)
+         :map org-mode-map
+         ("<f1>" . eh-org-attach-reveal))
   :mode ("\\.org\\'" . org-mode)
   :mode ("\\.org_archive\\'" . org-mode)
   :ensure nil
@@ -469,7 +471,21 @@
     (interactive)
     (org-map-entries #'org-attach-sync)
     (org-align-all-tags))
-  )
+
+  (defun eh-org-attach-reveal ()
+    (interactive)
+    (let (c marker)
+      (when (eq major-mode 'org-agenda-mode)
+        (setq marker (or (get-text-property (point) 'org-hd-marker)
+		         (get-text-property (point) 'org-marker)))
+        (unless marker
+	  (error "No task in current line")))
+      (save-excursion
+        (when marker
+	  (set-buffer (marker-buffer marker))
+	  (goto-char marker))
+        (org-back-to-heading t)
+        (call-interactively 'org-attach-reveal)))))
 
 (use-package autorevert
   :after org
@@ -479,6 +495,7 @@
 (use-package org-agenda
   :bind (("C-c a" . org-agenda)
          :map org-agenda-mode-map
+         ("<f1>" . eh-org-attach-reveal)
          ("g" . eh-org-agenda-redo-all)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
          ("A" . org-agenda-archive-default-with-confirmation)
