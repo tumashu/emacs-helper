@@ -443,6 +443,7 @@
   :ensure nil
   :config
   (setq org-attach-commit nil)
+  (setq org-attach-file-list-property nil)
   (setq org-attach-store-link-p 'attached)
 
   (defun eh-org-attach-abbrev (file-name)
