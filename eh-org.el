@@ -561,10 +561,10 @@
               (todo  . " %i")
               (tags  . " %i")
               (search . "%i"))
-          '((agenda  . " %i %(eh-org-agenda-prefix-format-0) %?t%(eh-org-agenda-prefix-format-1)")
-            (todo  . " %i %(eh-org-agenda-prefix-format-0) ")
-            (tags  . " %i %(eh-org-agenda-prefix-format-0) ")
-            (search . " %i %(eh-org-agenda-prefix-format-0) "))))
+          '((agenda  . " %i %(eh-org-agenda-prefix-format-0)%?t%(eh-org-agenda-prefix-format-1)")
+            (todo  . " %i %(eh-org-agenda-prefix-format-0)")
+            (tags  . " %i %(eh-org-agenda-prefix-format-0)")
+            (search . " %i %(eh-org-agenda-prefix-format-0)"))))
 
   (setq org-agenda-scheduled-leaders
         '("§计划 @" "§拖%02d  "))
@@ -576,7 +576,7 @@
 
   (defun eh-org-agenda-prefix-format-0 ()
     (let* ((w eh-org-agenda-category-width)
-           (formater (format "%%-%ss" (+ 1 w)))
+           (formater (format "%%-%ss " (+ 1 w)))
            (string (eh-org-agenda-substring category w)))
       (format formater (concat string ":"))))
 
