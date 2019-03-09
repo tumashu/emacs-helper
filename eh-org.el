@@ -569,10 +569,10 @@
             (search . " %i %(eh-org-agenda-prefix-format t)"))))
 
   (setq org-agenda-scheduled-leaders
-        '("§计划 @" "§拖%02d  "))
+        '("&计划 @" "&拖%02d  "))
 
   (setq org-agenda-deadline-leaders
-        '("§截止 ?" "§剩%02d  " "§逾%02d  "))
+        '("§截止 ?" "&剩%02d  " "&逾%02d  "))
 
   (defun eh-org-agenda-substring (string n)
     (if (> (string-width string) n)
@@ -618,10 +618,9 @@
      (if (or (not show-time)
              (= (length time) 0))
          ""
-       time)
+       (format "%s" (concat time "")))
      (if show-extra
-         (if (or (not show-extra)
-                 (= (length extra) 0))
+         (if (= (length extra) 0)
              (if (= (length time) 0)
                  "§提醒  "
                "  ")
