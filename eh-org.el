@@ -600,6 +600,8 @@
                    (or (org-get-category (point)) "")))
                 nil 'agenda-with-archives)))
      `(lambda (result)
+        (customize-save-variable
+         'eh-org-agenda-category-width (max 6 result))
         (setq eh-org-agenda-category-width result))))
 
   (defvar eh-org-agenda-category-width 16)
