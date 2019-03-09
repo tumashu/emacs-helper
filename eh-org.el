@@ -526,7 +526,9 @@
     (interactive "P")
     (eh-revert-org-buffers)
     (funcall-interactively #'org-agenda-redo-all)
-    (eh-org-agenda-get-category-width)
+    ;; 手机上不显示 CATEGORY, 不需要获取
+    (unless (eh-termux-p)
+      (eh-org-agenda-get-category-width))
     (message (substitute-command-keys
               "刷新完成，记得按快捷键 '\\[org-save-all-org-buffers]' 来保存更改。")))
 
