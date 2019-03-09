@@ -526,6 +526,7 @@
     (interactive "P")
     (eh-revert-org-buffers)
     (funcall-interactively #'org-agenda-redo-all)
+    (eh-org-agenda-get-category-width)
     (message (substitute-command-keys
               "刷新完成，记得按快捷键 '\\[org-save-all-org-buffers]' 来保存更改。")))
 
@@ -560,16 +561,52 @@
               (todo  . " %i")
               (tags  . " %i")
               (search . "%i"))
-          '((agenda  . " %i %-20:c %?t%(eh-org-agenda-prefix-format-1)")
-            (todo  . " %i %-20:c ")
-            (tags  . " %i %-20:c ")
-            (search . " %i %-20:c "))))
+          '((agenda  . " %i %(eh-org-agenda-prefix-format-0) %?t%(eh-org-agenda-prefix-format-1)")
+            (todo  . " %i %(eh-org-agenda-prefix-format-0) ")
+            (tags  . " %i %(eh-org-agenda-prefix-format-0) ")
+            (search . " %i %(eh-org-agenda-prefix-format-0) "))))
 
   (setq org-agenda-scheduled-leaders
         '("§计划 @" "§拖%02d  "))
 
   (setq org-agenda-deadline-leaders
         '("§截止 ?" "§剩%02d  " "§逾%02d  "))
+
+  (defvar eh-org-agenda-category-width 16)
+
+  (defun eh-org-agenda-prefix-format-0 ()
+    (let* ((w eh-org-agenda-category-width)
+           (formater (format "%%-%ss" (+ 1 w)))
+           (string (eh-org-agenda-substring category w)))
+      (format formater (concat string ":"))))
+
+  (defun eh-org-agenda-substring (string n)
+    (if (> (string-width string) n)
+        (let ((chars (string-to-list string))
+              (str ""))
+          (while chars
+            (setq str (concat str (char-to-string (pop chars))))
+            (when (> (+ (string-width str) 3) n)
+              (setq chars nil)
+              (setq str (substring str 0 -1))))
+          (concat str "..."))
+      string))
+
+  (defun eh-org-agenda-get-category-width (&optional silent)
+    (interactive)
+    (async-start
+     `(lambda ()
+        ,(async-inject-variables "^load-path$")
+        ,(async-inject-variables "org-agenda-files.*")
+        (require 'org)
+        (apply #'max
+               (org-map-entries
+                (lambda ()
+                  (string-width
+                   (or (org-get-category (point)) "")))
+                nil 'agenda-with-archives)))
+     `(lambda (result)
+        (setq eh-org-agenda-category-width result))))
 
   (defun eh-org-agenda-prefix-format-1 ()
     (if (or (equal extra "") (equal extra nil))
