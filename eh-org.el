@@ -557,28 +557,20 @@
 
   (setq org-agenda-prefix-format
         (if (eh-termux-p)
-            '((agenda  . " %?t%(eh-org-agenda-prefix-format-1)")
+            '((agenda  . " %(eh-org-agenda-prefix-format nil t t)")
               (todo  . " %i")
               (tags  . " %i")
               (search . "%i"))
-          '((agenda  . " %i %(eh-org-agenda-prefix-format-0)%?t%(eh-org-agenda-prefix-format-1)")
-            (todo  . " %i %(eh-org-agenda-prefix-format-0)")
-            (tags  . " %i %(eh-org-agenda-prefix-format-0)")
-            (search . " %i %(eh-org-agenda-prefix-format-0)"))))
+          '((agenda  . " %i %(eh-org-agenda-prefix-format t t t)")
+            (todo  . " %i %(eh-org-agenda-prefix-format t)")
+            (tags  . " %i %(eh-org-agenda-prefix-format t)")
+            (search . " %i %(eh-org-agenda-prefix-format t)"))))
 
   (setq org-agenda-scheduled-leaders
         '("§计划 @" "§拖%02d  "))
 
   (setq org-agenda-deadline-leaders
         '("§截止 ?" "§剩%02d  " "§逾%02d  "))
-
-  (defvar eh-org-agenda-category-width 16)
-
-  (defun eh-org-agenda-prefix-format-0 ()
-    (let* ((w eh-org-agenda-category-width)
-           (formater (format "%%-%ss " (+ 1 w)))
-           (string (eh-org-agenda-substring category w)))
-      (format formater (concat string ":"))))
 
   (defun eh-org-agenda-substring (string n)
     (if (> (string-width string) n)
@@ -608,18 +600,37 @@
      `(lambda (result)
         (setq eh-org-agenda-category-width result))))
 
-  (defun eh-org-agenda-prefix-format-1 ()
-    (if (or (equal extra "") (equal extra nil))
-        (if (or (equal "" time) (equal nil time))
-            "§提醒  "
-          "  ")
-      (let ((str1 (car org-agenda-scheduled-leaders))
-            (str2 (car org-agenda-deadline-leaders))
-            (s extra))
-        (unless (or (equal "" time) (equal nil time))
-          (setq s (replace-regexp-in-string (regexp-quote str1) " @" extra))
-          (setq s (replace-regexp-in-string (regexp-quote str2) " ?" s)))
-        (concat s "" (get-text-property 0 'extra-space extra)))))
+  (defvar eh-org-agenda-category-width 16)
+
+  (defun eh-org-agenda-prefix-format (&optional show-category show-time show-extra)
+    (concat
+     (if show-category
+         (let* ((w eh-org-agenda-category-width)
+                (formater (format "%%-%ss " (+ 1 w)))
+                (string (eh-org-agenda-substring category w)))
+           (format formater
+                   (if (> (length string) 0)
+                       (concat string ":")
+                     "")))
+       "")
+     (if (or (not show-time)
+             (= (length time) 0))
+         ""
+       time)
+     (if show-extra
+         (if (or (not show-extra)
+                 (= (length extra) 0))
+             (if (= (length time) 0)
+                 "§提醒  "
+               "  ")
+           (let ((str1 (car org-agenda-scheduled-leaders))
+                 (str2 (car org-agenda-deadline-leaders))
+                 (s extra))
+             (unless (= (length time) 0)
+               (setq s (replace-regexp-in-string (regexp-quote str1) " @" extra))
+               (setq s (replace-regexp-in-string (regexp-quote str2) " ?" s)))
+             (concat s "" (get-text-property 0 'extra-space extra))))
+       "")))
 
   (setq org-agenda-format-date 'eh-org-agenda-format-date-aligned)
 
