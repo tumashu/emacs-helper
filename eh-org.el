@@ -552,10 +552,15 @@
   (setq  org-agenda-current-time-string
          "now - - - - - - - - - - - - -")
 
-  (setq org-agenda-entry-text-leaders
-        (if (eh-termux-p)
-            "        "
-          "                              "))
+  (setq org-agenda-entry-text-leaders "  > ")
+
+  (defun eh-org-agenda-entry-text-cleanup ()
+    (while (re-search-forward "^[[:space:]	\t]+" nil t)
+      (replace-match "" nil t))
+    (fill-paragraph))
+
+  (add-hook 'org-agenda-entry-text-cleanup-hook
+            #'eh-org-agenda-entry-text-cleanup)
 
   (setq org-agenda-prefix-format
         (if (eh-termux-p)
