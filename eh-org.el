@@ -552,7 +552,7 @@
   (setq  org-agenda-current-time-string
          "now - - - - - - - - - - - - -")
 
-  (setq org-agenda-entry-text-leaders "  > ")
+  (setq org-agenda-entry-text-leaders " > ")
 
   (defun eh-org-agenda-entry-text-cleanup ()
     (while (re-search-forward "^[[:space:]	\t]+" nil t)
@@ -568,10 +568,10 @@
               (todo  . " %i")
               (tags  . " %i")
               (search . "%i"))
-          '((agenda  . " %i %(eh-org-agenda-prefix-format t t t)")
-            (todo  . " %i %(eh-org-agenda-prefix-format t)")
-            (tags  . " %i %(eh-org-agenda-prefix-format t)")
-            (search . " %i %(eh-org-agenda-prefix-format t)"))))
+          '((agenda  . " %i%(eh-org-agenda-prefix-format t t t)")
+            (todo  . " %i%(eh-org-agenda-prefix-format t)")
+            (tags  . " %i%(eh-org-agenda-prefix-format t)")
+            (search . " %i%(eh-org-agenda-prefix-format t)"))))
 
   (setq org-agenda-scheduled-leaders
         '("&计划 @" "&拖%02d  "))
