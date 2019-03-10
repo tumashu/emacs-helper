@@ -718,6 +718,14 @@
   :END:
 
 %i")
+            ("k" "Deadline" entry (file ,local-inbox)
+             "* TODO %?
+  DEADLINE: %t
+  :PROPERTIES:
+  :created: %U
+  :END:
+
+%i")
             ("A" "Anniversary" plain (file+headline ,local-inbox "阳历生日")
              "\%\%%(or \"(org-anniversary 1985 4 17)\") 今天是%?%d阳历岁生日")
             ("C" "Chinese Anniversary" plain (file+headline ,local-inbox "农历生日")
