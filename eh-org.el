@@ -554,13 +554,12 @@
 
   (setq org-agenda-entry-text-leaders " > ")
 
-  (defun eh-org-agenda-entry-text-cleanup ()
-    (while (re-search-forward "^[[:space:]	\t]+" nil t)
-      (replace-match "" nil t))
-    (fill-paragraph))
+  ;; (defun eh-org-agenda-entry-text-cleanup ()
+  ;;   (while (re-search-forward "^[[:space:]	\t]+" nil t)
+  ;;     (replace-match "" nil t)))
 
-  (add-hook 'org-agenda-entry-text-cleanup-hook
-            #'eh-org-agenda-entry-text-cleanup)
+  ;; (add-hook 'org-agenda-entry-text-cleanup-hook
+  ;;           #'eh-org-agenda-entry-text-cleanup)
 
   (setq org-agenda-prefix-format
         (if (eh-termux-p)
