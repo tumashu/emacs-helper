@@ -539,15 +539,21 @@
           (revert-buffer t t t) )))
     (message "Refreshed all opened org files."))
 
-  (defun eh-org-agenda-redo-all (&optional exhaustive)
+  (defun eh-org-agenda-redo-all (&optional arg)
     (interactive "P")
-    (eh-revert-org-buffers)
-    (funcall-interactively #'org-agenda-redo-all)
-    ;; 手机上不显示 CATEGORY, 不需要获取
-    (unless (eh-termux-p)
-      (eh-org-agenda-cache))
-    (message (substitute-command-keys
-              "刷新完成，记得按快捷键 '\\[org-save-all-org-buffers]' 来保存更改。")))
+    (let ((eh-org-agenda-category-width
+           (if arg
+               (apply #'max
+                      (org-map-entries
+                       (lambda ()
+                         (string-width
+                          (or (org-get-category (point)) "")))
+                       nil 'agenda))
+             eh-org-agenda-category-width)))
+      (eh-revert-org-buffers)
+      (funcall-interactively #'org-agenda-redo-all)
+      (message (substitute-command-keys
+                "刷新完成，记得按快捷键 '\\[org-save-all-org-buffers]' 来保存更改。"))))
 
   (setq org-agenda-span 'day)
   (setq org-agenda-window-setup 'only-window)
@@ -607,7 +613,7 @@
           (concat str "..."))
       string))
 
-  (defvar eh-org-agenda-category-width 16)
+  (defvar eh-org-agenda-category-width 13)
 
   (defun eh-org-agenda-prefix-format (&optional show-category show-time show-extra)
     (concat
@@ -637,29 +643,6 @@
                (setq s (replace-regexp-in-string (regexp-quote str2) " ?" s)))
              (concat s "" (get-text-property 0 'extra-space extra))))
        "")))
-
-  (defvar eh-org-agenda-cache-p nil)
-
-  (defun eh-org-agenda-cache (&optional silent)
-    (interactive)
-    (unless eh-org-agenda-cache-p
-      (async-start
-       `(lambda ()
-          ,(async-inject-variables "^load-path$")
-          ,(async-inject-variables "org-agenda-files.*")
-          (require 'org)
-          (apply #'max
-                 (org-map-entries
-                  (lambda ()
-                    (string-width
-                     (or (org-get-category (point)) "")))
-                  nil 'agenda-with-archives)))
-       `(lambda (result)
-          (customize-save-variable
-           'eh-org-agenda-category-width (max 6 result))
-          (setq eh-org-agenda-category-width result)
-          (setq eh-org-agenda-cache-p nil))))
-    (setq eh-org-agenda-cache-p t))
 
   (setq org-agenda-format-date 'eh-org-agenda-format-date-aligned)
 
