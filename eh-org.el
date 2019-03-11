@@ -600,7 +600,7 @@
         '("&计划 @" "&拖%02d  "))
 
   (setq org-agenda-deadline-leaders
-        '("§截止 ?" "&剩%02d  " "&逾%02d  "))
+        '("&截止 ?" "&剩%02d  " "&逾%02d  "))
 
   (defun eh-org-agenda-substring (string n)
     (if (> (string-width string) n)
