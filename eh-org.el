@@ -87,7 +87,8 @@
   (setq org-fast-tag-selection-single-key 'expert)
   (setq org-tag-alist
         '(("proj" . ?p)
-          ("ref"  . ?r)))
+          ("ref"  . ?r)
+          ("ATTACH"  . ?a)))
 
   (setq org-tags-exclude-from-inheritance
         '("proj"))
