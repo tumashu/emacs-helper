@@ -72,11 +72,12 @@
         '(company-pseudo-tooltip-frontend
           company-echo-metadata-frontend))
 
-  (if (and (fboundp 'daemonp) (daemonp))
-      (add-hook 'after-make-frame-functions
-                (lambda (x)
-                  (global-company-mode)))
-    (global-company-mode)))
+  ;; (if (and (fboundp 'daemonp) (daemonp))
+  ;;     (add-hook 'after-make-frame-functions
+  ;;               (lambda (x)
+  ;;                 (global-company-mode)))
+  ;;   (global-company-mode))
+  )
 
 (use-package pyim
   :after company
