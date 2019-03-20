@@ -85,6 +85,8 @@
   ;;         ("CANCELLED" . (:foreground "forest green")))
 
   (setq org-fast-tag-selection-single-key nil)
+  (setq org-tags-match-list-sublevels nil)
+
   (setq org-tag-alist
         '(("proj" . ?p)
           ("ref"  . ?r)
@@ -593,8 +595,8 @@
               (search . "%i"))
           '((agenda  . " %i%(eh-org-agenda-prefix-format t t t)")
             (todo  . " %i%(eh-org-agenda-prefix-format t)")
-            (tags  . " %i%(eh-org-agenda-prefix-format t)")
-            (search . " %i%(eh-org-agenda-prefix-format t)"))))
+            (tags  . " %i%(eh-org-agenda-prefix-format t)%b")
+            (search . " %i%(eh-org-agenda-prefix-format t)%b"))))
 
   (setq org-agenda-scheduled-leaders
         '("&计划 @" "&拖%02d  "))
