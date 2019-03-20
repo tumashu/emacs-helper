@@ -84,7 +84,7 @@
   ;;         ("DONE" . (:foreground "light sea green"))
   ;;         ("CANCELLED" . (:foreground "forest green")))
 
-  (setq org-fast-tag-selection-single-key 'expert)
+  (setq org-fast-tag-selection-single-key nil)
   (setq org-tag-alist
         '(("proj" . ?p)
           ("ref"  . ?r)
