@@ -586,7 +586,6 @@
 
   ;; (add-hook 'org-agenda-entry-text-cleanup-hook
   ;;           #'eh-org-agenda-entry-text-cleanup)
-  (setq org-agenda-hide-tags-regexp "\\cc")
 
   (setq org-agenda-prefix-format
         (if (eh-termux-p)
@@ -596,8 +595,8 @@
               (search . "%i"))
           '((agenda  . " %i%(eh-org-agenda-prefix-format t t t)")
             (todo  . " %i%(eh-org-agenda-prefix-format t)")
-            (tags  . " %i%(eh-org-agenda-prefix-format t)%b")
-            (search . " %i%(eh-org-agenda-prefix-format t)%b"))))
+            (tags  . " %i%(eh-org-agenda-prefix-format t)")
+            (search . " %i%(eh-org-agenda-prefix-format t)"))))
 
   (setq org-agenda-scheduled-leaders
         '("&计划 @" "&拖%02d  "))
