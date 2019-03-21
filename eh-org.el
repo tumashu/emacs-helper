@@ -500,6 +500,7 @@
          :map org-agenda-mode-map
          ("<f1>" . eh-org-attach-reveal)
          ("g" . eh-org-agenda-redo-all)
+         ("'" . eh-org-agenda-search-level)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
          ("A" . org-agenda-archive-default-with-confirmation)
          ("J" . counsel-org-agenda-headlines)
@@ -541,6 +542,25 @@
                    (not (buffer-modified-p)))
           (revert-buffer t t t) )))
     (message "Refreshed all opened org files."))
+
+  (defvar eh-org-agenda-search-level 0)
+  (defun eh-org-agenda-search-level ()
+    (interactive)
+    (if (eq (car org-agenda-redo-command) 'org-tags-view)
+        (let ((org-agenda-overriding-arguments
+               (list nil
+                     (concat (replace-regexp-in-string
+                              "[+]LEVEL[><=]+[0-9]" ""
+                              org-agenda-query-string)
+                             (if (> eh-org-agenda-search-level 0)
+                                 (format "+LEVEL>%s" eh-org-agenda-search-level)
+                               "")))))
+          (setq eh-org-agenda-search-level
+                (+ 1 eh-org-agenda-search-level))
+          (when (> eh-org-agenda-search-level 3)
+            (setq eh-org-agenda-search-level 0))
+          (org-agenda-redo))
+      (message "当前命令仅在 org-tags-view 界面有用。")))
 
   (defun eh-org-agenda-redo-all (&optional arg)
     (interactive "P")
