@@ -596,8 +596,8 @@
               (search . "%i"))
           '((agenda  . " %i%(eh-org-agenda-prefix-format t t t)")
             (todo  . " %i%(eh-org-agenda-prefix-format t)")
-            (tags  . " %i%(eh-org-agenda-prefix-format t)%b%T")
-            (search . " %i%(eh-org-agenda-prefix-format t)%b%T"))))
+            (tags  . " %i%(eh-org-agenda-prefix-format t)%T%b")
+            (search . " %i%(eh-org-agenda-prefix-format t)%T%b"))))
 
   (setq org-agenda-scheduled-leaders
         '("&计划 @" "&拖%02d  "))
