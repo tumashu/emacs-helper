@@ -543,24 +543,23 @@
           (revert-buffer t t t) )))
     (message "Refreshed all opened org files."))
 
-  (defvar eh-org-agenda-search-level 0)
   (defun eh-org-agenda-search-level ()
     (interactive)
     (if (eq (car org-agenda-redo-command) 'org-tags-view)
-        (let* ((regexp "[+]LEVEL[><=]+[0-9]")
+        (let* ((regexp "[+]LEVEL[>=<]+[0-9]")
                (org-agenda-overriding-arguments
                 (list nil
-                      (concat (replace-regexp-in-string
-                               "[+]LEVEL[><=]+[0-9]" ""
-                               org-agenda-query-string)
-                              (format "+LEVEL>%s"
-                                      (if (string-match-p regexp org-agenda-query-string)
-                                          eh-org-agenda-search-level
-                                        1))))))
-          (setq eh-org-agenda-search-level
-                (+ 1 eh-org-agenda-search-level))
-          (when (> eh-org-agenda-search-level 3)
-            (setq eh-org-agenda-search-level 0))
+                      (if (string-match-p regexp org-agenda-query-string)
+                          (replace-regexp-in-string
+                           regexp
+                           (lambda (str)
+                             (let ((n (+ 1 (string-to-number (substring str -1)))))
+                               (format "+LEVEL>%s" (if (> n 3) 0 n))))
+                           org-agenda-query-string)
+                        (concat (replace-regexp-in-string
+                                 regexp ""
+                                 org-agenda-query-string)
+                                "+LEVEL>1")))))
           (org-agenda-redo))
       (message "当前命令仅在 org-tags-view 界面有用。")))
 
