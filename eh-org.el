@@ -608,7 +608,7 @@
   ;; (add-hook 'org-agenda-entry-text-cleanup-hook
   ;;           #'eh-org-agenda-entry-text-cleanup)
   (setq org-agenda-remove-tags t)
-  (setq org-agenda-breadcrumbs-separator " -> ")
+  (setq org-agenda-breadcrumbs-separator " ~> ")
 
   (add-hook 'org-agenda-finalize-hook
             #'eh-org-agenda-change-breadcrumbs-color)
