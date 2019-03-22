@@ -554,7 +554,7 @@
                            regexp
                            (lambda (str)
                              (let ((n (+ 1 (string-to-number (substring str -1)))))
-                               (format "+LEVEL>%s" (if (> n 3) 0 n))))
+                               (format "+LEVEL>%s" (if (> n 2) 0 n))))
                            org-agenda-query-string)
                         (concat (replace-regexp-in-string
                                  regexp ""
