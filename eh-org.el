@@ -611,6 +611,17 @@
   ;; (add-hook 'org-agenda-entry-text-cleanup-hook
   ;;           #'eh-org-agenda-entry-text-cleanup)
   (setq org-agenda-remove-tags t)
+  (setq org-agenda-breadcrumbs-separator " -> ")
+
+  (add-hook 'org-agenda-finalize-hook
+            #'eh-org-agenda-change-breadcrumbs-color)
+
+  (defun eh-org-agenda-change-breadcrumbs-color ()
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward org-agenda-breadcrumbs-separator nil t)
+        (put-text-property (match-beginning 0) (match-end 0)
+                           'face '(:foreground "green" :bold t)))))
 
   (setq org-agenda-prefix-format
         (if (eh-termux-p)
