@@ -62,6 +62,13 @@
 
   (defvar eh-org-remote-directory eh-org-local-directory)
 
+  ;; 禁止在 emacs 里面查看图片，体验效果不好。
+  (setq org-file-apps
+        (append '(("\\.png\\'" . default)
+                  ("\\.jp[e]?g\\'" . default)
+                  ("\\.bmp\\'" . default))
+                org-file-apps))
+
   ;; 确保 tag 可以对齐
   (dolist (face '(org-level-1
                   org-level-2
@@ -177,9 +184,15 @@
 
 (use-package org-download
   :after org
+  :bind (:map org-mode-map
+              ("<f2>" . org-download-screenshot))
   :ensure nil
   :config
   (setq org-download-method 'attach)
+  (setq org-download-display-inline-images nil)
+  (when (eq system-type 'windows-nt)
+    (setq org-download-screenshot-method "convert clipboard: %s")
+    (setq org-download-screenshot-file "d:/tmp/image.png"))
   (org-download-enable))
 
 (use-package org-collector
