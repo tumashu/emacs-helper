@@ -190,9 +190,9 @@
   :config
   (setq org-download-method 'attach)
   (setq org-download-display-inline-images nil)
+  (setq org-download-screenshot-file (concat temporary-file-directory "image.png"))
   (when (eq system-type 'windows-nt)
-    (setq org-download-screenshot-method "convert clipboard: %s")
-    (setq org-download-screenshot-file "d:/tmp/image.png"))
+    (setq org-download-screenshot-method "convert clipboard: %s"))
   (org-download-enable))
 
 (use-package org-collector
