@@ -69,6 +69,9 @@
                   ("\\.bmp\\'" . default))
                 org-file-apps))
 
+  ;; 习惯顶格写
+  (setq org-adapt-indentation nil)
+
   ;; 确保 tag 可以对齐
   (dolist (face '(org-level-1
                   org-level-2
