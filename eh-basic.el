@@ -321,7 +321,8 @@
   (ivy-mode 1)
   (setq ivy-count-format ""
         ivy-use-virtual-buffers t
-        ivy-format-function #'ivy-format-function-arrow
+        ivy-format-functions-alist
+        '((t . ivy-format-function-arrow))
         ivy-display-style 'fancy
         ivy-use-selectable-prompt t)
 
