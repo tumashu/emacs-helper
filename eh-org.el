@@ -189,17 +189,10 @@
   :ensure nil
   :config
   (setq org-download-method 'attach)
-  (setq org-download-display-inline-images nil)
+  (setq org-download-display-inline-images 'posframe)
   (setq org-download-screenshot-file (concat temporary-file-directory "image.png"))
-  (setq org-download-annotate-function #'eh-org-download-annotate)
-
-  (defun eh-org-download-annotate (link)
-    "Annotate LINK with the time of download."
-    (format "#+DOWNLOADED: %s @ %s
-#+ATTR_HTML: :width 80%% :align center"
-            link
-            (format-time-string "%Y-%m-%d %H:%M:%S")))
-
+  (setq org-download-image-attr-list
+        '("#+ATTR_HTML: :width 80% :align center"))
   (when (eq system-type 'windows-nt)
     (setq org-download-screenshot-method "convert clipboard: %s"))
   (org-download-enable))
