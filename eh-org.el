@@ -93,6 +93,7 @@
 
   (setq org-fast-tag-selection-single-key nil)
   (setq org-tags-match-list-sublevels nil)
+  (setq org-complete-tags-always-offer-all-agenda-tags t)
 
   (setq org-tag-alist
         '(("proj" . ?p)
