@@ -525,7 +525,10 @@
   )
 
 (use-package org-board
-  :after org)
+  :after org
+  :config
+  (setq org-board-wget-show-buffer nil)
+  (define-key org-mode-map (kbd "C-c o") org-board-keymap))
 
 (use-package autorevert
   :after org
