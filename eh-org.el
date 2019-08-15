@@ -524,6 +524,9 @@
         (delete-region (point) (org-end-of-subtree t)))))
   )
 
+(use-package org-board
+  :after org)
+
 (use-package autorevert
   :after org
   :config
