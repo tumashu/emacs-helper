@@ -503,7 +503,26 @@
 	  (set-buffer (marker-buffer marker))
 	  (goto-char marker))
         (org-back-to-heading t)
-        (call-interactively 'org-attach-reveal)))))
+        (call-interactively 'org-attach-reveal))))
+
+  (defun eh-org-attach-subtree ()
+    (interactive "P")
+    (when (yes-or-no-p "确定将 subtree 转移到 attach 目录中？ ")
+      (org-back-to-heading t)
+      (let* ((case-fold-search nil)
+             (org-export-with-tags t)
+             (filename (expand-file-name
+                        (concat
+                         (org-element-property
+                          :title (org-element-at-point))
+                         "-"
+                         (format-time-string "%Y%m%dT%H%M%S")
+                         ".org")
+                        (org-attach-dir t))))
+        (org-export-to-file 'org filename nil t)
+        (org-end-of-meta-data)
+        (delete-region (point) (org-end-of-subtree t)))))
+  )
 
 (use-package autorevert
   :after org
