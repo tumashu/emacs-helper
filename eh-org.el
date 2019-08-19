@@ -530,6 +530,11 @@
   (setq org-board-wget-show-buffer nil)
   (define-key org-mode-map (kbd "C-c o") org-board-keymap))
 
+(use-package org-picklink
+  :after org
+  :config
+  (define-key org-mode-map (kbd "C-c j") 'org-picklink))
+
 (use-package autorevert
   :after org
   :config
