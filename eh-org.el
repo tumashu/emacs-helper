@@ -588,7 +588,7 @@
     (let* ((string (buffer-substring
                     (point)
                     (save-excursion
-                      (skip-syntax-backward "w_")
+                      (skip-syntax-backward "w")
                       (point))))
            (length (length string)))
       (delete-char (- 0 length))
