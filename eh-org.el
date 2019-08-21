@@ -580,9 +580,10 @@
         (let* ((map (make-sparse-keymap)))
           (set-keymap-parent map minibuffer-local-map)
           (org-defkey map (kbd "C-<return>") 'eh-org-agenda-search-cregexp)
+          (org-defkey map (kbd "C-j") 'eh-org-agenda-convert-to-cregexp)
           map))
 
-  (defun eh-org-agenda-search-cregexp ()
+  (defun eh-org-agenda-convert-to-cregexp ()
     (interactive)
     (let* ((string (buffer-substring
                     (point)
@@ -591,8 +592,12 @@
                       (point))))
            (length (length string)))
       (delete-char (- 0 length))
-      (insert (format "{%s}" (pyim-cregexp-build string)))
-      (exit-minibuffer))))
+      (insert (format "{%s}" (pyim-cregexp-build string)))))
+
+  (defun eh-org-agenda-search-cregexp ()
+    (interactive)
+    (eh-org-agenda-convert-to-cregexp)
+    (exit-minibuffer))
 
   (defun eh-org-search-view (orig-fun &rest args)
     (let ((minibuffer-local-map
