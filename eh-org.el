@@ -544,6 +544,7 @@
   :bind (("C-c a" . org-agenda)
          :map org-agenda-mode-map
          ("<f1>" . eh-org-attach-reveal)
+         ("SPC" . eh-org-agenda-show-and-scroll-up)
          ("g" . eh-org-agenda-redo-all)
          ("'" . eh-org-agenda-search-level)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
@@ -554,6 +555,29 @@
          ("a" . ignore))
   :ensure nil
   :config
+
+  (defun eh-org-agenda-show-and-scroll-up (&optional arg)
+    (interactive "P")
+    (let ((win (selected-window)))
+      (if (and (window-live-p org-agenda-show-window)
+               (eq this-command last-command))
+          (progn
+            (select-window org-agenda-show-window)
+            (ignore-errors (scroll-up)))
+        (org-agenda-goto t)
+        (org-show-entry)
+        (let ((org-indirect-buffer-display 'current-window))
+          (org-tree-to-indirect-buffer)
+          ;; 隐藏 indirect buffer
+          (rename-buffer (concat " " (buffer-name))))
+        (if arg (org-cycle-hide-drawers 'children)
+          (org-with-wide-buffer
+           (narrow-to-region (org-entry-beginning-position)
+                             (org-entry-end-position))
+           (org-show-all '(drawers))))
+        (when arg )
+        (setq org-agenda-show-window (selected-window)))
+      (select-window win)))
 
   ;; 加快 agenda 启动速度
   (setq org-agenda-dim-blocked-tasks t)
