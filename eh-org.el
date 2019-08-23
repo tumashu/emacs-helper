@@ -556,6 +556,16 @@
   :ensure nil
   :config
 
+  (defun eh-org-agenda-delete-window (&rest args)
+    (when (window-live-p org-agenda-show-window)
+      (delete-window org-agenda-show-window)))
+
+  (dolist (x '(org-agenda-next-line
+               org-agenda-previous-line
+               org-agenda-next-item
+               org-agenda-previous-item))
+    (advice-add x :after 'eh-org-agenda-delete-window))
+
   (defun eh-org-agenda-show-and-scroll-up (&optional arg)
     (interactive "P")
     (let ((win (selected-window)))
