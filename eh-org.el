@@ -662,13 +662,13 @@
                           (replace-regexp-in-string
                            regexp
                            (lambda (str)
-                             (let ((n (+ 2 (string-to-number (substring str -1)))))
-                               (format "+LEVEL>%s" (if (> n 4) 0 n))))
+                             (let ((n (+ 1 (string-to-number (substring str -1)))))
+                               (format "+LEVEL>%s" (if (> n 3) 0 n))))
                            org-agenda-query-string)
                         (concat (replace-regexp-in-string
                                  regexp ""
                                  org-agenda-query-string)
-                                "+LEVEL>2")))))
+                                "+LEVEL>1")))))
           (org-agenda-redo))
       (message "当前命令仅在 org-tags-view 界面有用。")))
 
