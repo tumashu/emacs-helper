@@ -546,7 +546,7 @@
          ("<f1>" . eh-org-attach-reveal)
          ("SPC" . eh-org-agenda-show-and-scroll-up)
          ("g" . eh-org-agenda-redo-all)
-         ("'" . eh-org-agenda-search-level)
+         ("<tab>" . eh-org-agenda-search-level)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
          ("A" . org-agenda-archive-default-with-confirmation)
          ("J" . counsel-org-agenda-headlines)
@@ -662,8 +662,8 @@
                           (replace-regexp-in-string
                            regexp
                            (lambda (str)
-                             (let ((n (+ 1 (string-to-number (substring str -1)))))
-                               (format "+LEVEL>%s" (if (> n 2) 0 n))))
+                             (let ((n (+ 2 (string-to-number (substring str -1)))))
+                               (format "+LEVEL>%s" (if (> n 4) 0 n))))
                            org-agenda-query-string)
                         (concat (replace-regexp-in-string
                                  regexp ""
