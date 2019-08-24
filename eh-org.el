@@ -545,6 +545,7 @@
          :map org-agenda-mode-map
          ("<f1>" . eh-org-attach-reveal)
          ("SPC" . eh-org-agenda-show-and-scroll-up)
+         ("<return>" . eh-org-agenda-show-and-scroll-up)
          ("g" . eh-org-agenda-redo-all)
          ("<tab>" . eh-org-agenda-search-level)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
