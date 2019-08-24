@@ -557,8 +557,7 @@
   :config
 
   (defun eh-org-agenda-delete-window (&rest args)
-    (when (window-live-p org-agenda-show-window)
-      (delete-window org-agenda-show-window)))
+    (delete-other-windows))
 
   (dolist (x '(org-agenda-next-line
                org-agenda-previous-line
@@ -566,6 +565,7 @@
                org-agenda-previous-item))
     (advice-add x :after 'eh-org-agenda-delete-window))
 
+  (defun eh-org-agenda-show-window-point nil)
   (defun eh-org-agenda-show-and-scroll-up (&optional arg)
     (interactive "P")
     (let ((win (selected-window)))
@@ -573,7 +573,12 @@
                (eq this-command last-command))
           (progn
             (select-window org-agenda-show-window)
-            (ignore-errors (scroll-up)))
+            (if (eq eh-org-agenda-show-window-point (window-point))
+                (progn
+                  (goto-char (point-min))
+                  (message "已经滚动到底，返回第一行！"))
+              (ignore-errors (scroll-up))
+              (setq eh-org-agenda-show-window-point (window-point))))
         (org-agenda-goto t)
         (org-show-entry)
         (let ((org-indirect-buffer-display 'current-window))
