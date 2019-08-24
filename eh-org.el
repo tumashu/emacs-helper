@@ -668,7 +668,7 @@
                         (concat (replace-regexp-in-string
                                  regexp ""
                                  org-agenda-query-string)
-                                "+LEVEL>1")))))
+                                "+LEVEL>2")))))
           (org-agenda-redo))
       (message "当前命令仅在 org-tags-view 界面有用。")))
 
