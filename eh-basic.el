@@ -384,7 +384,9 @@
 ;; ** 设置拼音输入法
 (use-package pyim
   :ensure nil
-  :bind* (("M-j" . pyim-convert-string-at-point))
+  :bind* (("M-j" . pyim-convert-string-at-point)
+          :map minibuffer-local-map
+          ("C-<return>" . pyim-convert-cregexp-at-point))
   :config
 
   (setq default-input-method "pyim")
@@ -423,29 +425,6 @@
         (let* ((map (make-sparse-keymap)))
           (set-keymap-parent map minibuffer-local-map)
           map))
-
-  (define-key minibuffer-local-map (kbd "C-<return>") 'eh-minibuffer-exit-minibuffer)
-  (define-key minibuffer-local-map (kbd "C-j") 'eh-minibuffer-convert-to-cregexp)
-
-  (defun eh-minibuffer-convert-to-cregexp ()
-    (interactive)
-    (let* ((string (buffer-substring
-                    (point)
-                    (save-excursion
-                      (skip-syntax-backward "w")
-                      (point))))
-           (length (length string))
-           (cregexp (pyim-cregexp-build string)))
-      (delete-char (- 0 length))
-      (cond
-       ((eq last-command 'org-search-view)
-        (insert (format "{%s}" cregexp)))
-       (t (insert cregexp)))))
-
-  (defun eh-minibuffer-exit-minibuffer ()
-    (interactive)
-    (eh-minibuffer-convert-to-cregexp)
-    (exit-minibuffer))
 
   ;; emacs 启动时加载 pyim 词库
   ;; (add-hook 'emacs-startup-hook
