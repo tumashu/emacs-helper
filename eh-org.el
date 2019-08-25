@@ -505,7 +505,7 @@
         (call-interactively 'org-attach-reveal))))
 
   (defun eh-org-attach-subtree ()
-    (interactive "P")
+    (interactive)
     (when (yes-or-no-p "确定将 subtree 转移到 attach 目录中？ ")
       (org-back-to-heading t)
       (let* ((case-fold-search nil)
@@ -564,7 +564,7 @@
                org-agenda-previous-item))
     (advice-add x :after 'eh-org-agenda-delete-window))
 
-  (defun eh-org-agenda-show-window-point nil)
+  (defvar eh-org-agenda-show-window-point nil)
   (defun eh-org-agenda-show-and-scroll-up (&optional arg)
     (interactive "P")
     (let ((win (selected-window)))
