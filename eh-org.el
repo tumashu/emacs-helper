@@ -92,7 +92,6 @@
   ;;         ("CANCELLED" . (:foreground "forest green")))
 
   (setq org-fast-tag-selection-single-key nil)
-  (setq org-tags-match-list-sublevels nil)
 
   (setq org-tag-alist
         '(("proj" . ?p)
@@ -547,7 +546,6 @@
          ("SPC" . eh-org-agenda-show-and-scroll-up)
          ("<return>" . eh-org-agenda-show-and-scroll-up)
          ("g" . eh-org-agenda-redo-all)
-         ("<tab>" . eh-org-agenda-search-level)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
          ("A" . org-agenda-archive-default-with-confirmation)
          ("J" . counsel-org-agenda-headlines)
@@ -657,26 +655,6 @@
                    (not (buffer-modified-p)))
           (revert-buffer t t t) )))
     (message "Refreshed all opened org files."))
-
-  (defun eh-org-agenda-search-level ()
-    (interactive)
-    (if (eq (car org-agenda-redo-command) 'org-tags-view)
-        (let* ((regexp "[+]LEVEL[>=<]+[0-9]")
-               (org-agenda-overriding-arguments
-                (list nil
-                      (if (string-match-p regexp org-agenda-query-string)
-                          (replace-regexp-in-string
-                           regexp
-                           (lambda (str)
-                             (let ((n (+ 1 (string-to-number (substring str -1)))))
-                               (format "+LEVEL>%s" (if (> n 3) 0 n))))
-                           org-agenda-query-string)
-                        (concat (replace-regexp-in-string
-                                 regexp ""
-                                 org-agenda-query-string)
-                                "+LEVEL>1")))))
-          (org-agenda-redo))
-      (message "当前命令仅在 org-tags-view 界面有用。")))
 
   (defun eh-org-agenda-redo-all (&optional arg)
     (interactive "P")
