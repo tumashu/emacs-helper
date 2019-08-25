@@ -614,36 +614,6 @@
 
   (add-to-list 'org-agenda-files eh-org-local-directory t)
 
-  (setq eh-org-minibuffer-local-map
-        (let* ((map (make-sparse-keymap)))
-          (set-keymap-parent map minibuffer-local-map)
-          (org-defkey map (kbd "C-<return>") 'eh-org-agenda-search-cregexp)
-          (org-defkey map (kbd "C-j") 'eh-org-agenda-convert-to-cregexp)
-          map))
-
-  (defun eh-org-agenda-convert-to-cregexp ()
-    (interactive)
-    (let* ((string (buffer-substring
-                    (point)
-                    (save-excursion
-                      (skip-syntax-backward "w")
-                      (point))))
-           (length (length string)))
-      (delete-char (- 0 length))
-      (insert (format "{%s}" (pyim-cregexp-build string)))))
-
-  (defun eh-org-agenda-search-cregexp ()
-    (interactive)
-    (eh-org-agenda-convert-to-cregexp)
-    (exit-minibuffer))
-
-  (defun eh-org-search-view (orig-fun &rest args)
-    (let ((minibuffer-local-map
-           (copy-keymap eh-org-minibuffer-local-map)))
-      (apply orig-fun args)))
-
-  (advice-add 'org-search-view :around 'eh-org-search-view)
-
   (defun eh-revert-org-buffers ()
     "Refreshes all opened org buffers."
     (interactive)
