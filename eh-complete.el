@@ -62,7 +62,7 @@
   (setq company-dabbrev-minimum-length 2)
 
   (setq company-backends
-        '((company-capf company-dabbrev company-files)
+        '((company-capf company-files) ;company-dabbrev 经常让 emacs 卡死
           (company-dabbrev-code company-gtags company-etags
                                 company-keywords)))
   (setq company-transformers
@@ -72,12 +72,11 @@
         '(company-pseudo-tooltip-frontend
           company-echo-metadata-frontend))
 
-  ;; (if (and (fboundp 'daemonp) (daemonp))
-  ;;     (add-hook 'after-make-frame-functions
-  ;;               (lambda (x)
-  ;;                 (global-company-mode)))
-  ;;   (global-company-mode))
-  )
+  (if (and (fboundp 'daemonp) (daemonp))
+      (add-hook 'after-make-frame-functions
+                (lambda (x)
+                  (global-company-mode)))
+    (global-company-mode)))
 
 (use-package pyim
   :after company
