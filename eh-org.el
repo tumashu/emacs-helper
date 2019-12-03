@@ -529,6 +529,12 @@
   (setq org-board-wget-show-buffer nil)
   (define-key org-mode-map (kbd "C-c o") org-board-keymap))
 
+(use-package org-ql
+  :after org)
+
+(use-package org-super-agenda
+  :after org-agenda)
+
 (use-package org-picklink
   :after org
   :config
@@ -555,14 +561,14 @@
   :ensure nil
   :config
 
-  (defun eh-org-agenda-delete-window (&rest args)
-    (delete-other-windows))
+  ;; (defun eh-org-agenda-delete-window (&rest args)
+  ;;   (delete-other-windows))
 
-  (dolist (x '(org-agenda-next-line
-               org-agenda-previous-line
-               org-agenda-next-item
-               org-agenda-previous-item))
-    (advice-add x :after 'eh-org-agenda-delete-window))
+  ;; (dolist (x '(org-agenda-next-line
+  ;;              org-agenda-previous-line
+  ;;              org-agenda-next-item
+  ;;              org-agenda-previous-item))
+  ;;   (advice-add x :after 'eh-org-agenda-delete-window))
 
   (defvar eh-org-agenda-show-window-point nil)
   (defun eh-org-agenda-show-and-scroll-up (&optional arg)
@@ -643,7 +649,7 @@
                 "刷新完成，记得按快捷键 '\\[org-save-all-org-buffers]' 来保存更改。"))))
 
   (setq org-agenda-span 'day)
-  (setq org-agenda-window-setup 'only-window)
+  (setq org-agenda-window-setup 'current-window)
   (setq org-agenda-include-diary nil)
 
   (setq org-agenda-todo-ignore-scheduled t)
