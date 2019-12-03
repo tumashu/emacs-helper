@@ -530,7 +530,31 @@
   (define-key org-mode-map (kbd "C-c o") org-board-keymap))
 
 (use-package org-ql
-  :after org)
+  :after org
+  :config
+  (defun eh-ivy-org-ql-agenda-files ()
+    (interactive)
+    (let ((files (org-agenda-files)))
+      (ivy-read
+       "Query: "
+       #'(lambda (input)
+           (let ((query (org-ql--plain-query input)))
+             (when query
+               (ignore-errors
+                 (org-ql-select files query
+                   :action (lambda ()
+                             (propertize (org-get-heading t)
+                                         'marker (copy-marker (point)))))))))
+       :dynamic-collection t
+       :action #'eh-ivy-org-ql-agenda-goto)))
+
+  (defun eh-ivy-org-ql-agenda-goto (headline)
+    (interactive)
+    (let ((marker (get-text-property 0 'marker headline)))
+      (when (markerp marker)
+        (switch-to-buffer (marker-buffer marker))
+        (goto-char marker)
+        (org-show-entry)))))
 
 (use-package org-super-agenda
   :after org-agenda)
@@ -554,8 +578,7 @@
          ("g" . eh-org-agenda-redo-all)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
          ("A" . org-agenda-archive-default-with-confirmation)
-         ("S" . org-ql-view)
-         ("J" . counsel-org-agenda-headlines)
+         ("J" . eh-ivy-org-ql-agenda-files)
          ("h" . ignore)
          ("y" . ignore)
          ("a" . ignore))

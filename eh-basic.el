@@ -445,7 +445,7 @@
     (let ((a (ivy--regex-plus str))
           (b (let ((case-fold-search nil))
                (pyim-cregexp-build str))))
-      (if (and a (stringp a))
+      (if (and a (stringp a) (string> a ""))
           (concat a "\\|" b)
         a)))
 
