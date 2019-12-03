@@ -554,6 +554,7 @@
          ("g" . eh-org-agenda-redo-all)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
          ("A" . org-agenda-archive-default-with-confirmation)
+         ("S" . org-ql-view)
          ("J" . counsel-org-agenda-headlines)
          ("h" . ignore)
          ("y" . ignore)
