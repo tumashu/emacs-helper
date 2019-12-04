@@ -500,11 +500,17 @@
   (setq org-board-wget-show-buffer nil)
   (define-key org-mode-map (kbd "C-c o") org-board-keymap))
 
+(use-package org-picklink
+  :after org
+  :config
+  (define-key org-mode-map (kbd "C-c j") 'org-picklink))
+
 (use-package org-ql
   :after org
   :config
 
-  (define-key org-mode-map (kbd "C-c j") 'eh-org-query-picklink)
+  ;; (define-key org-mode-map (kbd "C-c j") 'eh-org-query)
+  ;; (define-key org-mode-map (kbd "C-c i") 'eh-org-query-picklink)
 
   (defun eh-org-query ()
     (interactive)
