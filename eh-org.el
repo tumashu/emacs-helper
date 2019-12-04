@@ -461,28 +461,8 @@
   :after org
   :ensure nil
   :config
-  (setq org-attach-commit nil)
   (setq org-attach-file-list-property nil)
   (setq org-attach-store-link-p 'attached)
-
-  (defun eh-org-attach-abbrev (file-name)
-    "Return `org-attach-dir' for the current entry."
-    (concat (file-name-as-directory (org-attach-dir 'CREATE))
-            file-name))
-
-  (add-to-list 'org-link-abbrev-alist
-               (cons "attach" "file:%(eh-org-attach-abbrev)"))
-
-  (defun eh-org-attach-link-complete (&optional arg)
-    "Completion function for attach: link."
-    (let* ((attach-dir (org-attach-dir 'CREATE))
-           (file-link
-            (let ((default-directory attach-dir))
-              (org-file-complete-link)))
-           (file-path (apply #'concat (cdr (split-string file-link ":")))))
-      (format "attach:%s" file-path)))
-
-  (org-link-set-parameters "attach" :complete #'eh-org-attach-link-complete)
 
   (defun eh-org-attach-sync-all ()
     (interactive)
