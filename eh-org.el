@@ -149,15 +149,6 @@
         (_ (toggle-truncate-lines -1))))
     (org-ctrl-c-ctrl-c arg))
 
-  ;; (defun eh-org-set-tags-command (orig-fun &optional arg)
-  ;;   (interactive "P")
-  ;;   (if (functionp 'counsel-org-tag)
-  ;;       (funcall-interactively 'counsel-org-tag)
-  ;;     (funcall orig-fun arg)))
-
-  ;; (advice-add 'org-set-tags-command
-  ;;             :around #'eh-org-set-tags-command)
-
   (defun eh-org-smart-truncate-lines (&optional arg)
     (interactive)
     (org-defkey org-mode-map "\C-c\C-c" 'eh-org-ctrl-c-ctrl-c))
@@ -512,37 +503,74 @@
 (use-package org-ql
   :after org
   :config
-  (defun eh-ivy-org-ql-agenda-files ()
-    (interactive)
-    (let ((files (org-agenda-files)))
-      (ivy-read
-       "Query: "
-       #'(lambda (input)
-           (let ((query (org-ql--plain-query input)))
-             (when query
-               (ignore-errors
-                 (org-ql-select files query
-                   :action (lambda ()
-                             (propertize (org-get-heading t)
-                                         'marker (copy-marker (point)))))))))
-       :dynamic-collection t
-       :action #'eh-ivy-org-ql-agenda-goto)))
 
-  (defun eh-ivy-org-ql-agenda-goto (headline)
+  (define-key org-mode-map (kbd "C-c j") 'eh-org-query-picklink)
+
+  (defun eh-org-query ()
+    (interactive)
+    (ivy-read "Org query: " #'eh-org-query-collect
+              :dynamic-collection t
+              :initial-input (eh-org-query-string)
+              :action #'eh-org-query-goto))
+
+  (defun eh-org-query-picklink ()
+    (interactive)
+    (ivy-read "Org query: " #'eh-org-query-collect
+              :dynamic-collection t
+              :initial-input (eh-org-query-string)
+              :action #'eh-org-query-insert-link))
+
+  (defun eh-org-query-string ()
+    (when mark-active
+      (buffer-substring-no-properties
+       (region-beginning) (region-end))))
+
+  (defun eh-org-query-collect (input)
+    (let ((files (org-agenda-files))
+          (query (org-ql--plain-query input)))
+      (when query
+        (ignore-errors
+          (org-ql-select files query
+            :action (lambda ()
+                      (propertize (org-get-heading t)
+                                  'marker (copy-marker (point)))))))))
+
+  (defun eh-org-query-goto (headline)
     (interactive)
     (let ((marker (get-text-property 0 'marker headline)))
       (when (markerp marker)
         (switch-to-buffer (marker-buffer marker))
         (goto-char marker)
-        (org-show-entry)))))
+        (org-show-entry))))
+
+  (defun eh-org-query-insert-link (headline &optional link-type breadcrumbs)
+    (interactive)
+    (let ((marker (get-text-property 0 'marker headline))
+          store-link)
+      (when (markerp marker)
+        (org-with-point-at marker
+          (let* ((id (org-id-get (point) t))
+                 (attach-dir (org-attach-dir t))
+                 (breadcrumbs
+                  (when breadcrumbs
+                    (let ((s (org-format-outline-path
+                              (org-get-outline-path)
+                              (1- (frame-width))
+                              nil org-picklink-breadcrumbs-separator)))
+                      (if (eq "" s) "" (concat s org-picklink-breadcrumbs-separator)))))
+                 (item (concat (or breadcrumbs "") (org-entry-get (point) "ITEM")))
+                 (link
+                  (cl-case link-type
+                    (attach (list :link attach-dir :description (concat item "(ATTACH)") :type "file"))
+                    (t (list :link (concat "id:" id) :description item :type "id")))))
+            (setq store-link link)))
+        (org-insert-link nil (plist-get store-link :link) (plist-get store-link :description))
+        (cond ((org-in-item-p)
+               (call-interactively #'org-insert-item))
+              (t (insert " ")))))))
 
 (use-package org-super-agenda
   :after org-agenda)
-
-(use-package org-picklink
-  :after org
-  :config
-  (define-key org-mode-map (kbd "C-c j") 'org-picklink))
 
 (use-package autorevert
   :after org
@@ -558,7 +586,7 @@
          ("g" . eh-org-agenda-redo-all)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
          ("A" . org-agenda-archive-default-with-confirmation)
-         ("J" . eh-ivy-org-ql-agenda-files)
+         ("J" . eh-org-query)
          ("h" . ignore)
          ("y" . ignore)
          ("a" . ignore))
