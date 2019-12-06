@@ -539,7 +539,7 @@
         (list "" (format "%d chars more" (- 4 (length input))))
       (setq eh-org-query-collect-timer
             (run-with-timer
-             0.5 nil
+             0.25 nil
              `(lambda ()
                 (let ((files (org-agenda-files))
                       (query (org-ql--plain-query (pyim-cregexp-build ,input))))
