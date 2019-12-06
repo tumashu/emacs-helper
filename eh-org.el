@@ -531,15 +531,30 @@
       (buffer-substring-no-properties
        (region-beginning) (region-end))))
 
+  (defvar eh-org-query-collect-timer nil)
   (defun eh-org-query-collect (input)
-    (let ((files (org-agenda-files))
-          (query (org-ql--plain-query input)))
-      (when query
-        (ignore-errors
-          (org-ql-select files query
-            :action (lambda ()
-                      (propertize (org-get-heading t)
-                                  'marker (copy-marker (point)))))))))
+    (when eh-org-query-collect-timer
+      (cancel-timer eh-org-query-collect-timer))
+    (if (< (length input) 4)
+        (list "" (format "%d chars more" (- 4 (length input))))
+      (setq eh-org-query-collect-timer
+            (run-with-timer
+             0.5 nil
+             `(lambda ()
+                (let ((files (org-agenda-files))
+                      (query (org-ql--plain-query (pyim-cregexp-build ,input))))
+                  (when query
+                    (ignore-errors
+                      (setq ivy--all-candidates
+                            (or
+                             (org-ql-select files query
+                               :action (lambda ()
+                                         (propertize (org-get-heading t)
+                                                     'marker (copy-marker (point)))))
+                             '("" "Search no results!")))
+                      (setq ivy--old-cands ivy--all-candidates)
+                      (ivy--exhibit)))))))
+      nil))
 
   (defun eh-org-query-goto (headline)
     (interactive)
