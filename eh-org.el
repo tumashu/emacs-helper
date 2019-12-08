@@ -619,7 +619,6 @@
          ("g" . eh-org-agenda-redo-all)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
          ("A" . org-agenda-archive-default-with-confirmation)
-         ("J" . eh-org-query)
          ("h" . ignore)
          ("y" . ignore)
          ("a" . ignore))
