@@ -531,6 +531,16 @@
       (buffer-substring-no-properties
        (region-beginning) (region-end))))
 
+  (defun eh-tree-map (fn tree)
+    "Apply FN to each element of TREE while preserving the tree structure."
+    (cond
+     ((null tree) nil)
+     ((consp tree)
+      (if (memq (car tree) '(regexp heading h path))
+          (funcall fn tree)
+        (mapcar (lambda (x) (eh-tree-map fn x)) tree)))
+     (t tree)))
+
   (defvar eh-org-query-collect-timer nil)
   (defun eh-org-query-collect (input)
     (when eh-org-query-collect-timer
@@ -542,7 +552,11 @@
              0.25 nil
              `(lambda ()
                 (let ((files (org-agenda-files))
-                      (query (org-ql--plain-query (pyim-cregexp-build ,input))))
+                      (query
+                       (eh-tree-map
+                        (lambda (x)
+                          `(,(car x) ,@(mapcar 'pyim-cregexp-build (cdr x))))
+                        (org-ql--plain-query ,input))))
                   (when query
                     (ignore-errors
                       (setq ivy--all-candidates
