@@ -307,7 +307,7 @@
 
 (use-package swiper
   :demand t
-  :bind (
+  :bind (("C-c C-r" . ivy-resume)
          :map ivy-minibuffer-map
          ;; I use "C-x C-f" to open file, so bind "C-f" to
          ;; `ivy-immediate-done' is very useful.
