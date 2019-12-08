@@ -534,7 +534,7 @@
     (cond
      ((null tree) nil)
      ((consp tree)
-      (if (memq (car tree) '(regexp heading h path))
+      (if (memq (car tree) '(regexp r heading h path))
           (funcall fn tree)
         (mapcar (lambda (x) (eh-tree-map fn x)) tree)))
      (t tree)))
