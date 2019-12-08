@@ -498,7 +498,6 @@ Taken from elpy-shell-send-current-statement"
 
 (use-package counsel
   :after magit
-  :bind (("C-c i" . counsel-git-log))
   :config
   (setq counsel-yank-pop-separator
         (concat "\n\n" (make-string 70 ?-) "\n"))
