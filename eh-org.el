@@ -510,6 +510,8 @@
          ("C-c l" . eh-org-query-picklink))
   :config
 
+  (setq org-ql-default-predicate 'heading)
+  
   (defun eh-org-query ()
     (interactive)
     (ivy-read "Org query: " #'eh-org-query-collect
@@ -540,6 +542,7 @@
      (t tree)))
 
   (defvar eh-org-query-collect-timer nil)
+  
   (defun eh-org-query-collect (input)
     (when eh-org-query-collect-timer
       (cancel-timer eh-org-query-collect-timer))
