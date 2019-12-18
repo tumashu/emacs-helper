@@ -61,11 +61,22 @@
   (defvar eh-org-remote-directory eh-org-local-directory)
 
   ;; 禁止在 emacs 里面查看图片，体验效果不好。
-  (setq org-file-apps
+  (setq org-file-apps-windowsnt
         (append '(("\\.png\\'" . default)
                   ("\\.jp[e]?g\\'" . default)
                   ("\\.bmp\\'" . default))
-                org-file-apps))
+                org-file-apps-windowsnt))
+
+  (setq org-file-apps-gnu
+        (append '((directory . eh-xdg-open)
+                  ("\\.png\\'" . eh-xdg-open)
+                  ("\\.jp[e]?g\\'" . eh-xdg-open)
+                  ("\\.bmp\\'" . eh-xdg-open))
+                org-file-apps-gnu))
+
+  (defun eh-xdg-open (path _linkstr)
+    (let ((process-connection-type))
+      (start-process "" nil "xdg-open" (expand-file-name path))))
 
   ;; 确保 tag 可以对齐
   (dolist (face '(org-level-1
