@@ -298,6 +298,13 @@
   ;; 但对它的内容没有影响。
   (ox-extras-activate '(latex-header-blocks ignore-headlines)))
 
+(use-package org-brain
+  :after org
+  :ensure nil
+  :config
+  (setq org-brain-path (expand-file-name "brain" eh-org-local-directory))
+  (setq org-brain-include-file-entries nil))
+
 (use-package ob-core
   :commands (org-babel-execute-maybe
              org-babel-execute-safely-maybe)
