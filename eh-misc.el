@@ -35,17 +35,6 @@
 
 ;; * 代码                                                      :code:
 
-;; ** cyberpunk-theme
-(use-package cyberpunk-theme
-  :config
-  (add-hook 'after-init-hook
-            #'(lambda ()
-                (load-theme 'cyberpunk t)
-                ;; Adjust cyberpunk theme
-                (set-face-attribute 'font-lock-comment-face nil :italic nil)
-                (set-face-attribute 'org-agenda-date-today nil :slant 'normal)
-                )))
-
 ;; ** yasnippet
 (use-package yasnippet
   :config

@@ -38,12 +38,15 @@
 ;; ** cyberpunk-theme
 (use-package cyberpunk-theme
   :config
-  (add-hook 'after-init-hook
-            #'(lambda ()
-                (load-theme 'cyberpunk t)
-                ;; Adjust cyberpunk theme
-                (set-face-attribute 'font-lock-comment-face nil :italic nil)
-                (set-face-attribute 'org-agenda-date-today nil :slant 'normal))))
+  (load-theme 'cyberpunk t))
+
+(use-package font-lock
+  :config
+  (set-face-attribute 'font-lock-comment-face nil :italic nil))
+
+(use-package org-faces
+  :config
+  (set-face-attribute 'org-agenda-date-today nil :slant 'normal))
 
 ;; * Footer
 (provide 'eh-theme)
