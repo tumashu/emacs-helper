@@ -37,22 +37,6 @@
 (require 'cl-lib)
 
 ;; ** 设置 load-path (Can not use use-package)
-(defun eh-hack-load-path ()
-  ;; Delete buildin org's PATH
-  (setq load-path
-        (cl-remove-if
-         #'(lambda (path)
-             (string-match "lisp/org$" path))
-         load-path))
-  ;; Demove property lists to defeat cus-load and remove autoloads
-  (mapatoms
-   #'(lambda (sym)
-       (let ((sym-name (symbol-name sym)))
-         (when (string-match "^\\(org\\|ob\\|ox\\)-?" sym-name)
-           (setplist sym nil)
-           (when (autoloadp sym)
-             (unintern sym)))))))
-
 (defun eh-update-load-path ()
   (interactive)
   (let (dirs)
@@ -69,8 +53,7 @@
           (when (and (file-directory-p x)
                      (not (string-match-p "/\\.$" x))
                      (not (string-match-p "/\\.\\.$" x)))
-            (add-to-list 'load-path x))))))
-  (eh-hack-load-path))
+            (add-to-list 'load-path x)))))))
 
 (eh-update-load-path)
 
