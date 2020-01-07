@@ -304,9 +304,8 @@
   :config
   (setq org-brain-path (expand-file-name "brain" eh-org-local-directory))
   (setq org-brain-include-file-entries nil)
-  ;; (setq org-brain-file-entries-use-title nil)
-  ;;(setq org-brain-headline-entry-name-format-string "%2$s")
-  )
+  (setq org-brain-file-entries-use-title nil)
+  (setq org-brain-headline-entry-name-format-string "%2$s"))
 
 (use-package ob-core
   :commands (org-babel-execute-maybe
