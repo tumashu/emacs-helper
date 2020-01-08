@@ -93,7 +93,10 @@
 
 (use-package company-posframe
   :after company
-  :config (company-posframe-mode 1))
+  :config
+  (setq company-posframe-show-indicator nil)
+  (setq company-posframe-show-metadata nil)
+  (company-posframe-mode 1))
 
 ;; * Footer
 (provide 'eh-complete)
