@@ -281,6 +281,10 @@
   :after ox
   :ensure nil)
 
+(use-package ox-org
+  :after ox
+  :ensure nil)
+
 (use-package ox-ascii
   :after ox
   :ensure nil)
