@@ -308,12 +308,59 @@
   (setq org-brain-include-file-entries nil)
   (setq org-brain-file-entries-use-title nil)
   (setq org-brain-headline-entry-name-format-string "%2$s")
-  (setq org-brain-file-from-input-function #'eh-org-brain-file-from-input-function)
+  (setq org-brain-file-from-input-function
+        #'(lambda (x) (if (cdr id) (car id) "brain"))))
 
-  (defun eh-org-brain-file-from-input-function (id)
-    (if (cdr id)
-        (car id)
-      "brain")))
+(use-package org-brain-export
+  :after org-brain
+  :config
+
+  (defun eh-org-brain-export-orgtags ()
+    "Export your `org-brain' to org-mode FILE with tags."
+    (interactive)
+    (let ((file (concat (file-name-as-directory eh-org-local-directory)
+                        "tags.org")))
+      (message "org-brain: starting export to %s ..." file)
+      (async-start
+       `(lambda ()
+          ,(async-inject-variables "^load-path$")
+          ,(async-inject-variables "org-brain-path")
+          (require 'org-brain)
+          (require 'org-brain-export)
+          (defun eh-org-brain-export--child-orgtags (ob-data &optional pool)
+            (let ((child-orgtags
+                   (mapcar
+                    (lambda (child)
+                      (if (and pool (member (alist-get :id child) pool))
+                          (alist-get :title child)
+                        ""))
+                    (alist-get :children ob-data))))
+              (concat
+               (if (> (length child-orgtags) 0)
+                   " : "
+                 "")
+               (mapconcat #'identity child-orgtags " "))))
+
+          (defun eh-org-brain-export-orgtags-save (entries file)
+            (make-directory (file-name-directory file) t)
+            (let* ((data (cdr (mapcar #'org-brain-export-generate-data (-distinct entries))))
+                   (pool (mapcar (lambda (x) (alist-get :id x)) data))
+                   orgtags-without-child)
+              (with-temp-file file
+                (dolist (ob-data data)
+                  (let ((orgtags (alist-get :title ob-data))
+                        (child-orgtags (eh-org-brain-export--child-orgtags ob-data pool)))
+                    (if (equal child-orgtags "")
+                        (push orgtags orgtags-without-child)
+                      (insert (format "#+TAGS: [ %s%s ]\n" orgtags child-orgtags)))))
+                (insert (format "#+TAGS: %s" (mapconcat #'identity orgtags-without-child " "))))))
+
+          (eh-org-brain-export-orgtags-save
+           (append (org-brain-files t)
+                   (org-brain-headline-entries))
+           ,file))
+       `(lambda (result)
+          (message "org-brain: export finished!"))))))
 
 (use-package ob-core
   :commands (org-babel-execute-maybe
