@@ -308,9 +308,9 @@
   (setq org-brain-include-file-entries nil)
   (setq org-brain-file-entries-use-title nil)
   (setq org-brain-headline-entry-name-format-string "%2$s")
-  (setq org-brain-fallback-file-function #'eh-org-brain-fallback-file-function)
+  (setq org-brain-file-from-input-function #'eh-org-brain-file-from-input-function)
 
-  (defun eh-org-brain-fallback-file-function (id)
+  (defun eh-org-brain-file-from-input-function (id)
     (if (cdr id)
         (car id)
       "brain")))
