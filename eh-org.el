@@ -309,7 +309,7 @@
   (setq org-brain-file-entries-use-title nil)
   (setq org-brain-headline-entry-name-format-string "%2$s")
   (setq org-brain-file-from-input-function
-        #'(lambda (x) (if (cdr id) (car id) "brain"))))
+        #'(lambda (x) (if (cdr x) (car x) "brain"))))
 
 (use-package org-brain-export
   :after org-brain
