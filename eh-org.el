@@ -115,9 +115,11 @@
           ("TODO")
           nil ""))
 
-  (defun org-set-tags-command (&optional arg)
+  (defun eh-org-set-tags-command (&optional arg)
     (interactive)
     (funcall-interactively #'counsel-org-tag))
+
+  (advice-add 'org-set-tags-command :override #'eh-org-set-tags-command)
 
   (setq org-insert-heading-respect-content nil)
   (setq org-log-done t)
@@ -705,8 +707,6 @@
          ("g" . eh-org-agenda-redo-all)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
          ("A" . org-agenda-archive-default-with-confirmation)
-         (":" . counsel-org-tag-agenda)
-         ("\C-c\C-q" . counsel-org-tag-agenda)
          ("h" . ignore)
          ("y" . ignore)
          ("a" . ignore))
