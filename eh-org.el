@@ -102,7 +102,7 @@
 
   (setq org-fast-tag-selection-single-key nil)
 
-  (setq org-tag-alist
+  (setq org-tag-persistent-alist
         '(("proj" . ?p)
           ("ref"  . ?r)
           ("ATTACH"  . ?a)))
@@ -114,6 +114,10 @@
         '("+proj/-MAYBE-DONE-CANCELED"
           ("TODO")
           nil ""))
+
+  (defun org-set-tags-command (&optional arg)
+    (interactive)
+    (funcall-interactively #'counsel-org-tag))
 
   (setq org-insert-heading-respect-content nil)
   (setq org-log-done t)
@@ -701,6 +705,8 @@
          ("g" . eh-org-agenda-redo-all)
          ("i" . (lambda () (interactive) (org-capture nil "s")))
          ("A" . org-agenda-archive-default-with-confirmation)
+         (":" . counsel-org-tag-agenda)
+         ("\C-c\C-q" . counsel-org-tag-agenda)
          ("h" . ignore)
          ("y" . ignore)
          ("a" . ignore))
