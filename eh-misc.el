@@ -35,6 +35,9 @@
 
 ;; * 代码                                                      :code:
 
+;; ** terminal here
+(use-package terminal-here)
+
 ;; ** yasnippet
 (use-package yasnippet
   :config
