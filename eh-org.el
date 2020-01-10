@@ -127,7 +127,7 @@
                                ivy-alt-done
                                ivy-immediate-done))
       (unless (member x counsel-org-tags)
-        (message "Tag %S has been removed." x))))
+        (message "WARN: tag %S has been removed." x))))
 
   (advice-add 'counsel-org-tag-action :around #'eh-counsel-org-tag-action)
 
