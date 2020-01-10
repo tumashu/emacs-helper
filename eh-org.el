@@ -121,6 +121,16 @@
 
   (advice-add 'org-set-tags-command :override #'eh-org-set-tags-command)
 
+  (defun eh-counsel-org-tag-action (orig_func x)
+    (funcall orig_func x)
+    (when (memq this-command '(ivy-done
+                               ivy-alt-done
+                               ivy-immediate-done))
+      (unless (member x counsel-org-tags)
+        (message "Tag %S has been removed." x))))
+
+  (advice-add 'counsel-org-tag-action :around #'eh-counsel-org-tag-action)
+
   (setq org-insert-heading-respect-content nil)
   (setq org-log-done t)
   (setq org-startup-indented nil)
