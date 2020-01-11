@@ -127,7 +127,7 @@
                                ivy-alt-done
                                ivy-immediate-done))
       (unless (member x counsel-org-tags)
-        (if (y-or-n-p (format "Remove tag %S ?" x))
+        (if (y-or-n-p (format "Remove tag %S really?" x))
             (message "WARN: tag %S has been removed." x)
           (push x counsel-org-tags)
           (counsel-org--set-tags)))))
