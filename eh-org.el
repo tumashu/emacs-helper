@@ -102,13 +102,13 @@
 
   (setq org-fast-tag-selection-single-key nil)
 
+  (setq org-tags-exclude-from-inheritance
+        '("proj"))
+
   (setq org-tag-persistent-alist
         '(("proj" . ?p)
           ("ref"  . ?r)
           ("ATTACH"  . ?a)))
-
-  (setq org-tags-exclude-from-inheritance
-        '("proj"))
 
   (setq org-stuck-projects
         '("+proj/-MAYBE-DONE-CANCELED"
@@ -117,7 +117,10 @@
 
   (defun eh-org-set-tags-command (&optional arg)
     (interactive)
-    (funcall-interactively #'counsel-org-tag))
+    (let ((org-current-tag-alist
+           (org--tag-add-to-alist org-current-tag-alist
+                                  (org-get-buffer-tags))))
+      (funcall-interactively #'counsel-org-tag)))
 
   (advice-add 'org-set-tags-command :override #'eh-org-set-tags-command)
 
