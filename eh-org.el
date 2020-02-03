@@ -68,15 +68,18 @@
                 org-file-apps-windowsnt))
 
   (setq org-file-apps-gnu
-        (append '((directory . eh-xdg-open)
-                  ("\\.png\\'" . eh-xdg-open)
-                  ("\\.jp[e]?g\\'" . eh-xdg-open)
-                  ("\\.bmp\\'" . eh-xdg-open))
+        (append '((directory . eh-open)
+                  ("\\.png\\'" . eh-open)
+                  ("\\.jp[e]?g\\'" . eh-open)
+                  ("\\.bmp\\'" . eh-open))
                 org-file-apps-gnu))
 
-  (defun eh-xdg-open (path _linkstr)
-    (let ((process-connection-type))
-      (start-process "" nil "xdg-open" (expand-file-name path))))
+  (defun eh-open (path _linkstr)
+    (if (and (functionp 'eaf-open)
+             (not (file-directory-p path)))
+        (funcall 'eaf-open path)
+      (let ((process-connection-type))
+        (start-process "" nil "xdg-open" (expand-file-name path)))))
 
   ;; 确保 tag 可以对齐
   (dolist (face '(org-level-1
@@ -365,19 +368,21 @@
                    (not (equal (car id) entry-file)))
                ;; Create new headline entry in file
                (org-with-point-at (org-brain-entry-marker entry-file)
-                 (if (and (not org-brain-include-file-entries)
-                          (re-search-forward (concat "\n\\* +" (car id)) nil t))
-                     (org-brain-entry-at-pt)
-                   (goto-char (point-max))
-                   (insert (concat "\n* " (or (cadr id) (car id))))
-                   (let ((new-id (org-id-get-create)))
-                     (run-hooks 'org-brain-new-entry-hook)
-                     (save-buffer)
-                     (list entry-file (or (cadr id) (car id)) new-id))))
+                                  (if (and (not org-brain-include-file-entries)
+                                           (re-search-forward (concat "\n\\* +" (car id)) nil t))
+                                      (org-brain-entry-at-pt)
+                                    (goto-char (point-max))
+                                    (insert (concat "\n* " (or (cadr id) (car id))))
+                                    (let ((new-id (org-id-get-create)))
+                                      (run-hooks 'org-brain-new-entry-hook)
+                                      (save-buffer)
+                                      (list entry-file (or (cadr id) (car id)) new-id))))
              entry-file)))))))
 
 (use-package org-brain-export
   :after org-brain
+  :bind (:map org-brain-visualize-mode-map
+              ("E" . eh-org-brain-export-orgtags))
   :config
 
   (defun eh-org-brain-export-orgtags ()
