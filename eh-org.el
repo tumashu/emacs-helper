@@ -68,10 +68,13 @@
       (eh-system-open path)))
 
   (defun eh-system-open (path &optional _linkstr)
-    (if (string-equal system-type "windows-nt")
-        (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" path t t))
-      (let ((process-connection-type))
-        (start-process "" nil "xdg-open" (expand-file-name path)))))
+    (cond ((string-equal system-type "windows-nt")
+           (w32-shell-execute "open" path))
+          ((string-equal system-type "darwin")
+           (concat "open " (shell-quote-argument path)))
+          ((string-equal system-type "gnu/linux")
+           (let ((process-connection-type nil))
+             (start-process "" nil "xdg-open" path)))))
 
   (defun eh-find-file (orig-fun &rest args)
     (let ((filename (car args))
