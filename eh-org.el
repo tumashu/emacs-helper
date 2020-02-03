@@ -60,37 +60,42 @@
 
   (defvar eh-org-remote-directory eh-org-local-directory)
 
-  (setq org-file-apps
-        (append
-         (if (eq system-type 'windows-nt)
-             '(("\\.docx?\\'" . default)
-               ("\\.xlsx?\\'" . default)
-               ("\\.pptx?\\'" . default)
-               ("\\.png\\'" . default)
-               ("\\.jpe?g\\'" . default)
-               ("\\.gif\\'" . default)
-               ("\\.bmp\\'" . default)
-               ("\\.pdf\\'" . default))
-           '((directory . eh-xdg-open)
-             ("\\.docx?\\'" . eh-xdg-open)
-             ("\\.xlsx?\\'" . eh-xdg-open)
-             ("\\.pptx?\\'" . eh-xdg-open)
-             ("\\.png\\'" . eh-eaf-open)
-             ("\\.jpe?g\\'" . eh-eaf-open)
-             ("\\.gif\\'" . eh-eaf-open)
-             ("\\.bmp\\'" . eh-eaf-open)
-             ("\\.pdf\\'" . eh-eaf-open)))
-         org-file-apps))
-
-  (defun eh-eaf-open (path _linkstr)
+  (defun eh-eaf-open (path &optional _linkstr)
     (if (and (functionp 'eaf-open)
              (not (file-directory-p path)))
         (funcall 'eaf-open path)
-      (eh-xdg-open path)))
+      (eh-system-open path)))
 
-  (defun eh-xdg-open (path _linkstr)
-    (let ((process-connection-type))
-      (start-process "" nil "xdg-open" (expand-file-name path))))
+  (defun eh-system-open (path &optional _linkstr)
+    (if (string-equal system-type "windows-nt")
+        (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" path t t))
+      (let ((process-connection-type))
+        (start-process "" nil "xdg-open" (expand-file-name path)))))
+
+  (defun eh-find-file (orig-fun &rest args)
+    (let ((filename (car args))
+          (cmd (symbol-name this-command)))
+      (cond ((cl-find-if
+              (lambda (regexp)
+                (string-match regexp filename))
+              '("\\.pdf\\'" "\\.png\\'" "\\.jpe?g\\'" "\\.bmp\\'" "\\.gif\\'"))
+             (eh-eaf-open filename))
+            ((cl-find-if
+              (lambda (regexp)
+                (string-match regexp filename))
+              '("\\.docx?\\'" "\\.xlsx?\\'" "\\.pptx?\\'" "\\.wps?\\'"))
+             (eh-system-open filename))
+            ((and (or (string-match "^org-" cmd)
+                      (string-match "^eh-org-" cmd))
+                  (file-directory-p filename))
+             (eh-system-open filename))
+            (t (apply orig-fun args)))))
+
+  (dolist (f '(find-file
+               find-file-other-window
+               find-file-other-frame
+               org-open-file))
+    (advice-add f :around 'eh-find-file))
 
   ;; 确保 tag 可以对齐
   (dolist (face '(org-level-1
