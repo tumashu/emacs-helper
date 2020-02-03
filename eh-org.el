@@ -61,7 +61,8 @@
   (defvar eh-org-remote-directory eh-org-local-directory)
 
   (defun eh-eaf-open (path &optional _linkstr)
-    (if (and (functionp 'eaf-open)
+    (if (and (string-equal system-type "gnu/linux")
+             (functionp 'eaf-open)
              (not (file-directory-p path)))
         (funcall 'eaf-open path)
       (eh-system-open path)))
