@@ -60,19 +60,19 @@
 
   (defvar eh-org-remote-directory eh-org-local-directory)
 
-  (setq org-file-apps-gnu
-        (if (eq system-type 'windows-nt)
-            (append '(("\\.png\\'" . default)
-                      ("\\.jp[e]?g\\'" . default)
-                      ("\\.bmp\\'" . default)
-                      ("\\.pdf\\'" . default))
-                    org-file-apps)
-          (append '((directory . eh-open)
-                    ("\\.png\\'" . eh-open)
-                    ("\\.jp[e]?g\\'" . eh-open)
-                    ("\\.bmp\\'" . eh-open)
-                    ("\\.pdf\\'" . eh-open))
-                  org-file-apps)))
+  (setq org-file-apps
+        (append
+         (if (eq system-type 'windows-nt)
+             '(("\\.png\\'" . default)
+               ("\\.jp[e]?g\\'" . default)
+               ("\\.bmp\\'" . default)
+               ("\\.pdf\\'" . default))
+           '((directory . eh-open)
+             ("\\.png\\'" . eh-open)
+             ("\\.jp[e]?g\\'" . eh-open)
+             ("\\.bmp\\'" . eh-open)
+             ("\\.pdf\\'" . eh-open)))
+         org-file-apps))
 
   (defun eh-open (path _linkstr)
     (if (and (functionp 'eaf-open)
