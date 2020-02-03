@@ -96,6 +96,7 @@
             (t (apply orig-fun args)))))
 
   (dolist (f '(find-file
+               find-file-read-only
                find-file-other-window
                find-file-other-frame
                org-open-file))
