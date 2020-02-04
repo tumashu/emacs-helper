@@ -36,6 +36,47 @@
 ;; * 代码                                                                 :code:
 (require 'cl-lib)
 
+(defun eh-system-open (path &rest args)
+  (cond ((string-equal system-type "windows-nt")
+         (w32-shell-execute "open" path))
+        ((string-equal system-type "darwin")
+         (concat "open " (shell-quote-argument path)))
+        ((string-equal system-type "gnu/linux")
+         (let ((process-connection-type nil))
+           (start-process "" nil "xdg-open" path)))))
+
+(defun eh-eaf-open (path &rest args)
+  (if (and (string-equal system-type "gnu/linux")
+           (functionp 'eaf-open)
+           (not (file-directory-p path)))
+      (funcall 'eaf-open path)
+    (eh-system-open path)))
+
+(defun eh-find-file (orig-fun &rest args)
+  (let ((filename (car args))
+        (cmd (symbol-name this-command)))
+    (cond ((cl-find-if
+            (lambda (regexp)
+              (string-match regexp filename))
+            '("\\.pdf\\'" "\\.png\\'" "\\.jpe?g\\'" "\\.bmp\\'" "\\.gif\\'"))
+           (eh-eaf-open filename))
+          ((cl-find-if
+            (lambda (regexp)
+              (string-match regexp filename))
+            '("\\.docx?\\'" "\\.xlsx?\\'" "\\.pptx?\\'" "\\.wps?\\'"))
+           (eh-system-open filename))
+          ((and (or (string-match "^org-" cmd)
+                    (string-match "^eh-org-" cmd))
+                (file-directory-p filename))
+           (eh-system-open filename))
+          (t (apply orig-fun args)))))
+
+(dolist (f '(find-file
+             find-file-read-only
+             find-file-other-window
+             find-file-other-frame))
+  (advice-add f :around 'eh-find-file))
+
 ;; ** 设置 load-path (Can not use use-package)
 (defun eh-update-load-path ()
   (interactive)
