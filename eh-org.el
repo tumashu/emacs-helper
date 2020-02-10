@@ -40,7 +40,8 @@
   :bind (("C-c a" . org-agenda)
          ("C-c c" . org-capture)
          :map org-mode-map
-         ("<f1>" . eh-org-attach-reveal))
+         ("<f1>" . eh-org-attach-reveal)
+         ("<f3>" . eh-org-attach-sharetocomputer))
   :mode ("\\.org\\'" . org-mode)
   :mode ("\\.org_archive\\'" . org-mode)
   :ensure nil
@@ -600,6 +601,55 @@
         (org-back-to-heading t)
         (call-interactively 'org-attach-reveal))))
 
+  (defvar eh-org-attach-sharetocomputer-link nil)
+
+  (defun eh-org-attach-sharetocomputer-write (status path)
+    (let* ((err (plist-get status :error))
+           (disposition
+            (mail-fetch-field "Content-Disposition"))
+           (filename
+            (when disposition
+              (substring
+               (decode-coding-string disposition 'utf-8)
+               10 -1))))
+      (when (and filename (not err))
+        (let ((file (concat (file-name-as-directory path) filename)))
+          (delete-region
+           (point-min)
+           (progn
+             (re-search-forward "\n\n" nil 'move)
+             (point)))
+          (unless (file-exists-p file)
+            (let ((coding-system-for-write 'no-conversion))
+              (write-region nil nil file)))))))
+
+  (defun eh-org-attach-sharetocomputer-1 (path)
+    (interactive)
+    (if eh-org-attach-sharetocomputer-link
+        (dotimes (i 10)
+          (url-retrieve
+           (format "%s%S" (file-name-as-directory eh-org-attach-sharetocomputer-link) (- i 1))
+           (lambda (status path)
+             (eh-org-attach-sharetocomputer-write status path))
+           (list path)
+           nil t))
+      (message "You should config `eh-org-attach-sharetocomputer-link'.")))
+
+  (defun eh-org-attach-sharetocomputer ()
+    (interactive)
+    (let (c marker)
+      (when (eq major-mode 'org-agenda-mode)
+        (setq marker (or (get-text-property (point) 'org-hd-marker)
+		         (get-text-property (point) 'org-marker)))
+        (unless marker
+	  (error "No task in current line")))
+      (save-excursion
+        (when marker
+	  (set-buffer (marker-buffer marker))
+	  (goto-char marker))
+        (org-back-to-heading t)
+        (eh-org-attach-sharetocomputer-1 (org-attach-dir t)))))
+
   (defun eh-org-attach-subtree ()
     (interactive)
     (when (yes-or-no-p "确定将 subtree 转移到 attach 目录中？ ")
@@ -744,6 +794,7 @@
   :bind (("C-c a" . org-agenda)
          :map org-agenda-mode-map
          ("<f1>" . eh-org-attach-reveal)
+         ("<f3>" . eh-org-attach-sharetocomputer)
          ("SPC" . eh-org-agenda-show-and-scroll-up)
          ("<return>" . eh-org-agenda-show-and-scroll-up)
          ("g" . eh-org-agenda-redo-all)
