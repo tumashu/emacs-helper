@@ -45,7 +45,7 @@
          (let ((process-connection-type nil))
            (start-process "" nil "xdg-open" path)))))
 
-(defun eh-eaf-open (path &rest args)
+(defun eh-emacs-open (path &rest args)
   (if (and (string-equal system-type "gnu/linux")
            (functionp 'eaf-open)
            (not (file-directory-p path)))
@@ -66,7 +66,7 @@
             '("pdf" "xps" "oxps" "cbz" "epub" "fb2" "fbz" "djvu"
               "jpg" "jpeg" "png" "bmp" "gif" "svg" "webp"
               "avi" "rmvb" "ogg" "mp4" "mkv"))
-           (eh-eaf-open filename))
+           (eh-emacs-open filename))
           ((eh-fileext-match-p
             filename
             '("doc" "docx" "xls" "xlsx" "ppt" "pptx" "wps"))
