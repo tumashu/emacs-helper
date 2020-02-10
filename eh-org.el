@@ -619,7 +619,8 @@
            (progn
              (re-search-forward "\n\n" nil 'move)
              (point)))
-          (unless (file-exists-p file)
+          (if (file-exists-p file)
+              (message "File %S is exist, do not override it." file)
             (let ((coding-system-for-write 'no-conversion))
               (write-region nil nil file)))))))
 
