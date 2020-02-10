@@ -52,18 +52,24 @@
       (funcall 'eaf-open path)
     (eh-system-open path)))
 
+(defun eh-fileext-match-p (filename exts)
+  (cl-find-if
+   (lambda (ext)
+     (string-match-p (format "\\.%s\\'" ext) filename))
+   exts))
+
 (defun eh-find-file (orig-fun &rest args)
   (let ((filename (car args))
         (cmd (symbol-name this-command)))
-    (cond ((cl-find-if
-            (lambda (regexp)
-              (string-match regexp filename))
-            '("\\.pdf\\'" "\\.png\\'" "\\.jpe?g\\'" "\\.bmp\\'" "\\.gif\\'"))
+    (cond ((eh-fileext-match-p
+            filename
+            '("pdf" "xps" "oxps" "cbz" "epub" "fb2" "fbz" "djvu"
+              "jpg" "jpeg" "png" "bmp" "gif" "svg" "webp"
+              "avi" "rmvb" "ogg" "mp4" "mkv"))
            (eh-eaf-open filename))
-          ((cl-find-if
-            (lambda (regexp)
-              (string-match regexp filename))
-            '("\\.docx?\\'" "\\.xlsx?\\'" "\\.pptx?\\'" "\\.wps?\\'"))
+          ((eh-fileext-match-p
+            filename
+            '("doc" "docx" "xls" "xlsx" "ppt" "pptx" "wps"))
            (eh-system-open filename))
           ((and (or (string-match "^org-" cmd)
                     (string-match "^eh-org-" cmd))
