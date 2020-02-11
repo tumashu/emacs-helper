@@ -602,8 +602,9 @@
         (call-interactively 'org-attach-reveal))))
 
   (defvar eh-org-attach-sharetocomputer-link nil)
+  (defvar eh-org-attach-sharetocomputer-n nil)
 
-  (defun eh-org-attach-sharetocomputer-write (status path)
+  (defun eh-org-attach-sharetocomputer-write (status path n)
     (let* ((err (plist-get status :error))
            (disposition
             (mail-fetch-field "Content-Disposition"))
@@ -622,7 +623,11 @@
           (if (file-exists-p file)
               (message "File %S is exist, do not override it." file)
             (let ((coding-system-for-write 'no-conversion))
-              (write-region nil nil file)))))))
+              (write-region nil nil file)))
+          (setq eh-org-attach-sharetocomputer-n
+                (+ eh-org-attach-sharetocomputer-n 1))
+          (when (= eh-org-attach-sharetocomputer-n n)
+            (message "Download %s file(s) successfully!" n))))))
 
   (defun eh-org-attach-sharetocomputer-1 (path)
     (interactive)
@@ -639,18 +644,18 @@
                                    (buffer-substring (point) (point-max)))))))))
           (when (and (numberp n)
                      (> n 0))
-            (message "Downloading %s fils ..." n)
             (dotimes (i n)
               (url-retrieve
                (format "%s%S" (file-name-as-directory eh-org-attach-sharetocomputer-link) i)
-               (lambda (status path)
-                 (eh-org-attach-sharetocomputer-write status path))
-               (list path)
+               (lambda (status path n)
+                 (eh-org-attach-sharetocomputer-write status path n))
+               (list path n)
                nil t))))
       (message "You should config `eh-org-attach-sharetocomputer-link'.")))
 
   (defun eh-org-attach-sharetocomputer ()
     (interactive)
+    (setq eh-org-attach-sharetocomputer-n 0)
     (let (c marker)
       (when (eq major-mode 'org-agenda-mode)
         (setq marker (or (get-text-property (point) 'org-hd-marker)
