@@ -626,8 +626,9 @@
               (write-region nil nil file)))
           (setq eh-org-attach-sharetocomputer-n
                 (+ eh-org-attach-sharetocomputer-n 1))
-          (when (= eh-org-attach-sharetocomputer-n n)
-            (message "Download %s file(s) successfully!" n))))))
+          (if (= eh-org-attach-sharetocomputer-n n)
+              (message "Download finished!")
+            (message "Downloading %s/%s files ..." eh-org-attach-sharetocomputer-n n))))))
 
   (defun eh-org-attach-sharetocomputer-1 (path)
     (interactive)
