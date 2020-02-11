@@ -611,7 +611,7 @@
            (filename
             (when disposition
               (replace-regexp-in-string
-               ".*filename=\"\\(.*\\)\"" "\\1"
+               ".*filename=\"\\(.*\\)\"$" "\\1"
                (decode-coding-string disposition 'utf-8)))))
       (when (and filename (not err))
         (let ((file (concat (file-name-as-directory path) filename)))
