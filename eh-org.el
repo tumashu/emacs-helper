@@ -629,13 +629,14 @@
     (if eh-org-attach-sharetocomputer-link
         (let* ((buf (url-retrieve-synchronously
                      (concat (file-name-as-directory eh-org-attach-sharetocomputer-link) "info")
-                     nil nil 3))
+                     t nil 3))
                (n (with-current-buffer buf
                     (goto-char (point-min))
                     (re-search-forward "\n\n" nil 'move)
                     (ignore-errors
                       (cdr (assoc 'total
-                                  (json-read-from-string (buffer-substring (point) (point-max)))))))))
+                                  (json-read-from-string
+                                   (buffer-substring (point) (point-max)))))))))
           (when (and (numberp n)
                      (> n 0))
             (message "Downloading %s fils ..." n)
