@@ -627,13 +627,25 @@
   (defun eh-org-attach-sharetocomputer-1 (path)
     (interactive)
     (if eh-org-attach-sharetocomputer-link
-        (dotimes (i 10)
-          (url-retrieve
-           (format "%s%S" (file-name-as-directory eh-org-attach-sharetocomputer-link) (- i 1))
-           (lambda (status path)
-             (eh-org-attach-sharetocomputer-write status path))
-           (list path)
-           nil t))
+        (let* ((buf (url-retrieve-synchronously
+                     (concat (file-name-as-directory eh-org-attach-sharetocomputer-link) "info")
+                     nil nil 3))
+               (n (with-current-buffer buf
+                    (goto-char (point-min))
+                    (re-search-forward "\n\n" nil 'move)
+                    (ignore-errors
+                      (cdr (assoc 'total
+                                  (json-read-from-string (buffer-substring (point) (point-max)))))))))
+          (when (and (numberp n)
+                     (> n 0))
+            (message "Downloading %s fils ..." n)
+            (dotimes (i n)
+              (url-retrieve
+               (format "%s%S" (file-name-as-directory eh-org-attach-sharetocomputer-link) i)
+               (lambda (status path)
+                 (eh-org-attach-sharetocomputer-write status path))
+               (list path)
+               nil t))))
       (message "You should config `eh-org-attach-sharetocomputer-link'.")))
 
   (defun eh-org-attach-sharetocomputer ()
