@@ -610,9 +610,9 @@
             (mail-fetch-field "Content-Disposition"))
            (filename
             (when disposition
-              (substring
-               (decode-coding-string disposition 'utf-8)
-               10 -1))))
+              (replace-regexp-in-string
+               ".*filename=\"\\(.*\\)\"" "\\1"
+               (decode-coding-string disposition 'utf-8)))))
       (when (and filename (not err))
         (let ((file (concat (file-name-as-directory path) filename)))
           (delete-region
