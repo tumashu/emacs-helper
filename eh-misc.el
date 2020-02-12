@@ -70,7 +70,7 @@
 (defun eh-sharetocomputer-1 (path)
   (setq path (file-name-as-directory path))
   (make-directory path t)
-  (unless eh-sharetocomputer-url
+  (while (< (length eh-sharetocomputer-url) 1)
     (setq eh-sharetocomputer-url
           (read-from-minibuffer "ShareToComputer url: " "http://192.168.0.X:8080"))
     (when (y-or-n-p "Save this url for future session? ")
