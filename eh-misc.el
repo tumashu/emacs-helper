@@ -68,8 +68,19 @@
               (eh-system-open path))
           (message "ShareToComputer: download %s/%s files to %S ..." eh-sharetocomputer-file-number n path))))))
 
-(defun eh-sharetocomputer-1 (path)
+(defun eh-sharetocomputer-kill ()
+  (interactive)
+  (message "ShareToComputer: download killed!")
+  (let ((kill-buffer-query-functions nil)
+        (buff))
+    (while (setq buff (pop eh-sharetocomputer-buffers))
+      (if (buffer-live-p buff)
+	  (kill-buffer buff)))))
+
+(defun eh-sharetocomputer-internal (path)
+  (eh-sharetocomputer-kill)
   (setq path (expand-file-name (file-name-as-directory path)))
+  (setq eh-sharetocomputer-file-number 0)
   (make-directory path t)
   (while (< (length eh-sharetocomputer-url) 1)
     (eh-sharetocomputer-setup))
@@ -98,27 +109,22 @@
 
 (defun eh-sharetocomputer ()
   (interactive)
-  (let ((kill-buffer-query-functions nil)
-        (buff))
-    (while (setq buff (pop eh-sharetocomputer-buffers))
-      (if (buffer-live-p buff)
-	  (kill-buffer buff))))
-  (setq eh-sharetocomputer-file-number 0)
-  (if (or (eq major-mode 'org-agenda-mode)
-          (eq major-mode 'org-mode))
-      (let (c marker)
-        (when (eq major-mode 'org-agenda-mode)
-          (setq marker (or (get-text-property (point) 'org-hd-marker)
-		           (get-text-property (point) 'org-marker)))
-          (unless marker
-	    (error "No task in current line")))
-        (save-excursion
-          (when marker
-	    (set-buffer (marker-buffer marker))
-	    (goto-char marker))
-          (org-back-to-heading t)
-          (eh-sharetocomputer-1 (org-attach-dir t))))
-    (eh-sharetocomputer-1 eh-sharetocomputer-default-path)))
+  (eh-sharetocomputer-internal eh-sharetocomputer-default-path))
+
+(defun eh-org-sharetocomputer ()
+  (interactive)
+  (let (c marker)
+    (when (eq major-mode 'org-agenda-mode)
+      (setq marker (or (get-text-property (point) 'org-hd-marker)
+		       (get-text-property (point) 'org-marker)))
+      (unless marker
+	(error "No task in current line")))
+    (save-excursion
+      (when marker
+	(set-buffer (marker-buffer marker))
+	(goto-char marker))
+      (org-back-to-heading t)
+      (eh-sharetocomputer-internal (org-attach-dir t)))))
 
 (defun eh-sharetocomputer-setup ()
   (interactive)
