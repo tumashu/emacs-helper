@@ -68,9 +68,10 @@
               (eh-system-open path))
           (message "ShareToComputer: download %s/%s files to %S ..." eh-sharetocomputer-file-number n path))))))
 
-(defun eh-sharetocomputer-kill ()
+(defun eh-sharetocomputer-kill (&optional silent)
   (interactive)
-  (message "ShareToComputer: download killed!")
+  (unless silent
+    (message "ShareToComputer: download killed!"))
   (let ((kill-buffer-query-functions nil)
         (buff))
     (while (setq buff (pop eh-sharetocomputer-buffers))
@@ -78,7 +79,7 @@
 	  (kill-buffer buff)))))
 
 (defun eh-sharetocomputer-internal (path)
-  (eh-sharetocomputer-kill)
+  (eh-sharetocomputer-kill t)
   (setq path (expand-file-name (file-name-as-directory path)))
   (setq eh-sharetocomputer-file-number 0)
   (make-directory path t)
