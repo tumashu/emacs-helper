@@ -41,7 +41,7 @@
          ("C-c c" . org-capture)
          :map org-mode-map
          ("<f1>" . eh-org-attach-reveal)
-         ("<f3>" . eh-org-attach-sharetocomputer))
+         ("<f3>" . eh-sharetocomputer))
   :mode ("\\.org\\'" . org-mode)
   :mode ("\\.org_archive\\'" . org-mode)
   :ensure nil
@@ -601,75 +601,6 @@
         (org-back-to-heading t)
         (call-interactively 'org-attach-reveal))))
 
-  (defvar eh-org-attach-sharetocomputer-link nil)
-  (defvar eh-org-attach-sharetocomputer-n nil)
-
-  (defun eh-org-attach-sharetocomputer-write (status path n)
-    (let* ((err (plist-get status :error))
-           (disposition
-            (mail-fetch-field "Content-Disposition"))
-           (filename
-            (when disposition
-              (replace-regexp-in-string
-               ".*filename=\"\\(.*\\)\"$" "\\1"
-               (decode-coding-string disposition 'utf-8)))))
-      (when (and filename (not err))
-        (let ((file (concat (file-name-as-directory path) filename)))
-          (delete-region
-           (point-min)
-           (progn
-             (re-search-forward "\n\n" nil 'move)
-             (point)))
-          (if (file-exists-p file)
-              (message "File %S is exist, do not override it." file)
-            (let ((coding-system-for-write 'no-conversion))
-              (write-region nil nil file)))
-          (setq eh-org-attach-sharetocomputer-n
-                (+ eh-org-attach-sharetocomputer-n 1))
-          (if (= eh-org-attach-sharetocomputer-n n)
-              (message "Download finished!")
-            (message "Downloading %s/%s files ..." eh-org-attach-sharetocomputer-n n))))))
-
-  (defun eh-org-attach-sharetocomputer-1 (path)
-    (interactive)
-    (if eh-org-attach-sharetocomputer-link
-        (let* ((buf (url-retrieve-synchronously
-                     (concat (file-name-as-directory eh-org-attach-sharetocomputer-link) "info")
-                     t nil 3))
-               (n (with-current-buffer buf
-                    (goto-char (point-min))
-                    (re-search-forward "\n\n" nil 'move)
-                    (ignore-errors
-                      (cdr (assoc 'total
-                                  (json-read-from-string
-                                   (buffer-substring (point) (point-max)))))))))
-          (when (and (numberp n)
-                     (> n 0))
-            (dotimes (i n)
-              (url-retrieve
-               (format "%s%S" (file-name-as-directory eh-org-attach-sharetocomputer-link) i)
-               (lambda (status path n)
-                 (eh-org-attach-sharetocomputer-write status path n))
-               (list path n)
-               nil t))))
-      (message "You should config `eh-org-attach-sharetocomputer-link'.")))
-
-  (defun eh-org-attach-sharetocomputer ()
-    (interactive)
-    (setq eh-org-attach-sharetocomputer-n 0)
-    (let (c marker)
-      (when (eq major-mode 'org-agenda-mode)
-        (setq marker (or (get-text-property (point) 'org-hd-marker)
-		         (get-text-property (point) 'org-marker)))
-        (unless marker
-	  (error "No task in current line")))
-      (save-excursion
-        (when marker
-	  (set-buffer (marker-buffer marker))
-	  (goto-char marker))
-        (org-back-to-heading t)
-        (eh-org-attach-sharetocomputer-1 (org-attach-dir t)))))
-
   (defun eh-org-attach-subtree ()
     (interactive)
     (when (yes-or-no-p "确定将 subtree 转移到 attach 目录中？ ")
@@ -814,7 +745,7 @@
   :bind (("C-c a" . org-agenda)
          :map org-agenda-mode-map
          ("<f1>" . eh-org-attach-reveal)
-         ("<f3>" . eh-org-attach-sharetocomputer)
+         ("<f3>" . eh-sharetocomputer)
          ("SPC" . eh-org-agenda-show-and-scroll-up)
          ("<return>" . eh-org-agenda-show-and-scroll-up)
          ("g" . eh-org-agenda-redo-all)

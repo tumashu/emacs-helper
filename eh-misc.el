@@ -35,6 +35,82 @@
 
 ;; * 代码                                                      :code:
 
+;; ** Share to Computer
+
+(defvar eh-sharetocomputer-url nil)
+(defvar eh-sharetocomputer-default-path "~/ShareToComputer/")
+(defvar eh-sharetocomputer-file-number 0)
+
+(defun eh-sharetocomputer-write (status path n)
+  (let* ((err (plist-get status :error))
+         (disposition
+          (mail-fetch-field "Content-Disposition"))
+         (filename
+          (when disposition
+            (replace-regexp-in-string
+             ".*filename=\"\\(.*\\)\"$" "\\1"
+             (decode-coding-string disposition 'utf-8)))))
+    (when (and filename (not err))
+      (let ((file (concat (file-name-as-directory path) filename)))
+        (delete-region
+         (point-min)
+         (progn
+           (re-search-forward "\n\n" nil 'move)
+           (point)))
+        (if (file-exists-p file)
+            (message "ShareToComputer: file %S is exist, do not override it." file)
+          (let ((coding-system-for-write 'no-conversion))
+            (write-region nil nil file)))
+        (setq eh-sharetocomputer-file-number
+              (+ eh-sharetocomputer-file-number 1))
+        (if (= eh-sharetocomputer-file-number n)
+            (message "ShareToComputer: download finished!")
+          (message "ShareToComputer: downloading %s/%s files ..." eh-sharetocomputer-file-number n))))))
+
+(defun eh-sharetocomputer-1 (path)
+  (setq path (file-name-as-directory path))
+  (make-directory path t)
+  (if eh-sharetocomputer-url
+      (let* ((buf (url-retrieve-synchronously
+                   (concat (file-name-as-directory eh-sharetocomputer-url) "info")
+                   t nil 3))
+             (n (with-current-buffer buf
+                  (goto-char (point-min))
+                  (re-search-forward "\n\n" nil 'move)
+                  (ignore-errors
+                    (cdr (assoc 'total
+                                (json-read-from-string
+                                 (buffer-substring (point) (point-max)))))))))
+        (when (and (numberp n)
+                   (> n 0))
+          (dotimes (i n)
+            (url-retrieve
+             (format "%s%S" (file-name-as-directory eh-sharetocomputer-url) i)
+             (lambda (status path n)
+               (eh-sharetocomputer-write status path n))
+             (list path n)
+             nil t))))
+    (message "ShareToComputer: you should config `eh-sharetocomputer-url'.")))
+
+(defun eh-sharetocomputer ()
+  (interactive)
+  (setq eh-sharetocomputer-file-number 0)
+  (if (or (eq major-mode 'org-agenda-mode)
+          (eq major-mode 'org-mode))
+      (let (c marker)
+        (when (eq major-mode 'org-agenda-mode)
+          (setq marker (or (get-text-property (point) 'org-hd-marker)
+		           (get-text-property (point) 'org-marker)))
+          (unless marker
+	    (error "No task in current line")))
+        (save-excursion
+          (when marker
+	    (set-buffer (marker-buffer marker))
+	    (goto-char marker))
+          (org-back-to-heading t)
+          (eh-sharetocomputer-1 (org-attach-dir t))))
+    (eh-sharetocomputer-1 eh-sharetocomputer-default-path)))
+
 ;; ** EAF
 (use-package eaf
   :custom
