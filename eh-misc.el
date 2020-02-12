@@ -64,11 +64,13 @@
         (setq eh-sharetocomputer-file-number
               (+ eh-sharetocomputer-file-number 1))
         (if (= eh-sharetocomputer-file-number n)
-            (message "ShareToComputer: download finished!")
+            (progn
+              (message "ShareToComputer: download finished!")
+              (eh-system-open path))
           (message "ShareToComputer: downloading %s/%s files to %S ..." eh-sharetocomputer-file-number n path))))))
 
 (defun eh-sharetocomputer-1 (path)
-  (setq path (file-name-as-directory path))
+  (setq path (expand-file-name (file-name-as-directory path)))
   (make-directory path t)
   (while (< (length eh-sharetocomputer-url) 1)
     (setq eh-sharetocomputer-url
