@@ -65,7 +65,7 @@
               (+ eh-sharetocomputer-file-number 1))
         (if (= eh-sharetocomputer-file-number n)
             (message "ShareToComputer: download finished!")
-          (message "ShareToComputer: downloading %s/%s files ..." eh-sharetocomputer-file-number n))))))
+          (message "ShareToComputer: downloading %s/%s files to %S ..." eh-sharetocomputer-file-number n path))))))
 
 (defun eh-sharetocomputer-1 (path)
   (setq path (file-name-as-directory path))
