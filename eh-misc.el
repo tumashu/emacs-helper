@@ -74,12 +74,7 @@
   (setq path (expand-file-name (file-name-as-directory path)))
   (make-directory path t)
   (while (< (length eh-sharetocomputer-url) 1)
-    (setq eh-sharetocomputer-url
-          (read-from-minibuffer "ShareToComputer url: " "http://192.168.0.X:8080"))
-    (when (y-or-n-p "Save this url for future session? ")
-      (customize-save-variable
-       'eh-sharetocomputer-url
-       eh-sharetocomputer-url)))
+    (eh-sharetocomputer-setup))
   (let* ((buf (url-retrieve-synchronously
                (concat (file-name-as-directory eh-sharetocomputer-url) "info")
                t nil 3))
@@ -123,6 +118,15 @@
           (org-back-to-heading t)
           (eh-sharetocomputer-1 (org-attach-dir t))))
     (eh-sharetocomputer-1 eh-sharetocomputer-default-path)))
+
+(defun eh-sharetocomputer-setup ()
+  (interactive)
+  (setq eh-sharetocomputer-url
+        (read-from-minibuffer "ShareToComputer url: " "http://192.168.0.X:8080"))
+  (when (y-or-n-p "Save this url for future session? ")
+    (customize-save-variable
+     'eh-sharetocomputer-url
+     eh-sharetocomputer-url)))
 
 ;; ** EAF
 (use-package eaf
