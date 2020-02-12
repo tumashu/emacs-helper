@@ -70,27 +70,32 @@
 (defun eh-sharetocomputer-1 (path)
   (setq path (file-name-as-directory path))
   (make-directory path t)
-  (if eh-sharetocomputer-url
-      (let* ((buf (url-retrieve-synchronously
-                   (concat (file-name-as-directory eh-sharetocomputer-url) "info")
-                   t nil 3))
-             (n (with-current-buffer buf
-                  (goto-char (point-min))
-                  (re-search-forward "\n\n" nil 'move)
-                  (ignore-errors
-                    (cdr (assoc 'total
-                                (json-read-from-string
-                                 (buffer-substring (point) (point-max)))))))))
-        (when (and (numberp n)
-                   (> n 0))
-          (dotimes (i n)
-            (url-retrieve
-             (format "%s%S" (file-name-as-directory eh-sharetocomputer-url) i)
-             (lambda (status path n)
-               (eh-sharetocomputer-write status path n))
-             (list path n)
-             nil t))))
-    (message "ShareToComputer: you should config `eh-sharetocomputer-url'.")))
+  (unless eh-sharetocomputer-url
+    (setq eh-sharetocomputer-url
+          (read-from-minibuffer "ShareToComputer url: " "http://192.168.0.X:8080"))
+    (when (y-or-n-p "Save this url for future session? ")
+      (customize-save-variable
+       'eh-sharetocomputer-url
+       eh-sharetocomputer-url)))
+  (let* ((buf (url-retrieve-synchronously
+               (concat (file-name-as-directory eh-sharetocomputer-url) "info")
+               t nil 3))
+         (n (with-current-buffer buf
+              (goto-char (point-min))
+              (re-search-forward "\n\n" nil 'move)
+              (ignore-errors
+                (cdr (assoc 'total
+                            (json-read-from-string
+                             (buffer-substring (point) (point-max)))))))))
+    (when (and (numberp n)
+               (> n 0))
+      (dotimes (i n)
+        (url-retrieve
+         (format "%s%S" (file-name-as-directory eh-sharetocomputer-url) i)
+         (lambda (status path n)
+           (eh-sharetocomputer-write status path n))
+         (list path n)
+         nil t)))))
 
 (defun eh-sharetocomputer ()
   (interactive)
