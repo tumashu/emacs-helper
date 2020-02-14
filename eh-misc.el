@@ -41,6 +41,7 @@
 (defvar eh-sharetocomputer-default-path "~/ShareToComputer/")
 (defvar eh-sharetocomputer-file-number 0)
 (defvar eh-sharetocomputer-buffers nil)
+(defvar eh-sharetocomputer-timer nil)
 
 (defun eh-sharetocomputer-write (status url path n)
   (let* ((err (plist-get status :error))
@@ -99,6 +100,8 @@
                             (buffer-substring (point) (point-max)))))))))
     (when (and (numberp n) (> n 0))
       (eh-sharetocomputer-kill url t)
+      (when eh-sharetocomputer-timer
+        (cancel-timer eh-sharetocomputer-timer))
       (dotimes (i n)
         (eh-sharetocomputer-register
          url
@@ -116,6 +119,14 @@
   (while (< (length eh-sharetocomputer-url) 1)
     (eh-sharetocomputer-setup))
   (eh-sharetocomputer-kill 'all)
+  (when eh-sharetocomputer-timer
+    (cancel-timer eh-sharetocomputer-timer))
+  (setq eh-sharetocomputer-timer
+        (run-with-timer
+         4 nil
+         (lambda ()
+           (message "ShareToComputer: cancel download for wait too long time.")
+           (eh-sharetocomputer-kill 'all))))
   (message "ShareToComputer: fetch info ...")
   (dolist (url eh-sharetocomputer-urls)
     (let ((url (file-name-as-directory url)))
@@ -127,7 +138,6 @@
 
 (defun eh-sharetocomputer ()
   (interactive)
-  (princ eh-sharetocomputer-buffers)
   (eh-sharetocomputer-internal eh-sharetocomputer-default-path))
 
 (defun eh-org-sharetocomputer ()
