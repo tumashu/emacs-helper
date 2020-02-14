@@ -41,7 +41,8 @@
 (defvar eh-sharetocomputer-default-path "~/ShareToComputer/")
 (defvar eh-sharetocomputer-file-number 0)
 (defvar eh-sharetocomputer-buffers nil)
-(defvar eh-sharetocomputer-timer nil)
+(defvar eh-sharetocomputer-timer1 nil)
+(defvar eh-sharetocomputer-timer2 nil)
 
 (defun eh-sharetocomputer-write (status url path n)
   (let* ((err (plist-get status :error))
@@ -100,8 +101,8 @@
                             (buffer-substring (point) (point-max)))))))))
     (when (and (numberp n) (> n 0))
       (eh-sharetocomputer-kill url t)
-      (when eh-sharetocomputer-timer
-        (cancel-timer eh-sharetocomputer-timer))
+      (eh-sharetocomputer-cancel-timer)
+      (message "ShareToComputer: start download ...")
       (dotimes (i n)
         (eh-sharetocomputer-register
          url
@@ -112,6 +113,29 @@
                        (list url path n)
                        t t))))))
 
+(defun eh-sharetocomputer-active-timer ()
+  (let ((sec (string-to-number (format-time-string "%s"))))
+    (eh-sharetocomputer-cancel-timer)
+    (setq eh-sharetocomputer-timer1
+          (run-with-timer
+           4 nil
+           (lambda ()
+             (message "ShareToComputer: cancel download for wait too long time.")
+             (eh-sharetocomputer-cancel-timer)
+             (eh-sharetocomputer-kill 'all))))
+    (setq eh-sharetocomputer-timer2
+          (run-with-timer
+           nil 1
+           `(lambda ()
+              (message "ShareToComputer: read info (%ss) ..."
+                       (- (string-to-number (format-time-string "%s")) ,sec)))))))
+
+(defun eh-sharetocomputer-cancel-timer ()
+  (when eh-sharetocomputer-timer1
+    (cancel-timer eh-sharetocomputer-timer1))
+  (when eh-sharetocomputer-timer2
+    (cancel-timer eh-sharetocomputer-timer2)))
+
 (defun eh-sharetocomputer-internal (path)
   (setq path (expand-file-name (file-name-as-directory path)))
   (setq eh-sharetocomputer-file-number 0)
@@ -119,15 +143,7 @@
   (while (< (length eh-sharetocomputer-url) 1)
     (eh-sharetocomputer-setup))
   (eh-sharetocomputer-kill 'all)
-  (when eh-sharetocomputer-timer
-    (cancel-timer eh-sharetocomputer-timer))
-  (setq eh-sharetocomputer-timer
-        (run-with-timer
-         4 nil
-         (lambda ()
-           (message "ShareToComputer: cancel download for wait too long time.")
-           (eh-sharetocomputer-kill 'all))))
-  (message "ShareToComputer: fetch info ...")
+  (eh-sharetocomputer-active-timer)
   (dolist (url eh-sharetocomputer-urls)
     (let ((url (file-name-as-directory url)))
       (eh-sharetocomputer-register
