@@ -37,7 +37,7 @@
 
 ;; ** Share to Computer
 
-(defvar eh-sharetocomputer-url nil)
+(defvar eh-sharetocomputer-urls nil)
 (defvar eh-sharetocomputer-default-path "~/ShareToComputer/")
 (defvar eh-sharetocomputer-file-number 0)
 (defvar eh-sharetocomputer-buffers nil)
@@ -68,48 +68,74 @@
               (eh-system-open path))
           (message "ShareToComputer: download %s/%s files to %S ..." eh-sharetocomputer-file-number n path))))))
 
-(defun eh-sharetocomputer-kill (&optional silent)
+(defun eh-sharetocomputer-kill (&optional url retain-url silent)
   (interactive)
   (unless silent
-    (message "ShareToComputer: download killed!"))
+    (if url
+        (message "ShareToComputer: download from %s killed!" url)
+      (if retain-url
+          (message "ShareToComputer: only retain download from %s and kill others!" retain-url)
+        (message "ShareToComputer: all download killed!"))))
   (let ((kill-buffer-query-functions nil)
-        (buff))
-    (while (setq buff (pop eh-sharetocomputer-buffers))
-      (if (buffer-live-p buff)
-	  (kill-buffer buff)))))
+        buffers result)
+    (dolist (x eh-sharetocomputer-buffers)
+      (if (or (and (not url)
+                   (not (equal retain-url (car x))))
+              (equal url (car x)))
+          (dolist (buff (cdr x))
+            (when (buffer-live-p buff)
+              (push buff buffers)))
+        (push x result)))
+    (setq eh-sharetocomputer-buffers result)
+    ;; 必须先设置 eh-sharetocomputer-buffers 然后再删除 buffer
+    (mapcar #'kill-buffer buffers)))
+
+(defun eh-sharetocomputer-register (url buffer)
+  (push buffer (alist-get url eh-sharetocomputer-buffers nil t 'equal)))
+
+(defun eh-sharetocomputer-registered-p (url buffer)
+  (member buffer (alist-get url eh-sharetocomputer-buffers nil t 'equal)))
+
+(defun eh-sharetocomputer-download (status url path)
+  (let ((n (save-excursion
+             (goto-char (point-min))
+             (re-search-forward "\n\n" nil 'move)
+             (ignore-errors
+               (cdr (assoc 'total
+                           (json-read-from-string
+                            (buffer-substring (point) (point-max)))))))))
+    (when (and (numberp n) (> n 0))
+      (message "ShareToComputer: download start ...")
+      (eh-sharetocomputer-kill nil url)
+      (dotimes (i n)
+        (eh-sharetocomputer-register
+         url
+         (url-retrieve (format "%s%S" url i)
+                       (lambda (status url path n)
+                         (when (eh-sharetocomputer-registered-p url (current-buffer))
+                           (eh-sharetocomputer-write status path n)))
+                       (list url path n)
+                       t t))))))
 
 (defun eh-sharetocomputer-internal (path)
-  (eh-sharetocomputer-kill t)
   (setq path (expand-file-name (file-name-as-directory path)))
   (setq eh-sharetocomputer-file-number 0)
   (make-directory path t)
   (while (< (length eh-sharetocomputer-url) 1)
     (eh-sharetocomputer-setup))
-  (let* ((buf (url-retrieve-synchronously
-               (concat (file-name-as-directory eh-sharetocomputer-url) "info")
-               t nil 3))
-         (n (with-current-buffer buf
-              (goto-char (point-min))
-              (re-search-forward "\n\n" nil 'move)
-              (ignore-errors
-                (cdr (assoc 'total
-                            (json-read-from-string
-                             (buffer-substring (point) (point-max)))))))))
-    (when (and (numberp n)
-               (> n 0))
-      (message "ShareToComputer: download start ...")
-      (dotimes (i n)
-        (push (url-retrieve
-               (format "%s%S" (file-name-as-directory eh-sharetocomputer-url) i)
-               (lambda (status path n)
-                 (when (member (current-buffer) eh-sharetocomputer-buffers)
-                   (eh-sharetocomputer-write status path n)))
-               (list path n)
-               t t)
-              eh-sharetocomputer-buffers)))))
+  (eh-sharetocomputer-kill nil nil t)
+  (message "ShareToComputer: fetch info ...")
+  (dolist (url eh-sharetocomputer-urls)
+    (let ((url (file-name-as-directory url)))
+      (eh-sharetocomputer-register
+       url (url-retrieve (concat url "info")
+                         'eh-sharetocomputer-download
+                         (list url path)
+                         t t)))))
 
 (defun eh-sharetocomputer ()
   (interactive)
+  (princ eh-sharetocomputer-buffers)
   (eh-sharetocomputer-internal eh-sharetocomputer-default-path))
 
 (defun eh-org-sharetocomputer ()
@@ -129,12 +155,18 @@
 
 (defun eh-sharetocomputer-setup ()
   (interactive)
-  (setq eh-sharetocomputer-url
-        (read-from-minibuffer "ShareToComputer url: " "http://192.168.0.X:8080"))
+  (let ((status t))
+    (while status
+      (push (read-from-minibuffer "ShareToComputer url: " "http://192.168.0.X:8080")
+            eh-sharetocomputer-urls)
+      (when (y-or-n-p "Adding url finish? ")
+        (setq status nil))))
+  (setq eh-sharetocomputer-urls
+        (delete-dups eh-sharetocomputer-urls))
   (when (y-or-n-p "Save this url for future session? ")
     (customize-save-variable
-     'eh-sharetocomputer-url
-     eh-sharetocomputer-url)))
+     'eh-sharetocomputer-urls
+     eh-sharetocomputer-urls)))
 
 ;; ** EAF
 (use-package eaf
