@@ -70,6 +70,10 @@
               (eh-system-open path))
           (message "ShareToComputer: download %s/%s files from %S to %S ..." eh-sharetocomputer-file-number n url path))))))
 
+(defun eh-sharetocomputer-kill-all ()
+  (interactive)
+  (eh-sharetocomputer-kill 'all))
+
 (defun eh-sharetocomputer-kill (url &optional reverse)
   (let ((kill-buffer-query-functions nil)
         buffers result)
