@@ -68,17 +68,11 @@
                 (+ eh-sharetocomputer-file-number 1))
           (if (= eh-sharetocomputer-file-number n)
               (progn
-                (message "ShareToComputer: download finished!")
+                (message "ShareToComputer: download finished from %S" url)
                 (eh-system-open path))
-            (message "ShareToComputer: download %s/%s files from %S to %S ..."
-                     eh-sharetocomputer-file-number n link path)))
-      (let ((retry-n (or retry-n 1)))
-        (if (> retry-n 3)
-            (message "ShareToComputer: fail after retry download 3 times !!!")
-          (message "ShareToComputer: retry(%s) download file from %S ..." retry-n link)
-          (eh-sharetocomputer-download-1
-           (current-buffer) url link path n)
-          (setq retry-n (+ retry-n 1)))))))
+            (message "ShareToComputer: download %s/%s files to %S ..."
+                     eh-sharetocomputer-file-number n path)))
+      (eh-sharetocomputer-download-1 (current-buffer) url link path n 1))))
 
 (defun eh-sharetocomputer-kill-all ()
   (interactive)
@@ -121,16 +115,22 @@
         (eh-sharetocomputer-download-1
          (current-buffer) url (format "%s%S" url i) path n)))))
 
-(defun eh-sharetocomputer-download-1 (buffer url link path n)
-  (eh-sharetocomputer-register
-   url
-   (url-retrieve
-    link
-    (lambda (status buffer url link path n)
-      (when (eh-sharetocomputer-registered-p url buffer)
-        (eh-sharetocomputer-write status url link path n)))
-    (list buffer url link path n)
-    t t)))
+(defun eh-sharetocomputer-download-1 (buffer url link path n &optional retry-n)
+  (if (and (numberp retry-n)
+           (> retry-n 4))
+      (message "ShareToComputer: fail after retry download 3 times !!!")
+    (eh-sharetocomputer-register
+     url
+     (url-retrieve
+      link
+      (lambda (status buffer url link path n)
+        (when (eh-sharetocomputer-registered-p url buffer)
+          (eh-sharetocomputer-write status url link path n)))
+      (list buffer url link path n)
+      t t))
+    (when (numberp retry-n)
+      (message "ShareToComputer: retry(%s) download file from %S ..." retry-n link)
+      (setq retry-n (+ retry-n 1)))))
 
 (defun eh-sharetocomputer-active-timer ()
   (let ((sec (string-to-number (format-time-string "%s"))))
