@@ -44,15 +44,17 @@
 (defvar eh-sharetocomputer-timer1 nil)
 (defvar eh-sharetocomputer-timer2 nil)
 
-(defun eh-sharetocomputer-write (status link path n &optional retry-n)
+(defun eh-sharetocomputer-write (status url link path n &optional retry-n)
   (let* ((err (plist-get status :error))
          (disposition
           (mail-fetch-field "Content-Disposition"))
          (filename
           (when disposition
             (replace-regexp-in-string
-             ".*filename=\"\\(.*\\)\"$" "\\1"
-             (decode-coding-string disposition 'utf-8)))))
+             file-name-invalid-regexp ""
+             (replace-regexp-in-string
+              ".*filename=\"\\(.*\\)\"$" "\\1"
+              (decode-coding-string disposition 'utf-8))))))
     (if (and filename (not err))
         (let ((file (concat (file-name-as-directory path) filename)))
           (delete-region
@@ -70,13 +72,13 @@
                 (eh-system-open path))
             (message "ShareToComputer: download %s/%s files from %S to %S ..."
                      eh-sharetocomputer-file-number n link path)))
-      (message "ShareToComputer: retry(%s) download file from %S ..." (or retry-n 1) link)
-      (url-retrieve
-       link
-       (lambda (status link path n retry-n)
-         (eh-sharetocomputer-write status link path n retry-n))
-       (list link path n (or retry-n 1))
-       t t))))
+      (let ((retry-n (or retry-n 1)))
+        (setq retry-n (+ retry-n 1))
+        (if (> retry-n 3)
+            (message "ShareToComputer: fail after retry download 3 times !!!")
+          (message "ShareToComputer: retry(%s) download file from %S ..." retry-n link)
+          (eh-sharetocomputer-download-1
+           (current-buffer) url link path n))))))
 
 (defun eh-sharetocomputer-kill-all ()
   (interactive)
@@ -116,16 +118,19 @@
       (eh-sharetocomputer-cancel-timer)
       (message "ShareToComputer: start download ...")
       (dotimes (i n)
-        (let ((link (format "%s%S" url i)))
-          (eh-sharetocomputer-register
-           url
-           (url-retrieve
-            link
-            (lambda (status url link path n)
-              (when (eh-sharetocomputer-registered-p url (current-buffer))
-                (eh-sharetocomputer-write status link path n)))
-            (list url link path n)
-            t t)))))))
+        (eh-sharetocomputer-download-1
+         (current-buffer) url (format "%s%S" url i) path n)))))
+
+(defun eh-sharetocomputer-download-1 (buffer url link path n)
+  (eh-sharetocomputer-register
+   url
+   (url-retrieve
+    link
+    (lambda (status buffer url link path n)
+      (when (eh-sharetocomputer-registered-p url buffer)
+        (eh-sharetocomputer-write status url link path n)))
+    (list buffer url link path n)
+    t t)))
 
 (defun eh-sharetocomputer-active-timer ()
   (let ((sec (string-to-number (format-time-string "%s"))))
