@@ -73,12 +73,12 @@
             (message "ShareToComputer: download %s/%s files from %S to %S ..."
                      eh-sharetocomputer-file-number n link path)))
       (let ((retry-n (or retry-n 1)))
-        (setq retry-n (+ retry-n 1))
         (if (> retry-n 3)
             (message "ShareToComputer: fail after retry download 3 times !!!")
           (message "ShareToComputer: retry(%s) download file from %S ..." retry-n link)
           (eh-sharetocomputer-download-1
-           (current-buffer) url link path n))))))
+           (current-buffer) url link path n)
+          (setq retry-n (+ retry-n 1)))))))
 
 (defun eh-sharetocomputer-kill-all ()
   (interactive)
