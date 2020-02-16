@@ -44,7 +44,7 @@
 (defvar eh-sharetocomputer-timer1 nil)
 (defvar eh-sharetocomputer-timer2 nil)
 
-(defun eh-sharetocomputer-write (status url path n)
+(defun eh-sharetocomputer-write (status link path n &optional retry-n)
   (let* ((err (plist-get status :error))
          (disposition
           (mail-fetch-field "Content-Disposition"))
@@ -53,22 +53,30 @@
             (replace-regexp-in-string
              ".*filename=\"\\(.*\\)\"$" "\\1"
              (decode-coding-string disposition 'utf-8)))))
-    (when (and filename (not err))
-      (let ((file (concat (file-name-as-directory path) filename)))
-        (delete-region
-         (point-min)
-         (progn
-           (re-search-forward "\n\n" nil 'move)
-           (point)))
-        (let ((coding-system-for-write 'no-conversion))
-          (write-region nil nil file))
-        (setq eh-sharetocomputer-file-number
-              (+ eh-sharetocomputer-file-number 1))
-        (if (= eh-sharetocomputer-file-number n)
-            (progn
-              (message "ShareToComputer: download finished!")
-              (eh-system-open path))
-          (message "ShareToComputer: download %s/%s files from %S to %S ..." eh-sharetocomputer-file-number n url path))))))
+    (if (and filename (not err))
+        (let ((file (concat (file-name-as-directory path) filename)))
+          (delete-region
+           (point-min)
+           (progn
+             (re-search-forward "\n\n" nil 'move)
+             (point)))
+          (let ((coding-system-for-write 'no-conversion))
+            (write-region nil nil file))
+          (setq eh-sharetocomputer-file-number
+                (+ eh-sharetocomputer-file-number 1))
+          (if (= eh-sharetocomputer-file-number n)
+              (progn
+                (message "ShareToComputer: download finished!")
+                (eh-system-open path))
+            (message "ShareToComputer: download %s/%s files from %S to %S ..."
+                     eh-sharetocomputer-file-number n link path)))
+      (message "ShareToComputer: retry(%s) download file from %S ..." (or retry-n 1) link)
+      (url-retrieve
+       link
+       (lambda (status link path n retry-n)
+         (eh-sharetocomputer-write status link path n retry-n))
+       (list link path n (or retry-n 1))
+       t t))))
 
 (defun eh-sharetocomputer-kill-all ()
   (interactive)
@@ -108,14 +116,16 @@
       (eh-sharetocomputer-cancel-timer)
       (message "ShareToComputer: start download ...")
       (dotimes (i n)
-        (eh-sharetocomputer-register
-         url
-         (url-retrieve (format "%s%S" url i)
-                       (lambda (status url path n)
-                         (when (eh-sharetocomputer-registered-p url (current-buffer))
-                           (eh-sharetocomputer-write status url path n)))
-                       (list url path n)
-                       t t))))))
+        (let ((link (format "%s%S" url i)))
+          (eh-sharetocomputer-register
+           url
+           (url-retrieve
+            link
+            (lambda (status url link path n)
+              (when (eh-sharetocomputer-registered-p url (current-buffer))
+                (eh-sharetocomputer-write status link path n)))
+            (list url link path n)
+            t t)))))))
 
 (defun eh-sharetocomputer-active-timer ()
   (let ((sec (string-to-number (format-time-string "%s"))))
