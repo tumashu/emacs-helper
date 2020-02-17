@@ -38,7 +38,7 @@
 ;; ** Share to Computer
 
 (defvar eh-share2computer-urls nil)
-(defvar eh-share2computer-default-path "~/Share2computer/")
+(defvar eh-share2computer-default-path "~/share2computer/")
 (defvar eh-share2computer-file-number 0)
 (defvar eh-share2computer-buffers nil)
 (defvar eh-share2computer-timer1 nil)
@@ -68,9 +68,9 @@
                 (+ eh-share2computer-file-number 1))
           (if (= eh-share2computer-file-number n)
               (progn
-                (message "Share2computer: download finished from %S" url)
+                (message "share2computer: download finished from %S" url)
                 (eh-system-open path))
-            (message "Share2computer: download %s/%s files to %S ..."
+            (message "share2computer: download %s/%s files to %S ..."
                      eh-share2computer-file-number n path)))
       (eh-share2computer-download-1 (current-buffer) url link path n 1))))
 
@@ -110,7 +110,7 @@
     (when (and (numberp n) (> n 0))
       (eh-share2computer-kill url t)
       (eh-share2computer-cancel-timer)
-      (message "Share2computer: start download ...")
+      (message "share2computer: start download ...")
       (dotimes (i n)
         (eh-share2computer-download-1
          (current-buffer) url (format "%s%S" url i) path n)))))
@@ -118,7 +118,7 @@
 (defun eh-share2computer-download-1 (buffer url link path n &optional retry-n)
   (if (and (numberp retry-n)
            (> retry-n 4))
-      (message "Share2computer: fail after retry download 3 times !!!")
+      (message "share2computer: fail after retry download 3 times !!!")
     (eh-share2computer-register
      url
      (url-retrieve
@@ -129,7 +129,7 @@
       (list buffer url link path n)
       t t))
     (when (numberp retry-n)
-      (message "Share2computer: retry(%s) download file from %S ..." retry-n link)
+      (message "share2computer: retry(%s) download file from %S ..." retry-n link)
       (setq retry-n (+ retry-n 1)))))
 
 (defun eh-share2computer-active-timer ()
@@ -139,14 +139,14 @@
           (run-with-timer
            4 nil
            (lambda ()
-             (message "Share2computer: cancel download for wait too long time.")
+             (message "share2computer: cancel download for wait too long time.")
              (eh-share2computer-cancel-timer)
              (eh-share2computer-kill 'all))))
     (setq eh-share2computer-timer2
           (run-with-timer
            nil 1
            `(lambda ()
-              (message "Share2computer: read info (%ss) ..."
+              (message "share2computer: read info (%ss) ..."
                        (- (string-to-number (format-time-string "%s")) ,sec)))))))
 
 (defun eh-share2computer-cancel-timer ()
@@ -196,9 +196,9 @@
   (interactive)
   (let ((status t))
     (while status
-      (push (read-from-minibuffer "Share2computer url: " "http://192.168.0.X:8080")
+      (push (read-from-minibuffer "share2computer url: " "http://192.168.0.X:8080")
             eh-share2computer-urls)
-      (when (y-or-n-p "Adding url finish? ")
+      (when (y-or-n-p "share2computer: adding url finish? ")
         (setq status nil))))
   (setq eh-share2computer-urls
         (delete-dups eh-share2computer-urls))
