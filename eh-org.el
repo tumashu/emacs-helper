@@ -41,7 +41,7 @@
          ("C-c c" . org-capture)
          :map org-mode-map
          ("<f1>" . eh-org-attach-reveal)
-         ("<f3>" . eh-org-share2computer))
+         ("<f3>" . share2computer-org))
   :mode ("\\.org\\'" . org-mode)
   :mode ("\\.org_archive\\'" . org-mode)
   :ensure nil
@@ -745,7 +745,7 @@
   :bind (("C-c a" . org-agenda)
          :map org-agenda-mode-map
          ("<f1>" . eh-org-attach-reveal)
-         ("<f3>" . eh-org-share2computer)
+         ("<f3>" . share2computer-org)
          ("SPC" . eh-org-agenda-show-and-scroll-up)
          ("<return>" . eh-org-agenda-show-and-scroll-up)
          ("g" . eh-org-agenda-redo-all)
