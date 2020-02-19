@@ -412,7 +412,7 @@
 (setq ivy-re-builders-alist
       '((t . eh-ivy-cregexp)))
 
-(when (require 'liberime-config nil t)
+(when (require 'liberime nil t)
   (add-hook 'after-liberime-load-hook
             (lambda ()
               (liberime-select-schema "luna_pinyin_simp")))
