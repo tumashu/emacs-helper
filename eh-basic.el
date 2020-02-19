@@ -242,8 +242,10 @@
 (global-set-key (kbd "C-x C-x C-x") 'exchange-point-and-mark)
 (global-set-key (kbd "C-x C-x <SPC>") 'rectangle-mark-mode)
 
-;; ** 关闭 tool-bar
+;; ** kill 当前 buffer
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
+
+;; ** 关闭 tool-bar
 (tool-bar-mode -1)
 
 ;; ** 关闭 menu-bar
@@ -277,7 +279,6 @@
 
 ;; ** 设置 swiper , ivy-mode and counsel
 (require 'counsel)
-
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
@@ -293,9 +294,6 @@
       #'counsel-linux-app-format-function-name-only)
 
 (require 'swiper)
-
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
-
 ;; I use "C-x C-f" to open file, so bind "C-f" to
 ;; `ivy-immediate-done' is very useful.
 (define-key ivy-minibuffer-map (kbd "C-f") 'ivy-immediate-done)
@@ -412,7 +410,9 @@
 (setq ivy-re-builders-alist
       '((t . eh-ivy-cregexp)))
 
-(when (require 'liberime nil t)
+;; liberime
+(with-eval-after-load "liberime"
+  (require 'liberime-config)
   (add-hook 'after-liberime-load-hook
             (lambda ()
               (liberime-select-schema "luna_pinyin_simp")))

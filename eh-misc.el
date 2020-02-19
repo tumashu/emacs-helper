@@ -36,13 +36,12 @@
 ;; * 代码                                                      :code:
 
 ;; ** Share to Computer
-
 (require 'share2computer)
 (add-hook 'share2computer-finish-hook #'eh-system-open)
 
-;; ** EAF
+;; ** Emacs Application Framework (EAF)
 (setq eaf-find-alternate-file-in-dired t)
-(when (require 'eaf nil t)
+(with-eval-after-load "eaf"
   (setq eaf-buffer-title-format "EAF/%s")
   (setq browse-url-browser-function 'eaf-open-browser)
   (defalias 'browse-web #'eaf-open-browser)
@@ -58,6 +57,8 @@
 ;; ** yasnippet
 (require 'yasnippet)
 (add-to-list 'yas-snippet-dirs "d:/org/snippets" t)
+(add-to-list 'yas-snippet-dirs "e:/org/snippets" t)
+(add-to-list 'yas-snippet-dirs "f:/org/snippets" t)
 (add-to-list 'yas-snippet-dirs "~/org/snippets" t)
 (yas-global-mode 1)
 
@@ -192,14 +193,12 @@
 ;; 必应:  http://cn.bing.com/search?q=
 (setq eww-search-prefix "http://www.sogou.com/sogou?query=")
 
-
 ;; ** cnfonts
 (setq cnfonts-verbose nil)
 (require 'cnfonts)
 (when (display-graphic-p)
   (setq cnfonts-use-face-font-rescale
         (eq system-type 'gnu/linux))
-
   (cnfonts-enable)
   (global-set-key (kbd "C--") 'cnfonts-decrease-fontsize)
   (global-set-key (kbd "C-=") 'cnfonts-increase-fontsize)
@@ -207,18 +206,14 @@
 
 ;; ** eh-website
 (require  'org2web)
-
-;; (eval-after-load 'org2web
-;;   (require 'eh-website)
-;;   (require 'org2web-devtools)
-
-;;   (eval-after-load 'pyim
-;;     (require 'pyim-devtools)))
+(require 'eh-website nil t)
+(require 'org2web-devtools nil t)
+(require 'pyim-devtools nil t)
 
 ;; ** el2org
 (require 'el2org)
 
-;; EPG
+;; ** EPG
 (require 'epg)
 ;; 1. Put the below to your ~/.gnupg/gpg-agent.conf:
 ;;       allow-emacs-pinentry
@@ -249,9 +244,7 @@
 (require 'python)
 
 (setq python-shell-interpreter "C:/ProgramData/Anaconda3/pythonw.exe"
-      python-shell-interpreter-args
-      "-i C:/ProgramData/Anaconda3/Scripts/ipython-script.py"
-      )
+      python-shell-interpreter-args "-i C:/ProgramData/Anaconda3/Scripts/ipython-script.py")
 
 (add-hook 'inferior-python-mode-hook
           #'(lambda ()
@@ -337,10 +330,6 @@ Taken from elpy-shell-send-current-statement"
                 ("C-c C-h" . eh-term-send-ctrl-h))
               term-bind-key-alist))
 
-(remove-hook 'term-mode-hook 'eh-term-setup)
-(remove-hook 'term-mode-hook 'multi-term-keystroke-setup)
-(remove-hook 'kill-buffer-hook 'multi-term-kill-buffer-hook)
-
 (add-hook 'term-mode-hook #'eh-term-setup)
 (add-hook 'term-mode-hook #'multi-term-keystroke-setup)
 (add-hook 'kill-buffer-hook #'multi-term-kill-buffer-hook)
@@ -366,11 +355,6 @@ Taken from elpy-shell-send-current-statement"
   (interactive)
   (term-send-raw-string "\C-h"))
 
-;; ** wdired and dired-ranger
-(require 'dired)
-(require 'wdired)
-(require 'dired-ranger)
-
 ;; ** ace-jump
 (require 'ace-jump-mode)
 (global-set-key (kbd "C-j") 'ace-jump-mode)
@@ -386,6 +370,7 @@ Taken from elpy-shell-send-current-statement"
         "emms-help@gnu.org"
         "emacs-orgmode@gnu.org"
         "emacs-devel@gnu.org"))
+
 (defun eh-gitpatch-mail ()
   (interactive)
   ;; 如果 gnus 没有开启，强制开启。
@@ -438,27 +423,23 @@ Taken from elpy-shell-send-current-statement"
 (require 'projectile)
 (global-set-key (kbd "C-x F") 'projectile-find-file)
 (global-set-key (kbd "C-S-s") 'projectile-grep)
-
-(require 'swiper)
 (setq projectile-completion-system 'ivy)
-
-(require 'wgrep)
-(projectile-global-mode 1)
 (setq projectile-enable-caching nil)
+(projectile-global-mode 1)
 
 ;; ** guix
-(require 'guix)
-(setq guix-directory "~/project/guix")
-(setq geiser-debug-jump-to-debug-p nil)
-(setq geiser-guile-binary
-      (list (executable-find "guile")
-            ;; Avoid auto-compilation as it is slow and error-prone:
-            ;; <https://notabug.org/alezost/emacs-guix/issues/2>.
-            "--no-auto-compile"))
-(add-hook 'scheme-mode-hook 'guix-devel-mode)
+(with-eval-after-load "guix"
+  (setq guix-directory "~/project/guix")
+  (setq geiser-debug-jump-to-debug-p nil)
+  (setq geiser-guile-binary
+        (list (executable-find "guile")
+              ;; Avoid auto-compilation as it is slow and error-prone:
+              ;; <https://notabug.org/alezost/emacs-guix/issues/2>.
+              "--no-auto-compile"))
+  (add-hook 'scheme-mode-hook 'guix-devel-mode))
 
-(require 'geiser-guile)
-(add-to-list 'geiser-guile-load-path "~/.config/guix/latest")
+(with-eval-after-load "geiser-guile"
+  (add-to-list 'geiser-guile-load-path "~/.config/guix/latest"))
 
 ;; ** undo-tree
 (require 'undo-tree)
