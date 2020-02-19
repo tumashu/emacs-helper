@@ -159,17 +159,6 @@
 ;; ** 设置 elpa-mirror
 (require 'elpa-mirror)
 
-(defun eh-elpa-mirror-github ()
-  (interactive)
-  (let ((directory "~/.eh-elpa-mirror/"))
-    (elpamr-create-mirror-for-installed directory t)
-    (shell-command
-     (concat "cd " directory " && "
-             "git init &&"
-             "git add -A && "
-             "git commit -m \"Update elpa mirror\" && "
-             "git push -f git@github.com:tumashu/elpa.git master &"))))
-
 (defun eh-elpa-mirror ()
   (interactive)
   (let* ((directory (file-name-as-directory (eh-elpa-directory)))
@@ -392,7 +381,6 @@
 ;;           #'(lambda ()
 ;;               (pyim-restart-1 t)))
 
-
 (require 'pyim-basedict)
 (pyim-basedict-enable)
 
@@ -408,6 +396,7 @@
       '((t . eh-ivy-cregexp)))
 
 ;; liberime
+(require 'liberime nil t)
 (with-eval-after-load "liberime"
   (require 'liberime-config)
   (add-hook 'after-liberime-load-hook

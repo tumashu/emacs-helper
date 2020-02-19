@@ -41,6 +41,7 @@
 
 ;; ** Emacs Application Framework (EAF)
 (setq eaf-find-alternate-file-in-dired t)
+(require 'eaf nil t)
 (with-eval-after-load "eaf"
   (setq eaf-buffer-title-format "EAF/%s")
   (setq browse-url-browser-function 'eaf-open-browser)
@@ -428,6 +429,7 @@
 (projectile-global-mode 1)
 
 ;; ** guix
+(require 'guix nil t)
 (with-eval-after-load "guix"
   (setq guix-directory "~/project/guix")
   (setq geiser-debug-jump-to-debug-p nil)
@@ -438,6 +440,7 @@
               "--no-auto-compile"))
   (add-hook 'scheme-mode-hook 'guix-devel-mode))
 
+(require 'geiser-guile nil t)
 (with-eval-after-load "geiser-guile"
   (add-to-list 'geiser-guile-load-path "~/.config/guix/latest"))
 
