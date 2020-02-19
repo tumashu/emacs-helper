@@ -205,7 +205,7 @@
   (global-set-key (kbd "C-+") 'cnfonts-next-profile))
 
 ;; ** eh-website
-(require  'org2web)
+(require 'org2web)
 (require 'eh-website nil t)
 (require 'org2web-devtools nil t)
 (require 'pyim-devtools nil t)
@@ -241,41 +241,41 @@
           #'eh-elisp-setup)
 
 ;; ** python
-(require 'python)
+;; (require 'python)
 
-(setq python-shell-interpreter "C:/ProgramData/Anaconda3/pythonw.exe"
-      python-shell-interpreter-args "-i C:/ProgramData/Anaconda3/Scripts/ipython-script.py")
+;; (setq python-shell-interpreter "C:/ProgramData/Anaconda3/pythonw.exe"
+;;       python-shell-interpreter-args "-i C:/ProgramData/Anaconda3/Scripts/ipython-script.py")
 
-(add-hook 'inferior-python-mode-hook
-          #'(lambda ()
-              (setq comint-preoutput-filter-functions
-                    '(eh-python-comint-preoutput-funtion))))
+;; (add-hook 'inferior-python-mode-hook
+;;           #'(lambda ()
+;;               (setq comint-preoutput-filter-functions
+;;                     '(eh-python-comint-preoutput-funtion))))
 
-(defun eh-python-comint-preoutput-funtion (output)
-  (concat "\n" output))
+;; (defun eh-python-comint-preoutput-funtion (output)
+;;   (concat "\n" output))
 
-(defun eh-python-shell-send-region-or-line (&optional send-main msg)
-  "Sends from python-mode buffer to a python shell, intelligently."
-  (interactive current-prefix-arg t)
-  (display-buffer
-   (process-buffer (python-shell-get-process-or-error msg)) t t)
-  (cond ((region-active-p)
-         (python-shell-send-region (region-beginning) (region-end) send-main msg)
-         (setq deactivate-mark t))
-        (t (eh-python-shell-send-current-statement))))
+;; (defun eh-python-shell-send-region-or-line (&optional send-main msg)
+;;   "Sends from python-mode buffer to a python shell, intelligently."
+;;   (interactive current-prefix-arg t)
+;;   (display-buffer
+;;    (process-buffer (python-shell-get-process-or-error msg)) t t)
+;;   (cond ((region-active-p)
+;;          (python-shell-send-region (region-beginning) (region-end) send-main msg)
+;;          (setq deactivate-mark t))
+;;         (t (eh-python-shell-send-current-statement))))
 
-(defun eh-python-shell-send-current-statement ()
-  "Send current statement to Python shell.
-Taken from elpy-shell-send-current-statement"
-  (interactive)
-  (let ((beg (python-nav-beginning-of-statement))
-        (end (python-nav-end-of-statement)))
-    (python-shell-send-string (buffer-substring beg end)))
-  (python-nav-forward-statement))
+;; (defun eh-python-shell-send-current-statement ()
+;;   "Send current statement to Python shell.
+;; Taken from elpy-shell-send-current-statement"
+;;   (interactive)
+;;   (let ((beg (python-nav-beginning-of-statement))
+;;         (end (python-nav-end-of-statement)))
+;;     (python-shell-send-string (buffer-substring beg end)))
+;;   (python-nav-forward-statement))
 
-(add-hook 'python-mode-hook
-          #'(lambda ()
-              (define-key python-mode-map "\C-c\C-c" 'eh-python-shell-send-region-or-line)))
+;; (add-hook 'python-mode-hook
+;;           #'(lambda ()
+;;               (define-key python-mode-map "\C-c\C-c" 'eh-python-shell-send-region-or-line)))
 
 ;; ;; ** ESS
 ;; (require 'ess)
@@ -317,43 +317,43 @@ Taken from elpy-shell-send-current-statement"
 ;; ** aggressive-indent
 (require 'aggressive-indent)
 
-;; ** multi-term
-(require 'multi-term)
+;; ;; ** multi-term
+;; (require 'multi-term)
 
-(setq multi-term-program "/bin/bash")
-(setq multi-term-buffer-name "term")
-(setq term-scroll-show-maximum-output nil)
-(setq term-scroll-to-bottom-on-output nil)
-(setq multi-term-dedicated-select-after-open-p t)
-(setq term-bind-key-alist
-      (append '(("C-c C-x" . eh-term-send-ctrl-x)
-                ("C-c C-h" . eh-term-send-ctrl-h))
-              term-bind-key-alist))
+;; (setq multi-term-program "/bin/bash")
+;; (setq multi-term-buffer-name "term")
+;; (setq term-scroll-show-maximum-output nil)
+;; (setq term-scroll-to-bottom-on-output nil)
+;; (setq multi-term-dedicated-select-after-open-p t)
+;; (setq term-bind-key-alist
+;;       (append '(("C-c C-x" . eh-term-send-ctrl-x)
+;;                 ("C-c C-h" . eh-term-send-ctrl-h))
+;;               term-bind-key-alist))
 
-(add-hook 'term-mode-hook #'eh-term-setup)
-(add-hook 'term-mode-hook #'multi-term-keystroke-setup)
-(add-hook 'kill-buffer-hook #'multi-term-kill-buffer-hook)
+;; (add-hook 'term-mode-hook #'eh-term-setup)
+;; (add-hook 'term-mode-hook #'multi-term-keystroke-setup)
+;; (add-hook 'kill-buffer-hook #'multi-term-kill-buffer-hook)
 
-(defun eh-term-setup ()
-  (setq truncate-lines t)
-  (setq term-buffer-maximum-size 0)
-  (setq show-trailing-whitespace nil)
-  (multi-term-handle-close))
+;; (defun eh-term-setup ()
+;;   (setq truncate-lines t)
+;;   (setq term-buffer-maximum-size 0)
+;;   (setq show-trailing-whitespace nil)
+;;   (multi-term-handle-close))
 
-(defun eh-term-send-ctrl-x ()
-  "Send C-x in term mode."
-  (interactive)
-  (term-send-raw-string "\C-x"))
+;; (defun eh-term-send-ctrl-x ()
+;;   "Send C-x in term mode."
+;;   (interactive)
+;;   (term-send-raw-string "\C-x"))
 
-(defun eh-term-send-ctrl-z ()
-  "Send C-z in term mode."
-  (interactive)
-  (term-send-raw-string "\C-z"))
+;; (defun eh-term-send-ctrl-z ()
+;;   "Send C-z in term mode."
+;;   (interactive)
+;;   (term-send-raw-string "\C-z"))
 
-(defun eh-term-send-ctrl-h ()
-  "Send C-h in term mode."
-  (interactive)
-  (term-send-raw-string "\C-h"))
+;; (defun eh-term-send-ctrl-h ()
+;;   "Send C-h in term mode."
+;;   (interactive)
+;;   (term-send-raw-string "\C-h"))
 
 ;; ** ace-jump
 (require 'ace-jump-mode)
