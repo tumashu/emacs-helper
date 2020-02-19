@@ -35,68 +35,61 @@
 
 ;; * 代码                                                      :code:
 ;; ** 设置 company-mode
-(use-package company
-  :defer 5
-  :bind (("M-/" . company-complete)
-         :map company-active-map
-         ("M-i" . company-complete-selection)
-         ("C-n" . company-select-next)
-         ("C-p" . company-select-previous)
-         ("M-n" . company-select-next)
-         ("M-p" . company-select-previous))
-  :config
-  (setq company-idle-delay 0.2)
-  (setq company-minimum-prefix-length 2)
-  (setq company-selection-wrap-around t)
-  (setq company-show-numbers t)
-  (setq company-tooltip-limit 10)
-  (setq company-echo-delay 0)
-  (setq company-global-modes
-        '(not message-mode git-commit-mode eshell-mode))
+(require 'company)
+(global-set-key (kbd "M-/") 'company-complete)
+(define-key company-active-map (kbd "M-i") 'company-complete-selection)
+(define-key company-active-map (kbd "C-n") 'company-select-next)
+(define-key company-active-map (kbd "C-p") 'company-select-previous)
+(define-key company-active-map (kbd "M-n") 'company-select-next)
+(define-key company-active-map (kbd "M-p") 'company-select-previous)
 
-  ;; company-dabbrev
-  (setq company-dabbrev-char-regexp "[[:word:]_:@.-]+")
-  (setq company-dabbrev-downcase nil)
-  (setq company-dabbrev-ignore-case nil)
-  (setq company-require-match nil)
-  (setq company-dabbrev-minimum-length 2)
+(setq company-idle-delay 0.2)
+(setq company-minimum-prefix-length 2)
+(setq company-selection-wrap-around t)
+(setq company-show-numbers t)
+(setq company-tooltip-limit 10)
+(setq company-echo-delay 0)
+(setq company-global-modes
+      '(not message-mode git-commit-mode eshell-mode))
 
-  (setq company-backends
-        '((company-capf company-files) ;company-dabbrev 经常让 emacs 卡死
-          (company-dabbrev-code company-gtags company-etags
-                                company-keywords)))
-  (setq company-transformers
-        '(company-sort-by-occurrence))
+;; company-dabbrev
+(setq company-dabbrev-char-regexp "[[:word:]_:@.-]+")
+(setq company-dabbrev-downcase nil)
+(setq company-dabbrev-ignore-case nil)
+(setq company-require-match nil)
+(setq company-dabbrev-minimum-length 2)
 
-  (setq company-frontends
-        '(company-pseudo-tooltip-frontend
-          company-echo-metadata-frontend))
+(setq company-backends
+      '((company-capf company-files) ;company-dabbrev 经常让 emacs 卡死
+        (company-dabbrev-code company-gtags company-etags
+                              company-keywords)))
+(setq company-transformers
+      '(company-sort-by-occurrence))
 
-  (if (and (fboundp 'daemonp) (daemonp))
-      (add-hook 'after-make-frame-functions
-                (lambda (x)
-                  (global-company-mode)))
-    (global-company-mode)))
+(setq company-frontends
+      '(company-pseudo-tooltip-frontend
+        company-echo-metadata-frontend))
 
-(use-package pyim
-  :after company
-  :config
-  (defun eh-company-dabbrev--prefix (orig-fun)
-    "取消中文补全"
-    (let ((string (pyim-char-before-to-string 0)))
-      (if (pyim-string-match-p "\\cc" string)
-          nil
-        (funcall orig-fun))))
+(if (and (fboundp 'daemonp) (daemonp))
+    (add-hook 'after-make-frame-functions
+              (lambda (x)
+                (global-company-mode)))
+  (global-company-mode))
 
-  (advice-add 'company-dabbrev--prefix
-              :around #'eh-company-dabbrev--prefix))
+(defun eh-company-dabbrev--prefix (orig-fun)
+  "取消中文补全"
+  (let ((string (pyim-char-before-to-string 0)))
+    (if (pyim-string-match-p "\\cc" string)
+        nil
+      (funcall orig-fun))))
 
-(use-package company-posframe
-  :after company
-  :config
-  (setq company-posframe-show-indicator nil)
-  (setq company-posframe-show-metadata nil)
-  (company-posframe-mode 1))
+(advice-add 'company-dabbrev--prefix
+            :around #'eh-company-dabbrev--prefix)
+
+(require 'company-posframe)
+(setq company-posframe-show-indicator nil)
+(setq company-posframe-show-metadata nil)
+(company-posframe-mode 1)
 
 ;; * Footer
 (provide 'eh-complete)

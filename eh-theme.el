@@ -36,17 +36,14 @@
 ;; * 代码                                                      :code:
 
 ;; ** cyberpunk-theme
-(use-package cyberpunk-theme
-  :config
-  (load-theme 'cyberpunk t))
+(require 'cyberpunk-theme)
+(load-theme 'cyberpunk t)
 
-(use-package font-lock
-  :config
-  (set-face-attribute 'font-lock-comment-face nil :italic nil))
+(require 'font-lock)
+(set-face-attribute 'font-lock-comment-face nil :italic nil)
 
-(use-package org-faces
-  :config
-  (set-face-attribute 'org-agenda-date-today nil :slant 'normal))
+(require 'org-faces)
+(set-face-attribute 'org-agenda-date-today nil :slant 'normal)
 
 ;; * Footer
 (provide 'eh-theme)

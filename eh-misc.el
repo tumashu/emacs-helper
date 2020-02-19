@@ -36,32 +36,29 @@
 ;; * 代码                                                      :code:
 
 ;; ** Share to Computer
-(use-package share2computer
-  :config
-  (add-hook 'share2computer-finish-hook #'eh-system-open))
+
+(require 'share2computer)
+(add-hook 'share2computer-finish-hook #'eh-system-open)
 
 ;; ** EAF
-(use-package eaf
-  :custom
-  (eaf-find-alternate-file-in-dired t)
-  :config
-  (setq eaf-buffer-title-format "EAF/%s")
-  (setq browse-url-browser-function 'eaf-open-browser)
-  (defalias 'browse-web #'eaf-open-browser)
-  (eaf-bind-key scroll_up "RET" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key scroll_down_page "DEL" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key take_photo "p" eaf-camera-keybinding))
+(setq eaf-find-alternate-file-in-dired t)
+(require 'eaf)
+(setq eaf-buffer-title-format "EAF/%s")
+(setq browse-url-browser-function 'eaf-open-browser)
+(defalias 'browse-web #'eaf-open-browser)
+(eaf-bind-key scroll_up "RET" eaf-pdf-viewer-keybinding)
+(eaf-bind-key scroll_down_page "DEL" eaf-pdf-viewer-keybinding)
+(eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
+(eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
+(eaf-bind-key take_photo "p" eaf-camera-keybinding)
 
 ;; ** terminal here
-(use-package terminal-here)
+(require 'terminal-here)
 
 ;; ** yasnippet
-(use-package yasnippet
-  :config
-  (add-to-list 'yas-snippet-dirs "d:/org/snippets" t)
-  (yas-global-mode 1))
+(require 'yasnippet)
+(add-to-list 'yas-snippet-dirs "d:/org/snippets" t)
+(yas-global-mode 1)
 
 ;; ** Tramp (msys2's emacs) 和 termux 的 sshd 配合使用需要如下设置：
 ;;
@@ -157,415 +154,324 @@
 ;;    #+END_EXAMPLE
 ;;
 ;;    就需要设置保存一个名字为 "192.168.1.101" 的 putty session .
-(use-package tramp
-  :ensure nil
-  :config
-  (push "/data/data/com.termux/files/usr/bin" tramp-remote-path))
+(require 'tramp)
+(push "/data/data/com.termux/files/usr/bin" tramp-remote-path)
 
 ;; ** Eshell
-(use-package eshell
-  :bind (("C-x c" . eshell))
-  :ensure nil
-  :config
-  (use-package em-term :ensure nil)
-  (use-package em-unix :ensure nil)
-  (setq eshell-visual-commands
-        (append '("top" "htop" "aptitude" "mutt"
-                  "nano" "crontab" "vim" "less" "zile")
-                eshell-visual-commands))
-  (setq eshell-visual-subcommands
-        (list (append '("sudo") eshell-visual-commands)
-              '("git" "log" "diff" "show" "grep"
-                "commit" "rebase" "pull" "push")))
-  (setq eshell-visual-options
-        '(("git" "--help" "--paginate")))
-  (defun eh-eshell (&optional arg)
-    (interactive)
-    ;; 使用eshell-exec-visual第一次打开term时，
-    ;; 不能使用multi-term的键盘绑定，原因不知，
-    ;; 首先运行一下less, 从而让multi-term的键盘绑定生效。
-    (eshell-command "less")
-    (eshell arg)))
+(require 'eshell)
+(require 'em-term)
+(require 'em-unix)
+
+(global-set-key (kbd "C-x c") 'eshell)
+
+(setq eshell-visual-commands
+      (append '("top" "htop" "aptitude" "mutt"
+                "nano" "crontab" "vim" "less" "zile")
+              eshell-visual-commands))
+(setq eshell-visual-subcommands
+      (list (append '("sudo") eshell-visual-commands)
+            '("git" "log" "diff" "show" "grep"
+              "commit" "rebase" "pull" "push")))
+(setq eshell-visual-options
+      '(("git" "--help" "--paginate")))
+
+(defun eh-eshell (&optional arg)
+  (interactive)
+  ;; 使用eshell-exec-visual第一次打开term时，
+  ;; 不能使用multi-term的键盘绑定，原因不知，
+  ;; 首先运行一下less, 从而让multi-term的键盘绑定生效。
+  (eshell-command "less")
+  (eshell arg))
 
 ;; ** EWW
-(use-package eww
-  :commands eww
-  :ensure nil
-  :config
-  (setq shr-width 90)
-  ;; 搜狗:  http://www.sogou.com/sogou?query=
-  ;; 百度:  http://m.baidu.com/ssid=0/s?word=
-  ;; 必应:  http://cn.bing.com/search?q=
-  (setq eww-search-prefix "http://www.sogou.com/sogou?query="))
+(require 'eww)
+(setq shr-width 90)
+;; 搜狗:  http://www.sogou.com/sogou?query=
+;; 百度:  http://m.baidu.com/ssid=0/s?word=
+;; 必应:  http://cn.bing.com/search?q=
+(setq eww-search-prefix "http://www.sogou.com/sogou?query=")
 
 
 ;; ** cnfonts
-(use-package cnfonts
-  :demand t
-  :if (display-graphic-p)
-  :init (setq cnfonts-verbose nil)
-  :config
+(setq cnfonts-verbose nil)
+(require 'cnfonts)
+(when (display-graphic-p)
   (setq cnfonts-use-face-font-rescale
         (eq system-type 'gnu/linux))
+
   (cnfonts-enable)
-  :bind (("C--" . cnfonts-decrease-fontsize)
-         ("C-=" . cnfonts-increase-fontsize)
-         ("C-+" . cnfonts-next-profile)))
+  (global-set-key (kbd "C--") 'cnfonts-decrease-fontsize)
+  (global-set-key (kbd "C-=") 'cnfonts-increase-fontsize)
+  (global-set-key (kbd "C-+") 'cnfonts-next-profile))
 
 ;; ** eh-website
-(use-package org2web
-  :commands (org2web-publish org2web-new-post))
+(require  'org2web)
 
-(use-package eh-website
-  :after org2web
-  :ensure nil)
+;; (eval-after-load 'org2web
+;;   (require 'eh-website)
+;;   (require 'org2web-devtools)
 
-(use-package org2web-devtools
-  :after org2web
-  :ensure nil)
-
-(use-package pyim-devtools
-  :after (:all org2web pyim)
-  :ensure nil)
+;;   (eval-after-load 'pyim
+;;     (require 'pyim-devtools)))
 
 ;; ** el2org
-(use-package el2org
-  :commands (el2org-generate-readme
-             el2org-generate-org
-             el2org-generate-html))
-
-;; ** poporg
-(use-package poporg
-  :bind (("C-c \"" . poporg-dwim)))
+(require 'el2org)
 
 ;; EPG
-(use-package epg
-  :after gnus  ;; Only use it in gnus
-  :config
-  ;; 1. Put the below to your ~/.gnupg/gpg-agent.conf:
-  ;;       allow-emacs-pinentry
-  ;;       allow-loopback-pinentry
-  ;; 2. gpgconf --reload gpg-agent
-  ;; 3. (setq epa-pinentry-mode 'loopback)
-  ;; 4. (pinentry-start)
-  (setq epa-pinentry-mode 'loopback))
+(require 'epg)
+;; 1. Put the below to your ~/.gnupg/gpg-agent.conf:
+;;       allow-emacs-pinentry
+;;       allow-loopback-pinentry
+;; 2. gpgconf --reload gpg-agent
+;; 3. (setq epa-pinentry-mode 'loopback)
+;; 4. (pinentry-start)
+(setq epa-pinentry-mode 'loopback)
 
 ;; ** emms
-(use-package eh-emms
-  :commands (emms eh-emms emms-browser)
-  :ensure nil)
+(require 'eh-emms)
 
 ;; ** aggressive-indent
-(use-package aggressive-indent
-  :config
+(require 'aggressive-indent)
 
-  (defun eh-elisp-setup ()
-    ;; 跟踪行尾空格
-    (setq show-trailing-whitespace t)
-    ;; 高亮TAB
-    (setq highlight-tabs t)
-    ;; 自动缩进
-    (aggressive-indent-mode))
+(defun eh-elisp-setup ()
+  ;; 跟踪行尾空格
+  (setq show-trailing-whitespace t)
+  ;; 高亮TAB
+  (setq highlight-tabs t)
+  ;; 自动缩进
+  (aggressive-indent-mode))
 
-  (add-hook 'emacs-lisp-mode-hook
-            #'eh-elisp-setup))
+(add-hook 'emacs-lisp-mode-hook
+          #'eh-elisp-setup)
 
 ;; ** python
-(use-package python
-  :config
-  (setq python-shell-interpreter "C:/ProgramData/Anaconda3/pythonw.exe"
-        python-shell-interpreter-args
-        "-i C:/ProgramData/Anaconda3/Scripts/ipython-script.py"
-        )
+(require 'python)
 
-  (add-hook 'inferior-python-mode-hook
-            #'(lambda ()
-                (setq comint-preoutput-filter-functions
-                      '(eh-python-comint-preoutput-funtion))))
+(setq python-shell-interpreter "C:/ProgramData/Anaconda3/pythonw.exe"
+      python-shell-interpreter-args
+      "-i C:/ProgramData/Anaconda3/Scripts/ipython-script.py"
+      )
 
-  (defun eh-python-comint-preoutput-funtion (output)
-    (concat "\n" output))
+(add-hook 'inferior-python-mode-hook
+          #'(lambda ()
+              (setq comint-preoutput-filter-functions
+                    '(eh-python-comint-preoutput-funtion))))
 
-  (defun eh-python-shell-send-region-or-line (&optional send-main msg)
-    "Sends from python-mode buffer to a python shell, intelligently."
-    (interactive current-prefix-arg t)
-    (display-buffer
-     (process-buffer (python-shell-get-process-or-error msg)) t t)
-    (cond ((region-active-p)
-           (python-shell-send-region (region-beginning) (region-end) send-main msg)
-           (setq deactivate-mark t))
-          (t (eh-python-shell-send-current-statement))))
+(defun eh-python-comint-preoutput-funtion (output)
+  (concat "\n" output))
 
-  (defun eh-python-shell-send-current-statement ()
-    "Send current statement to Python shell.
+(defun eh-python-shell-send-region-or-line (&optional send-main msg)
+  "Sends from python-mode buffer to a python shell, intelligently."
+  (interactive current-prefix-arg t)
+  (display-buffer
+   (process-buffer (python-shell-get-process-or-error msg)) t t)
+  (cond ((region-active-p)
+         (python-shell-send-region (region-beginning) (region-end) send-main msg)
+         (setq deactivate-mark t))
+        (t (eh-python-shell-send-current-statement))))
+
+(defun eh-python-shell-send-current-statement ()
+  "Send current statement to Python shell.
 Taken from elpy-shell-send-current-statement"
-    (interactive)
-    (let ((beg (python-nav-beginning-of-statement))
-          (end (python-nav-end-of-statement)))
-      (python-shell-send-string (buffer-substring beg end)))
-    (python-nav-forward-statement))
+  (interactive)
+  (let ((beg (python-nav-beginning-of-statement))
+        (end (python-nav-end-of-statement)))
+    (python-shell-send-string (buffer-substring beg end)))
+  (python-nav-forward-statement))
 
-  (add-hook 'python-mode-hook
-            #'(lambda ()
-                (define-key python-mode-map "\C-c\C-c" 'eh-python-shell-send-region-or-line))))
+(add-hook 'python-mode-hook
+          #'(lambda ()
+              (define-key python-mode-map "\C-c\C-c" 'eh-python-shell-send-region-or-line)))
 
-;; ** ESS
-(use-package ess
-  :bind (:map
-         ess-mode-map
-         ("C-<return>" . eh-ess-eval-region-or-line-and-step)
-         ("C-M-<return>" . eh-ess-eval-region-or-function-or-paragraph)
-         ("C-c C-c" . eh-ess-eval-region-or-function-or-paragraph-and-step))
-  :config
-  ;; 这个变量设置为 nil 后 org-babel 会有奇怪的问题
-  (setq ess-eval-visibly-p t)
-  (setq ess-history-file nil)
-  (setq ess-ask-for-ess-directory nil)
-  (setq ess-smart-S-assign-key nil)
-  ;; (setq inferior-ess-r-program "R")
+;; ;; ** ESS
+;; (require 'ess)
+;; (require 'ess-mode)
 
-  (defun eh-ess-popup-ESS-buffer (eob-p)
-    (interactive "P")
-    (ess-force-buffer-current)
-    (let ((buffer (current-buffer)))
-      (ess-switch-to-ESS eob-p)
-      (ess-show-buffer buffer t)))
+;; ;; 这个变量设置为 nil 后 org-babel 会有奇怪的问题
+;; (setq ess-eval-visibly-p t)
+;; (setq ess-history-file nil)
+;; (setq ess-ask-for-ess-directory nil)
+;; (setq ess-smart-S-assign-key nil)
+;; ;; (setq inferior-ess-r-program "R")
 
-  (defun eh-ess-eval-region-or-line-and-step (vis)
-    (interactive "P")
-    (ess-eval-region-or-line-and-step vis)
-    (eh-ess-popup-ESS-buffer t))
+;; (defun eh-ess-popup-ESS-buffer (eob-p)
+;;   (interactive "P")
+;;   (ess-force-buffer-current)
+;;   (let ((buffer (current-buffer)))
+;;     (ess-switch-to-ESS eob-p)
+;;     (ess-show-buffer buffer t)))
 
-  (defun eh-ess-eval-region-or-function-or-paragraph (vis)
-    (interactive "P")
-    (ess-eval-region-or-function-or-paragraph vis)
-    (eh-ess-popup-ESS-buffer t))
+;; (defun eh-ess-eval-region-or-line-and-step (vis)
+;;   (interactive "P")
+;;   (ess-eval-region-or-line-and-step vis)
+;;   (eh-ess-popup-ESS-buffer t))
 
-  (defun eh-ess-eval-region-or-function-or-paragraph-and-step (vis)
-    (interactive "P")
-    (ess-eval-region-or-function-or-paragraph-and-step vis)
-    (eh-ess-popup-ESS-buffer t))
+;; (defun eh-ess-eval-region-or-function-or-paragraph (vis)
+;;   (interactive "P")
+;;   (ess-eval-region-or-function-or-paragraph vis)
+;;   (eh-ess-popup-ESS-buffer t))
 
-  ;; (define-key ess-mode-map (kbd "C-<return>") #'eh-ess-eval-region-or-line-and-step)
-  ;; (define-key ess-mode-map (kbd "C-M-<return>") #'eh-ess-eval-region-or-function-or-paragraph)
-  ;; (define-key ess-mode-map (kbd "C-c C-c") #'eh-ess-eval-region-or-function-or-paragraph-and-step)
-  )
+;; (defun eh-ess-eval-region-or-function-or-paragraph-and-step (vis)
+;;   (interactive "P")
+;;   (ess-eval-region-or-function-or-paragraph-and-step vis)
+;;   (eh-ess-popup-ESS-buffer t))
+
+;; (define-key ess-mode-map (kbd "C-<return>") #'eh-ess-eval-region-or-line-and-step)
+;; (define-key ess-mode-map (kbd "C-M-<return>") #'eh-ess-eval-region-or-function-or-paragraph)
+;; (define-key ess-mode-map (kbd "C-c C-c") #'eh-ess-eval-region-or-function-or-paragraph-and-step)
 
 ;; ** aggressive-indent
-(use-package aggressive-indent)
+(require 'aggressive-indent)
 
 ;; ** multi-term
-(use-package multi-term
-  :commands multi-term
-  :ensure nil
-  :config
-  (setq multi-term-program "/bin/bash")
-  (setq multi-term-buffer-name "term")
-  (setq term-scroll-show-maximum-output nil)
-  (setq term-scroll-to-bottom-on-output nil)
-  (setq multi-term-dedicated-select-after-open-p t)
-  (setq term-bind-key-alist
-        (append '(("C-c C-x" . eh-term-send-ctrl-x)
-                  ("C-c C-h" . eh-term-send-ctrl-h))
-                term-bind-key-alist))
+(require 'multi-term)
 
-  (remove-hook 'term-mode-hook 'eh-term-setup)
-  (remove-hook 'term-mode-hook 'multi-term-keystroke-setup)
-  (remove-hook 'kill-buffer-hook 'multi-term-kill-buffer-hook)
+(setq multi-term-program "/bin/bash")
+(setq multi-term-buffer-name "term")
+(setq term-scroll-show-maximum-output nil)
+(setq term-scroll-to-bottom-on-output nil)
+(setq multi-term-dedicated-select-after-open-p t)
+(setq term-bind-key-alist
+      (append '(("C-c C-x" . eh-term-send-ctrl-x)
+                ("C-c C-h" . eh-term-send-ctrl-h))
+              term-bind-key-alist))
 
-  (add-hook 'term-mode-hook #'eh-term-setup)
-  (add-hook 'term-mode-hook #'multi-term-keystroke-setup)
-  (add-hook 'kill-buffer-hook #'multi-term-kill-buffer-hook)
+(remove-hook 'term-mode-hook 'eh-term-setup)
+(remove-hook 'term-mode-hook 'multi-term-keystroke-setup)
+(remove-hook 'kill-buffer-hook 'multi-term-kill-buffer-hook)
 
-  (defun eh-term-setup ()
-    (setq truncate-lines t)
-    (setq term-buffer-maximum-size 0)
-    (setq show-trailing-whitespace nil)
-    (multi-term-handle-close))
+(add-hook 'term-mode-hook #'eh-term-setup)
+(add-hook 'term-mode-hook #'multi-term-keystroke-setup)
+(add-hook 'kill-buffer-hook #'multi-term-kill-buffer-hook)
 
-  (defun eh-term-send-ctrl-x ()
-    "Send C-x in term mode."
-    (interactive)
-    (term-send-raw-string "\C-x"))
+(defun eh-term-setup ()
+  (setq truncate-lines t)
+  (setq term-buffer-maximum-size 0)
+  (setq show-trailing-whitespace nil)
+  (multi-term-handle-close))
 
-  (defun eh-term-send-ctrl-z ()
-    "Send C-z in term mode."
-    (interactive)
-    (term-send-raw-string "\C-z"))
+(defun eh-term-send-ctrl-x ()
+  "Send C-x in term mode."
+  (interactive)
+  (term-send-raw-string "\C-x"))
 
-  (defun eh-term-send-ctrl-h ()
-    "Send C-h in term mode."
-    (interactive)
-    (term-send-raw-string "\C-h")))
+(defun eh-term-send-ctrl-z ()
+  "Send C-z in term mode."
+  (interactive)
+  (term-send-raw-string "\C-z"))
+
+(defun eh-term-send-ctrl-h ()
+  "Send C-h in term mode."
+  (interactive)
+  (term-send-raw-string "\C-h"))
 
 ;; ** wdired and dired-ranger
-(use-package dired
-  :commands dired
-  :ensure nil)
-
-(use-package wdired
-  :after dired
-  :ensure nil)
-
-(use-package dired-ranger
-  :after dired
-  :ensure nil)
+(require 'dired)
+(require 'wdired)
+(require 'dired-ranger)
 
 ;; ** ace-jump
-(use-package ace-jump-mode
-  :ensure nil
-  :bind (("C-j" . ace-jump-mode)))
+(require 'ace-jump-mode)
+(global-set-key (kbd "C-j") 'ace-jump-mode)
 
 ;; ** gitpatch
-(use-package gitpatch
-  :bind (("C-c m" . eh-gitpatch-mail))
-  :ensure nil
-  :config
-  (setq gitpatch-mail-function 'gnus-msg-mail)
-  (setq gitpatch-mail-attach-patch-key "C-c i")
-  (setq gitpatch-mail-database
-        '("guix-patches@gnu.org"
-          "emms-help@gnu.org"
-          "emacs-orgmode@gnu.org"
-          "emacs-devel@gnu.org"))
-  (defun eh-gitpatch-mail ()
-    (interactive)
-    ;; 如果 gnus 没有开启，强制开启。
-    (let ((buffer (current-buffer)))
-      (unless (gnus-alive-p)
-        (gnus)
-        (switch-to-buffer buffer))
-      (call-interactively 'gitpatch-mail))))
+(require 'gitpatch)
+(global-set-key (kbd "C-c m") 'eh-gitpatch-mail)
+
+(setq gitpatch-mail-function 'gnus-msg-mail)
+(setq gitpatch-mail-attach-patch-key "C-c i")
+(setq gitpatch-mail-database
+      '("guix-patches@gnu.org"
+        "emms-help@gnu.org"
+        "emacs-orgmode@gnu.org"
+        "emacs-devel@gnu.org"))
+(defun eh-gitpatch-mail ()
+  (interactive)
+  ;; 如果 gnus 没有开启，强制开启。
+  (let ((buffer (current-buffer)))
+    (unless (gnus-alive-p)
+      (gnus)
+      (switch-to-buffer buffer))
+    (call-interactively 'gitpatch-mail)))
 
 ;; ** ebdb
-(use-package ebdb
-  :ensure nil)
+(require 'ebdb)
+(require 'ebdb-mua)
+(require 'ebdb-gnus)
+(require 'ebdb-com)
+(require 'ebdb-vcard)
+(setq ebdb-gnus-window-configuration
+      '(article
+        (vertical 1.0
+		  (summary 0.25 point)
+		  (horizontal 1.0
+			      (article 1.0)
+			      (ebdb-gnus 0.25)))))
+(require 'ebdb-complete)
+(ebdb-complete-enable)
 
-(use-package ebdb-mua
-  :after ebdb
-  :ensure ebdb)
-
-(use-package ebdb-gnus
-  :after ebdb
-  :ensure ebdb
-  :config
-  (setq ebdb-gnus-window-configuration
-        '(article
-          (vertical 1.0
-		    (summary 0.25 point)
-		    (horizontal 1.0
-			        (article 1.0)
-			        (ebdb-gnus 0.25))))))
-
-(use-package ebdb-com
-  :after ebdb
-  :ensure ebdb)
-
-(use-package ebdb-vcard
-  :after ebdb
-  :ensure ebdb)
-
-(use-package ebdb-complete
-  :after ebdb
-  :ensure ebdb
-  :config
-  (ebdb-complete-enable))
-
-(use-package ebdb-i18n-chn
-  :after ebdb
-  :ensure nil)
-
-(use-package pyim
-  :after ebdb-i18n-chn
-  :config
-  ;; (defun eh-ebdb-search-chinese (string)
-  ;;   (if (functionp 'pyim-isearch-build-search-regexp)
-  ;;       (pyim-isearch-build-search-regexp string)
-  ;;     string))
-
-  ;; (setq ebdb-search-transform-functions
-  ;;       '(eh-ebdb-search-chinese))
-  (cl-defmethod ebdb-field-search
-    :around (field criterion)
-    (or (cl-call-next-method)
-        (when (stringp criterion)
-          (let ((str (ebdb-string field)))
-            (cl-some
-             (lambda (pinyin)
-               (string-match-p criterion pinyin))
-             (append (pyim-hanzi2pinyin str nil "" t)
-                     (pyim-hanzi2pinyin str t "" t))))))))
+(require 'ebdb-i18n-chn)
+(cl-defmethod ebdb-field-search
+  :around (field criterion)
+  (or (cl-call-next-method)
+      (when (stringp criterion)
+        (let ((str (ebdb-string field)))
+          (cl-some
+           (lambda (pinyin)
+             (string-match-p criterion pinyin))
+           (append (pyim-hanzi2pinyin str nil "" t)
+                   (pyim-hanzi2pinyin str t "" t)))))))
 
 ;; ** magit
-(use-package magit
-  :bind (("C-c g" . magit-status)
-         :map magit-status-mode-map
-         ("C-c f" . magit-format-patch)))
-
-(use-package swiper
-  :after magit
-  :config
-  (setq magit-completing-read-function 'ivy-completing-read))
-
-(use-package counsel
-  :after magit
-  :config
-  (setq counsel-yank-pop-separator
-        (concat "\n\n" (make-string 70 ?-) "\n"))
-
-  (setq counsel-git-log-cmd
-        "GIT_PAGER=cat git log --pretty='TUMASHU%%s%%n%%n%%b' --grep '%s'")
-  (setq counsel-git-log-split-string-re "TUMASHU"))
+(require 'magit)
+(global-set-key (kbd "C-c g") 'magit-status)
+(define-key magit-status-mode-map (kbd "C-c f") 'magit-format-patch)
+(setq magit-completing-read-function 'ivy-completing-read)
+(setq counsel-yank-pop-separator
+      (concat "\n\n" (make-string 70 ?-) "\n"))
+(setq counsel-git-log-cmd
+      "GIT_PAGER=cat git log --pretty='TUMASHU%%s%%n%%n%%b' --grep '%s'")
+(setq counsel-git-log-split-string-re "TUMASHU")
 
 ;; ** projectile
-(use-package projectile
-  :bind (("C-x F" . projectile-find-file)
-         ("C-S-s" . projectile-grep)))
+(require 'projectile)
+(global-set-key (kbd "C-x F") 'projectile-find-file)
+(global-set-key (kbd "C-S-s") 'projectile-grep)
 
-(use-package swiper
-  :after projectile
-  :ensure nil
-  :config (setq projectile-completion-system 'ivy))
+(require 'swiper)
+(setq projectile-completion-system 'ivy)
 
-(use-package wgrep
-  :after projectile
-  :config
-  (projectile-global-mode 1)
-  (setq projectile-enable-caching nil))
+(require 'wgrep)
+(projectile-global-mode 1)
+(setq projectile-enable-caching nil)
 
 ;; ** guix
-(use-package guix
-  :commands (guix-scheme-mode guix-devel-mode)
-  :ensure nil
-  :config
-  (setq guix-directory "~/project/guix")
-  (setq geiser-debug-jump-to-debug-p nil)
-  (setq geiser-guile-binary
-        (list (executable-find "guile")
-              ;; Avoid auto-compilation as it is slow and error-prone:
-              ;; <https://notabug.org/alezost/emacs-guix/issues/2>.
-              "--no-auto-compile"))
-  (add-hook 'scheme-mode-hook 'guix-devel-mode))
+(require 'guix)
+(setq guix-directory "~/project/guix")
+(setq geiser-debug-jump-to-debug-p nil)
+(setq geiser-guile-binary
+      (list (executable-find "guile")
+            ;; Avoid auto-compilation as it is slow and error-prone:
+            ;; <https://notabug.org/alezost/emacs-guix/issues/2>.
+            "--no-auto-compile"))
+(add-hook 'scheme-mode-hook 'guix-devel-mode)
 
-(use-package geiser-guile
-  :commands run-guile
-  :ensure geiser
-  :config
-  (add-to-list 'geiser-guile-load-path "~/.config/guix/latest"))
+(require 'geiser-guile)
+(add-to-list 'geiser-guile-load-path "~/.config/guix/latest")
 
 ;; ** undo-tree
-(use-package undo-tree
-  :bind (("C-c /" . undo-tree-visualize))
-  :config
-  (global-undo-tree-mode)
-  (add-hook 'undo-tree-visualizer-mode-hook
-            #'eh-undo-tree-visualizer-settings)
-  (defun eh-undo-tree-visualizer-settings ()
-    (interactive)
-    (define-key undo-tree-visualizer-mode-map (kbd "C-c C-k") #'undo-tree-visualizer-quit)
-    (define-key undo-tree-visualizer-mode-map (kbd "C-k") #'undo-tree-visualizer-quit)
-    (define-key undo-tree-visualizer-mode-map (kbd "k") #'undo-tree-visualizer-quit)
-    (define-key undo-tree-visualizer-mode-map (kbd "C-g") #'undo-tree-visualizer-abort)))
+(require 'undo-tree)
+(global-key-binding (kbd "C-c /") 'undo-tree-visualize)
+(global-undo-tree-mode)
+(add-hook 'undo-tree-visualizer-mode-hook
+          #'eh-undo-tree-visualizer-settings)
+
+(defun eh-undo-tree-visualizer-settings ()
+  (interactive)
+  (define-key undo-tree-visualizer-mode-map (kbd "C-c C-k") #'undo-tree-visualizer-quit)
+  (define-key undo-tree-visualizer-mode-map (kbd "C-k") #'undo-tree-visualizer-quit)
+  (define-key undo-tree-visualizer-mode-map (kbd "k") #'undo-tree-visualizer-quit)
+  (define-key undo-tree-visualizer-mode-map (kbd "C-g") #'undo-tree-visualizer-abort))
 
 ;; * Footer
 (provide 'eh-misc)
