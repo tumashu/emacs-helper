@@ -43,10 +43,10 @@
 
 ;; * 代码                                                                 :code:
 (require 'eh-basic)
+(require 'eh-theme)
 (require 'eh-functions)
 (require 'eh-org)
 (require 'eh-complete)
-(require 'eh-theme)
 (require 'eh-misc)
 
 ;; * Footer
