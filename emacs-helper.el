@@ -49,6 +49,8 @@
 (require 'eh-theme)
 (require 'eh-misc)
 
+(message "emacs-helper load success.")
+
 ;; * Footer
 (provide 'emacs-helper)
 

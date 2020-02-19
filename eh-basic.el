@@ -412,6 +412,12 @@
 (setq ivy-re-builders-alist
       '((t . eh-ivy-cregexp)))
 
+(when (require 'liberime-config nil t)
+  (add-hook 'after-liberime-load-hook
+            (lambda ()
+              (liberime-select-schema "luna_pinyin_simp")))
+  (setq pyim-default-scheme 'rime))
+
 ;; * Footer
 (provide 'eh-basic)
 
