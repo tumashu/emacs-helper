@@ -40,17 +40,18 @@
 (add-hook 'share2computer-finish-hook #'eh-system-open)
 
 ;; ** Emacs Application Framework (EAF)
-(setq eaf-find-alternate-file-in-dired t)
-(require 'eaf nil t)
-(with-eval-after-load "eaf"
-  (setq eaf-buffer-title-format "EAF/%s")
-  (setq browse-url-browser-function 'eaf-open-browser)
-  (defalias 'browse-web #'eaf-open-browser)
-  (eaf-bind-key scroll_up "RET" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key scroll_down_page "DEL" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key take_photo "p" eaf-camera-keybinding))
+(when (eq system-type 'gnu/linux)
+  (setq eaf-find-alternate-file-in-dired t)
+  (require 'eaf nil t)
+  (with-eval-after-load "eaf"
+    (setq eaf-buffer-title-format "EAF/%s")
+    (setq browse-url-browser-function 'eaf-open-browser)
+    (defalias 'browse-web #'eaf-open-browser)
+    (eaf-bind-key scroll_up "RET" eaf-pdf-viewer-keybinding)
+    (eaf-bind-key scroll_down_page "DEL" eaf-pdf-viewer-keybinding)
+    (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
+    (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
+    (eaf-bind-key take_photo "p" eaf-camera-keybinding)))
 
 ;; ** terminal here
 (require 'terminal-here)
@@ -315,51 +316,6 @@
 ;; (define-key ess-mode-map (kbd "C-M-<return>") #'eh-ess-eval-region-or-function-or-paragraph)
 ;; (define-key ess-mode-map (kbd "C-c C-c") #'eh-ess-eval-region-or-function-or-paragraph-and-step)
 
-;; ** aggressive-indent
-(require 'aggressive-indent)
-
-;; ;; ** multi-term
-;; (require 'multi-term)
-
-;; (setq multi-term-program "/bin/bash")
-;; (setq multi-term-buffer-name "term")
-;; (setq term-scroll-show-maximum-output nil)
-;; (setq term-scroll-to-bottom-on-output nil)
-;; (setq multi-term-dedicated-select-after-open-p t)
-;; (setq term-bind-key-alist
-;;       (append '(("C-c C-x" . eh-term-send-ctrl-x)
-;;                 ("C-c C-h" . eh-term-send-ctrl-h))
-;;               term-bind-key-alist))
-
-;; (add-hook 'term-mode-hook #'eh-term-setup)
-;; (add-hook 'term-mode-hook #'multi-term-keystroke-setup)
-;; (add-hook 'kill-buffer-hook #'multi-term-kill-buffer-hook)
-
-;; (defun eh-term-setup ()
-;;   (setq truncate-lines t)
-;;   (setq term-buffer-maximum-size 0)
-;;   (setq show-trailing-whitespace nil)
-;;   (multi-term-handle-close))
-
-;; (defun eh-term-send-ctrl-x ()
-;;   "Send C-x in term mode."
-;;   (interactive)
-;;   (term-send-raw-string "\C-x"))
-
-;; (defun eh-term-send-ctrl-z ()
-;;   "Send C-z in term mode."
-;;   (interactive)
-;;   (term-send-raw-string "\C-z"))
-
-;; (defun eh-term-send-ctrl-h ()
-;;   "Send C-h in term mode."
-;;   (interactive)
-;;   (term-send-raw-string "\C-h"))
-
-;; ** ace-jump
-(require 'ace-jump-mode)
-(global-set-key (kbd "C-j") 'ace-jump-mode)
-
 ;; ** gitpatch
 (require 'gitpatch)
 (global-set-key (kbd "C-c m") 'eh-gitpatch-mail)
@@ -413,6 +369,7 @@
 (require 'magit)
 (global-set-key (kbd "C-c g") 'magit-status)
 (define-key magit-status-mode-map (kbd "C-c f") 'magit-format-patch)
+(define-key magit-status-mode-map (kbd "C-c t") 'terminal-here)
 (setq magit-completing-read-function 'ivy-completing-read)
 (setq counsel-yank-pop-separator
       (concat "\n\n" (make-string 70 ?-) "\n"))
@@ -429,20 +386,21 @@
 (projectile-global-mode 1)
 
 ;; ** guix
-(require 'guix nil t)
-(with-eval-after-load "guix"
-  (setq guix-directory "~/project/guix")
-  (setq geiser-debug-jump-to-debug-p nil)
-  (setq geiser-guile-binary
-        (list (executable-find "guile")
-              ;; Avoid auto-compilation as it is slow and error-prone:
-              ;; <https://notabug.org/alezost/emacs-guix/issues/2>.
-              "--no-auto-compile"))
-  (add-hook 'scheme-mode-hook 'guix-devel-mode))
+(when (eq system-type 'gnu/linux)
+  (require 'guix nil t)
+  (with-eval-after-load "guix"
+    (setq guix-directory "~/project/guix")
+    (setq geiser-debug-jump-to-debug-p nil)
+    (setq geiser-guile-binary
+          (list (executable-find "guile")
+                ;; Avoid auto-compilation as it is slow and error-prone:
+                ;; <https://notabug.org/alezost/emacs-guix/issues/2>.
+                "--no-auto-compile"))
+    (add-hook 'scheme-mode-hook 'guix-devel-mode))
 
-(require 'geiser-guile nil t)
-(with-eval-after-load "geiser-guile"
-  (add-to-list 'geiser-guile-load-path "~/.config/guix/latest"))
+  (require 'geiser-guile nil t)
+  (with-eval-after-load "geiser-guile"
+    (add-to-list 'geiser-guile-load-path "~/.config/guix/latest")))
 
 ;; ** undo-tree
 (require 'undo-tree)
