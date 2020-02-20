@@ -125,6 +125,10 @@
 (defun eh-unkillable-scratch-buffer ()
   (if (string= (buffer-name (current-buffer)) "*scratch*")
       (progn
+        (let ((content (buffer-string)))
+          (with-temp-buffer
+            (insert content)
+            (write-file (concat user-emacs-directory "scratch"))))
         (delete-region (point-min) (point-max))
         (insert initial-scratch-message)
         nil)
