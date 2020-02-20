@@ -197,13 +197,11 @@
 (require 'ox-org)
 (require 'ox-ascii)
 (require 'ox-md)
-
-(require 'org2ctex)
-(org2ctex-toggle t)
+(require 'ox-html)
+(require 'ox-ascii)
+(require 'ox-beamer)
 
 (setq org-export-default-language "zh-CN")
-(setq org-export-backends
-      '(ascii beamer html latex md deck rss s5 odt))
 
 ;; org默认使用"_下标"来定义一个下标，使用"^上标"定义一个上标，
 ;; 但这种方式在中文环境中与下划线冲突。
@@ -217,6 +215,7 @@
       org-latex-to-mathml-jar-file
       eh-org-mathtoweb-file)
 
+;;; ** export html
 (setq org-html-coding-system 'utf-8)
 (setq org-html-head-include-default-style t)
 (setq org-html-head-include-scripts t)
@@ -248,6 +247,7 @@
 (add-hook 'org-export-filter-headline-functions #'eh-org-wash-text)
 (add-hook 'org-export-filter-paragraph-functions #'eh-org-wash-text)
 
+;; *** export latex
 ;; 不要在latex输出文件中插入\maketitle
 (setq org-latex-title-command "")
 
@@ -257,6 +257,9 @@
 (setq org-format-latex-options
       (plist-put org-format-latex-options :scale 2.5))
 (setq org-format-latex-options(plist-put org-format-latex-options :html-scale 2.5))
+
+(require 'org2ctex)
+(org2ctex-toggle t)
 
 ;; ** org-plus-contrib
 (require 'ox-extra)
