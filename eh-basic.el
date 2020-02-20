@@ -397,9 +397,8 @@
 
 ;; liberime
 (when (eq system-type 'gnu/linux)
-  (require 'liberime nil t)
-  (with-eval-after-load "liberime"
-    (require 'liberime-config)
+  (require 'liberime-config nil t)
+  (with-eval-after-load "liberime-config"
     (add-hook 'after-liberime-load-hook
               (lambda ()
                 (liberime-select-schema "luna_pinyin_simp")))
