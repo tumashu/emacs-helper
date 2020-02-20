@@ -58,10 +58,13 @@
 
 ;; ** yasnippet
 (require 'yasnippet)
-(add-to-list 'yas-snippet-dirs "d:/org/snippets" t)
-(add-to-list 'yas-snippet-dirs "e:/org/snippets" t)
-(add-to-list 'yas-snippet-dirs "f:/org/snippets" t)
-(add-to-list 'yas-snippet-dirs "~/org/snippets" t)
+(dolist (dir '("c:/org/snippets"
+               "d:/org/snippets"
+               "e:/org/snippets"
+               "f/org/snippets"
+               "~/org/snippets"))
+  (when (file-directory-p dir)
+    (add-to-list 'yas-snippet-dirs dir t)))
 (yas-global-mode 1)
 
 ;; ** Tramp (msys2's emacs) 和 termux 的 sshd 配合使用需要如下设置：
