@@ -405,32 +405,7 @@
                 (liberime-select-schema "luna_pinyin_simp")))
     (setq pyim-default-scheme 'rime)))
 
-;; ** calendar
-(require 'calendar)
-(setq calendar-week-start-day 0) ; 一周第一天，0表示星期天, 1表示星期一
-
-(setq calendar-month-name-array
-      ["一月" "二月" "三月" "四月" "五月" "六月"
-       "七月" "八月" "九月" "十月" "十一月" "十二月"])
-
-(setq calendar-day-name-array
-      ["周日" "周一" "周二" "周三" "周四" "周五" "周六"])
-
-(defun eh-org-chinese-anniversary (year lunar-month lunar-day &optional mark)
-  (if year
-      (let* ((d-date (diary-make-date lunar-month lunar-day year))
-             (a-date (calendar-absolute-from-gregorian d-date))
-             (c-date (calendar-chinese-from-absolute a-date))
-             (cycle (car c-date))
-             (yy (cadr c-date))
-             (y (+ (* 100 cycle) yy)))
-        (diary-chinese-anniversary lunar-month lunar-day y mark))
-    (diary-chinese-anniversary lunar-month lunar-day year mark)))
-
-;; ** calendar 相关
-;; 使用英文 day-name, 而不是中文： “星期XX”
-(setq system-time-locale "C")
-
+;; ** parse-time
 (require 'parse-time)
 (setq parse-time-months
       (append '(("yi" . 1) ("er" . 2) ("san" . 3)
@@ -444,9 +419,17 @@
                 ("zsi" . 4) ("zwu" . 5) ("zliu" . 6))
               parse-time-weekdays))
 
+;; ** calendar
+(require 'calendar)
 (require 'cal-china-x)
-(defvar eh-calendar-holidays nil)
-(setq eh-calendar-holidays
+
+;; 使用英文 day-name, 而不是中文： “星期XX”
+(setq system-time-locale "C")
+
+;; 一周第一天，0表示星期天, 1表示星期一
+(setq calendar-week-start-day 0)
+
+(setq calendar-holidays
       '(;;公历节日
         (holiday-fixed 1 1 "元旦")
         (holiday-fixed 2 14 "情人节")
@@ -496,7 +479,24 @@
         (holiday-lunar 7 7 "七夕情人节" 0)
         (holiday-lunar 12 8 "腊八节" 0)
         (holiday-lunar 9 9 "重阳节" 0)))
-(setq calendar-holidays eh-calendar-holidays)
+
+(setq calendar-month-name-array
+      ["一月" "二月" "三月" "四月" "五月" "六月"
+       "七月" "八月" "九月" "十月" "十一月" "十二月"])
+
+(setq calendar-day-name-array
+      ["周日" "周一" "周二" "周三" "周四" "周五" "周六"])
+
+(defun eh-org-chinese-anniversary (year lunar-month lunar-day &optional mark)
+  (if year
+      (let* ((d-date (diary-make-date lunar-month lunar-day year))
+             (a-date (calendar-absolute-from-gregorian d-date))
+             (c-date (calendar-chinese-from-absolute a-date))
+             (cycle (car c-date))
+             (yy (cadr c-date))
+             (y (+ (* 100 cycle) yy)))
+        (diary-chinese-anniversary lunar-month lunar-day y mark))
+    (diary-chinese-anniversary lunar-month lunar-day year mark)))
 
 ;; * Footer
 (provide 'eh-basic)

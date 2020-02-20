@@ -34,7 +34,7 @@
 ;;; Code:
 
 ;; * 代码                                                      :code:
-;; ** 设置 company-mode
+;; ** company-mode
 (require 'company)
 (global-set-key (kbd "M-/") 'company-complete)
 (define-key company-active-map (kbd "M-i") 'company-complete-selection)
@@ -52,7 +52,6 @@
 (setq company-global-modes
       '(not message-mode git-commit-mode eshell-mode))
 
-;; company-dabbrev
 (setq company-dabbrev-char-regexp "[[:word:]_:@.-]+")
 (setq company-dabbrev-downcase nil)
 (setq company-dabbrev-ignore-case nil)
@@ -86,6 +85,7 @@
 (advice-add 'company-dabbrev--prefix
             :around #'eh-company-dabbrev--prefix)
 
+;; ** company-posframe
 (require 'company-posframe)
 (setq company-posframe-show-indicator nil)
 (setq company-posframe-show-metadata nil)
