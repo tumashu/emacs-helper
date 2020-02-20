@@ -99,8 +99,10 @@
 (defun eh-org-set-tags-command (&optional arg)
   (interactive)
   (let ((org-current-tag-alist
-         (org--tag-add-to-alist org-current-tag-alist
-                                (org-get-buffer-tags))))
+         (org--tag-add-to-alist
+          (org--tag-add-to-alist org-current-tag-alist
+                                 (org-get-buffer-tags))
+          (eh-org-brain-as-tags))))
     (funcall-interactively #'counsel-org-tag)))
 
 (advice-add 'org-set-tags-command :override #'eh-org-set-tags-command)
@@ -785,6 +787,14 @@
 (setq org-brain-headline-entry-name-format-string "%2$s")
 (setq org-brain-file-from-input-function
       #'(lambda (x) (if (cdr x) (car x) "brain")))
+
+(defun eh-org-brain-as-tags ()
+  (mapcar
+   (lambda (x)
+     (list (replace-regexp-in-string
+            "[^[:alnum:]_@#%]" "" (or (car x) ""))))
+   (mapcan #'org-brain--file-targets
+           (org-brain-files))))
 
 (defun eh-org-brain-add-entry (title)
   (unless org-id-locations (org-id-locations-load))
