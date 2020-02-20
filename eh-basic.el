@@ -396,13 +396,14 @@
       '((t . eh-ivy-cregexp)))
 
 ;; liberime
-(require 'liberime nil t)
-(with-eval-after-load "liberime"
-  (require 'liberime-config)
-  (add-hook 'after-liberime-load-hook
-            (lambda ()
-              (liberime-select-schema "luna_pinyin_simp")))
-  (setq pyim-default-scheme 'rime))
+(when (eq system-type 'gnu/linux)
+  (require 'liberime nil t)
+  (with-eval-after-load "liberime"
+    (require 'liberime-config)
+    (add-hook 'after-liberime-load-hook
+              (lambda ()
+                (liberime-select-schema "luna_pinyin_simp")))
+    (setq pyim-default-scheme 'rime)))
 
 ;; ** calendar
 (require 'calendar)
