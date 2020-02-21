@@ -390,12 +390,15 @@
 (pyim-basedict-enable)
 
 (defun eh-ivy-cregexp (str)
-  (let ((a (ivy--regex-plus str))
-        (b (let ((case-fold-search nil))
-             (pyim-cregexp-build str))))
-    (if (and a (stringp a) (string> a ""))
-        (concat a "\\|" b)
-      a)))
+  (let ((x (ivy--regex-plus str))
+        (case-fold-search nil))
+    (if (listp x)
+        (mapcar (lambda (y)
+                  (if (cdr y)
+                      y
+                    (list (pyim-cregexp-build (car y))))
+                  x))
+      (pyim-cregexp-build x))))
 
 (setq ivy-re-builders-alist
       '((t . eh-ivy-cregexp)))
