@@ -288,6 +288,7 @@
 ;; `ivy-immediate-done' is very useful.
 (define-key ivy-minibuffer-map (kbd "C-f") 'ivy-immediate-done)
 (define-key ivy-minibuffer-map (kbd "S-<return>") 'ivy-immediate-done)
+(define-key ivy-minibuffer-map (kbd "C-<return>") 'ivy-immediate-done)
 (define-key ivy-minibuffer-map (kbd "M-j") 'pyim-convert-code-at-point)
 (define-key ivy-minibuffer-map [mouse-1] 'ignore)
 (define-key ivy-minibuffer-map [mouse-3] 'ignore)
