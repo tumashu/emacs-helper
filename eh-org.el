@@ -42,8 +42,6 @@
 
 (require 'org)
 
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c c") 'org-capture)
 (define-key org-mode-map (kbd "<f1>") 'eh-org-attach-reveal)
 (define-key org-mode-map (kbd "<f3>") 'share2computer-org)
 
@@ -618,7 +616,7 @@
 ;; ** org-capture
 (require 'org-capture)
 
-(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c c") 'counsel-org-capture)
 ;; 保存的时候强制 refile
 (define-key org-capture-mode-map (kbd "C-c C-c") 'org-capture-refile)
 

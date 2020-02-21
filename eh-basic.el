@@ -295,7 +295,6 @@
 (define-key ivy-minibuffer-map [mouse-4] 'ivy-next-line)
 (define-key ivy-minibuffer-map [mouse-5] 'ivy-previous-line)
 
-(ivy-mode 1)
 (setq ivy-count-format ""
       ivy-use-virtual-buffers t
       ivy-format-functions-alist
@@ -314,6 +313,7 @@
         (Man-completion-table . "")
         (woman . "")))
 
+(ivy-mode 1)
 (require 'ivy-hydra)
 
 ;; ** 设置 amx
