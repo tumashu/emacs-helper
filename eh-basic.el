@@ -411,7 +411,7 @@
     (add-hook 'after-liberime-load-hook
               (lambda ()
                 (liberime-select-schema "luna_pinyin_simp")))
-    (setq pyim-default-scheme 'rime)))
+    (setq pyim-default-scheme 'rime-quanpin)))
 
 ;; ** parse-time
 (require 'parse-time)
