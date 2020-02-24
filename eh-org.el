@@ -805,23 +805,26 @@
 (defun eh-org-agenda-brain-button (key entries)
   (when entries
     (insert (propertize key 'face 'org-agenda-structure))
-    (dolist (entry entries)
-      (let ((text (nth 1 entry))
-            (id (nth 2 entry)))
-        (insert-text-button
-         (format "[%s]" text)
-         'action `(lambda (_x)
-                    (eh-org-agenda-brain-add-history ',entry)
-                    (org-tags-view nil ,text))
-         'id id
-         'follow-link t
-         'aa2u-text t)
-        (if (< (length (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
-               (* 0.7 (window-width)))
-            (insert " ")
-          (insert "\n")
-          (insert (make-string (length key) ? )))))
-    (insert "\n")))
+    (let (entry)
+      (while (setq entry (pop entries))
+        (let ((text (nth 1 entry))
+              (id (nth 2 entry)))
+          (insert-text-button
+           (format "[%s]" text)
+           'action `(lambda (_x)
+                      (eh-org-agenda-brain-add-history ',entry)
+                      (org-tags-view nil ,text))
+           'id id
+           'follow-link t
+           'aa2u-text t)
+          (when entries
+            (if (< (length (buffer-substring-no-properties
+                            (line-beginning-position) (line-end-position)))
+                   (* 0.7 (window-width)))
+                (insert " ")
+              (insert "\n")
+              (insert (make-string (length key) ? ))))))
+      (insert "\n"))))
 
 (defun eh-org-agenda-brain ()
   (when (and org-agenda-query-string
