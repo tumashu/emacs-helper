@@ -800,6 +800,38 @@
    (mapcan #'org-brain--file-targets
            (org-brain-files))))
 
+(defun eh-org-agenda-brain-button (key entries)
+  (when entries
+    (insert (propertize key 'face 'org-agenda-structure))
+    (dolist (entry entries)
+      (let ((text (nth 1 entry))
+            (id (nth 2 entry)))
+        (insert-text-button
+         (format "[%s]" text)
+         'action `(lambda (_x) (org-tags-view nil ,text))
+         'id id
+         'follow-link t
+         'aa2u-text t)
+        (insert " ")))
+    (insert "\n")))
+
+(defun eh-org-agenda-brain ()
+  (when org-agenda-query-string
+    (let* ((entry
+            (cl-find-if (lambda (x)
+                          (equal (nth 1 x) org-agenda-query-string))
+                        (org-brain-headline-entries)))
+           (children (org-brain-children entry))
+           (parents (org-brain-parents entry))
+           (friends (org-brain-friends entry)))
+      (eh-org-agenda-brain-button "Brain-Parents:  " parents)
+      (eh-org-agenda-brain-button "Brain-Friends:  " friends)
+      (eh-org-agenda-brain-button "Brain-Children: " children)
+      (when (or children parents friends)
+        (insert "\n")))))
+
+(add-hook 'org-agenda-finalize-hook 'eh-org-agenda-brain)
+
 (defun eh-org-brain-add-entry (title)
   (unless org-id-locations (org-id-locations-load))
   (let* ((targets (mapcan #'org-brain--file-targets
