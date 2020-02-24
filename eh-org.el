@@ -800,6 +800,8 @@
    (mapcan #'org-brain--file-targets
            (org-brain-files))))
 
+(defvar eh-org-agenda-brain-history nil)
+
 (defun eh-org-agenda-brain-button (key entries)
   (when entries
     (insert (propertize key 'face 'org-agenda-structure))
@@ -808,7 +810,9 @@
             (id (nth 2 entry)))
         (insert-text-button
          (format "[%s]" text)
-         'action `(lambda (_x) (org-tags-view nil ,text))
+         'action `(lambda (_x)
+                    (eh-org-agenda-brain-add-history ',entry)
+                    (org-tags-view nil ,text))
          'id id
          'follow-link t
          'aa2u-text t)
@@ -828,11 +832,21 @@
            (children (org-brain-children entry))
            (parents (org-brain-parents entry))
            (friends (org-brain-friends entry)))
+      (eh-org-agenda-brain-add-history entry)
       (eh-org-agenda-brain-button "Brain-Parents:  " parents)
       (eh-org-agenda-brain-button "Brain-Friends:  " friends)
       (eh-org-agenda-brain-button "Brain-Children: " children)
+      (eh-org-agenda-brain-button "Brain-History:  " eh-org-agenda-brain-history)
       (when (or children parents friends)
         (insert "\n")))))
+
+(defun eh-org-agenda-brain-add-history (entry)
+  (unless (cl-some
+           (lambda (x)
+             (equal (nth 1 entry)
+                    (nth 1 x)))
+           eh-org-agenda-brain-history)
+    (push entry eh-org-agenda-brain-history)))
 
 (add-hook 'org-agenda-finalize-hook 'eh-org-agenda-brain)
 
