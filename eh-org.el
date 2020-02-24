@@ -812,7 +812,11 @@
          'id id
          'follow-link t
          'aa2u-text t)
-        (insert " ")))
+        (if (< (length (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
+               (* 0.7 (window-width)))
+            (insert " ")
+          (insert "\n")
+          (insert (make-string (length key) ? )))))
     (insert "\n")))
 
 (defun eh-org-agenda-brain ()
