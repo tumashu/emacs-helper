@@ -824,20 +824,19 @@
     (insert "\n")))
 
 (defun eh-org-agenda-brain ()
-  (when org-agenda-query-string
-    (let* ((entry
-            (cl-find-if (lambda (x)
-                          (equal (nth 1 x) org-agenda-query-string))
-                        (org-brain-headline-entries)))
-           (children (org-brain-children entry))
-           (parents (org-brain-parents entry))
-           (friends (org-brain-friends entry)))
-      (eh-org-agenda-brain-add-history entry)
-      (eh-org-agenda-brain-button "Brain-Parents:  " parents)
-      (eh-org-agenda-brain-button "Brain-Friends:  " friends)
-      (eh-org-agenda-brain-button "Brain-Children: " children)
-      (eh-org-agenda-brain-button "Brain-History:  " eh-org-agenda-brain-history)
-      (when (or children parents friends)
+  (when (and org-agenda-query-string
+             (save-excursion
+               (search-forward "Headlines with TAGS match: " nil t)))
+    (let ((entry
+           (cl-find-if (lambda (x)
+                         (equal (nth 1 x) org-agenda-query-string))
+                       (org-brain-headline-entries))))
+      (when entry
+        (eh-org-agenda-brain-add-history entry)
+        (eh-org-agenda-brain-button "Brain-Parents:  " (org-brain-parents entry))
+        (eh-org-agenda-brain-button "Brain-Friends:  " (org-brain-friends entry))
+        (eh-org-agenda-brain-button "Brain-Children: " (org-brain-children entry))
+        (eh-org-agenda-brain-button "Brain-History:  " eh-org-agenda-brain-history)
         (insert "\n")))))
 
 (defun eh-org-agenda-brain-add-history (entry)
