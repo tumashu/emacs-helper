@@ -376,12 +376,6 @@
 ;; 显示5个候选词。
 (setq pyim-page-length 5)
 
-;; 添加 pinyin 搜索中文功能
-(setq eh-org-minibuffer-local-map
-      (let* ((map (make-sparse-keymap)))
-        (set-keymap-parent map minibuffer-local-map)
-        map))
-
 ;; emacs 启动时加载 pyim 词库
 ;; (add-hook 'emacs-startup-hook
 ;;           #'(lambda ()
