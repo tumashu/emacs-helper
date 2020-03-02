@@ -784,7 +784,6 @@
 ;; ** org-brain
 (require 'org-brain)
 (setq org-brain-path (expand-file-name "brain" eh-org-local-directory))
-(setq org-brain-open-same-window t)
 (add-to-list 'org-agenda-files org-brain-path t)
 
 (setq org-brain-include-file-entries nil)
