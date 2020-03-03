@@ -399,7 +399,10 @@
       '((t . eh-ivy-cregexp)))
 
 ;; liberime
-(when (eq system-type 'gnu/linux)
+(when (file-exists-p
+       (concat (file-name-directory
+                (locate-library "liberime-config"))
+               "build/liberime" module-file-suffix))
   (require 'liberime-config nil t)
   (with-eval-after-load "liberime-config"
     (add-hook 'after-liberime-load-hook
