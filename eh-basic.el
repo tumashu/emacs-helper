@@ -399,16 +399,16 @@
       '((t . eh-ivy-cregexp)))
 
 ;; liberime
-(when (file-exists-p
-       (concat (file-name-directory
-                (locate-library "liberime-config"))
-               "build/liberime" module-file-suffix))
-  (require 'liberime-config nil t)
-  (with-eval-after-load "liberime-config"
-    (add-hook 'after-liberime-load-hook
-              (lambda ()
-                (liberime-select-schema "luna_pinyin_simp")))
-    (setq pyim-default-scheme 'rime-quanpin)))
+(require 'liberime nil t)
+(with-eval-after-load "liberime"
+  (add-hook 'after-liberime-load-hook
+            (lambda ()
+              ;; Select schema delay 5 second, make sure
+              ;; `liberime-load' run finish.
+              (run-with-timer
+               5 1
+               (liberime-select-schema "luna_pinyin_simp"))))
+  (setq pyim-default-scheme 'rime-quanpin))
 
 ;; ** parse-time
 (require 'parse-time)
