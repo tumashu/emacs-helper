@@ -854,8 +854,7 @@
 
 (defun eh-org-brain-add-entry (title)
   (unless org-id-locations (org-id-locations-load))
-  (let* ((targets (mapcan #'org-brain--file-targets
-                          (org-brain-files)))
+  (let* ((targets (org-brain--all-targets))
          (id (or (cdr (assoc title targets))
                  title)))
     (or
@@ -868,6 +867,7 @@
                            (funcall org-brain-file-from-input-function id)
                            t))
               (entry-file (org-brain-path-entry-name entry-path)))
+         (princ entry-file)
          (unless (file-exists-p entry-path)
            (make-directory (file-name-directory entry-path) t)
            (write-region "" nil entry-path))
@@ -877,7 +877,13 @@
              ;; Create new headline entry in file
              (org-with-point-at (org-brain-entry-marker entry-file)
                (if (and (not org-brain-include-file-entries)
-                        (re-search-forward (concat "\n\\* +" (car id)) nil t))
+                        (or
+                         ;; Search heading without tags
+                         (save-excursion
+                           (re-search-forward (concat "\n\\* +" (car id) "[ \t]*$") nil t))
+                         ;; Search heading with tags
+                         (save-excursion
+                           (re-search-forward (concat "\n\\* +" (car id) "[ \t]+:.*:$") nil t))))
                    (org-brain-entry-at-pt)
                  (goto-char (point-max))
                  (insert (concat "\n* " (or (cadr id) (car id))))
