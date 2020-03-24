@@ -867,7 +867,6 @@
                            (funcall org-brain-file-from-input-function id)
                            t))
               (entry-file (org-brain-path-entry-name entry-path)))
-         (princ entry-file)
          (unless (file-exists-p entry-path)
            (make-directory (file-name-directory entry-path) t)
            (write-region "" nil entry-path))
