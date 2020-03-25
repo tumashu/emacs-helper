@@ -797,8 +797,7 @@
    (lambda (x)
      (list (replace-regexp-in-string
             "[^[:alnum:]_@#%]" "" (or (car x) ""))))
-   (mapcan #'org-brain--file-targets
-           (org-brain-files))))
+   (org-brain--all-targets)))
 
 (defvar eh-org-agenda-brain-history nil)
 
