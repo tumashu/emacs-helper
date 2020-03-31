@@ -536,6 +536,8 @@
 
 (defvar eh-org-agenda-category-width 13)
 
+;; 这个函数编译的时候会有警告，因为启用词法作用域的缘故，但不影响使用，
+;; 原因是这个函数最终会被 org-eval 包装，强制使用动态作用域。
 (defun eh-org-agenda-prefix-format (&optional show-category show-time show-extra)
   (concat
    (if show-category
