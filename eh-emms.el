@@ -1,4 +1,4 @@
-;;; eh-emms.el --- Tumashu's emacs configuation
+;;; eh-emms.el --- Tumashu's emacs configuation   -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright (c) 2011-2019, Feng Shu
@@ -157,7 +157,6 @@
 
 ;; Local Variables:
 ;; coding: utf-8-unix
-;; no-byte-compile: t
 ;; End:
 
 ;;; eh-emms.el ends here

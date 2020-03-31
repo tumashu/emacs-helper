@@ -1,4 +1,4 @@
-;;; eh-misc.el --- Tumashu's emacs configuation
+;;; eh-misc.el --- Tumashu's emacs configuation    -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright (c) 2011-2019, Feng Shu
@@ -226,7 +226,7 @@
 ;; 2. gpgconf --reload gpg-agent
 ;; 3. (setq epa-pinentry-mode 'loopback)
 ;; 4. (pinentry-start)
-(setq epa-pinentry-mode 'loopback)
+(setq epg-pinentry-mode 'loopback)
 
 ;; ** emms
 (require 'eh-emms)
@@ -386,7 +386,7 @@
 (global-set-key (kbd "C-S-s") 'projectile-grep)
 (setq projectile-completion-system 'ivy)
 (setq projectile-enable-caching nil)
-(projectile-global-mode 1)
+(projectile-mode 1)
 
 ;; ** guix
 (when (eq system-type 'gnu/linux)
@@ -424,7 +424,6 @@
 
 ;; Local Variables:
 ;; coding: utf-8-unix
-;; no-byte-compile: t
 ;; End:
 
 ;;; eh-misc.el ends here

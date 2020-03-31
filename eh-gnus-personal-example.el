@@ -1,4 +1,4 @@
-;; ** Gnus 邮件基本设置。
+;; ** Gnus 邮件基本设置.
 (setq gnus-select-method '(nnml ""))
 (setq mail-sources
       '((pop :server "pop.163.com"
@@ -89,5 +89,4 @@
 
 ;; Local Variables:
 ;; coding: utf-8-unix
-;; no-byte-compile: t
 ;; End:

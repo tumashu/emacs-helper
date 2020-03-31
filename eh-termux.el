@@ -1,4 +1,4 @@
-;;; eh-termux.el --- Tumashu's emacs termux configuation
+;;; eh-termux.el --- Tumashu's emacs termux configuation   -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright (c) 2011-2019, Feng Shu
@@ -117,7 +117,6 @@
 (provide 'eh-termux)
 
 ;; Local Variables:
-;; no-byte-compile: t
 ;; coding: utf-8-unix
 ;; End:
 

@@ -1,4 +1,4 @@
-;;; eh-basic.el --- Tumashu's basic emacs configuation
+;;; eh-basic.el --- Tumashu's basic emacs configuation     -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright (c) 2011-2019, Feng Shu
@@ -34,9 +34,10 @@
 ;;; Code:
 
 ;; * 代码                                                                 :code:
+(setq comp-deferred-compilation t)
 (require 'cl-lib)
 
-(defun eh-system-open (path &rest args)
+(defun eh-system-open (path &rest _args)
   (cond ((string-equal system-type "windows-nt")
          (w32-shell-execute "open" path))
         ((string-equal system-type "darwin")
@@ -45,7 +46,7 @@
          (let ((process-connection-type nil))
            (start-process "" nil "xdg-open" path)))))
 
-(defun eh-emacs-open (path &rest args)
+(defun eh-emacs-open (path &rest _args)
   (if (and (string-equal system-type "gnu/linux")
            (functionp 'eaf-open)
            (not (file-directory-p path)))
@@ -391,8 +392,8 @@
         (mapcar (lambda (y)
                   (if (cdr y)
                       y
-                    (list (pyim-cregexp-build (car y))))
-                  x))
+                    (list (pyim-cregexp-build (car y)))))
+                x)
       (pyim-cregexp-build x))))
 
 (setq ivy-re-builders-alist
@@ -401,12 +402,12 @@
 ;; liberime
 (require 'liberime nil t)
 (with-eval-after-load "liberime"
-  (add-hook 'after-liberime-load-hook
+  (add-hook 'liberime-after-start-hook
             (lambda ()
               ;; Select schema delay 5 second, make sure
               ;; `liberime-load' run finish.
               (run-with-timer
-               5 1
+               7 1
                (liberime-select-schema "luna_pinyin_simp"))))
   (setq pyim-default-scheme 'rime-quanpin))
 
@@ -507,7 +508,6 @@
 (provide 'eh-basic)
 
 ;; Local Variables:
-;; no-byte-compile: t
 ;; coding: utf-8-unix
 ;; End:
 

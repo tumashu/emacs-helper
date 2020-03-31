@@ -1,4 +1,4 @@
-;;; eh-theme.el --- Tumashu's emacs configuation
+;;; eh-theme.el --- Tumashu's emacs configuation   -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright (c) 2011-2019, Feng Shu
@@ -50,7 +50,6 @@
 
 ;; Local Variables:
 ;; coding: utf-8-unix
-;; no-byte-compile: t
 ;; End:
 
 ;;; eh-theme.el ends here

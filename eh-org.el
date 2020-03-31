@@ -1,4 +1,4 @@
-;;; eh-org.el --- Tumashu's org-mode configuation
+;;; eh-org.el --- Tumashu's org-mode configuation    -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright (c) 2012-2016, Feng Shu
@@ -94,7 +94,7 @@
         ("TODO")
         nil ""))
 
-(defun eh-org-set-tags-command (&optional arg)
+(defun eh-org-set-tags-command (&optional _arg)
   (interactive)
   (let ((org-current-tag-alist
          (org--tag-add-to-alist
@@ -165,7 +165,7 @@
       (_ (toggle-truncate-lines -1))))
   (org-ctrl-c-ctrl-c arg))
 
-(defun eh-org-smart-truncate-lines (&optional arg)
+(defun eh-org-smart-truncate-lines (&optional _arg)
   (interactive)
   (org-defkey org-mode-map "\C-c\C-c" 'eh-org-ctrl-c-ctrl-c))
 
@@ -218,7 +218,7 @@
 (setq org-html-head-include-default-style t)
 (setq org-html-head-include-scripts t)
 
-(defun eh-org-wash-text (text backend info)
+(defun eh-org-wash-text (text backend _info)
   "导出 org file 时，删除中文之间不必要的空格。"
   (when (org-export-derived-backend-p backend 'html)
     (let ((regexp "[[:multibyte:]]")
@@ -251,13 +251,13 @@
 
 (setq org-latex-date-format "%Y-%m-%d")
 ;; (setq org-latex-create-formula-image-program 'imagemagick)  ;默认支持中文
-(setq org-latex-create-formula-image-program 'dvipng)          ;速度较快，但默认不支持中文
+(setq org-preview-latex-default-process 'dvipng)          ;速度较快，但默认不支持中文
 (setq org-format-latex-options
       (plist-put org-format-latex-options :scale 2.5))
 (setq org-format-latex-options(plist-put org-format-latex-options :html-scale 2.5))
 
 (require 'org2ctex)
-(org2ctex-toggle t)
+(org2ctex-mode 1)
 
 ;; ** org-plus-contrib
 (require 'ox-extra)
@@ -326,11 +326,11 @@
 (defun eh-org-attach-sync-all ()
   (interactive)
   (org-map-entries #'org-attach-sync)
-  (org-align-all-tags))
+  (org-align-tags 'all))
 
 (defun eh-org-attach-reveal ()
   (interactive)
-  (let (c marker)
+  (let (marker)
     (when (eq major-mode 'org-agenda-mode)
       (setq marker (or (get-text-property (point) 'org-hd-marker)
 		       (get-text-property (point) 'org-marker)))
@@ -573,18 +573,18 @@
          (day (cadr date))
          (day-of-week (calendar-day-of-week date))
          (month (car date))
-         (monthname (calendar-month-name month))
+         ;; (monthname (calendar-month-name month))
          (year (nth 2 date))
          (iso-week (org-days-to-iso-week
                     (calendar-absolute-from-gregorian date)))
-         (weekyear (cond ((and (= month 1) (>= iso-week 52))
-                          (1- year))
-                         ((and (= month 12) (<= iso-week 1))
-                          (1+ year))
-                         (t year)))
+         ;; (weekyear (cond ((and (= month 1) (>= iso-week 52))
+         ;;                  (1- year))
+         ;;                 ((and (= month 12) (<= iso-week 1))
+         ;;                  (1+ year))
+         ;;                 (t year)))
          (cn-date (calendar-chinese-from-absolute
                    (calendar-absolute-from-gregorian date)))
-         (cn-year (cadr cn-date))
+         ;; (cn-year (cadr cn-date))
          (cn-month (cl-caddr cn-date))
          (cn-day (cl-cadddr cn-date))
          (cn-month-name
@@ -768,8 +768,8 @@
                   (let ((s (org-format-outline-path
                             (org-get-outline-path)
                             (1- (frame-width))
-                            nil org-picklink-breadcrumbs-separator)))
-                    (if (eq "" s) "" (concat s org-picklink-breadcrumbs-separator)))))
+                            nil org-agenda-breadcrumbs-separator)))
+                    (if (eq "" s) "" (concat s org-agenda-breadcrumbs-separator)))))
                (item (concat (or breadcrumbs "") (org-entry-get (point) "ITEM")))
                (link
                 (cl-case link-type
@@ -900,7 +900,6 @@
 (provide 'eh-org)
 
 ;; Local Variables:
-;; no-byte-compile: t
 ;; coding: utf-8-unix
 ;; End:
 

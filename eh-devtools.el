@@ -1,4 +1,4 @@
-;;; eh-devtools.el --- Tools for emacs-helper
+;;; eh-devtools.el --- Tools for emacs-helper    -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright 2015 Feng Shu
@@ -56,9 +56,5 @@
 
 ;; * Footer
 (provide 'eh-devtools)
-
-;; Local Variables:
-;; no-byte-compile: t
-;; End:
 
 ;;; eh-devtools.el ends here

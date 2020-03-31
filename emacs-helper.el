@@ -1,4 +1,4 @@
-;;; emacs-helper.el --- An emacs config collection for Non programmers
+;;; emacs-helper.el --- An emacs config collection for Non programmers    -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright 2016 Feng Shu
@@ -54,7 +54,6 @@
 
 ;; Local Variables:
 ;; coding: utf-8-unix
-;; no-byte-compile: t
 ;; End:
 
 ;;; emacs-helper.el ends here

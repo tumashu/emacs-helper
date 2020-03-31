@@ -1,4 +1,4 @@
-;;; eh-complete.el --- Tumashu's emacs complete configuation
+;;; eh-complete.el --- Tumashu's emacs complete configuation    -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright (c) 2011-2019, Feng Shu
@@ -71,7 +71,7 @@
 
 (if (and (fboundp 'daemonp) (daemonp))
     (add-hook 'after-make-frame-functions
-              (lambda (x)
+              (lambda (_)
                 (global-company-mode)))
   (global-company-mode))
 
@@ -96,7 +96,6 @@
 
 ;; Local Variables:
 ;; coding: utf-8-unix
-;; no-byte-compile: t
 ;; End:
 
 ;;; eh-complete.el ends here

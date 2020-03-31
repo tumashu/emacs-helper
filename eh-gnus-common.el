@@ -1,4 +1,4 @@
-;;; eh-gnus-common.el --- Tumashu's gnus configuation file
+;;; eh-gnus-common.el --- Tumashu's gnus configuation file    -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright (c) 2008-2009, Andy Stewart
@@ -37,12 +37,16 @@
 
 ;; * 代码                                                      :code:
 (require 'gnus)
+(require 'gnus-cache)
+(require 'gnus-cite)
+(require 'gnus-agent)
+(require 'nntp)
 (require 'mm-encode)
 (require 'mm-decode)
 (require 'rfc2047)
 (require 'nnir)
 (require 'gnus-demon)
-(require 'eww :ensure)
+(require 'eww)
 (require 'gnus-select-account)
 (gnus-select-account-enable)
 
@@ -133,7 +137,6 @@
 (setq gnus-treat-fill-long-lines t)                 ; 自动折行
 (setq message-confirm-send t)                       ; 发邮件前需要确认（防止误发）
 (setq message-kill-buffer-on-exit t)                ; 发送邮件后删除buffer
-(setq message-from-style 'angles)                   ; `From' 头的显示风格
 (setq message-syntax-checks '((sender . disabled))) ; 语法检查
 (setq nnmail-expiry-wait 7)                         ; 邮件自动删除的期限 (单位: 天)
 (setq nnmairix-allowfast-default t)                 ; 加快进入搜索结果的组
@@ -218,22 +221,22 @@
                  (lambda ()
                    (interactive)
                    (delete-other-windows)
-                   (previous-line 1)))
+                   (forward-line -1)))
   (local-set-key (kbd "C-n")
                  (lambda ()
                    (interactive)
                    (delete-other-windows)
-                   (next-line 1)))
+                   (forward-line 1)))
   (local-set-key (kbd "<up>")
                  (lambda ()
                    (interactive)
                    (delete-other-windows)
-                   (previous-line 1)))
+                   (forward-line -1)))
   (local-set-key (kbd "<down>")
                  (lambda ()
                    (interactive)
                    (delete-other-windows)
-                   (next-line 1))))
+                   (forward-line 1))))
 
 (add-hook 'gnus-summary-mode-hook #'eh-gnus-summary-setup)
 
@@ -319,7 +322,6 @@
 
 ;; Local Variables:
 ;; coding: utf-8-unix
-;; no-byte-compile: t
 ;; End:
 
 ;;; eh-gnus-common.el ends here

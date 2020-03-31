@@ -1,4 +1,4 @@
-;;; eh-gnus.el --- Tumashu's gnus configuation file
+;;; eh-gnus.el --- Tumashu's gnus configuation file    -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright (c) 2011-2019, Feng Shu
@@ -42,7 +42,9 @@
 
 ;; * 代码                                                      :code:
 (defcustom eh-gnus-personal-file "~/Gnus/eh-gnus-personal.el"
-  "eh-gnus用于存储个人帐号信息的文件")
+  "eh-gnus用于存储个人帐号信息的文件"
+  :group 'emacs-helper
+  :type 'file)
 
 (defun eh-gnus-load ()
   (interactive)
@@ -65,7 +67,6 @@
 
 ;; Local Variables:
 ;; coding: utf-8-unix
-;; no-byte-compile: t
 ;; End:
 
 ;;; eh-gnus.el ends here

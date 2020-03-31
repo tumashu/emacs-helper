@@ -1,4 +1,4 @@
-;;; eh-functions.el --- Tumashu's  emacs functions
+;;; eh-functions.el --- Tumashu's  emacs functions   -*- lexical-binding: t; -*-
 
 
 ;; * Header
@@ -151,7 +151,6 @@ this function  derived from `article-strip-multiple-blank-lines' in
 
 ;; Local Variables:
 ;; coding: utf-8-unix
-;; no-byte-compile: t
 ;; End:
 
 ;;; eh-functions.el ends here

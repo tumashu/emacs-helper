@@ -1,4 +1,4 @@
-;;; eh-installer.el --- Emacs-helper installer
+;;; eh-installer.el --- Emacs-helper installer   -*- lexical-binding: t; -*-
 
 ;; * Header
 ;; Copyright (c) 2011-2019, Feng Shu
@@ -97,7 +97,6 @@
 ;; * Footer
 
 ;; Local Variables:
-;; no-byte-compile: t
 ;; coding: utf-8-unix
 ;; End:
 
