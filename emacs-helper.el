@@ -42,6 +42,7 @@
 ;; 5. 重启 Emacs
 
 ;; * 代码                                                                 :code:
+(setq comp-deferred-compilation t)
 (require 'eh-basic)
 (require 'eh-theme)
 (require 'eh-functions)

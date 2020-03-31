@@ -34,7 +34,6 @@
 ;;; Code:
 
 ;; * 代码                                                                 :code:
-(setq comp-deferred-compilation t)
 (require 'cl-lib)
 
 (defun eh-system-open (path &rest _args)
