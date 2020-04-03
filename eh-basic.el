@@ -401,9 +401,7 @@
 ;; liberime
 (require 'liberime nil t)
 (with-eval-after-load "liberime"
-  (add-hook 'liberime-after-start-hook
-            (lambda ()
-              (liberime-select-schema "luna_pinyin_simp")))
+  (liberime-select-schema "luna_pinyin_simp")
   (setq pyim-default-scheme 'rime-quanpin))
 
 ;; ** parse-time
