@@ -403,11 +403,7 @@
 (with-eval-after-load "liberime"
   (add-hook 'liberime-after-start-hook
             (lambda ()
-              ;; Select schema delay 5 second, make sure
-              ;; `liberime-load' run finish.
-              (run-with-timer
-               7 1
-               (liberime-select-schema "luna_pinyin_simp"))))
+              (liberime-select-schema "luna_pinyin_simp")))
   (setq pyim-default-scheme 'rime-quanpin))
 
 ;; ** parse-time
