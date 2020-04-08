@@ -36,9 +36,6 @@
 ;; * 代码                                                                 :code:
 (require 'cl-lib)
 
-;; GC调优
-(setq gc-cons-threshold 2000000)
-
 (defun eh-system-open (path &rest _args)
   (cond ((string-equal system-type "windows-nt")
          (w32-shell-execute "open" path))
@@ -106,6 +103,10 @@
             (add-to-list 'load-path x)))))))
 
 (eh-update-load-path)
+
+;; GC调优
+(require 'gcmh)
+(gcmh-mode 1)
 
 ;; ** Full name and Email
 (setq user-full-name "Feng Shu")
