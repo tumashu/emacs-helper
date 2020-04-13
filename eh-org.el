@@ -791,6 +791,8 @@
 (setq org-brain-include-file-entries nil)
 (setq org-brain-file-entries-use-title nil)
 (setq org-brain-headline-entry-name-format-string "%2$s")
+(setq org-brain-default-file-parent "brain")
+;; obsolete, delete future
 (setq org-brain-file-from-input-function
       #'(lambda (x) (if (cdr x) (car x) "brain")))
 
