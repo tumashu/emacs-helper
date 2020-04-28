@@ -390,7 +390,10 @@
     (if (listp x)
         (mapcar (lambda (y)
                   (if (cdr y)
-                      (list (pyim-cregexp-build (car y)) (cdr y))
+                      (list (if (equal (car y) "")
+                                ""
+                              (pyim-cregexp-build (car y)))
+                            (cdr y))
                     (list (pyim-cregexp-build (car y)))))
                 x)
       (pyim-cregexp-build x))))
