@@ -104,10 +104,6 @@
 
 (eh-update-load-path)
 
-;; GC调优
-(require 'gcmh)
-(gcmh-mode 1)
-
 ;; ** Full name and Email
 (setq user-full-name "Feng Shu")
 (setq user-mail-address "tumashu@163.com")
@@ -500,6 +496,10 @@
              (y (+ (* 100 cycle) yy)))
         (diary-chinese-anniversary lunar-month lunar-day y mark))
     (diary-chinese-anniversary lunar-month lunar-day year mark)))
+
+;; GC调优
+(require 'gcmh)
+(gcmh-mode 1)
 
 ;; * Footer
 (provide 'eh-basic)
