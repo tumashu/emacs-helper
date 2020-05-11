@@ -402,7 +402,8 @@
       '((t . eh-ivy-cregexp)))
 
 ;; liberime
-(require 'liberime nil t)
+(let ((liberime-auto-build t))
+  (require 'liberime nil t))
 (with-eval-after-load "liberime"
   (liberime-try-select-schema "luna_pinyin_simp")
   (setq pyim-default-scheme 'rime-quanpin))

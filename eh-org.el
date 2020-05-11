@@ -107,8 +107,8 @@
 
 (defun eh-counsel-org-tag-action (orig_func x)
   (funcall orig_func x)
-  (when (functionp 'eh-org-brain-add-entry)
-    (eh-org-brain-add-entry x)
+  (when (functionp 'org-brain-get-entry-from-title)
+    (org-brain-get-entry-from-title x)
     (message ""))
   (when (memq this-command '(ivy-done
                              ivy-alt-done
@@ -854,46 +854,6 @@
     (push entry eh-org-agenda-brain-history)))
 
 (add-hook 'org-agenda-finalize-hook 'eh-org-agenda-brain)
-
-(defun eh-org-brain-add-entry (title)
-  (unless org-id-locations (org-id-locations-load))
-  (let* ((targets (org-brain--all-targets))
-         (id (or (cdr (assoc title targets))
-                 title)))
-    (or
-     ;; Headline entry exists, return it
-     (org-brain-entry-from-id id)
-     ;; File entry
-     (progn
-       (setq id (split-string id "::" t))
-       (let* ((entry-path (org-brain-entry-path
-                           (funcall org-brain-file-from-input-function id)
-                           t))
-              (entry-file (org-brain-path-entry-name entry-path)))
-         (unless (file-exists-p entry-path)
-           (make-directory (file-name-directory entry-path) t)
-           (write-region "" nil entry-path))
-         (if (or (not org-brain-include-file-entries)
-                 (equal (length id) 2)
-                 (not (equal (car id) entry-file)))
-             ;; Create new headline entry in file
-             (org-with-point-at (org-brain-entry-marker entry-file)
-               (if (and (not org-brain-include-file-entries)
-                        (or
-                         ;; Search heading without tags
-                         (save-excursion
-                           (re-search-forward (concat "\n\\* +" (car id) "[ \t]*$") nil t))
-                         ;; Search heading with tags
-                         (save-excursion
-                           (re-search-forward (concat "\n\\* +" (car id) "[ \t]+:.*:$") nil t))))
-                   (org-brain-entry-at-pt)
-                 (goto-char (point-max))
-                 (insert (concat "\n* " (or (cadr id) (car id))))
-                 (let ((new-id (org-id-get-create)))
-                   (run-hooks 'org-brain-new-entry-hook)
-                   (save-buffer)
-                   (list entry-file (or (cadr id) (car id)) new-id))))
-           entry-file))))))
 
 ;; ** org-board
 (require 'org-board)
