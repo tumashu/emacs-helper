@@ -796,6 +796,48 @@
 (setq org-brain-file-from-input-function
       #'(lambda (x) (if (cdr x) (car x) "brain")))
 
+(define-key org-brain-visualize-mode-map "\C-c\C-c" 'eh-org-brain-goto-current)
+
+(defun eh-org-brain-goto-current (&optional same-window)
+  (interactive "P")
+  (org-brain-goto-current)
+  (let ((org-indirect-buffer-display 'current-window))
+    (org-tree-to-indirect-buffer)
+    (eh-org-brain-edit-mode)
+    ;; Hide indirect buffer
+    (rename-buffer (concat " " (buffer-name)))
+    (goto-char (point-max))))
+
+(define-minor-mode eh-org-brain-edit-mode
+  "eh-org-brain-edit-mode"
+  nil " BE" eh-org-brain-edit-mode-map
+  (setq-local
+   header-line-format
+   (substitute-command-keys
+    "\\<eh-org-brain-edit-mode-map>Org-brain entry.  Finish \
+`\\[eh-org-brain-edit-finalize]', abort `\\[eh-org-brain-edit-abort]'.")))
+
+(defun eh-org-brain-edit-finalize ()
+  (interactive)
+  (save-buffer)
+  (kill-buffer-and-window)
+  (ignore-errors
+    (with-current-buffer "*org-brain*"
+      (org-brain--revert-if-visualizing))))
+
+(defun eh-org-brain-edit-abort ()
+  (interactive)
+  (kill-buffer-and-window)
+  (ignore-errors
+    (with-current-buffer "*org-brain*"
+      (org-brain--revert-if-visualizing))))
+
+(defvar eh-org-brain-edit-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map "\C-c\C-c" #'eh-org-brain-edit-finalize)
+    (define-key map "\C-c\C-k" #'eh-org-brain-edit-abort)
+    map))
+
 (defun eh-org-brain-as-tags ()
   (mapcar
    (lambda (x)
