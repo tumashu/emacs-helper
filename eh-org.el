@@ -808,6 +808,12 @@
     (rename-buffer (concat " " (buffer-name)))
     (goto-char (point-max))))
 
+(defvar eh-org-brain-edit-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map "\C-c\C-c" #'eh-org-brain-edit-finalize)
+    (define-key map "\C-c\C-k" #'eh-org-brain-edit-abort)
+    map))
+
 (define-minor-mode eh-org-brain-edit-mode
   "eh-org-brain-edit-mode"
   nil " BE" eh-org-brain-edit-mode-map
@@ -831,12 +837,6 @@
   (ignore-errors
     (with-current-buffer "*org-brain*"
       (org-brain--revert-if-visualizing))))
-
-(defvar eh-org-brain-edit-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map "\C-c\C-c" #'eh-org-brain-edit-finalize)
-    (define-key map "\C-c\C-k" #'eh-org-brain-edit-abort)
-    map))
 
 (defun eh-org-brain-as-tags ()
   (mapcar
