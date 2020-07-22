@@ -94,6 +94,25 @@
         ("TODO")
         nil ""))
 
+(defun eh-org-update-all-tags ()
+  (interactive)
+  (when (yes-or-no-p "确定依照 org-brain 来更新所有 headlines 的 tag 吗? ")
+    (org-map-entries
+     (lambda ()
+       (let ((org-use-tag-inheritance nil))
+         (let (tags parent-tags)
+           (dolist (tag (org-get-tags))
+             (setq parent-tags
+                   (mapcar (lambda
+                             (x) (nth 1 x))
+                           (org-brain-parents
+                            (org-brain-get-entry-from-title tag))))
+             (setq tags (delete-dups `(,tag ,@parent-tags ,@tags))))
+           (org-set-tags tags))))
+     nil 'agenda)
+    (org-save-all-org-buffers)
+    (message "Tags 更新完成，最好使用 git diff 对比一下更新前后的内容。")))
+
 (defun eh-org-set-tags-command (&optional _arg)
   (interactive)
   (let ((org-current-tag-alist
