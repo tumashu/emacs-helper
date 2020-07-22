@@ -94,25 +94,6 @@
         ("TODO")
         nil ""))
 
-(defun eh-org-update-all-tags ()
-  (interactive)
-  (when (yes-or-no-p "确定依照 org-brain 来更新所有 headlines 的 tag 吗? ")
-    (org-map-entries
-     (lambda ()
-       (let ((org-use-tag-inheritance nil))
-         (let (tags parent-tags)
-           (dolist (tag (org-get-tags))
-             (setq parent-tags
-                   (mapcar (lambda
-                             (x) (nth 1 x))
-                           (org-brain-parents
-                            (org-brain-get-entry-from-title tag))))
-             (setq tags (delete-dups `(,tag ,@parent-tags ,@tags))))
-           (org-set-tags tags))))
-     nil 'agenda)
-    (org-save-all-org-buffers)
-    (message "Tags 更新完成，最好使用 git diff 对比一下更新前后的内容。")))
-
 (defun eh-org-set-tags-command (&optional _arg)
   (interactive)
   (let ((org-current-tag-alist
@@ -134,9 +115,7 @@
                              ivy-immediate-done))
     (setq counsel-org-tags
           (delete-dups
-           `(,@(eh-org-brain-get-parent-tags x)
-             ,x
-             ,@counsel-org-tags)))
+           `(,x ,@counsel-org-tags)))
     (counsel-org--set-tags)
     (message "")))
 
@@ -483,6 +462,23 @@
     (funcall-interactively #'org-agenda-redo-all)
     (message (substitute-command-keys
               "刷新完成，记得按快捷键 '\\[org-save-all-org-buffers]' 来保存更改。"))))
+
+(defvar eh-org-agenda-query-string-before-matcher nil)
+
+(defun eh-org-make-tags-matcher (orig_fun match)
+  (let* ((result (funcall orig_fun match))
+         (match (or match (car result))))
+    (setq eh-org-agenda-query-string-before-matcher match)
+    (if (and match
+             (stringp match)
+             (string-match-p "[|&+-]" match))
+        result
+      (let* ((entry (org-brain-get-entry-from-title match))
+             (tag (propertize (nth 1 entry) 'id (nth 2 entry)))
+             (parent-tags (eh-org-brain-get-all-parent-tags tag)))
+        (funcall orig_fun (mapconcat #'identity `(,tag ,@parent-tags) "|"))))))
+
+(advice-add 'org-make-tags-matcher :around #'eh-org-make-tags-matcher)
 
 (setq org-agenda-span 'day)
 (setq org-agenda-window-setup 'current-window)
@@ -865,16 +861,30 @@
       (propertize
        (replace-regexp-in-string
         "[^[:alnum:]_@#%]" "" (or (car x) ""))
-       'org-brain-entry x)))
+       'id (cdr x))))
    (org-brain--all-targets)))
 
 (defun eh-org-brain-get-parent-tags (tag)
   (let ((parents (org-brain-parents
                   (org-brain-entry-from-id
-                   (cdr (get-text-property 0 'org-brain-entry tag))))))
-    (mapcar (lambda
-              (x) (nth 1 x))
+                   (get-text-property 0 'id tag)))))
+    (mapcar (lambda (x)
+              (propertize
+               (nth 1 x)
+               'id (nth 2 x)))
             parents)))
+
+(defun eh-org-brain-get-all-parent-tags (tag)
+  (let ((parents (eh-org-brain-get-parent-tags tag))
+        p all)
+    (while parents
+      (setq p (pop parents))
+      (setq parents `(,@parents ,@(eh-org-brain-get-parent-tags p)))
+      (push p all))
+    (delete-dups all)))
+
+;; (eh-org-brain-get-all-parent-tags
+;;  #("网络安全" 0 4 (id "11e8046f-a5af-43f3-985b-9daa866fed54")))
 
 (defvar eh-org-agenda-brain-history nil)
 
@@ -908,7 +918,7 @@
                (search-forward "Headlines with TAGS match: " nil t)))
     (let ((entry
            (cl-find-if (lambda (x)
-                         (equal (nth 1 x) org-agenda-query-string))
+                         (equal (nth 1 x) eh-org-agenda-query-string-before-matcher))
                        (org-brain-headline-entries))))
       (when entry
         (eh-org-agenda-brain-add-history entry)
