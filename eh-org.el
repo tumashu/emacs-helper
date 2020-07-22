@@ -113,12 +113,13 @@
   (when (memq this-command '(ivy-done
                              ivy-alt-done
                              ivy-immediate-done))
-    (unless (member x counsel-org-tags)
-      (if (y-or-n-p (format "Really remove tag %S?" x))
-          (message "WARN: tag %S has been removed." x)
-        (push x counsel-org-tags)
-        (counsel-org--set-tags)
-        (message "")))))
+    (setq counsel-org-tags
+          (delete-dups
+           `(,@(eh-org-brain-get-parent-tags x)
+             ,x
+             ,@counsel-org-tags)))
+    (counsel-org--set-tags)
+    (message "")))
 
 (advice-add 'counsel-org-tag-action :around #'eh-counsel-org-tag-action)
 
@@ -841,9 +842,20 @@
 (defun eh-org-brain-as-tags ()
   (mapcar
    (lambda (x)
-     (list (replace-regexp-in-string
-            "[^[:alnum:]_@#%]" "" (or (car x) ""))))
+     (list
+      (propertize
+       (replace-regexp-in-string
+        "[^[:alnum:]_@#%]" "" (or (car x) ""))
+       'org-brain-entry x)))
    (org-brain--all-targets)))
+
+(defun eh-org-brain-get-parent-tags (tag)
+  (let ((parents (org-brain-parents
+                  (org-brain-entry-from-id
+                   (cdr (get-text-property 0 'org-brain-entry tag))))))
+    (mapcar (lambda
+              (x) (nth 1 x))
+            parents)))
 
 (defvar eh-org-agenda-brain-history nil)
 
