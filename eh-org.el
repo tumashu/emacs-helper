@@ -485,14 +485,16 @@
 (defun eh-org-make-tags-matcher (orig_fun match)
   (let* ((result (funcall orig_fun match))
          (match (or match (car result))))
-    (setq eh-org-agenda-query-string-before-matcher match)
     (if (and match
              (stringp match)
              (string-match-p "[|&+-]" match))
-        result
+        (progn
+          (setq eh-org-agenda-query-string-before-matcher match)
+          result)
       (let* ((entry (org-brain-get-entry-from-title match))
              (tag (propertize (nth 1 entry) 'id (nth 2 entry)))
              (parent-tags (eh-org-brain-get-all-parent-tags tag)))
+        (setq eh-org-agenda-query-string-before-matcher tag)
         (funcall orig_fun (mapconcat #'identity `(,tag ,@parent-tags) "|"))))))
 
 (advice-add 'org-make-tags-matcher :around #'eh-org-make-tags-matcher)
