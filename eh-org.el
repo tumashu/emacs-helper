@@ -99,12 +99,14 @@
   (when (yes-or-no-p "确定依照 org-brain 来更新所有 headlines 的 tag 吗? ")
     (org-map-entries
      (lambda ()
-       (let ((org-use-tag-inheritance nil))
-         (let (tags)
-           (dolist (tag (org-get-tags))
+       (let ((org-use-tag-inheritance nil)
+             (targets (mapcar #'car (org-brain--all-targets)))
+             tags)
+         (dolist (tag (org-get-tags))
+           (when (member tag targets) ;测试 org-brain 数据库内是否有这个 tag
              (push tag tags)
-             (push (nth 1 (org-brain-get-entry-from-title tag)) tags))
-           (org-set-tags (delete-dups (reverse tags))))))
+             (push (nth 1 (org-brain-get-entry-from-title tag)) tags)))
+         (org-set-tags (delete-dups (reverse tags)))))
      nil 'agenda)
     (org-save-all-org-buffers)
     (message "Tags 更新完成，最好使用 git diff 对比一下更新前后的内容。")))
@@ -904,6 +906,18 @@
 
 ;; (eh-org-brain-get-all-parent-tags
 ;;  #("网络安全" 0 4 (id "11e8046f-a5af-43f3-985b-9daa866fed54")))
+
+(defun eh-org-brain-set-title (&optional entry new-title)
+  (interactive)
+  (let* ((entry (or entry (org-brain-entry-at-pt t)))
+         (title (org-brain-title entry))
+         (new-title (or new-title (read-string "Title: " title))))
+    (when (equal (length new-title) 0)
+      (error "Title must be at least 1 character"))
+    (org-brain-set-title entry new-title)
+    (org-brain-add-nickname entry title)))
+
+(define-key org-brain-visualize-mode-map "t" 'eh-org-brain-set-title)
 
 (defvar eh-org-agenda-brain-history nil)
 
