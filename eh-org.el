@@ -94,6 +94,21 @@
         ("TODO")
         nil ""))
 
+(defun eh-org-tags-update-all ()
+  (interactive)
+  (when (yes-or-no-p "确定依照 org-brain 来更新所有 headlines 的 tag 吗? ")
+    (org-map-entries
+     (lambda ()
+       (let ((org-use-tag-inheritance nil))
+         (let (tags)
+           (dolist (tag (org-get-tags))
+             (push tag tags)
+             (push (nth 1 (org-brain-get-entry-from-title tag)) tags))
+           (org-set-tags (delete-dups (reverse tags))))))
+     nil 'agenda)
+    (org-save-all-org-buffers)
+    (message "Tags 更新完成，最好使用 git diff 对比一下更新前后的内容。")))
+
 (defun eh-org-set-tags-command (&optional _arg)
   (interactive)
   (let ((org-current-tag-alist
@@ -105,19 +120,21 @@
 
 (advice-add 'org-set-tags-command :override #'eh-org-set-tags-command)
 
-(defun eh-counsel-org-tag-action (orig_func x)
-  (funcall orig_func x)
-  (when (functionp 'org-brain-get-entry-from-title)
-    (org-brain-get-entry-from-title x)
-    (message ""))
-  (when (memq this-command '(ivy-done
-                             ivy-alt-done
-                             ivy-immediate-done))
-    (setq counsel-org-tags
-          (delete-dups
-           `(,x ,@counsel-org-tags)))
-    (counsel-org--set-tags)
-    (message "")))
+(defun eh-counsel-org-tag-action (orig_func tag)
+  (funcall orig_func tag)
+  (let ((tag1))
+    (when (functionp 'org-brain-get-entry-from-title)
+      ;; 主要处理 org-brain Nickname
+      (setq tag1 (nth 1 (org-brain-get-entry-from-title tag)))
+      (message ""))
+    (when (memq this-command '(ivy-done
+                               ivy-alt-done
+                               ivy-immediate-done))
+      (setq counsel-org-tags
+            (delete-dups
+             `(,tag ,tag1 ,@counsel-org-tags)))
+      (counsel-org--set-tags)
+      (message ""))))
 
 (advice-add 'counsel-org-tag-action :around #'eh-counsel-org-tag-action)
 
@@ -187,7 +204,7 @@
 (add-hook 'org-mode-hook #'turn-on-auto-revert-mode)
 
 (require 'org-protocol)
-(require 'org-collector)
+;; (require 'org-collector)
 
 ;; ** org-export
 (require 'ox-odt)
@@ -259,10 +276,10 @@
 (org2ctex-mode 1)
 
 ;; ** org-plus-contrib
-(require 'ox-extra)
-;; 如果一个标题包含TAG: “ignore” ,导出latex时直接忽略这个标题，
-;; 但对它的内容没有影响。
-(ox-extras-activate '(latex-header-blocks ignore-headlines))
+;; (require 'ox-extra)
+;; ;; 如果一个标题包含TAG: “ignore” ,导出latex时直接忽略这个标题，
+;; ;; 但对它的内容没有影响。
+;; (ox-extras-activate '(latex-header-blocks ignore-headlines))
 
 ;; ** org-bable设置
 (setq org-confirm-babel-evaluate nil)
