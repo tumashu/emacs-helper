@@ -915,7 +915,8 @@
     (when (equal (length new-title) 0)
       (error "Title must be at least 1 character"))
     (org-brain-set-title entry new-title)
-    (org-brain-add-nickname entry title)))
+    (when (y-or-n-p "Set original title as a nickname of entry? ")
+      (org-brain-add-nickname entry title))))
 
 (define-key org-brain-visualize-mode-map "t" 'eh-org-brain-set-title)
 
