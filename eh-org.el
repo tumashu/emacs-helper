@@ -916,7 +916,8 @@
       (error "Title must be at least 1 character"))
     (org-brain-set-title entry new-title)
     (when (y-or-n-p "Set original title as a nickname of entry? ")
-      (org-brain-add-nickname entry title))))
+      (org-brain-add-nickname entry title))
+    (org-brain--revert-if-visualizing)))
 
 (define-key org-brain-visualize-mode-map "t" 'eh-org-brain-set-title)
 
@@ -933,9 +934,51 @@
         (org-brain-add-child entry (org-brain-children nickname-entry))
         (org-brain-add-friendship entry (org-brain-friends nickname-entry))
         (org-brain-delete-entry nickname-entry t)
-        (org-brain-add-nickname entry nickname)))))
+        (org-brain-add-nickname entry nickname)))
+    (org-brain--revert-if-visualizing)))
 
 (define-key org-brain-visualize-mode-map "N" 'eh-org-brain-add-nickname)
+
+(defun eh-org-brain-remove-nickname (entry nickname)
+  (interactive
+   (let ((e (org-brain-entry-at-pt)))
+     (list e (completing-read
+              "Nickname: "
+              (if (org-brain-filep e)
+                  (ignore-errors
+                    (cdr (assoc "NICKNAMES" (org-brain-keywords e))))
+                (org-entry-get-multivalued-property
+                 (org-brain-entry-marker e)
+                 "NICKNAMES"))))))
+  (if (org-brain-filep entry)
+      (let ((nickname (org-entry-protect-space nickname)))
+        (org-with-point-at (org-brain-entry-marker entry)
+          (goto-char (point-min))
+          (re-search-forward "^#\\+NICKNAMES: +$" nil t)
+          (let* ((begin (point))
+                 (end (line-end-position))
+                 (s (buffer-substring-no-properties begin end)))
+            (delete-region begin end)
+            (insert (mapconcat #'identity (remove nickname (split-string s " ")) " "))
+            (save-buffer))))
+    (org-entry-remove-from-multivalued-property
+     (org-brain-entry-marker entry) "NICKNAMES" nickname)
+    (org-save-all-org-buffers))
+  (org-brain--revert-if-visualizing))
+
+(defun eh-org-brain-entry-nicknames (entry)
+  (let ((lst (if (org-brain-filep entry)
+                 (ignore-errors
+                   (cdr (assoc "NICKNAMES" (org-brain-keywords entry))))
+               (org-entry-get-multivalued-property
+                (org-brain-entry-marker entry)
+                "NICKNAMES"))))
+    (when lst
+      (format "(%s)" (mapconcat #'identity lst "|")))))
+
+(push 'eh-org-brain-entry-nicknames org-brain-vis-current-title-append-functions)
+(setq org-brain-vis-current-title-append-functions
+      (delete-dups org-brain-vis-current-title-append-functions))
 
 (defvar eh-org-agenda-brain-history nil)
 
