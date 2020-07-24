@@ -920,6 +920,26 @@
 
 (define-key org-brain-visualize-mode-map "t" 'eh-org-brain-set-title)
 
+(defun eh-org-brain-add-nickname (entry nickname)
+  (interactive (list (org-brain-entry-at-pt)
+                     (read-string "Nickname: ")))
+  (let* ((targets (org-brain--all-targets))
+         (nickname-entry (org-brain-entry-from-id
+                          (cdr (assoc nickname targets))))
+         (parents (org-brain-parents nickname-entry))
+         (children (org-brain-children nickname-entry))
+         (friends (org-brain-friends nickname-entry)))
+    (if (not entry)
+        (org-brain-add-nickname entry nickname)
+      (when (yes-or-no-p (format "Entry '%s' already exists, merge it to '%s' then delete it? " nickname (nth 1 entry)))
+        (org-brain-add-parent entry parents)
+        (org-brain-add-child entry children)
+        (org-brain-add-friendship entry friends)
+        (org-brain-delete-entry nickname-entry t)
+        (org-brain-add-nickname entry nickname)))))
+
+(define-key org-brain-visualize-mode-map "N" 'eh-org-brain-add-nickname)
+
 (defvar eh-org-agenda-brain-history nil)
 
 (defun eh-org-agenda-brain-button (key entries)
