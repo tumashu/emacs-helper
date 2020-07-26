@@ -980,7 +980,7 @@
 (setq org-brain-vis-current-title-append-functions
       (delete-dups org-brain-vis-current-title-append-functions))
 
-(setq eh-org-brain-group-face
+(setq eh-org-brain-colortags
       '(("red" (:foreground "red"))
         ("green" (:foreground "green"))
         ("blue" (:foreground "blue"))
@@ -991,10 +991,10 @@
 (defun eh-org-brain-display-face (orig_fun entry &optional face edge)
   (let* ((tag (cl-some
                #'(lambda (tag)
-                   (car (member tag (mapcar #'car eh-org-brain-group-face))))
+                   (car (member tag (mapcar #'car eh-org-brain-colortags))))
                (org-brain-get-tags entry)))
-         (group-face (cadr (or (assoc tag eh-org-brain-group-face)
-                               (assoc t eh-org-brain-group-face))))
+         (group-face (cadr (or (assoc tag eh-org-brain-colortags)
+                               (assoc t eh-org-brain-colortags))))
          (face (funcall orig_fun entry face edge)))
     (if (listp group-face)
         (append face group-face)
