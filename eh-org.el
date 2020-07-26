@@ -986,7 +986,7 @@
           (new-group (eh-org-brain-get-group entry-at-pt)))
      (list entry-at-pt (completing-read
                         "Group: " `(,new-group
-                                    ,@(mapcar #'car eh-org-brain-group-face))))))
+                                    ,@(mapcar #'car eh-org-brain-group-faces))))))
   (if (org-brain-filep entry)
       ;; File entry
       (org-with-point-at (org-brain-entry-marker entry)
@@ -997,10 +997,12 @@
         (insert (format "#+BRAIN_GROUP: %s\n" group))
         (save-buffer))
     ;; Headline entry
-    (org-entry-put
-     (org-brain-entry-marker entry)
-     "BRAIN_GROUP" group)
-    (save-buffer))
+    (org-with-point-at
+        (org-brain-entry-marker entry)
+      (org-entry-put
+       (org-brain-entry-marker entry)
+       "BRAIN_GROUP" group)
+      (save-buffer)))
   (org-brain--revert-if-visualizing))
 
 (define-key org-brain-visualize-mode-map "G" 'eh-org-brain-set-group)
@@ -1008,9 +1010,10 @@
 (defun eh-org-brain-set-selected-group (group)
   (interactive (list (completing-read
                       "Group: "
-                      (mapcar #'car eh-org-brain-group-face))))
+                      (mapcar #'car eh-org-brain-group-faces))))
   (dolist (entry org-brain-selected)
-    (ignore-errors (eh-org-brain-set-group entry group))))
+    (ignore-errors (eh-org-brain-set-group entry group)))
+  (org-brain-clear-selected))
 
 (define-key org-brain-select-map "g" 'eh-org-brain-set-selected-group)
 
@@ -1018,7 +1021,10 @@
   (if (org-brain-filep entry)
       (ignore-errors
         (cdr (assoc "BRAIN_GROUP" (org-brain-keywords entry))))
-    (org-entry-get (org-brain-entry-marker entry) "BRAIN_GROUP")))
+    (org-with-point-at
+        (org-brain-entry-marker entry)
+      (org-entry-get (org-brain-entry-marker entry)
+                     "BRAIN_GROUP"))))
 
 (setq eh-org-brain-group-faces
       '(("red" (:foreground "red"))
@@ -1039,14 +1045,14 @@
 
 (advice-add 'org-brain-display-face :around #'eh-org-brain-display-face)
 
-(setq org-brain-visualize-sort-function 'eh-org-brain-group<)
-
 (defun eh-org-brain-group< (entry1 entry2)
   (let ((group1 (or (eh-org-brain-get-group entry1) ""))
         (group2 (or (eh-org-brain-get-group entry2) ""))
         (colors (mapcar #'car eh-org-brain-group-faces)))
-    (< (or (cl-position group1 colors) 10000)
-       (or (cl-position group2 colors) 10000))))
+    (< (or (cl-position group1 colors :test #'equal) 10000)
+       (or (cl-position group2 colors :test #'equal) 10000))))
+
+(setq org-brain-visualize-sort-function 'eh-org-brain-group<)
 
 (defvar eh-org-agenda-brain-history nil)
 
