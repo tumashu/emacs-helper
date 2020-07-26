@@ -988,19 +988,31 @@
         ("orange" (:foreground "orange"))
         ("violet" (:foreground "violet"))))
 
+(defun eh-org-brain-find-colortag (entry)
+  (cl-some
+   #'(lambda (tag)
+       (car (member tag (mapcar #'car eh-org-brain-colortags))))
+   (org-brain-get-tags entry)))
+
 (defun eh-org-brain-display-face (orig_fun entry &optional face edge)
-  (let* ((tag (cl-some
-               #'(lambda (tag)
-                   (car (member tag (mapcar #'car eh-org-brain-colortags))))
-               (org-brain-get-tags entry)))
-         (group-face (cadr (or (assoc tag eh-org-brain-colortags)
-                               (assoc t eh-org-brain-colortags))))
-         (face (funcall orig_fun entry face edge)))
-    (if (listp group-face)
-        (append face group-face)
+  (let* ((tag (eh-org-brain-find-colortag entry))
+         (face (funcall orig_fun entry face edge))
+         (colortag-face (cadr (or (assoc tag eh-org-brain-colortags)
+                                  (assoc t eh-org-brain-colortags)))))
+    (if (listp colortag-face)
+        (append face colortag-face)
       face)))
 
 (advice-add 'org-brain-display-face :around #'eh-org-brain-display-face)
+
+(setq org-brain-visualize-sort-function 'eh-org-brain-colortag<)
+
+(defun eh-org-brain-colortag< (entry1 entry2)
+  (let ((colortag1 (or (eh-org-brain-find-colortag entry1) ""))
+        (colortag2 (or (eh-org-brain-find-colortag entry2) ""))
+        (colors (mapcar #'car eh-org-brain-colortags)))
+    (< (or (cl-position colortag1 colors) 10000)
+       (or (cl-position colortag2 colors) 10000))))
 
 (defvar eh-org-agenda-brain-history nil)
 
