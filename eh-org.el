@@ -980,6 +980,28 @@
 (setq org-brain-vis-current-title-append-functions
       (delete-dups org-brain-vis-current-title-append-functions))
 
+(setq eh-org-brain-group-face
+      '(("red" (:foreground "red"))
+        ("green" (:foreground "green"))
+        ("blue" (:foreground "blue"))
+        ("yellow" (:foreground "yellow"))
+        ("orange" (:foreground "orange"))
+        ("violet" (:foreground "violet"))))
+
+(defun eh-org-brain-display-face (orig_fun entry &optional face edge)
+  (let* ((tag (cl-some
+               #'(lambda (tag)
+                   (car (member tag (mapcar #'car eh-org-brain-group-face))))
+               (org-brain-get-tags entry)))
+         (group-face (cadr (or (assoc tag eh-org-brain-group-face)
+                               (assoc t eh-org-brain-group-face))))
+         (face (funcall orig_fun entry face edge)))
+    (if (listp group-face)
+        (append face group-face)
+      face)))
+
+(advice-add 'org-brain-display-face :around #'eh-org-brain-display-face)
+
 (defvar eh-org-agenda-brain-history nil)
 
 (defun eh-org-agenda-brain-button (key entries)
