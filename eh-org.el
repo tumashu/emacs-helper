@@ -980,7 +980,47 @@
 (setq org-brain-vis-current-title-append-functions
       (delete-dups org-brain-vis-current-title-append-functions))
 
-(setq eh-org-brain-colortags
+(defun eh-org-brain-set-group (entry group)
+  (interactive
+   (let* ((entry-at-pt (org-brain-entry-at-pt t))
+          (new-group (eh-org-brain-get-group entry-at-pt)))
+     (list entry-at-pt (completing-read
+                        "Group: " `(,new-group
+                                    ,@(mapcar #'car eh-org-brain-group-face))))))
+  (if (org-brain-filep entry)
+      ;; File entry
+      (org-with-point-at (org-brain-entry-marker entry)
+        (goto-char (point-min))
+        (when (assoc "BRAIN_GROUP" (org-brain-keywords entry))
+          (re-search-forward "^#\\+BRAIN_GROUP:")
+          (kill-whole-line))
+        (insert (format "#+BRAIN_GROUP: %s\n" group))
+        (save-buffer))
+    ;; Headline entry
+    (org-entry-put
+     (org-brain-entry-marker entry)
+     "BRAIN_GROUP" group)
+    (save-buffer))
+  (org-brain--revert-if-visualizing))
+
+(define-key org-brain-visualize-mode-map "G" 'eh-org-brain-set-group)
+
+(defun eh-org-brain-set-selected-group (group)
+  (interactive (list (completing-read
+                      "Group: "
+                      (mapcar #'car eh-org-brain-group-face))))
+  (dolist (entry org-brain-selected)
+    (ignore-errors (eh-org-brain-set-group entry group))))
+
+(define-key org-brain-select-map "g" 'eh-org-brain-set-selected-group)
+
+(defun eh-org-brain-get-group (entry)
+  (if (org-brain-filep entry)
+      (ignore-errors
+        (cdr (assoc "BRAIN_GROUP" (org-brain-keywords entry))))
+    (org-entry-get (org-brain-entry-marker entry) "BRAIN_GROUP")))
+
+(setq eh-org-brain-group-faces
       '(("red" (:foreground "red"))
         ("green" (:foreground "green"))
         ("blue" (:foreground "blue"))
@@ -988,31 +1028,25 @@
         ("orange" (:foreground "orange"))
         ("violet" (:foreground "violet"))))
 
-(defun eh-org-brain-find-colortag (entry)
-  (cl-some
-   #'(lambda (tag)
-       (car (member tag (mapcar #'car eh-org-brain-colortags))))
-   (org-brain-get-tags entry)))
-
 (defun eh-org-brain-display-face (orig_fun entry &optional face edge)
-  (let* ((tag (eh-org-brain-find-colortag entry))
+  (let* ((group (eh-org-brain-get-group entry))
          (face (funcall orig_fun entry face edge))
-         (colortag-face (cadr (or (assoc tag eh-org-brain-colortags)
-                                  (assoc t eh-org-brain-colortags)))))
-    (if (listp colortag-face)
-        (append face colortag-face)
+         (group-face (cadr (or (assoc group eh-org-brain-group-faces)
+                               (assoc t eh-org-brain-group-faces)))))
+    (if (listp group-face)
+        (append face group-face)
       face)))
 
 (advice-add 'org-brain-display-face :around #'eh-org-brain-display-face)
 
-(setq org-brain-visualize-sort-function 'eh-org-brain-colortag<)
+(setq org-brain-visualize-sort-function 'eh-org-brain-group<)
 
-(defun eh-org-brain-colortag< (entry1 entry2)
-  (let ((colortag1 (or (eh-org-brain-find-colortag entry1) ""))
-        (colortag2 (or (eh-org-brain-find-colortag entry2) ""))
-        (colors (mapcar #'car eh-org-brain-colortags)))
-    (< (or (cl-position colortag1 colors) 10000)
-       (or (cl-position colortag2 colors) 10000))))
+(defun eh-org-brain-group< (entry1 entry2)
+  (let ((group1 (or (eh-org-brain-get-group entry1) ""))
+        (group2 (or (eh-org-brain-get-group entry2) ""))
+        (colors (mapcar #'car eh-org-brain-group-faces)))
+    (< (or (cl-position group1 colors) 10000)
+       (or (cl-position group2 colors) 10000))))
 
 (defvar eh-org-agenda-brain-history nil)
 
