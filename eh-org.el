@@ -976,10 +976,8 @@
     (when lst
       (format "(%s)" (mapconcat #'identity lst "|")))))
 
-(push 'eh-org-brain-entry-nicknames org-brain-vis-current-title-append-functions)
-(setq org-brain-vis-current-title-append-functions
-      (delete-dups org-brain-vis-current-title-append-functions))
-
+(add-to-list 'org-brain-vis-current-title-append-functions
+             'eh-org-brain-entry-nicknames)
 
 (defvar eh-org-agenda-brain-history nil)
 
