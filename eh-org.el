@@ -980,6 +980,8 @@
 (setq org-brain-vis-current-title-append-functions
       (delete-dups org-brain-vis-current-title-append-functions))
 
+(defvar org-brain-group-property-name "BRAIN_GROUP")
+
 (defun eh-org-brain-set-group (entry group)
   (interactive
    (let* ((entry-at-pt (org-brain-entry-at-pt t))
@@ -991,17 +993,17 @@
       ;; File entry
       (org-with-point-at (org-brain-entry-marker entry)
         (goto-char (point-min))
-        (when (assoc "BRAIN_GROUP" (org-brain-keywords entry))
-          (re-search-forward "^#\\+BRAIN_GROUP:")
+        (when (assoc org-brain-group-property-name (org-brain-keywords entry))
+          (re-search-forward (format "^#\\+%s:" org-brain-group-property-name))
           (kill-whole-line))
-        (insert (format "#+BRAIN_GROUP: %s\n" group))
+        (insert (format "#+%s: %s\n" org-brain-group-property-name group))
         (save-buffer))
     ;; Headline entry
     (org-with-point-at
         (org-brain-entry-marker entry)
       (org-entry-put
        (org-brain-entry-marker entry)
-       "BRAIN_GROUP" group)
+       org-brain-group-property-name group)
       (save-buffer)))
   (org-brain--revert-if-visualizing))
 
@@ -1018,13 +1020,14 @@
 (define-key org-brain-select-map "g" 'eh-org-brain-set-selected-group)
 
 (defun eh-org-brain-get-group (entry)
-  (if (org-brain-filep entry)
-      (ignore-errors
-        (cdr (assoc "BRAIN_GROUP" (org-brain-keywords entry))))
-    (org-with-point-at
-        (org-brain-entry-marker entry)
-      (org-entry-get (org-brain-entry-marker entry)
-                     "BRAIN_GROUP"))))
+  (let ((org-use-property-inheritance nil))
+    (if (org-brain-filep entry)
+        (ignore-errors
+          (cdr (assoc org-brain-group-property-name (org-brain-keywords entry))))
+      (org-with-point-at
+          (org-brain-entry-marker entry)
+        (org-entry-get (org-brain-entry-marker entry)
+                       org-brain-group-property-name)))))
 
 (setq eh-org-brain-group-faces
       '(("red" (:foreground "red"))
