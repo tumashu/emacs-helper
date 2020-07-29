@@ -928,38 +928,48 @@
   (interactive (list (org-brain-entry-at-pt)
                      (read-string "Nickname: ")))
   (let* ((targets (org-brain--all-targets))
-         (nickname-entry (org-brain-entry-from-id
-                          (cdr (assoc nickname targets)))))
+         (nickname-entry
+          (org-brain-entry-from-id
+           (cdr (assoc nickname targets)))))
     (if (not nickname-entry)
         (org-brain-add-nickname entry nickname)
-      (when (yes-or-no-p (format "Entry '%s' already exists, merge it to '%s' then delete it? " nickname (nth 1 entry)))
-        (org-brain-add-parent entry (org-brain-parents nickname-entry))
-        (org-brain-add-child entry (org-brain-children nickname-entry))
-        (org-brain-add-friendship entry (org-brain-friends nickname-entry))
-        ;; org brain resources
-        (dolist (link (org-brain-resources nickname-entry))
-          (org-brain-add-resource
-           (car link)
-           (format "%s: %s" nickname (cdr link))
-           nil entry))
-        ;; org brain text
-        (let ((text (org-brain-text nickname-entry)))
-          (when (> (length (replace-regexp-in-string "[[:space:]\n]+" "" text)) 0)
-            (org-with-point-at (org-brain-entry-marker entry)
-              (save-excursion
-                (org-back-to-heading t)
-                (org-end-of-subtree t t)
-                (when (org-at-heading-p) (backward-char 1))
-                (insert text)))))
-        ;; Attachment
-        (let ((attach (org-with-point-at (org-brain-entry-marker nickname-entry)
-                        (org-attach-dir))))
-          (org-brain-add-resource
-           (format "file:%s" (file-name-as-directory attach))
-           (format "%s: /" nickname)
-           nil entry))
-        (org-brain-delete-entry nickname-entry t)
-        (org-brain-add-nickname entry nickname)))
+      (when (yes-or-no-p
+             (format "Entry '%s' already exists, merge it to '%s' then delete? "
+                     nickname (nth 1 entry)))
+        (eh-org-brain-merge entry nickname-entry)))))
+
+(defun eh-org-brain-merge (entry entry2)
+  "Merge ENTRY2 to ENTRY, and set ENTRY2's title as a nickname of ENTRY."
+  (let ((title2 (org-brain-title entry2)))
+    ;; Merge parent, children and friends
+    (org-brain-add-parent entry (org-brain-parents entry2))
+    (org-brain-add-child entry (org-brain-children entry2))
+    (org-brain-add-friendship entry (org-brain-friends entry2))
+    ;; Merge org brain resources
+    (dolist (link (org-brain-resources entry2))
+      (org-brain-add-resource
+       (car link)
+       (format "%s: %s" title2 (cdr link))
+       nil entry))
+    ;; Merge org brain text
+    (let ((text (org-brain-text entry2)))
+      (when (> (length (replace-regexp-in-string "[[:space:]\n]+" "" text)) 0)
+        (org-with-point-at (org-brain-entry-marker entry)
+          (save-excursion
+            (org-back-to-heading t)
+            (org-end-of-subtree t t)
+            (when (org-at-heading-p) (backward-char 1))
+            (insert text)))))
+    ;; Merge attachment
+    (let ((attach (org-with-point-at (org-brain-entry-marker entry2)
+                    (org-attach-dir))))
+      (when attach
+        (org-brain-add-resource
+         (format "file:%s" (file-name-as-directory attach))
+         (format "%s: /" title2)
+         nil entry)))
+    (org-brain-delete-entry entry2 t)
+    (org-brain-add-nickname entry title2)
     (org-brain--revert-if-visualizing)))
 
 (define-key org-brain-visualize-mode-map "N" 'eh-org-brain-add-nickname)
