@@ -936,6 +936,28 @@
         (org-brain-add-parent entry (org-brain-parents nickname-entry))
         (org-brain-add-child entry (org-brain-children nickname-entry))
         (org-brain-add-friendship entry (org-brain-friends nickname-entry))
+        ;; org brain resources
+        (dolist (link (org-brain-resources nickname-entry))
+          (org-brain-add-resource
+           (car link)
+           (format "%s: %s" nickname (cdr link))
+           nil entry))
+        ;; org brain text
+        (let ((text (org-brain-text nickname-entry)))
+          (when (> (length (replace-regexp-in-string "[[:space:]\n]+" "" text)) 0)
+            (org-with-point-at (org-brain-entry-marker entry)
+              (save-excursion
+                (org-back-to-heading t)
+                (org-end-of-subtree t t)
+                (when (org-at-heading-p) (backward-char 1))
+                (insert text)))))
+        ;; Attachment
+        (let ((attach (org-with-point-at (org-brain-entry-marker nickname-entry)
+                        (org-attach-dir))))
+          (org-brain-add-resource
+           (format "file:%s" (file-name-as-directory attach))
+           (format "%s: /" nickname)
+           nil entry))
         (org-brain-delete-entry nickname-entry t)
         (org-brain-add-nickname entry nickname)))
     (org-brain--revert-if-visualizing)))
