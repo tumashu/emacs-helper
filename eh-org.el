@@ -938,23 +938,34 @@
                      nickname (nth 1 entry)))
         (eh-org-brain-merge entry nickname-entry)))))
 
-(defun eh-org-brain-merge (entry entry2)
-  "Merge ENTRY2 to ENTRY, and set ENTRY2's title as a nickname of ENTRY."
-  (let ((title2 (org-brain-title entry2)))
-    ;; Merge parent, children and friends
-    (org-brain-add-parent entry (org-brain-parents entry2))
-    (org-brain-add-child entry (org-brain-children entry2))
-    (org-brain-add-friendship entry (org-brain-friends entry2))
+(defun eh-org-brain-merge (entry1 entry2)
+  "Merge ENTRY2 to ENTRY1, and set ENTRY2's title as a nickname of ENTRY1."
+  (let ((title2 (org-brain-title entry2))
+        (entry1-id (nth 2 entry1))
+        (entry2-id (nth 2 entry2))
+        (entry2-parent (org-brain-parents entry2))
+        (entry2-children (org-brain-children entry2))
+        (entry2-friends (org-brain-friends entry2))
+        (entry1-tags (org-brain-get-tags entry1))
+        (entry2-tags (org-brain-get-tags entry2)))
+    ;; Merge tags
+    (when entry2-tags
+      (org-with-point-at (org-brain-entry-marker entry1)
+        (org-set-tags (delete-dups (remove nil `(,@entry1-tags ,@entry2-tags))))))
+    ;; Merge parent, children and friends1
+    (org-brain-add-parent entry1 entry2-parent)
+    (org-brain-add-child entry1 entry2-children)
+    (org-brain-add-friendship entry1 entry2-friends)
     ;; Merge org brain resources
     (dolist (link (org-brain-resources entry2))
       (org-brain-add-resource
        (car link)
        (format "%s: %s" title2 (cdr link))
-       nil entry))
+       nil entry1))
     ;; Merge org brain text
     (let ((text (org-brain-text entry2)))
       (when (> (length (replace-regexp-in-string "[[:space:]\n]+" "" text)) 0)
-        (org-with-point-at (org-brain-entry-marker entry)
+        (org-with-point-at (org-brain-entry-marker entry1)
           (save-excursion
             (org-back-to-heading t)
             (org-end-of-subtree t t)
@@ -967,9 +978,26 @@
         (org-brain-add-resource
          (format "file:%s" (file-name-as-directory attach))
          (format "%s: /" title2)
-         nil entry)))
+         nil entry1)))
+    ;; Merge edge
+    (dolist (e `(,@entry2-parent ,@entry2-children ,@entry2-friends))
+      (let* ((id (nth 2 e))
+             (entry2-edge
+              (org-with-point-at (org-brain-entry-marker entry2)
+                (org-entry-get
+                 (org-brain-entry-marker entry2)
+                 (format "BRAIN_EDGE_%s" id)))))
+        (when entry2-edge
+          (let ((m (org-brain-entry-marker entry1)))
+            (org-with-point-at m
+              (org-entry-put m (format "BRAIN_EDGE_%s" id) entry2-edge)))
+          (let ((m (org-brain-entry-marker e)))
+            (org-with-point-at m
+              (org-entry-put
+               m (format "BRAIN_EDGE_%s" entry1-id)
+               (org-entry-get m (format "BRAIN_EDGE_%s" entry2-id))))))))
     (org-brain-delete-entry entry2 t)
-    (org-brain-add-nickname entry title2)
+    (org-brain-add-nickname entry1 title2)
     (org-brain--revert-if-visualizing)))
 
 (define-key org-brain-visualize-mode-map "N" 'eh-org-brain-add-nickname)
