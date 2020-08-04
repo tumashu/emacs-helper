@@ -389,7 +389,7 @@
 (define-key org-agenda-mode-map (kbd "SPC") 'eh-org-agenda-show-and-scroll-up)
 (define-key org-agenda-mode-map (kbd "<return>") 'eh-org-agenda-show-and-scroll-up)
 (define-key org-agenda-mode-map (kbd "g") 'eh-org-agenda-redo-all)
-(define-key org-agenda-mode-map (kbd "i") (lambda () (interactive) (org-capture nil "s")))
+(define-key org-agenda-mode-map (kbd "i") 'eh-org-agenda-insert-heading)
 (define-key org-agenda-mode-map (kbd "A") 'org-agenda-archive-default-with-confirmation)
 (define-key org-agenda-mode-map (kbd "h") 'ignore)
 (define-key org-agenda-mode-map (kbd "y") 'ignore)
@@ -431,6 +431,62 @@
          (org-show-all '(drawers))))
       (setq org-agenda-show-window (selected-window)))
     (select-window win)))
+
+(defun eh-org-agenda-insert-heading ()
+  (interactive)
+  (let ((win (selected-window)))
+    (setq eh-org-popedit-info
+          (cons major-mode (current-buffer)))
+    (org-agenda-goto t)
+    (org-insert-heading-respect-content)
+    (let ((org-indirect-buffer-display 'current-window))
+      (org-tree-to-indirect-buffer)
+      ;; 隐藏 indirect buffer
+      (rename-buffer (concat " " (buffer-name))))
+    (org-with-wide-buffer
+     (narrow-to-region (org-entry-beginning-position)
+                       (org-entry-end-position))
+     (org-show-all '(drawers)))
+    (eh-org-popedit-mode 1)))
+
+(defvar eh-org-popedit-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map "\C-c\C-c" #'eh-org-popedit-finalize)
+    (define-key map "\C-c\C-k" #'eh-org-popedit-abort)
+    map))
+
+(defvar eh-org-popedit-info nil)
+
+(define-minor-mode eh-org-popedit-mode
+  "eh-org-popedit-mode"
+  nil " OPE" eh-org-popedit-mode-map
+  (setq-local
+   header-line-format
+   (substitute-command-keys
+    "\\<eh-org-popedit-mode-map>Org Entry.  Finish \
+`\\[eh-org-popedit-finalize]', abort `\\[eh-org-popedit-abort]'.")))
+
+(defun eh-org-popedit-finalize ()
+  (interactive)
+  (save-buffer)
+  (kill-buffer-and-window)
+  (eh-org-popedit-update))
+
+(defun eh-org-popedit-abort ()
+  (interactive)
+  (kill-buffer-and-window)
+  (eh-org-popedit-update))
+
+(defun eh-org-popedit-update ()
+  (ignore-errors
+    (let ((mode (car eh-org-popedit-info))
+          (buffer (cdr eh-org-popedit-info)))
+      (cond ((equal mode 'org-agenda-mode)
+             (with-current-buffer buffer
+               (eh-org-agenda-redo-all)))
+            ((equal mode 'org-brain-visualize-mode)
+             (with-current-buffer buffer
+               (org-brain--revert-if-visualizing)))))))
 
 ;; 加快 agenda 启动速度
 (setq org-agenda-dim-blocked-tasks t)
@@ -839,43 +895,15 @@
 
 (defun eh-org-brain-goto-current (&optional same-window)
   (interactive "P")
+  (setq eh-org-popedit-info
+        (cons major-mode (current-buffer)))
   (org-brain-goto-current)
   (let ((org-indirect-buffer-display 'current-window))
     (org-tree-to-indirect-buffer)
-    (eh-org-brain-edit-mode)
+    (eh-org-popedit-mode 1)
     ;; Hide indirect buffer
     (rename-buffer (concat " " (buffer-name)))
     (goto-char (point-max))))
-
-(defvar eh-org-brain-edit-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map "\C-c\C-c" #'eh-org-brain-edit-finalize)
-    (define-key map "\C-c\C-k" #'eh-org-brain-edit-abort)
-    map))
-
-(define-minor-mode eh-org-brain-edit-mode
-  "eh-org-brain-edit-mode"
-  nil " BE" eh-org-brain-edit-mode-map
-  (setq-local
-   header-line-format
-   (substitute-command-keys
-    "\\<eh-org-brain-edit-mode-map>Org-brain entry.  Finish \
-`\\[eh-org-brain-edit-finalize]', abort `\\[eh-org-brain-edit-abort]'.")))
-
-(defun eh-org-brain-edit-finalize ()
-  (interactive)
-  (save-buffer)
-  (kill-buffer-and-window)
-  (ignore-errors
-    (with-current-buffer "*org-brain*"
-      (org-brain--revert-if-visualizing))))
-
-(defun eh-org-brain-edit-abort ()
-  (interactive)
-  (kill-buffer-and-window)
-  (ignore-errors
-    (with-current-buffer "*org-brain*"
-      (org-brain--revert-if-visualizing))))
 
 (defun eh-org-brain-as-tags ()
   (mapcar
