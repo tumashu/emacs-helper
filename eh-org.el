@@ -440,6 +440,8 @@
             (cons major-mode (current-buffer)))
       (org-agenda-goto t)
       (org-insert-heading-respect-content)
+      (save-excursion
+        (insert "\n\n"))
       (let ((org-indirect-buffer-display 'current-window))
         (org-tree-to-indirect-buffer)
         ;; 隐藏 indirect buffer
