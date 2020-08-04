@@ -434,20 +434,21 @@
 
 (defun eh-org-agenda-insert-heading ()
   (interactive)
-  (let ((win (selected-window)))
-    (setq eh-org-popedit-info
-          (cons major-mode (current-buffer)))
-    (org-agenda-goto t)
-    (org-insert-heading-respect-content)
-    (let ((org-indirect-buffer-display 'current-window))
-      (org-tree-to-indirect-buffer)
-      ;; 隐藏 indirect buffer
-      (rename-buffer (concat " " (buffer-name))))
-    (org-with-wide-buffer
-     (narrow-to-region (org-entry-beginning-position)
-                       (org-entry-end-position))
-     (org-show-all '(drawers)))
-    (eh-org-popedit-mode 1)))
+  (when (y-or-n-p "确定在当前标题下面插入一个新标题么? ")
+    (let ((win (selected-window)))
+      (setq eh-org-popedit-info
+            (cons major-mode (current-buffer)))
+      (org-agenda-goto t)
+      (org-insert-heading-respect-content)
+      (let ((org-indirect-buffer-display 'current-window))
+        (org-tree-to-indirect-buffer)
+        ;; 隐藏 indirect buffer
+        (rename-buffer (concat " " (buffer-name))))
+      (org-with-wide-buffer
+       (narrow-to-region (org-entry-beginning-position)
+                         (org-entry-end-position))
+       (org-show-all '(drawers)))
+      (eh-org-popedit-mode 1))))
 
 (defvar eh-org-popedit-mode-map
   (let ((map (make-sparse-keymap)))
