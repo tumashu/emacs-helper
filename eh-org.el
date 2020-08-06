@@ -436,7 +436,10 @@
   (interactive)
   (when (y-or-n-p "确定在当前标题下面插入一个新标题么? ")
     (let ((win (selected-window))
-          (timestamp
+          (scheduled-timestamp
+           (format-time-string
+            (cdr org-time-stamp-formats)))
+          (created-timestamp
            (format-time-string
             (concat "[" (substring (cdr org-time-stamp-formats) 1 -1) "]"))))
       (setq eh-org-popedit-info
@@ -445,7 +448,9 @@
       (org-insert-heading-respect-content)
       (save-excursion
         (insert "\n\n"))
-      (org-set-property "created" timestamp)
+      (org-set-property "created" created-timestamp)
+      (when (equal (car org-agenda-redo-command) 'org-agenda-list)
+        (org--deadline-or-schedule nil 'scheduled scheduled-timestamp))
       (let ((org-indirect-buffer-display 'current-window))
         (org-tree-to-indirect-buffer)
         ;; 隐藏 indirect buffer
