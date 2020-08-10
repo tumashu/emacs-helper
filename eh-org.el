@@ -43,6 +43,7 @@
 (require 'org)
 
 (define-key org-mode-map (kbd "<f1>") 'eh-org-attach-reveal)
+(define-key org-mode-map (kbd "<f2>") 'eh-org-open-syncthing-dir)
 (define-key org-mode-map (kbd "<f3>") 'share2computer-org)
 
 (defvar eh-org-local-directory
@@ -361,6 +362,38 @@
       (org-back-to-heading t)
       (call-interactively 'org-attach-reveal))))
 
+(defvar eh-org-syncthing-dir "~/01-syncthing")
+
+(defun eh-org-open-syncthing-dir ()
+  (interactive)
+  (let ((dir (file-name-as-directory
+              (expand-file-name eh-org-syncthing-dir))))
+    (when (file-directory-p dir)
+      (let (marker)
+        (when (eq major-mode 'org-agenda-mode)
+          (setq marker (or (get-text-property (point) 'org-hd-marker)
+		           (get-text-property (point) 'org-marker)))
+          (unless marker
+	    (error "No task in current line")))
+        (save-excursion
+          (when marker
+	    (set-buffer (marker-buffer marker))
+	    (goto-char marker))
+          (org-back-to-heading t)
+          (dolist (file (directory-files dir t "01-org-.*"))
+            (when (file-symlink-p file)
+              (delete-file file)))
+          (let* ((attach-dir (file-name-as-directory (org-attach-dir t)))
+                 (name (format "01-org-%s"
+                               (replace-regexp-in-string
+                                "[[:space]]" ""
+                                (replace-regexp-in-string
+                                 file-name-invalid-regexp ""
+                                 (org-get-heading t t t t)))))
+                 (file-link (concat (file-name-as-directory dir) name)))
+            (shell-command (format "ln -s %s %s" attach-dir file-link)))
+          (eh-system-open dir))))))
+
 (defun eh-org-attach-subtree ()
   (interactive)
   (when (yes-or-no-p "确定将 subtree 转移到 attach 目录中？ ")
@@ -385,6 +418,7 @@
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 (define-key org-agenda-mode-map (kbd "<f1>") 'eh-org-attach-reveal)
+(define-key org-agenda-mode-map (kbd "<f2>") 'eh-org-open-syncthing-dir)
 (define-key org-agenda-mode-map (kbd "<f3>") 'share2computer-org)
 (define-key org-agenda-mode-map (kbd "SPC") 'eh-org-agenda-show-and-scroll-up)
 (define-key org-agenda-mode-map (kbd "<return>") 'eh-org-agenda-show-and-scroll-up)
@@ -776,7 +810,7 @@
 
 ;; ** org-download
 (require 'org-download)
-(define-key org-mode-map (kbd "<f2>") 'org-download-screenshot)
+(define-key org-mode-map (kbd "<f4>") 'org-download-screenshot)
 (setq org-download-method 'attach)
 (setq org-download-display-inline-images 'posframe)
 (setq org-download-screenshot-file (concat temporary-file-directory "image.png"))
