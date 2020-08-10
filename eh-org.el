@@ -380,11 +380,11 @@
 	    (set-buffer (marker-buffer marker))
 	    (goto-char marker))
           (org-back-to-heading t)
-          (dolist (file (directory-files dir t "01-org-.*"))
+          (dolist (file (directory-files dir t "000-.*"))
             (when (file-symlink-p file)
               (delete-file file)))
           (let* ((attach-dir (file-name-as-directory (org-attach-dir t)))
-                 (name (format "01-org-%s"
+                 (name (format "000-%s"
                                (replace-regexp-in-string
                                 "[[:space:]]" ""
                                 (replace-regexp-in-string
