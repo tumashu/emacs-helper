@@ -386,7 +386,7 @@
           (let* ((attach-dir (file-name-as-directory (org-attach-dir t)))
                  (name (format "01-org-%s"
                                (replace-regexp-in-string
-                                "[[:space]]" ""
+                                "[[:space:]]" ""
                                 (replace-regexp-in-string
                                  file-name-invalid-regexp ""
                                  (org-get-heading t t t t)))))
