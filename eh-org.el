@@ -757,8 +757,6 @@
 (require 'org-capture)
 
 (global-set-key (kbd "C-c c") 'counsel-org-capture)
-;; 保存的时候强制 refile
-(define-key org-capture-mode-map (kbd "C-c C-c") 'org-capture-refile)
 
 (setq org-capture-templates
       (let ((local-inbox (concat (file-name-as-directory eh-org-local-directory) "INBOX.org")))
