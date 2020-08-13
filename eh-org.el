@@ -429,6 +429,15 @@
 (define-key org-agenda-mode-map (kbd "y") 'ignore)
 (define-key org-agenda-mode-map (kbd "a") 'ignore)
 
+;; 取消下面关于 archive 的快捷键，容易误操作
+(org-defkey org-agenda-mode-map "\C-c\C-x\C-a" 'ignore)
+(org-defkey org-agenda-mode-map "\C-c\C-xa"    'ignore)
+(org-defkey org-agenda-mode-map "\C-c\C-xA"    'ignore)
+(org-defkey org-agenda-mode-map "\C-c\C-x\C-s" 'ignore)
+(org-defkey org-agenda-mode-map "\C-c$"        'ignore)
+(org-defkey org-agenda-mode-map "$"            'ignore)
+
+
 ;; (defun eh-org-agenda-delete-window (&rest args)
 ;;   (delete-other-windows))
 
