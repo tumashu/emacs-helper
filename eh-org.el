@@ -486,11 +486,13 @@
            (format-time-string
             (concat "[" (substring (cdr org-time-stamp-formats) 1 -1) "]"))))
       (setq eh-org-popedit-info
-            (cons major-mode (current-buffer)))
+            (list :major-mode major-mode
+                  :buffer (current-buffer)))
       (org-agenda-goto t)
       (org-insert-heading-respect-content)
       (save-excursion
         (insert "\n\n"))
+      (plist-put eh-org-popedit-info :id (org-id-get-create))
       (org-set-property "created" created-timestamp)
       (when (equal (car org-agenda-redo-command) 'org-agenda-list)
         (org--deadline-or-schedule nil 'scheduled scheduled-timestamp))
@@ -532,13 +534,29 @@
   (kill-buffer-and-window)
   (eh-org-popedit-update))
 
+(defun eh-org-popedit-goto-id (id)
+  (when (equal major-mode 'org-agenda-mode)
+    (goto-char (point-min))
+    (while (let* ((marker (or (get-text-property (point) 'org-hd-marker)
+		              (get-text-property (point) 'org-marker)))
+                  (id1 (save-excursion
+                         (when marker
+	                   (set-buffer (marker-buffer marker))
+	                   (goto-char marker)
+                           (org-id-get)))))
+             (or (not id1)
+                 (not (equal id id1))))
+      (forward-line 1))))
+
 (defun eh-org-popedit-update ()
   (ignore-errors
-    (let ((mode (car eh-org-popedit-info))
-          (buffer (cdr eh-org-popedit-info)))
+    (let ((mode (plist-get eh-org-popedit-info :major-mode))
+          (buffer (plist-get eh-org-popedit-info :buffer))
+          (id (plist-get eh-org-popedit-info :id)))
       (cond ((equal mode 'org-agenda-mode)
              (with-current-buffer buffer
-               (eh-org-agenda-redo-all)))
+               (eh-org-agenda-redo-all)
+               (eh-org-popedit-goto-id id)))
             ((equal mode 'org-brain-visualize-mode)
              (with-current-buffer buffer
                (org-brain--revert-if-visualizing)))))))
@@ -949,7 +967,8 @@
 (defun eh-org-brain-goto-current (&optional same-window)
   (interactive "P")
   (setq eh-org-popedit-info
-        (cons major-mode (current-buffer)))
+        (list :major-mode major-mode
+              :buffer (current-buffer)))
   (org-brain-goto-current)
   (let ((org-indirect-buffer-display 'current-window))
     (org-tree-to-indirect-buffer)
