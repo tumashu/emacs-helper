@@ -44,8 +44,8 @@
   (emms-cache 1))
 
 ;; EMMS 目录
-(setq emms-source-file-default-directory "~/Music")
-(setq emms-directory "~/emacs.d/emms/")
+(setq emms-source-file-default-directory "~/音乐/")
+(setq emms-directory (concat user-emacs-directory "emms"))
 
 (unless (file-directory-p emms-source-file-default-directory)
   (make-directory
