@@ -128,7 +128,7 @@
         (let ((content (buffer-string)))
           (with-temp-buffer
             (insert content)
-            (write-file (concat user-emacs-directory "scratch"))))
+            (write-file (concat user-emacs-directory "*scratch*"))))
         (delete-region (point-min) (point-max))
         (insert initial-scratch-message)
         nil)
@@ -503,10 +503,6 @@
              (y (+ (* 100 cycle) yy)))
         (diary-chinese-anniversary lunar-month lunar-day y mark))
     (diary-chinese-anniversary lunar-month lunar-day year mark)))
-
-;; GC调优
-(require 'gcmh)
-(gcmh-mode 1)
 
 ;; * Footer
 (provide 'eh-basic)
