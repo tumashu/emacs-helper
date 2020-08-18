@@ -53,35 +53,13 @@
 
 ;; ** 其他一些常见的配置例子
 ;; #+BEGIN_EXAMPLE
-;; (add-to-list 'gnus-secondary-select-methods
-;;              '(nnimap "gmail"
-;;                       (nnimap-address "localhost")
-;;                       (nnimap-stream network)))
-
-;; (add-to-list 'gnus-secondary-select-methods
-;;              '(nnimap "163mail"
-;;                       (nnimap-address "localhost")
-;;                       (nnimap-stream network)))
-
-;; (add-to-list 'gnus-secondary-select-methods
-;;              '(nnimap "qqmail"
-;;                       (nnimap-address "localhost")
-;;                       (nnimap-stream network)))
-
-;; (add-to-list 'gnus-secondary-select-methods
-;;       '(nnimap "RSS"
-;;            (nnimap-address "localhost")
-;;            (nnimap-stream shell)
-;;            (nnimap-shell-program
-;;             "/usr/lib/dovecot/imap -o mail_location=maildir:$HOME/Maildir/rss:LAYOUT=fs")))
-
 ;; (setq gnus-select-method
-;;       '(nnimap "gmail"
-;;         (nnimap-address "imap.gmail.com")
+;;       '(nnimap "QQmail"
+;;         (nnimap-address "imap.qq.com")
 ;;         (nnimap-stream ssl)))
 
 ;; (add-to-list 'gnus-secondary-select-methods
-;;       '(nntp "news.gmane.org"))
+;;       '(nntp "news.gmane.io"))
 
 ;; (add-to-list 'gnus-secondary-select-methods
 ;;       '(nntp "news.newsfan.net"))
