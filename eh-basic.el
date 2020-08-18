@@ -144,6 +144,9 @@
 
 ;; ** 设置 emacs 包管理器
 (require 'package)
+(setq package-user-dir
+      (locate-user-emacs-file
+       (format "%s-%s" "elpa" emacs-major-version)))
 (unless package--initialized
   (package-initialize))
 

@@ -53,7 +53,7 @@
         ;; 加载个人帐号信息。
         (load eh-gnus-personal-file)
         ;; 加载 gnus 可共享的配置
-        (use-package eh-gnus-common :ensure nil))
+        (require 'eh-gnus-common))
     (message "eh-gnus个人帐号文件不存在，eh-gnus启动失败!!!")))
 
 (global-set-key (kbd "C-x m") #'(lambda ()
