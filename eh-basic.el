@@ -255,6 +255,9 @@
 (require 'elec-pair)
 (electric-pair-mode 1)
 
+;; ** 处理长行
+(global-so-long-mode 1)
+
 ;; ** switch-window
 (require 'switch-window)
 
