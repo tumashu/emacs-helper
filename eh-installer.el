@@ -90,7 +90,7 @@
   (unless (with-temp-buffer
             (insert-file-contents "~/.emacs")
             (goto-char (point-min))
-            (search-forward "(require 'emacs-helper)"))
+            (search-forward "(require 'emacs-helper)" nil t))
     (append-to-file
      (format (replace-regexp-in-string "%%" ";;" eh-config-template)
              (eh-current-directory)) nil "~/.emacs"))
