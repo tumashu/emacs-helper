@@ -87,9 +87,13 @@
    (eh-get-mirror-packages
     (concat (eh-current-directory) "elpa/")))
   ;; 在 "~/.emacs" 文件中插入配置片断
-  (append-to-file
-   (format (replace-regexp-in-string "%%" ";;" eh-config-template)
-           (eh-current-directory)) nil "~/.emacs")
+  (unless (with-temp-buffer
+            (insert-file-contents "~/.emacs")
+            (goto-char (point-min))
+            (search-forward "(require 'emacs-helper)"))
+    (append-to-file
+     (format (replace-regexp-in-string "%%" ";;" eh-config-template)
+             (eh-current-directory)) nil "~/.emacs"))
   (message "Emacs-helper 安装完成，请重新启动 Emacs"))
 
 (eh-installer)
