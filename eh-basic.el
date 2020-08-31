@@ -306,7 +306,8 @@
       ivy-format-functions-alist
       '((t . ivy-format-function-arrow))
       ivy-display-style 'fancy
-      ivy-use-selectable-prompt t)
+      ivy-use-selectable-prompt t
+      ivy-truncate-lines nil)
 
 (setq ivy-initial-inputs-alist
       '((org-refile . "")
