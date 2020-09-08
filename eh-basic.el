@@ -258,6 +258,10 @@
 ;; ** 处理长行
 (global-so-long-mode 1)
 
+;; ** 处理折行
+(toggle-word-wrap 1)
+(setq word-wrap-by-category t)
+
 ;; ** switch-window
 (require 'switch-window)
 
