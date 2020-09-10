@@ -1170,7 +1170,9 @@
 (defun eh-org-agenda-brain ()
   (when (and org-agenda-query-string
              (save-excursion
-               (search-forward "Headlines with TAGS match: " nil t)))
+               (search-forward "Headlines with TAGS match: " nil t))
+             (not (save-excursion
+                    (search-forward "Brain-" nil t))))
     (let ((entry
            (cl-find-if (lambda (x)
                          (equal (nth 1 x) eh-org-agenda-query-string-before-matcher))
