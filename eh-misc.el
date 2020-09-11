@@ -37,7 +37,7 @@
 
 ;; ** Share to Computer
 (require 'share2computer)
-(add-hook 'share2computer-finish-hook #'eh-system-open)
+;; (add-hook 'share2computer-finish-hook #'eh-system-open)
 
 ;; ** Emacs Application Framework (EAF)
 (when (eq system-type 'gnu/linux)
