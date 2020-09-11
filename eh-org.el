@@ -149,7 +149,7 @@
 (setq org-log-into-drawer t)
 
 ;; org 文件显示内嵌图片的时候，首先缩放一下。
-(setq org-image-actual-width '(600))
+(setq org-image-actual-width t)
 
 ;; 插入日期戳的命令不弹出日历表，太占地方。
 (setq org-read-date-popup-calendar nil)
@@ -226,7 +226,7 @@
 (setq org-export-with-sub-superscripts '{})
 (setq org-use-sub-superscripts '{})
 
-(setq eh-org-mathtoweb-file "~/bin/mathtoweb.jar")
+(setq eh-org-mathtoweb-file "/usr/share/mathtoweb/mathtoweb.jar")
 (setq org-latex-to-mathml-convert-command
       "java -jar %j -unicode -force -df %o %I"
       org-latex-to-mathml-jar-file
@@ -288,26 +288,6 @@
 (setq org-confirm-babel-evaluate nil)
 (setq org-src-fontify-natively t)
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((org . t)
-   ;; (R . t)
-   (ditaa . nil)
-   (dot . nil)
-   (emacs-lisp . t)
-   (gnuplot . t)
-   (haskell . nil)
-   (mscgen . t)
-   (latex . t)
-   (ocaml . nil)
-   (perl . t)
-   (python . nil)
-   (ruby . nil)
-   (screen . nil)
-   ;; (shell . nil)
-   (sql . nil)
-   (sqlite . nil)))
-
 (defun eh-org-align-babel-table (&optional info)
   "Align all tables in the result of the current babel source."
   (interactive)
@@ -330,6 +310,19 @@
 
 (add-hook 'org-babel-after-execute-hook #'eh-org-show-babel-image)
 (add-hook 'org-babel-after-execute-hook #'eh-org-align-babel-table)
+
+;; *** org babel plantuml module
+(require 'ob-plantuml)
+(setq org-plantuml-jar-path "/usr/share/plantuml/plantuml.jar")
+
+;; *** org babel other modules
+(require 'ob-org)
+(require 'ob-ditaa)
+(require 'ob-emacs-lisp)
+(require 'ob-gnuplot)
+(require 'ob-mscgen)
+(require 'ob-latex)
+(require 'ob-python)
 
 ;; ** org-archive
 ;; 使用 org-archive-subtree 时，原来的 header 层级容易被打乱，而且容易
