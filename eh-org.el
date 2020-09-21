@@ -574,6 +574,7 @@
 (setq org-agenda-search-view-force-full-words nil)
 
 (add-to-list 'org-agenda-files eh-org-local-directory t)
+(add-to-list 'org-agenda-files (concat (file-name-as-directory eh-org-local-directory) "orgzly") t)
 
 (defun eh-revert-org-buffers ()
   "Refreshes all opened org buffers."
