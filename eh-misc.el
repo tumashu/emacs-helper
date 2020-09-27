@@ -35,6 +35,16 @@
 
 ;; * 代码                                                      :code:
 
+;; ** hyperbole
+(setq hmouse-middle-flag t)
+(require 'hyperbole)
+(add-hook 'hyperbole-init-hook
+          'hmouse-add-unshifted-smart-keys)
+(add-hook 'hyperbole-init-hook
+          (lambda ()
+            (global-set-key
+             "\C-ch" 'hyperbole-toggle-bindings)))
+
 ;; ** Share to Computer
 (require 'share2computer)
 ;; (add-hook 'share2computer-finish-hook #'eh-system-open)
