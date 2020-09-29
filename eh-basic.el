@@ -60,7 +60,8 @@
 
 (defun eh-find-file (orig-fun &rest args)
   (let ((filename (car args))
-        (cmd (symbol-name this-command)))
+        ;; this-command may be a lambda
+        (cmd (ignore-error (symbol-name this-command))))
     (cond ((eh-fileext-match-p
             filename
             '("pdf" "xps" "oxps" "cbz" "epub" "fb2" "fbz" "djvu"
@@ -71,7 +72,8 @@
             filename
             '("doc" "docx" "xls" "xlsx" "ppt" "pptx" "wps"))
            (eh-system-open filename))
-          ((and (or (string-match "^org-" cmd)
+          ((and cmd
+                (or (string-match "^org-" cmd)
                     (string-match "^eh-org-" cmd))
                 (file-directory-p filename))
            (eh-system-open filename))
