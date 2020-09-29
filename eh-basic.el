@@ -61,7 +61,7 @@
 (defun eh-find-file (orig-fun &rest args)
   (let ((filename (car args))
         ;; this-command may be a lambda
-        (cmd (ignore-error (symbol-name this-command))))
+        (cmd (ignore-errors (symbol-name this-command))))
     (cond ((eh-fileext-match-p
             filename
             '("pdf" "xps" "oxps" "cbz" "epub" "fb2" "fbz" "djvu"
