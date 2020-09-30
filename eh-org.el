@@ -468,37 +468,6 @@
       (setq org-agenda-show-window (selected-window)))
     (select-window win)))
 
-(defun eh-org-agenda-insert-heading ()
-  (interactive)
-  (when (y-or-n-p "确定在当前标题下面插入一个新标题么? ")
-    (let ((win (selected-window))
-          (scheduled-timestamp
-           (format-time-string
-            (cdr org-time-stamp-formats)))
-          (created-timestamp
-           (format-time-string
-            (concat "[" (substring (cdr org-time-stamp-formats) 1 -1) "]"))))
-      (setq eh-org-popedit-info
-            (list :major-mode major-mode
-                  :buffer (current-buffer)))
-      (org-agenda-goto t)
-      (org-insert-heading-respect-content)
-      (save-excursion
-        (insert "\n\n"))
-      (plist-put eh-org-popedit-info :id (org-id-get-create))
-      (org-set-property "created" created-timestamp)
-      (when (equal (car org-agenda-redo-command) 'org-agenda-list)
-        (org--deadline-or-schedule nil 'scheduled scheduled-timestamp))
-      (let ((org-indirect-buffer-display 'current-window))
-        (org-tree-to-indirect-buffer)
-        ;; 隐藏 indirect buffer
-        (rename-buffer (concat " " (buffer-name))))
-      (org-with-wide-buffer
-       (narrow-to-region (org-entry-beginning-position)
-                         (org-entry-end-position))
-       (org-show-all '(drawers)))
-      (eh-org-popedit-mode 1))))
-
 (defvar eh-org-popedit-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map "\C-c\C-c" #'eh-org-popedit-finalize)
@@ -506,10 +475,13 @@
     map))
 
 (defvar eh-org-popedit-info nil)
+(defvar eh-org-popedit-erase-input-when-abort nil)
+(defvar eh-org-popedit-erase-input-success nil)
 
 (define-minor-mode eh-org-popedit-mode
   "eh-org-popedit-mode"
   nil " OPE" eh-org-popedit-mode-map
+  (setq eh-org-popedit-erase-input-success nil)
   (setq-local
    header-line-format
    (substitute-command-keys
@@ -524,6 +496,12 @@
 
 (defun eh-org-popedit-abort ()
   (interactive)
+  (when (and eh-org-popedit-erase-input-when-abort
+             ;; 测试 buffer 是否 narrowed, 防止不小心
+             ;; 把整个文件都清空。
+             (buffer-narrowed-p))
+    (delete-region (point-min) (point-max))
+    (setq eh-org-popedit-erase-input-success t))
   (kill-buffer-and-window)
   (eh-org-popedit-update))
 
@@ -549,10 +527,65 @@
       (cond ((equal mode 'org-agenda-mode)
              (with-current-buffer buffer
                (eh-org-agenda-redo-all)
-               (eh-org-popedit-goto-id id)))
+               (unless eh-org-popedit-erase-input-success
+                 (eh-org-popedit-goto-id id))))
             ((equal mode 'org-brain-visualize-mode)
              (with-current-buffer buffer
-               (org-brain--revert-if-visualizing)))))))
+               (org-brain--revert-if-visualizing))))
+      (setq eh-org-popedit-erase-input-when-abort nil))))
+
+(defun eh-org-agenda-insert-heading ()
+  (interactive)
+  (when (y-or-n-p "确定在当前标题下面插入一个新标题么? ")
+    (let ((win (selected-window))
+          (org-capture-templates
+           '(("t1" "" plain (file "/temp/null.org")
+              "%?
+:PROPERTIES:
+:created: %U
+:END:
+"
+              :immediate-finish t
+              :no-save t)
+             ("t2" "" plain (file "/temp/null.org")
+              "TODO %?
+SCHEDULED: %t
+:PROPERTIES:
+:created: %U
+:END:
+"
+              :immediate-finish t
+              :no-save t)))
+          (key (cond ((equal (car org-agenda-redo-command) 'org-agenda-list)
+                      "t2")
+                     (t "t1"))))
+      (setq eh-org-popedit-info
+            (list :major-mode major-mode
+                  :buffer (current-buffer)))
+      (setq eh-org-popedit-erase-input-when-abort t)
+      (org-agenda-goto t)
+      (org-insert-heading-respect-content)
+      (save-excursion
+        (insert
+         (with-temp-buffer
+           ;; org-capture 报找不到文件的错误，不影响使用，
+           ;; 使用特殊的方式让其不显示报错。
+           (cl-letf (((symbol-function 'message) #'ignore))
+             (ignore-errors
+               (org-capture 0 key)))
+           (buffer-string))))
+      (goto-char (line-end-position))
+      (plist-put eh-org-popedit-info :id (org-id-get-create))
+      (let ((org-indirect-buffer-display 'current-window))
+        (org-tree-to-indirect-buffer)
+        ;; 隐藏 indirect buffer
+        (rename-buffer (concat " " (buffer-name))))
+      (org-with-wide-buffer
+       (narrow-to-region (org-entry-beginning-position)
+                         (org-entry-end-position))
+       (org-show-all '(drawers))
+       (indent-region (point-min) (point-max)))
+      (eh-org-popedit-mode 1))))
 
 ;; 加快 agenda 启动速度
 (setq org-agenda-dim-blocked-tasks t)
