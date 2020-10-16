@@ -226,12 +226,6 @@
 (setq org-export-with-sub-superscripts '{})
 (setq org-use-sub-superscripts '{})
 
-(setq eh-org-mathtoweb-file "/usr/share/mathtoweb/mathtoweb.jar")
-(setq org-latex-to-mathml-convert-command
-      "java -jar %j -unicode -force -df %o %I"
-      org-latex-to-mathml-jar-file
-      eh-org-mathtoweb-file)
-
 ;;; ** export html
 (setq org-html-coding-system 'utf-8)
 (setq org-html-head-include-default-style t)
@@ -317,11 +311,8 @@
 
 ;; *** org babel other modules
 (require 'ob-org)
-(require 'ob-ditaa)
 (require 'ob-emacs-lisp)
-(require 'ob-gnuplot)
 (require 'ob-mscgen)
-(require 'ob-latex)
 (require 'ob-python)
 
 ;; ** org-archive
