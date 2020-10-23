@@ -149,6 +149,8 @@
 (setq package-user-dir
       (locate-user-emacs-file
        (format "%s-%s" "elpa" emacs-major-version)))
+(setq package-gnupghome-dir
+      (expand-file-name "gnupg" package-user-dir))
 (unless package--initialized
   (package-initialize))
 
