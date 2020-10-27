@@ -1110,7 +1110,7 @@ SCHEDULED: %t
            eh-org-agenda-brain-history)
     (push entry eh-org-agenda-brain-history)))
 
-(add-hook 'org-agenda-finalize-hook 'eh-org-agenda-brain)
+;; (add-hook 'org-agenda-finalize-hook 'eh-org-agenda-brain)
 
 ;; ** org-board
 (require 'org-board)
