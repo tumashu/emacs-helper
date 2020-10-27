@@ -686,7 +686,7 @@ SCHEDULED: %t
     (goto-char (point-min))
     (while (re-search-forward org-agenda-breadcrumbs-separator nil t)
       (put-text-property (match-beginning 0) (match-end 0)
-                         'face '(:foreground "green" :bold t)))))
+                         'face '(:foreground "green" :weight bold)))))
 
 (setq org-agenda-prefix-format
       (if (eh-termux-p)
