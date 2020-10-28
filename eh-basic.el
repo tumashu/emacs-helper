@@ -230,7 +230,7 @@
 (setq recentf-show-file-shortcuts-flag nil)
 (setq recentf-exclude
       '("COMMIT" "autoloads" "archive-contents" "eld" "newsrc"
-        ".recentf" "emacs-font-size.conf"
+        ".recentf" "emacs-font-size.conf" "eh-scratch"
         "pyim-dcache-.*"))
 ;; 自动保存recentf文件。
 (add-hook 'find-file-hook #'recentf-save-list)
