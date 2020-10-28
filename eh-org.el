@@ -1058,11 +1058,6 @@ SCHEDULED: %t
 (add-to-list 'org-brain-vis-current-title-append-functions
              'eh-org-brain-entry-nicknames)
 
-;; ** org-board
-(require 'org-board)
-(setq org-board-wget-show-buffer nil)
-(define-key org-mode-map (kbd "C-c o") org-board-keymap)
-
 ;; * Footer
 (provide 'eh-org)
 
