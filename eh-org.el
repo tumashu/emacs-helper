@@ -1058,60 +1058,6 @@ SCHEDULED: %t
 (add-to-list 'org-brain-vis-current-title-append-functions
              'eh-org-brain-entry-nicknames)
 
-(defvar eh-org-agenda-brain-history nil)
-
-(defun eh-org-agenda-brain-button (key entries)
-  (when entries
-    (insert (propertize key 'face 'org-agenda-structure))
-    (let (entry)
-      (while (setq entry (pop entries))
-        (let ((text (nth 1 entry))
-              (id (nth 2 entry)))
-          (insert-text-button
-           (format "[%s]" text)
-           'action `(lambda (_x)
-                      (eh-org-agenda-brain-add-history ',entry)
-                      (org-tags-view nil ,text))
-           'id id
-           'follow-link t
-           'aa2u-text t)
-          (when entries
-            (if (< (length (buffer-substring-no-properties
-                            (line-beginning-position) (line-end-position)))
-                   (* 0.7 (window-width)))
-                (insert " ")
-              (insert "\n")
-              (insert (make-string (length key) ? ))))))
-      (insert "\n"))))
-
-(defun eh-org-agenda-brain ()
-  (when (and org-agenda-query-string
-             (save-excursion
-               (search-forward "Headlines with TAGS match: " nil t))
-             (not (save-excursion
-                    (search-forward "Brain-" nil t))))
-    (let ((entry
-           (cl-find-if (lambda (x)
-                         (equal (nth 1 x) eh-org-agenda-query-string-before-matcher))
-                       (org-brain-headline-entries))))
-      (when entry
-        (eh-org-agenda-brain-add-history entry)
-        (eh-org-agenda-brain-button "Brain-Parents:  " (org-brain-parents entry))
-        (eh-org-agenda-brain-button "Brain-Friends:  " (org-brain-friends entry))
-        (eh-org-agenda-brain-button "Brain-Children: " (org-brain-children entry))
-        (eh-org-agenda-brain-button "Brain-History:  " eh-org-agenda-brain-history)
-        (insert "\n")))))
-
-(defun eh-org-agenda-brain-add-history (entry)
-  (unless (cl-some
-           (lambda (x)
-             (equal (nth 1 entry)
-                    (nth 1 x)))
-           eh-org-agenda-brain-history)
-    (push entry eh-org-agenda-brain-history)))
-
-;; (add-hook 'org-agenda-finalize-hook 'eh-org-agenda-brain)
-
 ;; ** org-board
 (require 'org-board)
 (setq org-board-wget-show-buffer nil)
