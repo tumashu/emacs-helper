@@ -140,8 +140,10 @@
 
 (defun eh-remove-scratch-dir ()
   (interactive)
-  (delete-directory
-   (concat user-emacs-directory "eh-scratch") t))
+  (let ((dir (concat user-emacs-directory "eh-scratch")))
+    (when (yes-or-no-p (format "Remove scratch directory: %S? " dir))
+      (delete-directory dir t)
+      (message "Success remove %S" dir))))
 
 (add-hook 'kill-buffer-query-functions
           #'eh-unkillable-scratch-buffer)
