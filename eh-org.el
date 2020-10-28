@@ -940,20 +940,6 @@ SCHEDULED: %t
 
 (define-key org-brain-visualize-mode-map "t" 'eh-org-brain-set-title)
 
-(defun eh-org-brain-add-nickname (entry nickname)
-  (interactive (list (org-brain-entry-at-pt)
-                     (read-string "Nickname: ")))
-  (let* ((targets (org-brain--all-targets))
-         (nickname-entry
-          (org-brain-entry-from-id
-           (cdr (assoc nickname targets)))))
-    (if (not nickname-entry)
-        (org-brain-add-nickname entry nickname)
-      (when (yes-or-no-p
-             (format "Entry '%s' already exists, merge it to '%s' then delete? "
-                     nickname (nth 1 entry)))
-        (eh-org-brain-merge entry nickname-entry)))))
-
 (defun eh-org-brain-merge (entry1 entry2)
   "Merge ENTRY2 to ENTRY1, and set ENTRY2's title as a nickname of ENTRY1."
   (let ((title2 (org-brain-title entry2))
@@ -1015,6 +1001,20 @@ SCHEDULED: %t
     (org-brain-delete-entry entry2 t)
     (org-brain-add-nickname entry1 title2)
     (org-brain--revert-if-visualizing)))
+
+(defun eh-org-brain-add-nickname (entry nickname)
+  (interactive (list (org-brain-entry-at-pt)
+                     (read-string "Nickname: ")))
+  (let* ((targets (org-brain--all-targets))
+         (nickname-entry
+          (org-brain-entry-from-id
+           (cdr (assoc nickname targets)))))
+    (if (not nickname-entry)
+        (org-brain-add-nickname entry nickname)
+      (when (yes-or-no-p
+             (format "Entry '%s' already exists, merge it to '%s' then delete? "
+                     nickname (nth 1 entry)))
+        (eh-org-brain-merge entry nickname-entry)))))
 
 (define-key org-brain-visualize-mode-map "N" 'eh-org-brain-add-nickname)
 
