@@ -114,8 +114,7 @@
 (setq inhibit-startup-screen t)
 (setq initial-buffer-choice nil)
 (setq initial-major-mode 'emacs-lisp-mode)
-(setq initial-scratch-message
-      ";; This is *scratch* buffer.\n\n")
+(setq initial-scratch-message "")
 
 ;; ** 使用空格缩进
 (setq-default indent-tabs-mode nil)
