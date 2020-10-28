@@ -126,14 +126,22 @@
 (defun eh-unkillable-scratch-buffer ()
   (if (string= (buffer-name (current-buffer)) "*scratch*")
       (progn
-        (let ((content (buffer-string)))
+        (let ((content (buffer-string))
+              (dir (file-name-as-directory
+                    (concat user-emacs-directory "eh-scratch"))))
+          (make-directory dir t)
           (with-temp-buffer
             (insert content)
-            (write-file (concat user-emacs-directory "*scratch*"))))
+            (write-file (concat dir (format-time-string "%Y%m%d-%T")))))
         (delete-region (point-min) (point-max))
         (insert initial-scratch-message)
         nil)
     t))
+
+(defun eh-remove-scratch-dir ()
+  (interactive)
+  (delete-directory
+   (concat user-emacs-directory "eh-scratch") t))
 
 (add-hook 'kill-buffer-query-functions
           #'eh-unkillable-scratch-buffer)
