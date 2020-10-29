@@ -151,6 +151,19 @@
 (setq emms-browser-playlist-info-album-format     "%i- %n")
 (setq emms-browser-playlist-info-title-format     "%i♪ %n")
 
+(defun eh-emms-browser-clean-playlist (_)
+  "简化 playlist, emms-browser 默认生成的 playlist 有缩进，看起来太花。"
+  (with-current-emms-playlist
+    (goto-char (point-min))
+    (while (re-search-forward "^[[:space:]	\t]+" nil t)
+      (replace-match "" nil t))
+    (goto-char (point-min))
+    (while (re-search-forward "^[^♪]+.*\n" nil t)
+      (replace-match "" nil t))
+    (goto-char (point-max))))
+
+(add-hook 'emms-browser-tracks-added-hook #'eh-emms-browser-clean-playlist)
+
 ;; 使用类似 org-mode 的快捷键
 (define-key emms-browser-mode-map (kbd "<tab>") 'emms-browser-toggle-subitems-recursively)
 (define-key emms-browser-mode-map (kbd "<backtab>") 'emms-browser-toggle-subitems-recursively)
