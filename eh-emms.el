@@ -102,9 +102,7 @@
 ;; 显示歌词
 (emms-lyrics 1)
 
-;; Track information, function `emms-info-libtag' need emms-print-metadata
-;; command in emms, which build with: make emms-print-metadata
-;; (setq emms-info-functions '(emms-info-libtag))
+;; Track information
 (setq emms-info-functions '(emms-info-tinytag))
 
 ;; 设置 Playlist 的显示方式
