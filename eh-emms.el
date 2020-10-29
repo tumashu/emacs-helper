@@ -36,7 +36,7 @@
 ;; * 代码                                                      :code:
 (require 'emms)
 (require 'emms-setup)
-(require 'emms-info-libtag)
+(require 'emms-info-tinytag)
 
 (emms-all)
 (emms-default-players)
@@ -104,7 +104,8 @@
 
 ;; Track information, function `emms-info-libtag' need emms-print-metadata
 ;; command in emms, which build with: make emms-print-metadata
-(setq emms-info-functions '(emms-info-libtag))
+;; (setq emms-info-functions '(emms-info-libtag))
+(setq emms-info-functions '(emms-info-tinytag))
 
 ;; 设置 Playlist 的显示方式
 (setq emms-last-played-format-alist
