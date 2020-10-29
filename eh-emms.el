@@ -135,7 +135,7 @@
  (lambda (track)
    (not (funcall (emms-browser-filter-only-recent 30) track))))
 
-;; 设置 emms browser 和 browser-list 中音乐的显示格式
+;; 设置 emms browser 和 playlist 中音乐的显示格式
 (setq emms-browser-info-year-format      "%i+ %n")
 (setq emms-browser-info-genre-format     "%i+ %n")
 (setq emms-browser-info-performer-format "%i+ %n")
@@ -150,6 +150,11 @@
 (setq emms-browser-playlist-info-artist-format    "%i* %n")
 (setq emms-browser-playlist-info-album-format     "%i- %n")
 (setq emms-browser-playlist-info-title-format     "%i♪ %n")
+
+;; 使用类似 org-mode 的快捷键
+(define-key emms-browser-mode-map (kbd "<tab>") 'emms-browser-toggle-subitems-recursively)
+(define-key emms-browser-mode-map (kbd "<backtab>") 'emms-browser-toggle-subitems-recursively)
+(define-key emms-browser-mode-map (kbd "C-c C-c") 'emms-browser-add-tracks-and-play)
 
 ;; * Footer
 (provide 'eh-emms)
