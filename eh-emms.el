@@ -37,6 +37,7 @@
 (require 'emms)
 (require 'emms-setup)
 (require 'emms-info-tinytag)
+(emms-history-load)
 
 (emms-all)
 (emms-default-players)
