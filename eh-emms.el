@@ -90,9 +90,12 @@
   (let ((type (emms-track-type track)))
     (concat "♪ "
             (cond ((eq 'file type)
-                   (file-relative-name
-                    (emms-track-name track)
-                    emms-source-file-default-directory))
+                   (replace-regexp-in-string
+                    (file-name-as-directory
+                     (expand-file-name
+                      emms-source-file-default-directory))
+                    ""
+                    (emms-track-name track)))
                   ((eq 'url type)
                    (emms-format-url-track-name (emms-track-name track)))
                   (t (concat (symbol-name type)
@@ -159,6 +162,12 @@
       (replace-match "" nil t))
     (goto-char (point-min))
     (while (re-search-forward "^[^♪]+.*\n" nil t)
+      (replace-match "" nil t))
+    (while (re-search-forward
+            (file-name-as-directory
+             (expand-file-name
+              emms-source-file-default-directory))
+            nil t)
       (replace-match "" nil t))
     (goto-char (point-max))))
 
