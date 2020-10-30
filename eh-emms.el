@@ -42,9 +42,9 @@
 (emms-default-players)
 (emms-cache 1)
 
-;; EMMS 目录
 (setq emms-source-file-default-directory "~/音乐/")
 (setq emms-directory (concat user-emacs-directory "emms"))
+(setq emms-playlist-buffer-name "*Music*")
 
 (unless (file-directory-p emms-source-file-default-directory)
   (make-directory
