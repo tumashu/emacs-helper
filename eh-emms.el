@@ -37,15 +37,16 @@
 (require 'emms)
 (require 'emms-setup)
 (require 'emms-info-tinytag)
-(emms-history-load)
 
 (emms-all)
 (emms-default-players)
 (emms-cache 1)
 
-(setq emms-source-file-default-directory "~/音乐/")
+(setq emms-source-file-default-directory
+      (or emms-source-file-default-directory
+          (concat user-emacs-directory "emms/Music")))
+
 (setq emms-directory (concat user-emacs-directory "emms"))
-(setq emms-playlist-buffer-name "*Music*")
 
 (unless (file-directory-p emms-source-file-default-directory)
   (make-directory
@@ -88,15 +89,13 @@
       #'eh-emms-track-simple-description)
 
 (defun eh-emms-track-simple-description (track)
-  (let ((type (emms-track-type track)))
+  (let ((type (emms-track-type track))
+        (dir (file-name-as-directory
+              (expand-file-name
+               emms-source-file-default-directory))))
     (concat "♪ "
             (cond ((eq 'file type)
-                   (replace-regexp-in-string
-                    (file-name-as-directory
-                     (expand-file-name
-                      emms-source-file-default-directory))
-                    ""
-                    (emms-track-name track)))
+                   (replace-regexp-in-string dir "" (emms-track-name track)))
                   ((eq 'url type)
                    (emms-format-url-track-name (emms-track-name track)))
                   (t (concat (symbol-name type)
@@ -155,7 +154,7 @@
 (setq emms-browser-playlist-info-album-format     "%i- %n")
 (setq emms-browser-playlist-info-title-format     "%i♪ %n")
 
-(defun eh-emms-browser-clean-playlist (_)
+(defun eh-emms-clean-playlist (&optional _)
   "简化 playlist, emms-browser 默认生成的 playlist 有缩进，看起来太花。"
   (with-current-emms-playlist
     (goto-char (point-min))
@@ -172,12 +171,15 @@
       (replace-match "" nil t))
     (goto-char (point-max))))
 
-(add-hook 'emms-browser-tracks-added-hook #'eh-emms-browser-clean-playlist)
+(add-hook 'emms-browser-tracks-added-hook #'eh-emms-clean-playlist)
 
 ;; 使用类似 org-mode 的快捷键
 (define-key emms-browser-mode-map (kbd "<tab>") 'emms-browser-toggle-subitems-recursively)
 (define-key emms-browser-mode-map (kbd "<backtab>") 'emms-browser-toggle-subitems-recursively)
 (define-key emms-browser-mode-map (kbd "C-c C-c") 'emms-browser-add-tracks-and-play)
+
+;; 加载 playlist 历史
+(add-hook 'after-init-hook #'emms-history-load)
 
 ;; * Footer
 (provide 'eh-emms)
