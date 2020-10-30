@@ -42,20 +42,21 @@
 (emms-default-players)
 (emms-cache 1)
 
-(setq emms-source-file-default-directory
-      (or emms-source-file-default-directory
-          (concat user-emacs-directory "emms/Music")))
-
 (setq emms-directory (concat user-emacs-directory "emms"))
-
-(unless (file-directory-p emms-source-file-default-directory)
-  (make-directory
-   (file-name-as-directory
-    emms-source-file-default-directory) t))
 
 (unless (file-directory-p emms-directory)
   (make-directory
    (file-name-as-directory emms-directory) t))
+
+(setq emms-source-file-default-directory
+      (or emms-source-file-default-directory
+          (concat (file-name-as-directory emms-directory) "music")))
+
+(unless (file-directory-p emms-source-file-default-directory)
+  (make-directory
+   (file-name-as-directory
+    emms-source-file-default-directory)
+   t))
 
 ;; 设定EMMS主模式为 Playlist 模式
 (setq emms-playlist-default-major-mode 'emms-playlist-mode)
