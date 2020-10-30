@@ -40,8 +40,7 @@
 
 (emms-all)
 (emms-default-players)
-(when (fboundp 'emms-cache)
-  (emms-cache 1))
+(emms-cache 1)
 
 ;; EMMS 目录
 (setq emms-source-file-default-directory "~/音乐/")
@@ -103,6 +102,7 @@
 (emms-lyrics 1)
 
 ;; Track information
+(setq emms-info-tinytag-python-name "python3")
 (setq emms-info-functions '(emms-info-tinytag))
 
 ;; 设置 Playlist 的显示方式
