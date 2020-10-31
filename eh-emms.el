@@ -35,8 +35,8 @@
 
 ;; * 代码                                                      :code:
 
-;; 添加 albumartist 设置，tinytag 会抓取这个设置。
-;; 注意：这是变量必须在 emms-tag-editor 之前设置。
+;; 添加 albumartist，tinytag 会抓取这个设置。
+;; 注意：这是变量必须在 emms-tag-editor 加载之前设置。
 (setq emms-tag-editor-tags
       '((info-artist      . "a")
         (info-albumartist . "A")
@@ -226,6 +226,7 @@
 ;; 加载 playlist 历史
 (add-hook 'after-init-hook #'emms-history-load)
 
+;; 设置 mid3v2
 (push '("mp3" "mid3v2"
         ((info-artist      . "a")
          (info-title       . "t")
