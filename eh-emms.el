@@ -34,6 +34,22 @@
 ;;; Code:
 
 ;; * 代码                                                      :code:
+
+;; 添加 albumartist 设置，tinytag 会抓取这个设置。
+;; 注意：这是变量必须在 emms-tag-editor 之前设置。
+(setq emms-tag-editor-tags
+      '((info-artist      . "a")
+        (info-albumartist . "A")
+        (info-composer    . "C")
+        (info-performer   . "p")
+        (info-title       . "t")
+        (info-album       . "l")
+        (info-tracknumber . "n")
+        (info-year        . "y")
+        (info-genre       . "g")
+        (info-date        . "d")
+        (info-note        . "c")))
+
 (require 'emms)
 (require 'emms-setup)
 (require 'emms-info-tinytag)
@@ -91,6 +107,16 @@
 
 (defvar eh-emms-wash-config nil)
 
+(defun eh-emms-wash-buffer ()
+  (dolist (x eh-emms-wash-config)
+    (goto-char (point-min))
+    (while (re-search-forward
+            (if (nth 2 x)
+                (nth 0 x)
+              (regexp-quote (nth 0 x)))
+            nil t)
+      (replace-match (propertize (nth 1 x) 'face (text-properties-at (point))) nil t))))
+
 (defun eh-emms-wash-config ()
   (interactive)
   (let ((str1 (read-string "请输入需清洗的字符串："))
@@ -102,17 +128,7 @@
      'eh-emms-wash-config
      (delete-dups eh-emms-wash-config))
     (with-current-emms-playlist
-      (eh-emms-wash-1))))
-
-(defun eh-emms-wash-buffer ()
-  (dolist (x eh-emms-wash-config)
-    (goto-char (point-min))
-    (while (re-search-forward
-            (if (nth 2 x)
-                (nth 0 x)
-              (regexp-quote (nth 0 x)))
-            nil t)
-      (replace-match (nth 1 x) nil t))))
+      (eh-emms-wash-buffer))))
 
 (defun eh-emms-track-simple-description (track)
   (let* ((type (emms-track-type track))
@@ -192,7 +208,15 @@
     (eh-emms-wash-buffer)
     (goto-char (point-max))))
 
+(defun eh-emms-browser-wash-browser ()
+  (interactive)
+  (with-current-buffer (emms-browser-get-buffer)
+    (let ((buffer-read-only nil))
+      (save-excursion
+        (eh-emms-wash-buffer)))))
+
 (add-hook 'emms-browser-tracks-added-hook #'eh-emms-browser-wash-playlist)
+;; (add-hook 'emms-browser-show-display-hook #'eh-emms-browser-wash-browser)
 
 ;; 使用类似 org-mode 的快捷键
 (define-key emms-browser-mode-map (kbd "<tab>") 'emms-browser-toggle-subitems-recursively)
@@ -201,6 +225,21 @@
 
 ;; 加载 playlist 历史
 (add-hook 'after-init-hook #'emms-history-load)
+
+(push '("mp3" "mid3v2"
+        ((info-artist      . "a")
+         (info-title       . "t")
+         (info-album       . "A")
+         (info-tracknumber . "T")
+         (info-year        . "y")
+         (info-genre       . "g")
+         (info-note        . "c")
+         ;;-------------------------
+         (info-albumartist . "-TPE2")
+         (info-composer    . "-TCOM")
+         (info-performer   . "-TOPE")
+         (info-date        . "-TDAT")))
+      emms-tag-editor-tagfile-functions)
 
 ;; * Footer
 (provide 'eh-emms)
