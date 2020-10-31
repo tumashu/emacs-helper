@@ -89,18 +89,43 @@
 (setq emms-track-description-function
       #'eh-emms-track-simple-description)
 
+(defvar eh-emms-wash-config nil)
+
+(defun eh-emms-wash-config ()
+  (interactive)
+  (let ((str1 (read-string "请输入需清洗的字符串："))
+        (str2 (read-string "请输入清洗成的字符串："))
+        (regexp-p (y-or-n-p "是否将待清洗的字符串作为 regexp 处理? ")))
+    (when (> (length str1) 0)
+      (push (list str1 str2 regexp-p) eh-emms-wash-config))
+    (customize-save-variable
+     'eh-emms-wash-config
+     (delete-dups eh-emms-wash-config))
+    (with-current-emms-playlist
+      (eh-emms-wash-1))))
+
+(defun eh-emms-wash-buffer ()
+  (dolist (x eh-emms-wash-config)
+    (goto-char (point-min))
+    (while (re-search-forward
+            (if (nth 2 x)
+                (nth 0 x)
+              (regexp-quote (nth 0 x)))
+            nil t)
+      (replace-match (nth 1 x) nil t))))
+
 (defun eh-emms-track-simple-description (track)
-  (let ((type (emms-track-type track))
-        (dir (file-name-as-directory
-              (expand-file-name
-               emms-source-file-default-directory))))
-    (concat "♪ "
-            (cond ((eq 'file type)
-                   (replace-regexp-in-string dir "" (emms-track-name track)))
-                  ((eq 'url type)
-                   (emms-format-url-track-name (emms-track-name track)))
-                  (t (concat (symbol-name type)
-                             ": " (emms-track-name track)))))))
+  (let* ((type (emms-track-type track))
+         (string (cond ((eq 'file type)
+                        (emms-track-name track))
+                       ((eq 'url type)
+                        (emms-format-url-track-name (emms-track-name track)))
+                       (t (concat (symbol-name type)
+                                  ": " (emms-track-name track))))))
+    (with-temp-buffer
+      (insert (concat "♪ " string))
+      (eh-emms-wash-buffer)
+      (buffer-string))))
 
 ;; 显示歌词
 (emms-lyrics 1)
@@ -155,7 +180,7 @@
 (setq emms-browser-playlist-info-album-format     "%i- %n")
 (setq emms-browser-playlist-info-title-format     "%i♪ %n")
 
-(defun eh-emms-clean-playlist (&optional _)
+(defun eh-emms-browser-wash-playlist (&optional _)
   "简化 playlist, emms-browser 默认生成的 playlist 有缩进，看起来太花。"
   (with-current-emms-playlist
     (goto-char (point-min))
@@ -164,15 +189,10 @@
     (goto-char (point-min))
     (while (re-search-forward "^[^♪]+.*\n" nil t)
       (replace-match "" nil t))
-    (while (re-search-forward
-            (file-name-as-directory
-             (expand-file-name
-              emms-source-file-default-directory))
-            nil t)
-      (replace-match "" nil t))
+    (eh-emms-wash-buffer)
     (goto-char (point-max))))
 
-(add-hook 'emms-browser-tracks-added-hook #'eh-emms-clean-playlist)
+(add-hook 'emms-browser-tracks-added-hook #'eh-emms-browser-wash-playlist)
 
 ;; 使用类似 org-mode 的快捷键
 (define-key emms-browser-mode-map (kbd "<tab>") 'emms-browser-toggle-subitems-recursively)
