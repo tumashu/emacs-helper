@@ -188,35 +188,24 @@
 (setq emms-browser-info-artist-format    "%i* %n")
 (setq emms-browser-info-album-format     "%i- %n")
 (setq emms-browser-info-title-format     "%i♪ %n")
-(setq emms-browser-playlist-info-year-format      "%i+ %n")
-(setq emms-browser-playlist-info-genre-format     "%i+ %n")
-(setq emms-browser-playlist-info-performer-format "%i+ %n")
-(setq emms-browser-playlist-info-composer-format  "%i+ %n")
-(setq emms-browser-playlist-info-artist-format    "%i* %n")
-(setq emms-browser-playlist-info-album-format     "%i- %n")
-(setq emms-browser-playlist-info-title-format     "%i♪ %n")
+(setq emms-browser-playlist-info-year-format      "+ %n")
+(setq emms-browser-playlist-info-genre-format     "+ %n")
+(setq emms-browser-playlist-info-performer-format "+ %n")
+(setq emms-browser-playlist-info-composer-format  "+ %n")
+(setq emms-browser-playlist-info-artist-format    "* %n")
+(setq emms-browser-playlist-info-album-format     "- %n")
+(setq emms-browser-playlist-info-title-format     "♪ %n")
 
 (defun eh-emms-browser-wash-playlist (&optional _)
   "简化 playlist, emms-browser 默认生成的 playlist 有缩进，看起来太花。"
   (with-current-emms-playlist
     (goto-char (point-min))
-    (while (re-search-forward "^[[:space:]	\t]+" nil t)
-      (replace-match "" nil t))
-    (goto-char (point-min))
-    (while (re-search-forward "^[^♪]+.*\n" nil t)
+    (while (re-search-forward "^[ ]+" nil t)
       (replace-match "" nil t))
     (eh-emms-wash-buffer)
     (goto-char (point-max))))
 
-(defun eh-emms-browser-wash-browser ()
-  (interactive)
-  (with-current-buffer (emms-browser-get-buffer)
-    (let ((buffer-read-only nil))
-      (save-excursion
-        (eh-emms-wash-buffer)))))
-
 (add-hook 'emms-browser-tracks-added-hook #'eh-emms-browser-wash-playlist)
-;; (add-hook 'emms-browser-show-display-hook #'eh-emms-browser-wash-browser)
 
 ;; 使用类似 org-mode 的快捷键
 (define-key emms-browser-mode-map (kbd "<tab>") 'emms-browser-toggle-subitems-recursively)
