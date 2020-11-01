@@ -256,7 +256,7 @@
         (when (zerop
                (call-process
                 "mid3iconv" nil nil nil "-e" eh-emms-tag-charset file))
-          (message "Update: %S ..." file)
+          (message "Update: %s" file)
           (run-hook-with-args 'emms-info-functions track)))
     (message "Only support files.")))
 
