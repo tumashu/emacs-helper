@@ -34,22 +34,6 @@
 ;;; Code:
 
 ;; * 代码                                                      :code:
-
-;; 添加 albumartist，tinytag 会抓取这个设置。
-;; 注意：这是变量必须在 emms-tag-editor 加载之前设置。
-(setq emms-tag-editor-tags
-      '((info-artist      . "a")
-        (info-albumartist . "A")
-        (info-composer    . "C")
-        (info-performer   . "p")
-        (info-title       . "t")
-        (info-album       . "l")
-        (info-tracknumber . "n")
-        (info-year        . "y")
-        (info-genre       . "g")
-        (info-date        . "d")
-        (info-note        . "c")))
-
 (require 'emms)
 (require 'emms-setup)
 (require 'emms-info-tinytag)
@@ -215,21 +199,44 @@
 ;; 加载 playlist 历史
 (add-hook 'after-init-hook #'emms-history-load)
 
-;; 设置 mid3v2
-(push '("mp3" "mid3v2"
-        ((info-artist      . "a")
-         (info-title       . "t")
-         (info-album       . "A")
-         (info-tracknumber . "T")
-         (info-year        . "y")
-         (info-genre       . "g")
-         (info-note        . "c")
-         ;;-------------------------
-         (info-albumartist . "-TPE2")
-         (info-composer    . "-TCOM")
-         (info-performer   . "-TOPE")
-         (info-date        . "-TDAT")))
-      emms-tag-editor-tagfile-functions)
+;; 设置 emms-tag-editor
+(setq emms-tag-editor-tags
+      '((info-artist      . "a")
+        (info-albumartist . "A")
+        (info-composer    . "C")
+        (info-performer   . "p")
+        (info-title       . "t")
+        (info-album       . "l")
+        (info-tracknumber . "n")
+        (info-year        . "y")
+        (info-genre       . "g")
+        (info-date        . "d")
+        (info-note        . "c")))
+
+(setq emms-tag-editor-formats
+      (let* ((tags (mapcar 'car emms-tag-editor-tags))
+             (default (emms-tag-editor-make-format (remove 'info-date tags))))
+        `(("mp3" . ,default)
+          ("ogg" . ,(emms-tag-editor-make-format (remove 'info-year tags)))
+          ("flac" . ,(emms-tag-editor-make-format (remove 'info-year tags)))
+          ("default" . ,default))))
+
+(setq emms-tag-editor-tagfile-functions
+      '(("mp3" "mid3v2"
+         ((info-artist      . "a")
+          (info-title       . "t")
+          (info-album       . "A")
+          (info-tracknumber . "T")
+          (info-year        . "y")
+          (info-genre       . "g")
+          (info-note        . "c")
+          ;;--------------------------
+          (info-albumartist . "-TPE2")
+          (info-composer    . "-TCOM")
+          (info-performer   . "-TOPE")
+          (info-date        . "-TDAT")))
+        ("ogg" . emms-tag-editor-tag-ogg)
+        ("flac" . emms-tag-editor-tag-flac)))
 
 ;; * Footer
 (provide 'eh-emms)
