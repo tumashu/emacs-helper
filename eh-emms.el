@@ -241,6 +241,33 @@
         ("ogg" . emms-tag-editor-tag-ogg)
         ("flac" . emms-tag-editor-tag-flac)))
 
+(defvar eh-emms-tag-charset "gbk")
+
+(defun eh-emms-tag-editor-fix-tag-charset ()
+  (interactive)
+  (if (emms-mark-has-markedp)
+      (eh-emms-tag-editor-fix-marked-track-tag-charset)
+    (eh-emms-tag-editor-fix-track-tag-charset (emms-tag-editor-track-at))))
+
+(defun eh-emms-tag-editor-fix-track-tag-charset (track)
+  (if (eq (emms-track-get track 'type) 'file)
+      (let ((coding-system-for-read 'utf-8)
+            (file (emms-track-name track)))
+        (when (zerop
+               (call-process
+                "mid3iconv" nil nil nil "-e" eh-emms-tag-charset file))
+          (message "Fix tag charset of %S ..." file)
+          (run-hook-with-args 'emms-info-functions track)))
+    (message "Only support files.")))
+
+(defun eh-emms-tag-editor-fix-marked-track-tag-charset ()
+  (let ((tracks (emms-mark-mapcar-marked-track
+                 'emms-tag-editor-track-at t)))
+    (if (null tracks)
+        (message "No track marked!")
+      (dolist (track tracks)
+        (eh-emms-tag-editor-fix-track-tag-charset track)))))
+
 ;; * Footer
 (provide 'eh-emms)
 
