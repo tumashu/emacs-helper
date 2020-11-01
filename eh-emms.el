@@ -89,6 +89,20 @@
 (setq emms-track-description-function
       #'eh-emms-track-simple-description)
 
+(defun eh-emms-track-simple-description (track)
+  (let* ((type (emms-track-type track))
+         (string (cond ((eq 'file type)
+                        (emms-track-name track))
+                       ((eq 'url type)
+                        (emms-format-url-track-name (emms-track-name track)))
+                       (t (concat (symbol-name type)
+                                  ": " (emms-track-name track))))))
+    (with-temp-buffer
+      (insert (concat "♪ " string))
+      (eh-emms-wash-buffer)
+      (buffer-string))))
+
+;; Playlist 清洗功能
 (defvar eh-emms-wash-config nil)
 
 (defun eh-emms-wash-buffer ()
@@ -113,19 +127,6 @@
      (delete-dups eh-emms-wash-config))
     (with-current-emms-playlist
       (eh-emms-wash-buffer))))
-
-(defun eh-emms-track-simple-description (track)
-  (let* ((type (emms-track-type track))
-         (string (cond ((eq 'file type)
-                        (emms-track-name track))
-                       ((eq 'url type)
-                        (emms-format-url-track-name (emms-track-name track)))
-                       (t (concat (symbol-name type)
-                                  ": " (emms-track-name track))))))
-    (with-temp-buffer
-      (insert (concat "♪ " string))
-      (eh-emms-wash-buffer)
-      (buffer-string))))
 
 ;; 显示歌词
 (emms-lyrics 1)
@@ -184,6 +185,8 @@
   "简化 playlist, emms-browser 默认生成的 playlist 有缩进，看起来太花。"
   (with-current-emms-playlist
     (goto-char (point-min))
+    ;; 这个空格是封面图片的占位符，我不用封面，将其删除。
+    ;; 这样对齐比较好。
     (while (re-search-forward "^[ ]+" nil t)
       (replace-match "" nil t))
     (eh-emms-wash-buffer)
