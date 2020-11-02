@@ -102,7 +102,7 @@
                        (t (concat (symbol-name type)
                                   ": " (emms-track-name track))))))
     (with-temp-buffer
-      (insert (concat " ♪ " string))
+      (insert (concat "  ♪ " string))
       (eh-emms-wash-buffer)
       (buffer-string))))
 
@@ -197,7 +197,7 @@
 (setq emms-browser-playlist-info-composer-format  "%i%n")
 (setq emms-browser-playlist-info-artist-format    "%i%n")
 (setq emms-browser-playlist-info-album-format     "%i%n")
-(setq emms-browser-playlist-info-title-format     " ♪ %n")
+(setq emms-browser-playlist-info-title-format     "  ♪ %n")
 
 (defun eh-emms-browser-wash-playlist (&optional _)
   "简化 playlist, emms-browser 默认生成的 playlist 有缩进，看起来太花。"
