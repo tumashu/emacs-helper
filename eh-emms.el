@@ -83,7 +83,7 @@
       'emms-playlist-sort-by-natural-order)
 
 ;; 在 minibuffer 中显示播放信息 (emms-show)
-(setq emms-show-format "正在播放: %s")
+(setq emms-show-format "正在播放:%s")
 (add-hook 'emms-player-started-hook #'emms-show)
 
 ;; 不在 mode-line 中显示播放信息
