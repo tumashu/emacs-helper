@@ -257,7 +257,7 @@
 (setq eh-emms-tag-editor-pipe-config
       '(("处理MP3中文标签乱码"
          :command "mid3iconv"
-         :arguments ("-e" "gbk" track-name))))
+         :arguments ("-e" "gbk" trace-name))))
 
 (defun eh-emms-tag-editor-pipe-config-get (pipe-name key)
   (plist-get (cdr (assoc pipe-name eh-emms-tag-editor-pipe-config)) key))
@@ -266,9 +266,11 @@
   (let* ((command (eh-emms-tag-editor-pipe-config-get pipe-name :command))
          (arguments
           (mapcar #'(lambda (x)
-                      (if (symbolp x)
-                          (format "<%s>" (upcase (symbol-name x)))
-                        x))
+                      (cond ((symbolp x)
+                             (format "<%s>" (upcase (symbol-name x))))
+                            ((listp x)
+                             (upcase (format "<%s-result>" (car x))))
+                            (t x)))
                   (eh-emms-tag-editor-pipe-config-get pipe-name :arguments))))
     (string-join `(,command ,@arguments) " ")))
 
@@ -294,9 +296,11 @@
              (command (eh-emms-tag-editor-pipe-config-get pipe-name :command))
              (arguments
               (mapcar #'(lambda (x)
-                          (if (symbolp x)
-                              (emms-track-get track (if (eq x 'track-name) 'name x))
-                            x))
+                          (cond ((symbolp x)
+                                 (emms-track-get track (if (eq x 'track-name) 'name x)))
+                                ((listp x)
+                                 (funcall (car x) track))
+                                (t x)))
                       (eh-emms-tag-editor-pipe-config-get pipe-name :arguments))))
         (if (member nil arguments)
             (message "Warn: skip run %S" (string-join `(,command ,@(remove nil arguments)) " "))
