@@ -257,7 +257,7 @@
 (setq eh-emms-tag-editor-pipe-config
       '(("处理MP3中文标签乱码"
          :command "mid3iconv"
-         :arguments ("-e" "gbk" trace-name))))
+         :arguments ("-e" "gbk" track-name))))
 
 (defun eh-emms-tag-editor-pipe-config-get (pipe-name key)
   (plist-get (cdr (assoc pipe-name eh-emms-tag-editor-pipe-config)) key))
