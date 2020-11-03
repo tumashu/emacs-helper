@@ -255,23 +255,21 @@
         ("flac" . emms-tag-editor-tag-flac)))
 
 (setq eh-emms-tag-editor-pipe-config
-      '(("Fix gibberish tag of chinese mp3 file"
+      '(("处理MP3中文标签乱码"
          :command "mid3iconv"
-         :arguments ("-e" "gbk" file)
-         :edit-file-name nil)))
+         :arguments ("-e" "gbk" track-name))))
 
-(defun eh-emms-tag-editor-pipe-config-get (name key)
-  (plist-get (cdr (assoc name eh-emms-tag-editor-pipe-config)) key))
+(defun eh-emms-tag-editor-pipe-config-get (pipe-name key)
+  (plist-get (cdr (assoc pipe-name eh-emms-tag-editor-pipe-config)) key))
 
-(defun eh-emms-tag-editor-pipe-format-command (name &optional file)
-  (let* ((command (eh-emms-tag-editor-pipe-config-get name :command))
-         (file (or file "<file>"))
+(defun eh-emms-tag-editor-pipe-format-command (pipe-name)
+  (let* ((command (eh-emms-tag-editor-pipe-config-get pipe-name :command))
          (arguments
           (mapcar #'(lambda (x)
-                      (if (eq x 'file)
-                          file
+                      (if (symbolp x)
+                          (format "<%s>" (upcase (symbol-name x)))
                         x))
-                  (eh-emms-tag-editor-pipe-config-get name :arguments))))
+                  (eh-emms-tag-editor-pipe-config-get pipe-name :arguments))))
     (string-join `(,command ,@arguments) " ")))
 
 (defun eh-emms-tag-editor-pipe ()
@@ -281,38 +279,41 @@
                               (cons (format "%S (%S)" name (eh-emms-tag-editor-pipe-format-command name))
                                     name)))
                         eh-emms-tag-editor-pipe-config))
-         (pipe (cdr (assoc (completing-read "Please choise pipe: " alist) alist #'equal))))
-    (when pipe
+         (pipe-name (cdr (assoc (completing-read "Please choise pipe: " alist) alist #'equal))))
+    (when pipe-name
       (if (emms-mark-has-markedp)
-          (eh-emms-tag-editor-marked-track-pipe pipe)
+          (eh-emms-tag-editor-marked-track-pipe pipe-name)
         (eh-emms-tag-editor-track-pipe
-         (emms-tag-editor-track-at) pipe)))))
+         (emms-tag-editor-track-at) pipe-name)))))
 
-(defun eh-emms-tag-editor-track-pipe (track pipe)
+(defun eh-emms-tag-editor-track-pipe (track pipe-name)
+  (princ track)
   (if (eq (emms-track-get track 'type) 'file)
       (let* ((coding-system-for-read 'utf-8)
-             (file (emms-track-name track))
-             (command (eh-emms-tag-editor-pipe-config-get pipe :command))
-             (arguments (eh-emms-tag-editor-pipe-config-get pipe :arguments)))
-        (when (zerop
-               (apply #'call-process
-                      command nil nil nil
-                      (mapcar #'(lambda (x)
-                                  (if (eq x 'file)
-                                      file
-                                    x))
-                              arguments)))
-          (message "Run command: %S" (eh-emms-tag-editor-pipe-format-command pipe file))
-          (run-hook-with-args 'emms-info-functions track)))
+             (track-name (emms-track-name track))
+             (command (eh-emms-tag-editor-pipe-config-get pipe-name :command))
+             (arguments
+              (mapcar #'(lambda (x)
+                          (if (symbolp x)
+                              (emms-track-get track (if (eq x 'track-name) 'name x))
+                            x))
+                      (eh-emms-tag-editor-pipe-config-get pipe-name :arguments))))
+        (if (member nil arguments)
+            (message "Warn: skip run %S" (string-join `(,command ,@(remove nil arguments)) " "))
+          (when (zerop
+                 (apply #'call-process
+                        command nil nil nil arguments))
+            (message "Run command: %S" (string-join `(,command ,@arguments) " "))
+            (run-hook-with-args 'emms-info-functions track))))
     (message "Only support files.")))
 
-(defun eh-emms-tag-editor-marked-track-pipe (pipe)
+(defun eh-emms-tag-editor-marked-track-pipe (pipe-name)
   (let ((tracks (emms-mark-mapcar-marked-track
                  'emms-tag-editor-track-at t)))
     (if (null tracks)
         (message "No track marked!")
       (dolist (track tracks)
-        (eh-emms-tag-editor-track-pipe track pipe)))))
+        (eh-emms-tag-editor-track-pipe track pipe-name)))))
 
 ;; * Footer
 (provide 'eh-emms)
