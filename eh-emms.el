@@ -289,7 +289,6 @@
          (emms-tag-editor-track-at) pipe-name)))))
 
 (defun eh-emms-tag-editor-track-pipe (track pipe-name)
-  (princ track)
   (if (eq (emms-track-get track 'type) 'file)
       (let* ((coding-system-for-read 'utf-8)
              (track-name (emms-track-name track))
