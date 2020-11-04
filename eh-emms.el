@@ -37,6 +37,7 @@
 (require 'emms)
 (require 'emms-setup)
 (require 'emms-info-tinytag)
+(require 'emms-info-exiftool)
 
 (emms-all)
 (emms-default-players)
@@ -136,8 +137,39 @@
 (emms-lyrics 1)
 
 ;; Track information
-(setq emms-info-tinytag-python-name "python3")
-(setq emms-info-functions '(emms-info-tinytag))
+;; (setq emms-info-tinytag-python-name "python3")
+;; (setq emms-info-functions '(emms-info-tinytag))
+
+(setq emms-info-functions '(emms-info-exiftool))
+
+(defun emms-info-exiftool (track)
+  "Set TRACK info using exiftool."
+  (when (eq (emms-track-type track) 'file)
+    (with-temp-buffer
+      (when (zerop
+	     (let ((coding-system-for-read 'utf-8))
+	       (call-process "exiftool" nil '(t nil) nil
+			     "-json" (emms-track-name track))))
+	(goto-char (point-min))
+	(condition-case nil
+	    (let ((json-fields (elt (json-read) 0)))
+	      (mapc
+	       (lambda (field-map)
+		 (let ((emms-field (car field-map))
+		       (exiftool-field (cdr field-map)))
+		   (let ((track-field (assoc exiftool-field json-fields)))
+		     (when track-field
+		       (emms-track-set
+			track
+			emms-field
+			(cond ((eq emms-field 'info-playing-time)
+			       (emms-info-exiftool-time))
+                              ((memq emms-field '(info-tracknumber info-year))
+                               (format "%s" (cdr track-field)))
+			      (t (cdr track-field))))))))
+	       emms-info-exiftool-field-map))
+	  (error (message "error while reading track info")))
+	track))))
 
 ;; 设置 Playlist 的显示方式
 (setq emms-last-played-format-alist
