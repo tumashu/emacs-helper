@@ -289,7 +289,7 @@
 (setq eh-emms-tag-editor-pipe-config
       '(("处理MP3中文标签乱码 (mid3iconv -e gbk <file>)"
          :command "mid3iconv"
-         :arguments ("-e" "gbk" ("-t" name) name))
+         :arguments ("-e" "gbk" name))
         ("TEST (echo <artist>-<title>)"
          :command "echo"
          :arguments (lambda (track)
@@ -343,11 +343,13 @@
         (when (and command (listp arguments))
           (if (member nil arguments)
               (message "Warn: skip run %S" (string-join `(,command ,@(remove nil arguments)) " "))
-            (when (zerop
-                   (apply #'call-process
-                          command nil nil nil arguments))
-              (message "Run command: %S" (string-join `(,command ,@arguments) " "))
-              (run-hook-with-args 'emms-info-functions track)))))
+            (if (zerop
+                 (apply #'call-process
+                        command nil nil nil arguments))
+                (progn
+                  (message "Run command: %S" (string-join `(,command ,@arguments) " "))
+                  (run-hook-with-args 'emms-info-functions track))
+              (message "Fail to run command: %S" (string-join `(,command ,@arguments) " "))))))
     (message "Only support files.")))
 
 (defun eh-emms-tag-editor-marked-track-pipe (pipe-name)
