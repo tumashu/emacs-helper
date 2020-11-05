@@ -290,7 +290,10 @@
       '(("处理MP3中文标签乱码 (mid3iconv -e gbk <file>)"
          :command "mid3iconv"
          :arguments ("-e" "gbk" name))
-        ("TEST (echo <artist>-<title>)"
+        ("Test1 (echo -a <name> -c <name>)"
+         :command "echo"
+         :arguments (("-a" name) ("-b" name1) ("-c" name)))
+        ("Test2 (echo <artist>-<title>)"
          :command "echo"
          :arguments (lambda (track)
                       (list (format "%s-%s"
