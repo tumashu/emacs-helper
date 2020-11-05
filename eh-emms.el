@@ -67,7 +67,7 @@
 (setq emms-playlist-default-major-mode 'emms-playlist-mode)
 
 ;; 修复播放完后的 BUG
-(setq emms-player-next-function 'emms-next)
+(setq emms-player-next-function 'emms-next-noerror)
 
 ;; 设定音轨初始化信息
 (add-to-list 'emms-track-initialize-functions
