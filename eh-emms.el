@@ -343,16 +343,17 @@
         (setq arguments
               (flatten-tree
                (remove (list nil) arguments)))
-        (when (and command (listp arguments))
-          (if (member nil arguments)
-              (message "Warn: skip run %S" (string-join `(,command ,@(remove nil arguments)) " "))
-            (if (zerop
-                 (apply #'call-process
-                        command nil nil nil arguments))
-                (progn
-                  (message "Run command: %S" (string-join `(,command ,@arguments) " "))
-                  (run-hook-with-args 'emms-info-functions track))
-              (message "Fail to run command: %S" (string-join `(,command ,@arguments) " "))))))
+        (if (and command (listp arguments))
+            (if (member nil arguments)
+                (message "Warn: skip run %S" (string-join `(,command ,@(remove nil arguments)) " "))
+              (if (zerop
+                   (apply #'call-process
+                          command nil nil nil arguments))
+                  (progn
+                    (message "Run command: %S" (string-join `(,command ,@arguments) " "))
+                    (run-hook-with-args 'emms-info-functions track))
+                (message "Fail to run command: %S" (string-join `(,command ,@arguments) " "))))
+          (message "No command or arguments are found.")))
     (message "Only support files.")))
 
 (defun eh-emms-tag-editor-marked-track-pipe (pipe-name)
