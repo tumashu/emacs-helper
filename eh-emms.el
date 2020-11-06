@@ -295,10 +295,11 @@
          :arguments (("-a" name) ("-b" name1) ("-c" name)))
         ("Test2 (echo <artist>-<title>)"
          :command "echo"
-         :arguments (lambda (track)
-                      (list (format "%s-%s"
-                                    (emms-track-get track 'info-artist)
-                                    (emms-track-get track 'info-title)))))))
+         :arguments
+         (lambda (track)
+           (list (format "%s-%s"
+                         (emms-track-get track 'info-artist)
+                         (emms-track-get track 'info-title)))))))
 
 (defun eh-emms-tag-editor-pipe-config-get (pipe-name key)
   (let ((config eh-emms-tag-editor-pipe-config))
