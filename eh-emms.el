@@ -46,6 +46,7 @@
 (global-set-key (kbd "<f12>") 'emms-smart-browse)
 ;; "+" 按起来麻烦，用 = 省事。
 (define-key emms-playlist-mode-map (kbd "=") 'emms-volume-raise)
+(define-key emms-browser-mode-map (kbd "=") 'emms-volume-raise)
 
 (setq emms-directory (concat user-emacs-directory "emms"))
 
@@ -252,27 +253,26 @@
              (track-name (emms-track-name track))
              (command (eh-emms-tag-editor-pipe-config-get pipe-name :command))
              (arguments (eh-emms-tag-editor-pipe-config-get pipe-name :arguments)))
-        (cond ((functionp arguments)
-               (setq arguments (funcall arguments track)))
-              ((listp arguments)
-               (setq arguments
-                     (mapcar
-                      #'(lambda (x)
-                          (cond ((symbolp x)
-                                 (emms-track-get track x))
-                                ((listp x)
-                                 (let ((list (mapcar
-                                              #'(lambda (y)
-                                                  (if (symbolp y)
-                                                      (emms-track-get track y)
-                                                    y))
-                                              x)))
-                                   (if (member nil list)
-                                       (list nil)
-                                     list)))
-                                (t x)))
-                      arguments)))
-              (t (setq arguments nil)))
+        (when (functionp arguments)
+          (setq arguments (funcall arguments track)))
+        (setq arguments
+              (when (listp arguments)
+                (mapcar
+                 #'(lambda (x)
+                     (cond ((symbolp x)
+                            (emms-track-get track x))
+                           ((listp x)
+                            (let ((list (mapcar
+                                         #'(lambda (y)
+                                             (if (symbolp y)
+                                                 (emms-track-get track y)
+                                               y))
+                                         x)))
+                              (if (member nil list)
+                                  (list nil)
+                                list)))
+                           (t x)))
+                 arguments)))
         (setq arguments
               (flatten-tree
                (remove (list nil) arguments)))
