@@ -142,35 +142,6 @@
 
 (setq emms-info-functions '(emms-info-exiftool))
 
-(defun emms-info-exiftool (track)
-  "Set TRACK info using exiftool."
-  (when (eq (emms-track-type track) 'file)
-    (with-temp-buffer
-      (when (zerop
-	     (let ((coding-system-for-read 'utf-8))
-	       (call-process "exiftool" nil '(t nil) nil
-			     "-json" (emms-track-name track))))
-	(goto-char (point-min))
-	(condition-case nil
-	    (let ((json-fields (elt (json-read) 0)))
-	      (mapc
-	       (lambda (field-map)
-		 (let ((emms-field (car field-map))
-		       (exiftool-field (cdr field-map)))
-		   (let ((track-field (assoc exiftool-field json-fields)))
-		     (when track-field
-		       (emms-track-set
-			track
-			emms-field
-			(cond ((eq emms-field 'info-playing-time)
-			       (emms-info-exiftool-time))
-                              ((memq emms-field '(info-tracknumber info-year))
-                               (format "%s" (cdr track-field)))
-			      (t (cdr track-field))))))))
-	       emms-info-exiftool-field-map))
-	  (error (message "error while reading track info")))
-	track))))
-
 ;; 设置 Playlist 的显示方式
 (setq emms-last-played-format-alist
       '(((emms-last-played-seconds-today) . "%H:%M")
@@ -246,45 +217,6 @@
 
 ;; 加载 playlist 历史
 (add-hook 'after-init-hook #'emms-history-load)
-
-;; 设置 emms-tag-editor
-(setq emms-tag-editor-tags
-      '((info-artist      . "a")
-        (info-albumartist . "A")
-        (info-composer    . "C")
-        (info-performer   . "p")
-        (info-title       . "t")
-        (info-album       . "l")
-        (info-tracknumber . "n")
-        (info-year        . "y")
-        (info-genre       . "g")
-        (info-date        . "d")
-        (info-note        . "c")))
-
-(setq emms-tag-editor-formats
-      (let* ((tags (mapcar 'car emms-tag-editor-tags))
-             (default (emms-tag-editor-make-format (remove 'info-date tags))))
-        `(("mp3" . ,default)
-          ("ogg" . ,(emms-tag-editor-make-format (remove 'info-year tags)))
-          ("flac" . ,(emms-tag-editor-make-format (remove 'info-year tags)))
-          ("default" . ,default))))
-
-(setq emms-tag-editor-tagfile-functions
-      '(("mp3" "mid3v2"
-         ((info-artist      . "a")
-          (info-title       . "t")
-          (info-album       . "A")
-          (info-tracknumber . "T")
-          (info-year        . "y")
-          (info-genre       . "g")
-          (info-note        . "c")
-          ;;--------------------------
-          (info-albumartist . "-TPE2")
-          (info-composer    . "-TCOM")
-          (info-performer   . "-TOPE")
-          (info-date        . "-TDAT")))
-        ("ogg" . emms-tag-editor-tag-ogg)
-        ("flac" . emms-tag-editor-tag-flac)))
 
 (setq eh-emms-tag-editor-pipe-config
       '(("处理MP3中文标签乱码 (mid3iconv -e gbk <file>)"
