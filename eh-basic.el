@@ -172,9 +172,32 @@
 
 (setq package-archives
       `(("eh-elpa" . ,(eh-elpa-directory))
-        ("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-        ("org-cn"   . "http://elpa.emacs-china.org/org/")
-        ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
+        ("melpa-cn" . "https://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/melpa/")
+        ("org-cn"   . "https://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/org/")
+        ("gnu-cn"   . "https://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/gnu/")))
+
+;; ** 找到最快的 elpa 镜像
+(require 'seq)
+(require 'benchmark)
+
+(defun eh-fastest-elpa-mirror ()
+  (interactive)
+  (let ((mirrors '((163         . "https://mirrors.163.com/elpa/melpa/")
+                   (emacs-china . "https://elpa.emacs-china.org/melpa/")
+                   (sjtu        . "https://mirrors.sjtug.sjtu.edu.cn/emacs-elpa/melpa/")
+                   (tencent     . "https://mirrors.cloud.tencent.com/elpa/melpa/")
+                   (tuna        . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/"))))
+    (pp (seq-sort-by #'cdr #'<
+                     (mapcar (lambda (pair)
+                               (let ((name (car pair))
+                                     (url  (cdr pair)))
+                                 (cons name
+                                       (benchmark-elapse
+                                         (url-copy-file
+                                          (concat url "archive-contents")
+                                          null-device
+                                          'OK-IF-ALREADY-EXISTS)))))
+                             mirrors)))))
 
 ;; ** 设置 elpa-mirror
 (require 'elpa-mirror)
