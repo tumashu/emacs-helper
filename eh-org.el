@@ -497,18 +497,26 @@
   (eh-org-popedit-update))
 
 (defun eh-org-popedit-goto-id (id)
-  (when (equal major-mode 'org-agenda-mode)
-    (goto-char (point-min))
-    (while (let* ((marker (or (get-text-property (point) 'org-hd-marker)
-		              (get-text-property (point) 'org-marker)))
-                  (id1 (save-excursion
-                         (when marker
-	                   (set-buffer (marker-buffer marker))
-	                   (goto-char marker)
-                           (org-id-get)))))
-             (or (not id1)
-                 (not (equal id id1))))
-      (forward-line 1))))
+  (let ((point (point))
+        id-found-p)
+    (when (equal major-mode 'org-agenda-mode)
+      (goto-char (point-min))
+      (while (and (not (= (line-end-position) (point-max)))
+                  (let* ((marker (or (get-text-property (point) 'org-hd-marker)
+		                     (get-text-property (point) 'org-marker)))
+                         (id1 (save-excursion
+                                (when marker
+	                          (set-buffer (marker-buffer marker))
+	                          (goto-char marker)
+                                  (org-id-get)))))
+                    (when (equal id id1)
+                      (setq id-found-p t))
+                    (or (not id1)
+                        (not (equal id id1)))))
+        (forward-line 1))
+      (unless id-found-p
+        (goto-char point)
+        (message "注意: 新插入的 headling 在当前视图中没有显示。")))))
 
 (defun eh-org-popedit-update ()
   (ignore-errors
@@ -549,12 +557,14 @@ SCHEDULED: %t
               :no-save t)))
           (key (cond ((equal (car org-agenda-redo-command) 'org-agenda-list)
                       "t2")
-                     (t "t1"))))
+                     (t "t1")))
+          tags)
       (setq eh-org-popedit-info
             (list :major-mode major-mode
                   :buffer (current-buffer)))
       (setq eh-org-popedit-erase-input-when-abort t)
       (org-agenda-goto t)
+      (setq tags (org-get-tags))
       (org-insert-heading-respect-content)
       (save-excursion
         (insert
@@ -566,6 +576,7 @@ SCHEDULED: %t
                (org-capture 0 key)))
            (buffer-string))))
       (goto-char (line-end-position))
+      (org-set-tags tags)
       (plist-put eh-org-popedit-info :id (org-id-get-create))
       (let ((org-indirect-buffer-display 'current-window))
         (org-tree-to-indirect-buffer)
