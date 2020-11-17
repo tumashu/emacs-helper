@@ -564,7 +564,8 @@ SCHEDULED: %t
                   :buffer (current-buffer)))
       (setq eh-org-popedit-erase-input-when-abort t)
       (org-agenda-goto t)
-      (setq tags (org-get-tags))
+      ;; 获取上一个 headline 在 headline 上面直接打的 tag.
+      (setq tags (org-get-tags nil t))
       (org-insert-heading-respect-content)
       (save-excursion
         (insert
@@ -576,6 +577,9 @@ SCHEDULED: %t
                (org-capture 0 key)))
            (buffer-string))))
       (goto-char (line-end-position))
+      ;; 把上一个 Headline 的 tag 打到新插入的 headline,
+      ;; 这样可以确保新插入的 headline 出现在当前视图中，
+      ;; 不过有可能打上不合适的 TAG.
       (org-set-tags tags)
       (plist-put eh-org-popedit-info :id (org-id-get-create))
       (let ((org-indirect-buffer-display 'current-window))
