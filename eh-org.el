@@ -580,7 +580,10 @@ SCHEDULED: %t
       ;; 把上一个 Headline 的 tag 打到新插入的 headline,
       ;; 这样可以确保新插入的 headline 出现在当前视图中，
       ;; 不过有可能打上不合适的 TAG.
-      (org-set-tags tags)
+      (when tags
+        (org-set-tags tags)
+        ;; 一打 tag, 星号后面的空格就没有了。
+        (insert " "))
       (plist-put eh-org-popedit-info :id (org-id-get-create))
       (let ((org-indirect-buffer-display 'current-window))
         (org-tree-to-indirect-buffer)
