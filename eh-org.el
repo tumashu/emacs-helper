@@ -581,7 +581,10 @@ SCHEDULED: %t
       ;; 这样可以确保新插入的 headline 出现在当前视图中，
       ;; 不过有可能打上不合适的 TAG.
       (when tags
-        (org-set-tags tags)
+        (org-set-tags
+         (cl-remove-if (lambda (x)
+                         (member x '("ATTACH" "proj" "ref")))
+                       tags))
         ;; 一打 tag, 星号后面的空格就没有了。
         (insert " "))
       (plist-put eh-org-popedit-info :id (org-id-get-create))
