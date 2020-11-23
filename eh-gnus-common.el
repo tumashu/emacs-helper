@@ -44,7 +44,6 @@
 (require 'mm-encode)
 (require 'mm-decode)
 (require 'rfc2047)
-(require 'nnir)
 (require 'gnus-demon)
 (require 'eww)
 (require 'gnus-select-account)
