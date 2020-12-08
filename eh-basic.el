@@ -376,8 +376,7 @@
 ;; ** VC
 (require 'vc)
 ;; I use magit instead of vc :-)
-(setq vc-handled-backends nil)
-(setq vc-ignore-dir-regexp ".*")
+(setq vc-handled-backends '(RCS CVS SVN SCCS SRC Bzr Hg Mtn))
 
 ;; ** elisp setting
 (require 'elisp-mode)
