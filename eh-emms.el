@@ -219,7 +219,7 @@
 ;; 加载 playlist 历史
 (add-hook 'after-init-hook #'emms-history-load)
 
-(setq eh-emms-tag-editor-pipe-config
+(setq emms-tag-editor-pipe-config
       '(("处理MP3中文标签乱码 (mid3iconv -e gbk <file>)"
          :command "mid3iconv"
          :arguments ("-e" "gbk" name))
@@ -233,69 +233,6 @@
            (list (format "%s-%s"
                          (emms-track-get track 'info-artist)
                          (emms-track-get track 'info-title)))))))
-
-(defun eh-emms-tag-editor-pipe-config-get (pipe-name key)
-  (let ((config eh-emms-tag-editor-pipe-config))
-    (plist-get (cdr (assoc pipe-name config)) key)))
-
-(defun eh-emms-tag-editor-pipe ()
-  (interactive)
-  (let* ((pipe-name (completing-read "Please choise pipe: " eh-emms-tag-editor-pipe-config)))
-    (when pipe-name
-      (if (emms-mark-has-markedp)
-          (eh-emms-tag-editor-marked-track-pipe pipe-name)
-        (eh-emms-tag-editor-track-pipe
-         (emms-tag-editor-track-at) pipe-name)))))
-
-(defun eh-emms-tag-editor-track-pipe (track pipe-name)
-  (if (eq (emms-track-get track 'type) 'file)
-      (let* ((coding-system-for-read 'utf-8)
-             (track-name (emms-track-name track))
-             (command (eh-emms-tag-editor-pipe-config-get pipe-name :command))
-             (arguments (eh-emms-tag-editor-pipe-config-get pipe-name :arguments)))
-        (when (functionp arguments)
-          (setq arguments (funcall arguments track)))
-        (setq arguments
-              (when (listp arguments)
-                (mapcar
-                 #'(lambda (x)
-                     (cond ((symbolp x)
-                            (emms-track-get track x))
-                           ((listp x)
-                            (let ((list (mapcar
-                                         #'(lambda (y)
-                                             (if (symbolp y)
-                                                 (emms-track-get track y)
-                                               y))
-                                         x)))
-                              (if (member nil list)
-                                  (list nil)
-                                list)))
-                           (t x)))
-                 arguments)))
-        (setq arguments
-              (flatten-tree
-               (remove (list nil) arguments)))
-        (if (and command (listp arguments))
-            (if (member nil arguments)
-                (message "Warn: skip run %S" (string-join `(,command ,@(remove nil arguments)) " "))
-              (if (zerop
-                   (apply #'call-process
-                          command nil nil nil arguments))
-                  (progn
-                    (message "Run command: %S" (string-join `(,command ,@arguments) " "))
-                    (run-hook-with-args 'emms-info-functions track))
-                (message "Fail to run command: %S" (string-join `(,command ,@arguments) " "))))
-          (message "No command or arguments are found.")))
-    (message "Only support files.")))
-
-(defun eh-emms-tag-editor-marked-track-pipe (pipe-name)
-  (let ((tracks (emms-mark-mapcar-marked-track
-                 'emms-tag-editor-track-at t)))
-    (if (null tracks)
-        (message "No track marked!")
-      (dolist (track tracks)
-        (eh-emms-tag-editor-track-pipe track pipe-name)))))
 
 ;; * Footer
 (provide 'eh-emms)
