@@ -36,8 +36,8 @@
 ;; * 代码                                                      :code:
 (require 'emms)
 (require 'emms-setup)
-(require 'emms-info-tinytag)
 (require 'emms-info-exiftool)
+(require 'emms-info-native)
 
 (emms-all)
 (emms-default-players)
