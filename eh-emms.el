@@ -145,8 +145,10 @@
 (setq emms-info-functions '(eh-emms-info-native))
 
 (defun eh-emms-info-native (track)
-  (when (ignore-errors (emms-info-native track))
-    (message "EMMS: 无法从 %S 中读取音乐信息." (emms-track-name track))))
+  (let ((file (emms-track-name track)))
+    (condition-case nil
+        (emms-info-native track)
+      (error (message "EMMS: 无法从 %S 中读取音乐信息." file)))))
 
 ;; 设置 Playlist 的显示方式
 (setq emms-last-played-format-alist
