@@ -138,10 +138,15 @@
 (emms-lyrics 1)
 
 ;; Track information
-;; (setq emms-info-tinytag-python-name "python3")
-;; (setq emms-info-functions '(emms-info-tinytag))
+;; 1. emms-info-exiftool 使用 perl 程序 exiftool, 速度比较慢但兼容性很好。
+;; 2. emms-info-native 是用 elisp 实现的，安装比较省事，速度还可以。
 
-(setq emms-info-functions '(emms-info-exiftool))
+;; (setq emms-info-functions '(emms-info-exiftool))
+(setq emms-info-functions '(eh-emms-info-native))
+
+(defun eh-emms-info-native (track)
+  (when (ignore-errors (emms-info-native track))
+    (message "EMMS: 无法从 %S 中读取音乐信息." (emms-track-name track))))
 
 ;; 设置 Playlist 的显示方式
 (setq emms-last-played-format-alist
