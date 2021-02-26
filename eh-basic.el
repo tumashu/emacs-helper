@@ -450,6 +450,7 @@
 ;; liberime
 (setq liberime-auto-build t)
 (require 'liberime nil t)
+(require 'pyim-liberime nil t)
 (with-eval-after-load "liberime"
   (liberime-try-select-schema "luna_pinyin_simp")
   (setq pyim-default-scheme 'rime-quanpin))
