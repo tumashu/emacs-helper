@@ -427,8 +427,16 @@
 ;;           #'(lambda ()
 ;;               (pyim-restart-1 t)))
 
-(require 'pyim-basedict)
-(pyim-basedict-enable)
+(let* ((file (concat (file-name-directory
+                      (locate-library "eh-basic.el"))
+                     "pyim/pyim-thuocl.pyim")))
+  (when (file-exists-p file)
+    (pyim-extra-dicts-add-dict
+     `(:name "THUOCL-DICT"
+             :file ,file
+             :coding utf-8-unix
+             :dict-type pinyin-dict
+             :elpa t))))
 
 (defun eh-ivy-cregexp (str)
   (let ((x (ivy--regex-plus str))
