@@ -429,7 +429,7 @@
 
 (let* ((file (concat (file-name-directory
                       (locate-library "eh-basic.el"))
-                     "pyim/pyim-thuocl.pyim")))
+                     "pyim/pyim-tsinghua.pyim")))
   (when (file-exists-p file)
     (pyim-extra-dicts-add-dict
      `(:name "THUOCL-DICT"
