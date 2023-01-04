@@ -275,6 +275,7 @@
 (savehist-mode 1)
 
 ;; ** minibuffer and completing-read
+(require 'minibuffer)
 (setq completion-auto-help t)
 (setq completion-auto-select nil)
 (setq completion-wrap-movement t)
@@ -325,10 +326,12 @@
 
 ;; ** VC
 (require 'vc)
+(require 'vc-hg)
 (setq vc-handled-backends '(Hg Git))
 (setq vc-hg-revert-switches '("--no-backup"))
 
 ;; ** ChangeLog 命令
+(require 'add-log)
 (setq add-log-dont-create-changelog-file t)
 ;; 大多数情况，我不会手动编辑 ChangeLog 文件，防止误操作。
 (setq change-log-default-name "01-dont-edit-changelog")
