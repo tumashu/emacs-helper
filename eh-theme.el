@@ -61,7 +61,7 @@
                 tab-line-close-highlight
                 tab-line-tab-inactive-alternate))
   (custom-set-faces
-   `(,face ((,c :weight bold :box nil :height 1.0)))))
+   `(,face ((t :weight bold :box nil :height 1.0)))))
 
 ;; * Footer
 (provide 'eh-theme)
