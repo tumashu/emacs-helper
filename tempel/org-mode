@@ -1,0 +1,57 @@
+org-mode
+
+(title "#+title: " p n
+       "#+author: Feng Shu" n
+       "#+language: zh-CN" n n)
+(quote "#+begin_quote" n> r> n> "#+end_quote")
+(example "#+begin_example" n> r> n> "#+end_example")
+(center "#+begin_center" n> r> n> "#+end_center")
+(comment "#+begin_comment" n> r> n> "#+end_comment")
+(verse "#+begin_verse" n> r> n> "#+end_verse")
+(src "#+begin_src " p n> r> n> "#+end_src")
+(elisp "#+begin_src emacs-lisp" n> r> n> "#+end_src")
+
+(gongwen
+ n>
+ ":CATEGORY: 党政机关公文" n>
+ ":标题: " p n>
+ ":URL: " p n>
+ ":发文机关标志: " p n>
+ ":发文机关代字: " p n>
+ ":发文顺序号: " p n>
+ ":成文日期: " (p (format-time-string "%Y-%m-%d")) n>
+ ":到手日期: " (p (format-time-string "%Y-%m-%d")) n>
+ ":年份: " (p (format-time-string "%Y") year) n>
+ ":发文字号: " n>
+ ":备注: "
+ :pre (eh-org-end-of-id-line))
+
+(xieyi
+ n>
+ ":CATEGORY: 协议或合同" n>
+ ":项目或服务名称: " p n>
+ ":委托方: " p n>
+ ":承接方: " p n>
+ ":价款（元）: " p n>
+ ":获取日期: " p n>
+ ":签署日期: " p n>
+ ":备注:"
+ :pre (eh-org-end-of-id-line))
+
+(contact
+ n>
+ ":PHONE: " p n>
+ ":EMAIL: " p n>
+ ":ALIAS: " p n>
+ ":NICKNAME: " p n>
+ ":IGNORE: " p n>
+ ":ICON: " p n>
+ ":NOTE: " p n>
+ ":ADDRESS: " p n>
+ ":BIRTHDAY: " p
+ :pre (eh-org-end-of-id-line))
+
+;; Local Variables:
+;; mode: lisp-data
+;; outline-regexp: "[a-z]"
+;; End:
