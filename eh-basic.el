@@ -251,12 +251,12 @@
 
 (unless (display-graphic-p)
   (setq switch-window-shortcut-appearance 'asciiart))
-(setq switch-window-increase 6)
 (setq switch-window-shortcut-style 'qwerty)
 (setq switch-window-input-style 'minibuffer)
 (global-set-key (kbd "C-x o") 'switch-window)
 
 ;; ** tab-line
+(require 'tab-line)
 (global-tab-line-mode 1)
 (setq tab-line-close-tab-function #'kill-buffer)
 (setq tab-line-tab-name-truncated-max 22)
