@@ -38,6 +38,7 @@
 ;; ** org
 (require 'org)
 (require 'org-attach)
+(require 'org-archive)
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (add-to-list 'auto-mode-alist '("\\.org_archive$" . org-mode))
@@ -132,7 +133,7 @@
     (org-id-get-create)
     (search-forward ":ID:")
     (end-of-line)
-    (org-show-all '(drawers))))
+    (org-fold-show-all '(drawers))))
 
 (setq org-insert-heading-respect-content nil)
 (setq org-log-done t)

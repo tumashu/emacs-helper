@@ -93,7 +93,7 @@
 (add-hook 'emms-player-started-hook #'emms-show)
 
 ;; 不在 mode-line 中显示播放信息
-(emms-mode-line -1)
+(emms-mode-line-mode -1)
 
 ;; 如何显示 track
 (setq emms-track-description-function

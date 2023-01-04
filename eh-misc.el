@@ -55,7 +55,7 @@
         (new-face (intern (format "eat-term-color-%s" new-color-number))))
     (setf (eat-term-parameter eat--terminal old-face) new-face)))
 
-(defun eh-eat--eshell-adjust-make-process-args (_ command args)
+(defun eh-eat--eshell-adjust-make-process-args (_ command _args)
   (when eat--terminal
     (eh-eat--set-cmd nil command)))
 

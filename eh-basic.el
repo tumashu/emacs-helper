@@ -44,7 +44,7 @@
 (defun eh-system-open (path &rest _args)
   (let ((path (expand-file-name path)))
     (cond ((string-equal system-type "windows-nt")
-           (w32-shell-execute "open" path))
+           (with-no-warnings (w32-shell-execute "open" path)))
           ((string-equal system-type "darwin")
            (concat "open " (shell-quote-argument path)))
           ((string-equal system-type "gnu/linux")
@@ -108,7 +108,7 @@
 ;; ** 让全角空格不会显示下划线
 (setq nobreak-char-display nil)
 ;; (setq eh-space (propertize " 　" 'face '(:weight 'bold)))
-(setq eh-space " 　")
+(defvar eh-space " 　")
 
 ;; ** 设置 mode-line
 ;; 在 mode-line 最后追加一个半角空格，一个全角空格，防止因为字体高度原
