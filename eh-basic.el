@@ -209,6 +209,7 @@
 (tool-bar-mode -1)
 
 ;; ** 关闭 scroll-bar
+(require 'scroll-bar)
 (scroll-bar-mode -1)
 
 ;; ** 启用像素级 scroll
