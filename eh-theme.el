@@ -52,17 +52,16 @@
 (load-theme 'modus-vivendi :no-confim)
 
 ;; Tab-line
-(modus-themes-with-colors
-  (dolist (face '(tab-line
-                  tab-line-tab
-                  tab-line-highlight
-                  tab-line-tab-special
-                  tab-line-tab-inactive
-                  tab-line-tab-modified
-                  tab-line-close-highlight
-                  tab-line-tab-inactive-alternate))
-    (custom-set-faces
-     `(,face ((,c :weight bold :box nil :height 1.0))))))
+(dolist (face '(tab-line
+                tab-line-tab
+                tab-line-highlight
+                tab-line-tab-special
+                tab-line-tab-inactive
+                tab-line-tab-modified
+                tab-line-close-highlight
+                tab-line-tab-inactive-alternate))
+  (custom-set-faces
+   `(,face ((,c :weight bold :box nil :height 1.0)))))
 
 ;; * Footer
 (provide 'eh-theme)
