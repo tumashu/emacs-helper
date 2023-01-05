@@ -23,7 +23,7 @@
            magit marginalia markdown-mode
            modus-themes orderless
            org-contrib org-download org-ql
-           org-super-agenda ox-gfm paredit
+           org-super-agenda ox-gfm paredit popon
            pos-tip projectile pyim
            pyim-basedict rainbow-delimiters
            rainbow-mode switch-window
