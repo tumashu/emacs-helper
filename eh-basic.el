@@ -209,8 +209,8 @@
 (tool-bar-mode -1)
 
 ;; ** 关闭 scroll-bar
-(require 'scroll-bar)
-(scroll-bar-mode -1)
+(when (functionp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
 
 ;; ** 启用像素级 scroll
 (when (functionp 'pixel-scroll-precision-mode)
