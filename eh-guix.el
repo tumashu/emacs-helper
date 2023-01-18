@@ -85,7 +85,7 @@ Do not deal with `geiser-guile-load-path'."
     (geiser-guile--set-up-declarative-modules)
     (geiser-guile--set-up-backtrace)
     (geiser-eval--send/wait ",use (geiser emacs)\n'done")
-    (geiser-eval--send/wait ",use (guix emacs)\n'done")
+    (geiser-eval--send/wait ",use (guix)\n'done")
     (geiser-eval--send/wait ",use (guix packages)\n'done")
     (geiser-guile-update-warning-level)))
 
