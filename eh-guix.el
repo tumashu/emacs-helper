@@ -86,7 +86,10 @@ Do not deal with `geiser-guile-load-path'."
     (geiser-guile--set-up-backtrace)
     (geiser-eval--send/wait ",use (geiser emacs)\n'done")
     (geiser-eval--send/wait ",use (guix)\n'done")
+    (geiser-eval--send/wait ",use (guix gexp)\n'done")
+    (geiser-eval--send/wait ",use (guix store)\n'done")
     (geiser-eval--send/wait ",use (guix packages)\n'done")
+    (geiser-eval--send/wait ",use (guix derivations)\n'done")
     (geiser-guile-update-warning-level)))
 
 (defun eh-geiser-guile--parameters (orig-func &rest args)
