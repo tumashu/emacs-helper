@@ -75,6 +75,7 @@
 (projectile-mode 1)
 
 ;; ** citre
+(require 'citre)
 (require 'citre-config)
 (global-set-key (kbd "C-x c j") 'citre-jump)
 (global-set-key (kbd "C-x c J") 'citre-jump-back)
@@ -95,6 +96,8 @@
 (add-hook 'write-file-functions #'tempel-done)
 
 ;; ** syncthing
+(require 'eh-basic)
+(require 'eh-org)
 (defvar eh-org-syncthing-dir "~/syncthing")
 (defun eh-org-open-syncthing-dir ()
   (interactive)

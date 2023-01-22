@@ -56,6 +56,7 @@
 (require 'geiser-guile)
 (require 'guix)
 (require 'magit)
+(require 'guix-devel)
 
 ;; ** Enable guix-devel-mode
 (add-hook 'scheme-mode-hook #'guix-devel-mode)
@@ -125,12 +126,14 @@ Do not handle `geiser-guile-load-path'."
             (exists-p (file-exists-p file)))
   (load-file file)
   ;; (add-hook 'after-save-hook 'copyright-update)
+  (defvar copyright-names-regexp)
   (setq copyright-names-regexp
         (format "%s <%s>" user-full-name user-mail-address)))
 
 ;; ** Load guix tempel snippets.
 (when-let* ((dir (eh-guix-dir))
             (path (expand-file-name "etc/snippets/tempel/*" dir)))
+  (defvar tempel-path)
   (add-to-list 'tempel-path path))
 
 ;; * Footer

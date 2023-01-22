@@ -206,7 +206,8 @@
 ;; (desktop-save-mode 1)
 
 ;; ** 关闭 tool-bar
-(tool-bar-mode -1)
+(when (functionp 'tool-bar-mode)
+  (tool-bar-mode -1))
 
 ;; ** 关闭 scroll-bar
 (when (functionp 'scroll-bar-mode)
@@ -276,10 +277,12 @@
 (savehist-mode 1)
 
 ;; ** minibuffer and completing-read
+(require 'simple)
 (require 'minibuffer)
+(defvar completion-auto-select)
+(defvar completions-max-height)
 (setq completion-auto-help t)
 (setq completion-auto-select nil)
-(setq completion-wrap-movement t)
 (setq completion-show-help nil)
 (setq completion-show-inline-help t)
 (setq completions-max-height 15)
@@ -307,6 +310,7 @@
 
 ;; ** orderless
 (require 'orderless)
+(require 'pyim-cregexp)
 (setq completion-styles '(basic orderless)
       completion-category-defaults nil
       completion-category-overrides '((file (styles partial-completion))))

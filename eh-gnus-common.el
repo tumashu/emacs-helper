@@ -38,13 +38,13 @@
 ;; * 代码                                                      :code:
 
 ;; 存储设置
-(setq gnus-init-file "~/gnus/eh-gnus-personal.el")
-(setq gnus-home-directory "~/gnus/")
-(setq gnus-default-directory "~/gnus/")
-(setq gnus-directory "~/gnus/")
-(setq gnus-article-save-directory "~/gnus/Saved/")
-(setq message-directory "~/gnus/Mail/")
-(setq mm-default-directory "~/gnus/")
+(defvar gnus-init-file "~/gnus/eh-gnus-personal.el")
+(defvar gnus-home-directory "~/gnus/")
+(defvar gnus-default-directory "~/gnus/")
+(defvar gnus-directory "~/gnus/")
+(defvar gnus-article-save-directory "~/gnus/Saved/")
+(defvar message-directory "~/gnus/Mail/")
+(defvar mm-default-directory "~/gnus/")
 
 ;; Require
 (require 'gnus)
@@ -52,23 +52,30 @@
 (require 'gnus-cite)
 (require 'gnus-agent)
 (require 'gnus-search)
+(require 'gnus-async)
 (require 'nntp)
 (require 'mm-encode)
 (require 'mm-decode)
 (require 'rfc2047)
 (require 'gnus-demon)
 (require 'eww)
+(require 'message)
+(require 'nnmairix)
+(require 'supercite)
 
 ;; EBDB 设置
 (require 'ebdb)
 (require 'ebdb-i18n-chn)
 
-(make-directory "~/gnus/ebdb/" t)
+(when (file-writable-p "~")
+  (make-directory "~/gnus/ebdb/" t))
+
 (setq ebdb-sources (list "~/gnus/ebdb/default"))
 (setq ebdb-search-transform-functions
       (list #'pyim-cregexp-build))
 
 ;; ebdb-complete 设置
+(require 'ebdb-complete)
 (ebdb-complete-enable)
 
 ;; ebdb-gnus 设置
@@ -163,6 +170,7 @@
     (when (> (length str) 0)
       (format "smtp smtp.%s 465 %s" str from))))
 
+(defvar message-server-alist)
 (setq message-server-alist '((eh-message-server-alist-function)))
 
 ;; 设置gnus默认编码: 如果常与国外联系，可以设置为utf-8
@@ -221,7 +229,6 @@
 (setq message-syntax-checks '((sender . disabled))) ; 语法检查
 (setq nnmail-expiry-wait 7)                         ; 邮件自动删除的期限 (单位: 天)
 (setq nnmairix-allowfast-default t)                 ; 加快进入搜索结果的组
-(setq gnus-use-correct-string-widths t)             ; 使用正确的字符宽度
 (setq gc-cons-threshold 3500000)                    ; 加快 gnus 的速度
 (setq gnus-use-cross-reference t)                   ; 开启交叉索引
 (setq gnus-summary-display-while-building 50)       ; 生成 summary 时,每50封显示一下
@@ -325,7 +332,6 @@
       gnus-treat-leading-whitespace 'head
       gnus-treat-highlight-citation t
       gnus-treat-highlight-signature t
-      gnus-treat-date-lapsed 'head
       gnus-treat-strip-trailing-blank-lines t
       gnus-treat-strip-cr t
       gnus-treat-overstrike nil

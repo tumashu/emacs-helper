@@ -58,15 +58,16 @@
       (or emms-source-file-default-directory
           (concat (file-name-as-directory emms-directory) "music")))
 
-(unless (file-directory-p emms-directory)
-  (make-directory
-   (file-name-as-directory emms-directory) t))
+(when (file-writable-p "~")
+  (unless (file-directory-p emms-directory)
+    (make-directory
+     (file-name-as-directory emms-directory) t))
 
-(unless (file-directory-p emms-source-file-default-directory)
-  (make-directory
-   (file-name-as-directory
-    emms-source-file-default-directory)
-   t))
+  (unless (file-directory-p emms-source-file-default-directory)
+    (make-directory
+     (file-name-as-directory
+      emms-source-file-default-directory)
+     t)))
 
 ;; 设定EMMS主模式为 Playlist 模式
 (setq emms-playlist-default-major-mode 'emms-playlist-mode)
@@ -93,6 +94,7 @@
 (add-hook 'emms-player-started-hook #'emms-show)
 
 ;; 不在 mode-line 中显示播放信息
+(require 'emms-mode-line)
 (emms-mode-line-mode -1)
 
 ;; 如何显示 track
@@ -139,6 +141,7 @@
       (eh-emms-wash-buffer))))
 
 ;; 显示歌词
+(require 'emms-lyrics)
 (emms-lyrics 1)
 
 ;; Track information
@@ -199,20 +202,20 @@
 
 (advice-add 'emms-browser-format-line :around #'eh-emms-browser-format-line)
 
-(setq emms-browser-info-year-format      "%i+ %n")
-(setq emms-browser-info-genre-format     "%i+ %n")
-(setq emms-browser-info-performer-format "%i+ %n")
-(setq emms-browser-info-composer-format  "%i+ %n")
-(setq emms-browser-info-artist-format    "%i* %n")
-(setq emms-browser-info-album-format     "%i- %n")
-(setq emms-browser-info-title-format     "%i♪ %n")
-(setq emms-browser-playlist-info-year-format      "%i%n")
-(setq emms-browser-playlist-info-genre-format     "%i%n")
-(setq emms-browser-playlist-info-performer-format "%i%n")
-(setq emms-browser-playlist-info-composer-format  "%i%n")
-(setq emms-browser-playlist-info-artist-format    "%i%n")
-(setq emms-browser-playlist-info-album-format     "%i%n")
-(setq emms-browser-playlist-info-title-format     "  ♪ %n")
+(defvar emms-browser-info-year-format      "%i+ %n")
+(defvar emms-browser-info-genre-format     "%i+ %n")
+(defvar emms-browser-info-performer-format "%i+ %n")
+(defvar emms-browser-info-composer-format  "%i+ %n")
+(defvar emms-browser-info-artist-format    "%i* %n")
+(defvar emms-browser-info-album-format     "%i- %n")
+(defvar emms-browser-info-title-format     "%i♪ %n")
+(defvar emms-browser-playlist-info-year-format      "%i%n")
+(defvar emms-browser-playlist-info-genre-format     "%i%n")
+(defvar emms-browser-playlist-info-performer-format "%i%n")
+(defvar emms-browser-playlist-info-composer-format  "%i%n")
+(defvar emms-browser-playlist-info-artist-format    "%i%n")
+(defvar emms-browser-playlist-info-album-format     "%i%n")
+(defvar emms-browser-playlist-info-title-format     "  ♪ %n")
 
 (defun eh-emms-browser-wash-playlist (&optional _)
   "简化 playlist, emms-browser 默认生成的 playlist 有缩进，看起来太花。"
@@ -228,6 +231,9 @@
 (define-key emms-browser-mode-map (kbd "C-c C-c") 'emms-browser-add-tracks-and-play)
 
 ;; 加载 playlist 历史
+(require 'emms-history)
+(require 'emms-tag-editor)
+
 (add-hook 'after-init-hook #'emms-history-load)
 
 (setq emms-tag-editor-pipe-config

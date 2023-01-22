@@ -36,6 +36,7 @@
 ;; * 代码                                                      :code:
 ;; ** company-mode
 (require 'company)
+
 (global-set-key (kbd "M-/") 'company-complete)
 (define-key company-active-map (kbd "M-i") 'company-complete-selection)
 (define-key company-active-map (kbd "C-n") 'company-select-next)
@@ -53,6 +54,7 @@
 (setq company-global-modes
       '(not message-mode git-commit-mode eshell-mode))
 
+(require 'company-dabbrev)
 (setq company-dabbrev-char-regexp "[[:word:]_:@.-]+")
 (setq company-dabbrev-downcase nil)
 (setq company-dabbrev-ignore-case nil)

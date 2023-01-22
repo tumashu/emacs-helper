@@ -45,12 +45,13 @@
 
 (defvar eh-org-directory
   (expand-file-name
-   (cl-find-if #'file-exists-p
-               '("d:/org/"
-                 "e:/org/"
-                 "f:/org/"
-                 "~/org/"
-                 "~/storage/shared/org/"))))
+   (or (cl-find-if #'file-exists-p
+                   '("d:/org/"
+                     "e:/org/"
+                     "f:/org/"
+                     "~/org/"
+                     "~/storage/shared/org/"))
+       "~/org/")))
 
 ;; 这个附件设置只适合我自己，千万别乱抄。
 (setq org-attach-id-dir
@@ -291,7 +292,6 @@
 (advice-add 'org-archive-subtree :around #'eh-org-archive-subtree)
 
 ;; ** org-attach
-(setq org-attach-file-list-property nil)
 (setq org-attach-store-link-p 'attached)
 (setq org-attach-sync-delete-empty-dir t)
 
@@ -418,7 +418,9 @@
 
 (add-to-list 'org-agenda-files eh-org-directory t)
 (add-to-list 'org-agenda-files (concat (file-name-as-directory eh-org-directory) "orgzly") t)
-(make-directory (concat (file-name-as-directory eh-org-directory) "orgzly") t)
+
+(when (file-writable-p "~")
+  (make-directory (concat (file-name-as-directory eh-org-directory) "orgzly") t))
 
 (defun eh-revert-org-buffers ()
   "Refreshes all opened org buffers."
