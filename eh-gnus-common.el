@@ -170,7 +170,6 @@
     (when (> (length str) 0)
       (format "smtp smtp.%s 465 %s" str from))))
 
-(defvar message-server-alist)
 (setq message-server-alist '((eh-message-server-alist-function)))
 
 ;; 设置gnus默认编码: 如果常与国外联系，可以设置为utf-8

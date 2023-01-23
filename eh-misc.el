@@ -142,8 +142,6 @@
 (defun eh-elisp-setup ()
   ;; 跟踪行尾空格
   (setq show-trailing-whitespace t)
-  ;; 高亮TAB
-  (setq highlight-tabs t)
   ;; 自动缩进
   (aggressive-indent-mode))
 

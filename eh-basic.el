@@ -279,8 +279,6 @@
 ;; ** minibuffer and completing-read
 (require 'simple)
 (require 'minibuffer)
-(defvar completion-auto-select)
-(defvar completions-max-height)
 (setq completion-auto-help t)
 (setq completion-auto-select nil)
 (setq completion-show-help nil)
