@@ -74,19 +74,6 @@
 (setq projectile-enable-caching nil)
 (projectile-mode 1)
 
-;; ** citre
-(require 'citre)
-(require 'citre-config)
-(global-set-key (kbd "C-x c j") 'citre-jump)
-(global-set-key (kbd "C-x c J") 'citre-jump-back)
-(global-set-key (kbd "C-x c p") 'citre-ace-peek)
-(global-set-key (kbd "C-x c u") 'citre-update-this-tags-file)
-(setq citre-project-root-function #'projectile-project-root
-      citre-default-create-tags-file-location 'global-cache
-      citre-use-project-root-when-creating-tags t
-      citre-prompt-language-for-ctags-command t
-      citre-auto-enable-citre-mode-modes '(prog-mode))
-
 ;; ** tempel
 (require 'tempel)
 (setq tempel-path (list (format "%s/*" (expand-file-name "tempel" (eh-directory)))))

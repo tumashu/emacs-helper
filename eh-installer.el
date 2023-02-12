@@ -15,7 +15,7 @@
   (let ((package-selected-packages
          '(;; Packages required by emacs-helper
            adaptive-wrap aggressive-indent
-           cal-china-x citre cnfonts
+           cal-china-x cnfonts
            company company-posframe
            consult eat ebdb
            ebdb-i18n-chn el2org emms
