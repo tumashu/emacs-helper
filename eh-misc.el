@@ -103,6 +103,8 @@
 (setq-default line-spacing 2)
 (setq cnfonts-use-face-font-rescale
       (eq system-type 'gnu/linux))
+(setq cnfonts-personal-fontnames
+      '(("PragmataPro Mono")))
 (cnfonts-mode 1)
 (define-key cnfonts-mode-map (kbd "C--") 'cnfonts-decrease-fontsize)
 (define-key cnfonts-mode-map (kbd "C-=") 'cnfonts-increase-fontsize)
