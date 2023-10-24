@@ -39,7 +39,7 @@
 (require 'eat)
 (eat-eshell-mode 1)
 
-(defun eh-eat--set-cmd (_ cmd)
+(defun eh-eat--set-cmd (cmd)
   (when (cl-some (lambda (x)
                    (string-search x cmd))
                  '("htop" "nmtui" "mutt" "aptitude"))
@@ -53,10 +53,10 @@
 (defun eh-eat--change-color (old-color-number new-color-number)
   (let ((old-face (intern (format "color-%s-face" old-color-number)))
         (new-face (intern (format "eat-term-color-%s" new-color-number))))
-    (setf (eat-term-parameter eat--terminal old-face) new-face)))
+    (setf (eat-term-parameter eat-terminal old-face) new-face)))
 
 (defun eh-eat--eshell-adjust-make-process-args (_ command _args)
-  (when eat--terminal
+  (when eat-terminal
     (eh-eat--set-cmd nil command)))
 
 (defun eh-eat--set-cmd-status (&rest _)
