@@ -217,6 +217,9 @@
 (when (functionp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode 1))
 
+;; ** 解决最大化留缝隙的问题
+(setq frame-resize-pixelwise t)
+
 ;; ** 加载 bookmark
 (require 'bookmark)
 (bookmark-maybe-load-default-file)
