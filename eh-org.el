@@ -265,32 +265,6 @@
 ;; 日常情况下，使用 ARCHIVE TAG 来隐藏已经完成的任务，安全又方便。
 (setq org-archive-default-command 'org-archive-set-tag)
 
-;; 使用 org-archive-subtree 时，保持一级目录结构。
-(defun eh-org-archive-subtree (orig_func &rest args)
-  (let* ((tags (org-get-tags))
-         (location (org-archive--compute-location
-		    (or (org-entry-get nil "ARCHIVE" 'inherit)
-			org-archive-location)))
-	 (archive-file (car location))
-         (subheading-p (save-excursion
-                         (org-back-to-heading)
-                         (> (org-outline-level) 1)))
-         (top-headline (car (org-get-outline-path t)))
-         (org-archive-location
-          (if subheading-p
-              (concat (car (split-string org-archive-location "::"))
-                      "::* "
-                      top-headline)
-            org-archive-location)))
-    (apply orig_func args)
-    (when (and subheading-p archive-file tags)
-      (with-current-buffer (find-file-noselect archive-file)
-        (save-excursion
-          (while (org-up-heading-safe))
-          (org-set-tags tags))))))
-
-(advice-add 'org-archive-subtree :around #'eh-org-archive-subtree)
-
 ;; ** org-attach
 (setq org-attach-store-link-p 'attached)
 (setq org-attach-sync-delete-empty-dir t)
