@@ -492,6 +492,15 @@
 
 ;; Org super agenda
 (require 'org-super-agenda)
+
+(org-super-agenda--def-auto-group eh-parent "their parent heading"
+  :key-form (org-super-agenda--when-with-marker-buffer (org-super-agenda--get-marker item)
+              (when (org-up-heading-safe)
+                (concat (org-entry-get nil "ITEM")
+                        (if (string-suffix-p ".org_archive" (buffer-name))
+                            "(归档)"
+                          "")))))
+
 (setq org-super-agenda-unmatched-name "未分组")
 (setq org-super-agenda-groups
       '((:name "Today" :time-grid t)
@@ -503,7 +512,7 @@
                  (org-super-agenda--when-with-marker-buffer
                    (org-super-agenda--get-marker item)
                    (equal (org-current-level) 1))))
-        (:auto-parent t)))
+        (:auto-eh-parent t)))
 
 (org-super-agenda-mode 1)
 
