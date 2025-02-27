@@ -17,8 +17,8 @@
            adaptive-wrap aggressive-indent
            cal-china-x cnfonts
            company company-posframe
-           consult eat ebdb
-           ebdb-i18n-chn el2org emms
+           consult ebdb
+           ebdb-i18n-chn
            flycheck geiser-guile guix
            magit marginalia markdown-mode
            modus-themes orderless

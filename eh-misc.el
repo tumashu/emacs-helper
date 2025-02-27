@@ -35,10 +35,6 @@
 
 ;; * 代码                                                      :code:
 
-;; ** emacs-eat
-(require 'eat)
-(eat-eshell-mode 1)
-
 ;; ** projectile
 (require 'projectile)
 (global-set-key (kbd "C-x F") 'projectile-find-file)
@@ -81,9 +77,6 @@
 (define-key cnfonts-mode-map (kbd "C--") 'cnfonts-decrease-fontsize)
 (define-key cnfonts-mode-map (kbd "C-=") 'cnfonts-increase-fontsize)
 
-;; ** el2org
-(require 'el2org)
-
 ;; ** EPG
 (require 'epg)
 ;; 1. Put the below to your ~/.gnupg/gpg-agent.conf:
@@ -93,9 +86,6 @@
 ;; 3. (setq epa-pinentry-mode 'loopback)
 ;; 4. (pinentry-start)
 (setq epg-pinentry-mode 'loopback)
-
-;; ** emms
-(require 'eh-emms)
 
 ;; ** aggressive-indent
 (require 'aggressive-indent)

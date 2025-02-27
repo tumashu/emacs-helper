@@ -61,53 +61,6 @@
 ;; ** Enable guix-devel-mode
 (add-hook 'scheme-mode-hook #'guix-devel-mode)
 
-;; ** Let geiser-guile use guix repl.
-(defun eh-guix-get-guile-load-path ()
-  "Get guile load-path from GUIX_PACKAGE_PATH environment."
-  (when-let* ((path-str (getenv "GUIX_PACKAGE_PATH"))
-              (length (> (length path-str) 0))
-              (paths (split-string path-str ":")))
-    (mapcan (lambda (path)
-              (list "-L" (substitute-in-file-name path)))
-            paths)))
-
-(setq geiser-guile-binary
-      `("guix" "repl"
-        ,@(eh-guix-get-guile-load-path)))
-
-;; ** Do not auto load paths to guile %load-path.
-(defun eh-geiser-guile--startup (remote)
-  "Advice function of `geiser-guile--startup'.
-Do not deal with `geiser-guile-load-path'."
-  (geiser-guile--set-up-error-links)
-  (let ((geiser-log-verbose t))
-    (when (or geiser-guile--conn-address remote)
-      (geiser-guile--set-geiser-load-path))
-    (geiser-guile--set-up-declarative-modules)
-    (geiser-guile--set-up-backtrace)
-    (geiser-eval--send/wait ",use (geiser emacs)\n'done")
-    (geiser-eval--send/wait ",use (guix)\n'done")
-    (geiser-eval--send/wait ",use (guix gexp)\n'done")
-    (geiser-eval--send/wait ",use (guix store)\n'done")
-    (geiser-eval--send/wait ",use (guix packages)\n'done")
-    (geiser-eval--send/wait ",use (guix derivations)\n'done")
-    (geiser-guile-update-warning-level)))
-
-(defun eh-geiser-guile--parameters (orig-func &rest args)
-  "Advice function of `geiser-guile--parameters'.
-Do not handle `geiser-guile-load-path'."
-  (let ((geiser-guile-load-path nil))
-    (apply orig-func args)))
-
-;; NOTE: geiser and geiser-guile will auto add project path,
-;; `geiser-guile-load-path' in dir-local.el and path of current-buffer
-;; to guile %load-path, this could lead to potential confusion for
-;; guix new developer. DISABLE THIS FEATURE, we just use
-;; GUIX_PACKAGE_PATH environment and 'guix repl' to handle %load-path.
-(setq geiser-repl-add-project-paths nil)
-(advice-add 'geiser-guile--startup :override #'eh-geiser-guile--startup)
-(advice-add 'geiser-guile--parameters :around #'eh-geiser-guile--parameters)
-
 ;; ** Get guix checkout directory.
 (defun eh-guix-dir ()
   "Get guix checkout directory created by guix pull."
