@@ -39,34 +39,6 @@
 (require 'eat)
 (eat-eshell-mode 1)
 
-(defun eh-eat--set-cmd (cmd)
-  (when (cl-some (lambda (x)
-                   (string-search x cmd))
-                 '("htop" "nmtui" "mutt" "aptitude"))
-    ;; * Color number:
-    ;; 0. black 1. red     2. green 3. yellow
-    ;; 4. blue  5. magenta 6. cyan  7. white
-    (dolist (x '((1 . 124)
-                 (4 . 20)))
-      (eh-eat--change-color (car x) (cdr x)))))
-
-(defun eh-eat--change-color (old-color-number new-color-number)
-  (let ((old-face (intern (format "color-%s-face" old-color-number)))
-        (new-face (intern (format "eat-term-color-%s" new-color-number))))
-    (setf (eat-term-parameter eat-terminal old-face) new-face)))
-
-(defun eh-eat--eshell-adjust-make-process-args (_ command _args)
-  (when eat-terminal
-    (eh-eat--set-cmd nil command)))
-
-(defun eh-eat--set-cmd-status (&rest _)
-  (dotimes (i 8)
-    (eh-eat--change-color i i)))
-
-(advice-add 'eat--set-cmd :after #'eh-eat--set-cmd)
-(advice-add 'eat--set-cmd-status :after #'eh-eat--set-cmd-status)
-(advice-add 'eat--eshell-adjust-make-process-args :after #'eh-eat--eshell-adjust-make-process-args)
-
 ;; ** projectile
 (require 'projectile)
 (global-set-key (kbd "C-x F") 'projectile-find-file)
