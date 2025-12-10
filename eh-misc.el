@@ -48,7 +48,13 @@
 (global-set-key (kbd "<f4>") 'tempel-insert)
 (define-key tempel-map (kbd "<tab>") #'tempel-next)
 (define-key tempel-map (kbd "C-<tab>") #'tempel-previous)
-(add-hook 'write-file-functions #'tempel-done)
+
+(defun eh-tempel-done ()
+  (interactive)
+  (when (tempel--active-p nil (current-buffer))
+    (tempel-done t)))
+
+(add-hook 'write-file-functions #'eh-tempel-done)
 
 ;; ** syncthing
 (require 'eh-basic)
