@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;; ** 添加账户信息
 ;; Account file: "~/.authinfo.gpg" template
 
