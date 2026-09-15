@@ -56,21 +56,21 @@
 
 (add-hook 'write-file-functions #'eh-tempel-done)
 
-;; ** syncthing
+;; ** org share directory
 (require 'eh-basic)
 (require 'eh-org)
-(defvar eh-org-syncthing-dir "~/syncthing")
-(defun eh-org-open-syncthing-dir ()
+(defvar eh-org-share-dir "~/desktop/share")
+(defun eh-org-open-share-dir ()
   (interactive)
   (let ((dir (file-name-as-directory
-              (expand-file-name eh-org-syncthing-dir))))
+              (expand-file-name eh-org-share-dir))))
     (when (file-directory-p dir)
       (if (or (derived-mode-p 'org-mode)
               (derived-mode-p 'org-agenda-mode))
           (eh-org-attach-reveal)
         (eh-system-open dir)))))
 
-(global-set-key (kbd "<f1>") 'eh-org-open-syncthing-dir)
+(global-set-key (kbd "<f1>") 'eh-org-open-share-dir)
 
 ;; ** cnfonts
 (require 'cnfonts)
